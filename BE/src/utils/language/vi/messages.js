@@ -1,0 +1,193 @@
+exports.CODES_SUCCESS = {
+    10000: 'Đăng ký thành công!',
+    10001: 'Đăng nhập thành công!',
+
+    /* 10200 -> 10209 users */
+    10200: 'Tạo mã xác nhận thành công!',
+    10201: 'Đặt lại mật khẩu thành công!',
+    10202: 'Xác nhận mã thành công',
+    10203: 'Cập nhật hồ sơ thành công',
+    10204: 'Danh sách người dùng thành công',
+    10205: 'Thông tin người dùng thành công',
+
+    /* 10210 -> 10229 posts */
+    10210: 'Tạo bài viết mới thành công!',
+    10211: 'Cập nhật bài viết thành công!',
+    10212: 'Xóa bài viết thành công!',
+    10213: 'Danh sách bài viết thành công!',
+    10214: 'Tìm bài viết thành công!',
+    10215: 'Nâng cấp bài viết thành công!',
+    10216: 'Duyệt bài viết thành công!',
+    10217: 'Nộp đơn việc thành công!',
+    10218: 'Từ chối bài viết thành công!',
+    10219: 'Lấy Danh sách ứng viên thành công!',
+    10220: 'Gia hạn bài viết thành công',
+    10221: 'Ẩn bài viết thành công!',
+    10225: 'Cập nhật trạng thái thành công!',
+    10226: 'Cập nhật trạng thái thành công!',
+    10227: 'Thống kê dashboard thành công!',
+    10228: 'Top 6 hr thành công!',
+    10229: 'Bạn có thể apply bài đăng này!',
+    /* 10230 -> 10239 users part 2 */
+    10230: 'Nạp tiền thành công!',
+    10231: 'Nâng cấp người dùng thành công!',
+    10232: 'Mua hồ sơ ứng viên thành công!',
+    10233: 'Đổi mật khẩu thành công!',
+    10234: 'Khóa tài khoản thành công!',
+    10235: 'Mở khóa tài khoản thành công!',
+    10236: 'Tải lên CV thành công!',
+    10237: 'Xóa CV thành công!',
+    10238: 'Bạn có thể mua hồ sơ này!',
+    /* 10240 -> 10270 configs */
+    10240: 'Danh sách cài đặt giá thành công!',
+    10241: 'Cập nhật cài đặt giá thành công!',
+    10242: 'Chi tiết Vip thành công!',
+    /* 10271 -> 10280 charging profile */
+    10271: 'Danh sách ứng viên của tôi thành công!',
+    /* 10281 -> 10310 advertisements */
+    10281: 'Tạo quảng cáo mới thành công!',
+    10282: 'Danh sách landing page thành công!',
+    10283: 'Xóa quảng cáo thành công!',
+    10284: 'Cập nhật quảng cáo thành công!',
+    /* 10311 -> 10360 dashboards */
+    10311: "Dữ liệu người dùng trong bảng điều khiển thành công!",
+    10312: "Doanh thu trong bảng điều khiển thành công!",
+    /* 10361 -> 10390 countries + cities */
+    10361: "Danh sách quốc gia thành công!",
+    10362: "Danh sách thành phố thành công!",
+    10363: "Tạo chương trình thành công!",
+    10364: "Cập nhật chương trình thành công!",
+    10365: "Xóa chương trình thành công",
+    /* 10391 -> 10420 news */
+    10391: "Tạo tin tức thành công!",
+    10392: "Danh sách tin tức thành công!",
+    10393: "Xóa tin tức thành công!",
+    10394: "Cập nhật tin tức thành công!",
+    10395: "Chi tiết tin tức thành công!",
+    /* 10421 -> 10470 notifications */
+    10421: "Danh sách thông báo thành công!",
+    10422: "Đọc thông báo thành công!",
+    10423: "Đọc tất cả thông báo thành công!",
+    10424: "Tạo thông báo thành công!",
+    10425: "Tìm thông báo thành công!",
+    10426: "Tổng số thông báo thành công!",
+    /* 10471 -> 10500 template cv */
+    10471: "Tải lên mẫu CV thành công!",
+    10472: "Xóa mẫu CV thành công!",
+    10473: "Danh sách mẫu CV thành công!",
+}
+
+exports.CODES_ERROR = {
+    40000: 'Tên người dùng hoặc mật khẩu không đúng. Vui lòng thử lại!',
+    40001: 'Mã token không được trống',
+    40002: 'Phiên đăng nhập của bạn đã hết hạn. Vui lòng đăng nhập lại!',
+    40003: 'Lỗi chưa nhập đúng các trường thông tin!',
+    40004: 'Đã xảy ra lỗi!',
+    40005: 'Token không hợp lệ!',
+    40006: 'Chỉ có Admin mới có thể thực hiện hành động này!',
+    40007: 'Hr mới có thể thực hiện quyền này!',
+    40008: 'Hình ảnh phải đúng định dạng và kích thước <= 8mb!',
+
+    /* 40100 -> 40109 users */
+    40100: 'Tên người dùng không tồn tại!',
+    40101: 'Email không khớp với email đã đăng ký!',
+    40102: 'Tạo mã xác nhận thất bại!',
+    40103: 'Xác nhận mật khẩu và mật khẩu phải giống nhau!',
+    40104: 'Mã xác nhận không hợp lệ!',
+    40105: 'Đặt lại mật khẩu thất bại!',
+    40106: 'Mật khẩu hoặc tên người dùng không đúng!',
+    40107: 'Đã có người đăng kí bằng Email/số điện thoại này !',
+    40108: 'Mã xác nhận sai!',
+    40109: 'Cập nhật người dùng thất bại!',
+
+    /* 40110 -> 40120 posts */
+    40110: 'Tạo bài viết mới thất bại!',
+    40111: 'Cập nhật bài viết thất bại!',
+    40112: 'Xóa bài viết thất bại!',
+    40113: 'Không tìm thấy bài viết này!',
+    40114: 'Tên bài viết trùng lặp, vui lòng thử lại!',
+    40115: 'Yêu cầu có hình ảnh',
+    40116: 'Không tìm thấy bài viết',
+    40117: 'Số dư tài khoản của bạn không đủ, vui lòng nạp thêm tiền vào tài khoản của bạn',
+    40118: 'Nâng cấp bài viết thất bại!',
+    40119: 'Bài viết đã là HOT hoặc GẤP, không thể nâng cấp thêm',
+    40120: 'Trạng thái hiện tại của bài viết là GẤP, không thể nâng cấp thêm!',
+
+    /* 40121 -> 40129 users */
+    40121: 'Nạp tiền thất bại!',
+    40122: 'Không tìm thấy người dùng!',
+    40123: 'Nâng cấp người dùng thất bại!',
+    40126: 'Mua hồ sơ ứng viên thất bại!',
+    40127: 'Hồ sơ này đã được mua, không thể mua thêm!',
+    40128: 'Hồ sơ này không thuộc bài viết này!',
+    40129: 'Bạn cần mua CV này trước khi xem!',
+    /* 40130 -> 40139 posts-2 */
+    40130: 'Bài viết đang cấp báo, chỉ có thể cập nhật bài viết cho đến khi trạng thái này hết hạn!',
+    40131: 'Duyệt bài viết thất bại!',
+    40132: 'Nộp đơn thất bại',
+    40133: 'Bạn đã nộp đơn cho công việc này, không thể nộp thêm',
+    40134: 'Tài khoản của bạn đã bị khóa, vui lòng liên hệ với Admin',
+    40135: 'Tài khoản của người tạo bài viết này không đủ để gia hạn',
+    40136: 'Gia hạn bài viết thất bại',
+    40137: 'Ẩn bài viết thất bại',
+    40138: 'Nộp đơn phải có CV, vui lòng tải lên CV hoặc sử dụng CV hiện có của bạn',
+    40139: 'Bạn không có CV sẵn có, vui lòng tải lên mới!',
+
+    /* 40140 -> 40149 users-2 */
+    40140: 'CV này đã hết hạn, bạn cần thanh toán lại',
+    40141: 'Thay đổi mật khẩu thất bại!',
+    40142: 'Khóa người dùng thất bại!',
+    40143: 'Mật khẩu hiện tại không khớp!',
+    40144: 'Mở khóa người dùng thất bại!',
+    40145: 'File phải được yêu cầu!',
+    40146: 'Tải lên CV thất bại',
+    40147: 'Phải mua gói VIP để mua ứng viên VIP',
+
+    /* 40150 -> 40180 config */
+    40150: 'Cập nhật cài đặt config thất bại',
+    40151: 'Không thể cập nhật cài đặt này',
+    40152: 'Không tìm thấy cài đặt này',
+    40153: 'Không thể cập nhật gói dưới hoặc bằng',
+    40154: 'Bạn đã sử dụng hết bài viết miễn phí trong gói VIP này',
+    40155: 'Bạn đã sử dụng hết bài viết miễn phí mỗi ngày',
+    40156: 'Bạn đã sử dụng hết hồ sơ miễn phí mỗi ngày',
+    40157: 'Gói VIP không được tìm thấy, vì vậy bạn không thể sử dụng tùy chọn VIP',
+    /* 40181 -> 40210 advertisement */
+    40181: 'Tạo quảng cáo mới thất bại',
+    40182: 'Không thể tạo quảng cáo có vị trí đã tồn tại',
+    40183: 'Yêu cầu có hình ảnh',
+    40184: 'Vị trí và cài đặt không khớp',
+    40185: 'Xóa quảng cáo thất bại!',
+    40186: 'Cập nhật quảng cáo thất bại!',
+    /* 40211 -> 40230 news */
+    40211: "Tạo tin tức thất bại",
+    40212: "Xóa tin tức thất bại",
+    40213: "Cập nhật tin tức thất bại",
+    40214: "Tin tức này không tồn tại",
+    /* 40231 -> 40270 notifications */
+    40231: "Danh sách thông báo thất bại!",
+    40232: "Đọc thông báo thất bại!",
+    40233: "Đọc tất cả thông báo thất bại!",
+    40234: "Tạo thông báo thất bại!",
+    40234: "Không tìm thấy thông báo này!",
+    40235: "Không thể đếm thông báo không tìm thấy!",
+    /* 40271 -> 40300 template CV */
+    40271: "Yêu cầu có tệp tin",
+    40272: "Tải lên CV thất bại!",
+    40273: "Xóa CV thất bại!",
+    40274: "CV không được tìm thấy",
+    /* 40301 -> 40330 internal post */
+    40301: "Tạo bài viết nội bộ thất bại",
+    40302: "Cập nhật bài viết nội bộ thất bại",
+    /* 40331 -> 40350 upgrade candidate */
+    40331: "Nâng cấp ứng viên thất bại",
+    /* 40351 -> 40370 external user */
+    40351: "Tạo ứng viên ngoài sàn thất bại",
+    40352: "Cập nhật ứng viên ngoài sàn vi thất bại",
+    40353: "Xóa ứng viên ngoài sàn thất bại",
+    /* 40370 -> 40400 countries + cities */
+    40370: "Tạo chương trình thất bại",
+    40371: "Cập nhật chương trình thất bại",
+    40372: "Tên chương trình đã tồn tại, hãy chọn tên khác",
+    40373: "Xóa chương trình thất bại",
+}

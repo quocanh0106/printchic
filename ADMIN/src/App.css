@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.ck-content {
+  padding-left: 25px !important;
+  color: rgb(9, 44, 76);
+}
+
+body {
+  background-color: white;
+  color: rgba(9, 44, 76, 1);
+}

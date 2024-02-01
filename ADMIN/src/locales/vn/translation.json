@@ -1,0 +1,11 @@
+{
+  "login": {
+    "title": "Đăng nhập",
+    "labelEmail": "Tài khoản hoặc Email",
+    "labelPassword": "Mật khẩu",
+    "labelEmailPlh": "Nhập tài khoản hoặc Email",
+    "labelPasswordPlh": "Nhập mật khẩu",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Quên mật khẩu?"
+  }
+}

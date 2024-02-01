@@ -1,0 +1,11 @@
+{
+  "login": {
+    "title": "Login",
+    "labelEmail": "Username or Email",
+    "labelPassword": "Password",
+    "labelEmailPlh": "Enter you username or email",
+    "labelPasswordPlh": "Enter you password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot Password?"
+  }
+}

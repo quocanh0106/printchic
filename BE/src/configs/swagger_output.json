@@ -1,0 +1,774 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "XKLD API",
+    "description": "Document api",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/auth",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "x-access-token",
+      "description": "token"
+    }
+  },
+  "paths": {
+    "/posts/create": {
+      "post": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Tạo mới bài đăng",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "example": "any"
+                },
+                "createdBy": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/list": {
+      "get": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Danh sách bài đăng",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/listByUser": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng",
+          "Done"
+        ],
+        "summary": "Danh sách bài đăng theo user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userObjId",
+            "in": "query",
+            "description": "id của user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/update": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Update bài đăng",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/info": {
+      "get": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Chi tiết bài đăng",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/upgradeHot": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Mua bài hot",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postObjId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/upgradeUrgent": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Mua bài gấp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postObjId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/delete": {
+      "delete": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Xóa bài đăng",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/approve": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng",
+          "Done"
+        ],
+        "summary": "Phê duyệt bài đăng",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postObjId",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postObjId": {
+                  "example": "any"
+                }
+              }
+            },
+            "description": "id của posts",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/apply": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Ứng tuyển bài đăng",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "postObjId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/purchaseProfile": {
+      "put": {
+        "tags": [
+          "Công việc/ bài đăng"
+        ],
+        "summary": "Mua thông tin ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "candidateObjId",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "candidateObjId": {
+                  "example": "any"
+                },
+                "postObjId": {
+                  "example": "any"
+                }
+              }
+            },
+            "description": "id của ứng viên",
+            "required": true
+          },
+          {
+            "name": "postObjId",
+            "in": "body",
+            "description": "id của bài đăng",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/list": {
+      "get": {
+        "tags": [
+          "User",
+          "Done"
+        ],
+        "summary": "Danh nhà tuyển dụng / ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Loại user. CANDIDATE: ứng viên | HR: nhà tuyển dụng",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "search theo tên, điện thoại, email, fb, zalo",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/info": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Chi tiết nhà tuyển dụng / ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userObjId",
+            "in": "query",
+            "description": "id của user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/update": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Cập nhật nhà tuyển dụng / ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "avatar": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/chargeMoney": {
+      "put": {
+        "tags": [
+          "User",
+          "Done"
+        ],
+        "summary": "Nạp tiền cho nhà tuyển dụng / ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userObjId",
+            "in": "query",
+            "description": "id của user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "chargingMoney",
+            "in": "query",
+            "description": "Số tiền cần nạp",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userObjId": {
+                  "example": "any"
+                },
+                "chargingMoney": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/upgradeUser": {
+      "put": {
+        "tags": [
+          "User",
+          "Done"
+        ],
+        "summary": "Tích xanh cho nhà tuyển dụng / ứng viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userObjId",
+            "in": "query",
+            "description": "id của user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userObjId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/charging-histories/listByUser": {
+      "get": {
+        "tags": [
+          "Lịch sử nạp tiền"
+        ],
+        "summary": "Lịch sử nạp tiền của user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userObjId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/verifyRegister": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send otp register",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "phoneNumber": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/validRegister": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Validate otp register",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "verifyCode": {
+                  "example": "any"
+                },
+                "verifyObjId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Đăng ký",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phoneNumber": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Đăng nhập",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/forgot": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send otp forgot",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/verifyCode": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/resetPassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset password",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "confirmPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

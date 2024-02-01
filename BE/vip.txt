@@ -1,0 +1,30 @@
+1. model vip config
+- price
+- level
+- detail: {
+-  freeProfiles: // mo mien phi profile
+-  freePosts: // dang free post
+- expired: 356 days
+- priceForHighEmploy: 100k
+- priceForNormalPost:  
+}
+2. model trackBusiness {
+  - vipObjId
+  - userObjId
+}
+gắn trackingBusiness vào posts + chargingProfiles
+expired clear trackBusiness, update user
+
+3. user gắn thêm vip
+4.rule 
+- cant purchase more vip level lower
+
+5.posts
+- free, normal, 150 (vip3), 300(vip2), 500(vip1)
+- statusPost: detail || configCode
+- nếu tạo post từ gói vip -> lấy statusPost = configCode 
+
+6.check validate create post
+2 case
+vip -> check da dung het luot chua
+free -> het so luot free moi ngay chua
