@@ -3,6 +3,12 @@ export const url = {
 }
 
 export const Endpoint = {
+
+
+
+
+
+  // source old
   // admin
   LOGIN_ADMIN: 'login',
   LIST_DATA: 'auth/users/list',

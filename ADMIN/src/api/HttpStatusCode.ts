@@ -15,6 +15,7 @@ export default class StatusCode {
 
   static UNKNOWN_ERROR = 700
 
+  // source old
   static WRONG_EMAIL_OR_USER_NAME = 40100
   static WRONG_OTP = 40104
 }

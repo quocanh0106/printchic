@@ -44,7 +44,7 @@ function Login() {
   }
   return (
     <S.Container>
-      <img width={'450px'} src={logo} alt='#' />
+      <img width={'450px'} src={logo} alt='#'/>
       <S.GroupFormInput>
         <FlexBoxColumn>
           <CustomText type={TEXT_TYPE.primary_24_700} customStyle={{ margin: '15px 0 5px 0' }}>

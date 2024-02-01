@@ -1,0 +1,11 @@
+{
+  "login": {
+    "title": "ログイン",
+    "labelEmail": "ユーザー名または電子メール",
+    "labelPassword": "パスワード",
+    "labelEmailPlh": "ユーザー名またはメールアドレスを入力してください",
+    "labelPasswordPlh": "パスワードを入力してください",
+    "rememberMe": "私を覚えてますか",
+    "forgotPassword": "パスワードをお忘れですか？"
+  }
+}
