@@ -2,13 +2,11 @@
 const usersController = require('../../controllers/UsersController').DEFAULT;
 const queryString = require('query-string');
 const axios = require('axios');
-const { pushNotificationToClient } = require('../../sockets/utils');
 
 function loginRoute(apiRouter) {
     // Get otp regis
     apiRouter.route('/verifyRegister').post(usersController.verifyRegis);
     apiRouter.route('/test').get(async (req, res) => {
-        pushNotificationToClient()
     });
     // verify otp regis
     apiRouter.route('/validRegister').post(usersController.validRegis);
