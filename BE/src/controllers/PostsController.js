@@ -26,7 +26,6 @@ const { createValidator, updateValidator, postObjIdValidator, applyValidator,
     upgradePostValidator, purchaseProfileValidator, approveValidator,
     createInternalValidator,
     updateInternalValidator } = require('../validators/PostsValidator');
-const { sendNotification } = require('../sockets/utils');
 
 const beforeUpload = (req, res, next) => {
     upload(req, res, (err) => {
@@ -371,7 +370,6 @@ module.exports.AUTH = {
                     entity: findPost,
                     isApprove,
                 }
-                await sendNotification(notifyParams);
                 return res.json(responseSuccess(statusCode, result));
             }
 
@@ -648,7 +646,6 @@ module.exports.AUTH = {
                         relatedType: FOR_ENTITY_TYPE[200],
                         entity: findPost,
                     }
-                    await sendNotification(notifyParams);
                     return res.json(responseSuccess(10217, rs));
                 }
                 return res.json(responseError(40132, []));

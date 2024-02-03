@@ -6,7 +6,6 @@ const express = require('express');
 const path = require('path');
 // const {config} = require('./configs/configEnvSchema');
 const { LANGUAGES } = require('./utils/constants');
-const socketIo = require('socket.io');
 global.language = global?.language || 'vi';
 const middleware = (req, res, next) => {
     const language = req.headers['x-language'] || global?.language || 'vi';
@@ -23,7 +22,6 @@ const app = express();
 app.use(middleware);
 
 const http = require('http');
-const initSocketIo = require('./sockets');
 /**
  * Create HTTP server.
  */
@@ -57,29 +55,9 @@ const corsOptions = {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
-const io = socketIo(server, {
-    cors:{
-        methods: ['OPTIONS', 'GET', 'PUT', 'POST', 'DELETE'],
-        allowedHeaders: [
-            'Origin',
-            'Content-Type',
-            'Accept',
-            'x-access-token',
-            'x-auth-token',
-            'x-xsrf-token',
-            'authorization',
-            'Access-Control-Allow-Origin',
-        ],
-        origin: "*",
-        credentials:true,
-        optionsSuccessStatus: 200,
-        secureProtocol: 'TLSv1_method',
-     }
-  });
 app.get("/", async (request, response) => {
     response.send("Ok!")
 });
-initSocketIo(io);
 
 app.use(express.static(path.join(__dirname, 'public')));
 require('./configs/database');
