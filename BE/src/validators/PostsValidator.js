@@ -6,7 +6,6 @@ const { GENDER_FOR_WORK } = require('../utils/constants');
 
 const createValidator = [
     check('title').notEmpty().withMessage('title must be required'),
-    validateObjectId('countryObjId'),
     validateObjectId('configObjId', true),
     validateObjectId('provinceObjId'),
     // check('companyObjId').notEmpty().withMessage('companyObjId must be required'),

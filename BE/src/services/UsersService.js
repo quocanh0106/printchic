@@ -11,9 +11,7 @@ const create = async (data) => {
         const set = {};
         set.password = data.password;
         set.email = data.email;
-        set.phoneNumber = data.phoneNumber;
-        set.type = data.type;
-        set.fullName = trimValue(data.fullName);
+        set.name = trimValue(data.name);
         set.isDeleted = IS_DELETED[200];
         set.createdAt = generatorTime();
         const result = await UsersModels.create(set);
@@ -41,58 +39,23 @@ const updateExpiresDate = async (data) => {
 };
 const findByConditions = async (data) => {
     try {
-        const { startMonth, endMonth, startPrevMonth, endPrevMonth } = data;
         const conditions = {
             isDeleted: IS_DELETED[200],
-
         };
         if (data?.email) {
             conditions.$or = [
-                { username: data.email },
+                { name: data.email },
                 { email: data.email },
             ]
-            if (data.isRegister) {
-                conditions.$or.push({
-                    phoneNumber: data.phoneNumber,
-                })
-            }
-        }
-        if (data?.type) {
-            conditions.type = data.type;
-        }
-        if (data?.status) {
-            conditions.status = data.status;
         }
         if (data?.userObjId) {
             conditions._id = data.userObjId;
         }
-        if (data?.statusUsers) {
-            conditions.statusUser = { $in: data.statusUsers };
-        }
-        if (startMonth && endMonth) {
-            conditions.createdAt = { $gte: startMonth, $lte: endMonth };
-        }
-        if (startPrevMonth && endPrevMonth) {
-            conditions.createdAt = { $gte: startPrevMonth, $lte: endPrevMonth };
-        }
-        if (data.isVipUser) {
-            conditions.trackingBusinessObjId = { $ne: null };
-        }
-        const populate = [
-            populateModel('countryObjId'),
-            populateModel('cityObjId'),
-            {
-                ...populateModel('trackingBusinessObjId'),
-                populate: [
-                    populateModel('vipObjId'),
-                ]
-            }
-        ]
         if (data?.getAll) {
-            const result = await UsersModels.find(conditions).populate(populate).lean();
+            const result = await UsersModels.find(conditions).lean();
             return promiseResolve(result);
         }
-        const result = await UsersModels.findOne(conditions).populate(populate).lean();
+        const result = await UsersModels.findOne(conditions).lean();
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -227,26 +190,6 @@ const chargeMoney = async (data) => {
         set.updatedBy = convertToObjectId(data?.updatedBy);
         set.updatedAt = generatorTime();
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true }).lean();
-        return promiseResolve(result);
-    } catch (err) {
-        console.log(err, 'err')
-        return promiseReject(err);
-    }
-};
-const updateStatusUser = async (data) => {
-    try {
-        const conditions = {
-            _id: convertToObjectId(data.userObjId),
-            isDeleted: IS_DELETED[200],
-        };
-        const set = {
-            statusUser: data.statusUser,
-            expireTruth: data?.expireTruth || '',
-        };
-        if (!isEmpty(data.trackingBusinessObjId) || data.trackingBusinessObjId === null) {
-            set.trackingBusinessObjId = data.trackingBusinessObjId;
-        }
-        const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -530,7 +473,6 @@ module.exports = {
     updateExpiresDate,
     updateConditions,
     chargeMoney,
-    updateStatusUser,
     list,
     updateStatus,
     createInternal,
