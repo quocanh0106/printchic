@@ -56,7 +56,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.get("/", async (request, response) => {
-    response.send("Ok!")
+    response.send("printchic!")
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
