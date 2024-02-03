@@ -45,7 +45,7 @@ const normalizePort = (val) => {
     return false;
 };
 
-const port = normalizePort(process.env.PORT || '7000');
+const port = normalizePort(process.env.PORT || '8000');
 
 server.listen(port, () => {
     console.log(`App is listening at ${port}`);
@@ -64,7 +64,6 @@ require('./configs/database');
 require('./configs/configInit')(app);
 require('./configs/configSwagger')(app);
 require('./configs/configRoutes')(app);
-require('./configs/configCronJob');
 
 
 module.exports = app;

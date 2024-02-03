@@ -1,13 +1,5 @@
 require('dotenv').config()
 const UsersService = require('../services/UsersService');
-const VerifiesService = require('../services/VerifiesService');
-const ChargingHistoriesService = require('../services/ChargingHistoriesService');
-const ChargingProfilesService = require('../services/ChargingProfilesService');
-const AttachmentsService = require('../services/AttachmentsService');
-const AttachmentEntitiesService = require('../services/AttachmentEntitiesService');
-const ConfigsService = require('../services/ConfigsService');
-const TrackingBusinessesService = require('../services/TrackingBusinessesService');
-const PostsService = require('../services/PostsService');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const configJwt = require('../configs/configJWT');
@@ -38,10 +30,8 @@ const { registerValidator, loginValidator, verifyValidator, forgotValidator, res
 const checkValid = async (data) => {
     try {
         const email = data.email;
-        const phoneNumber = data.phoneNumber;
         const findUser = await UsersService.findByConditions({
             email,
-            phoneNumber,
             isRegister: true
         });
         if (!isEmpty(findUser)) return 40107;
@@ -99,36 +89,28 @@ module.exports.DEFAULT = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40003, errors));
             }
-            const { password, email, phoneNumber, type, fullName } = req.body;
+            const { password, email, name } = req.body;
             const resultCheck = await checkValid({
                 email,
-                phoneNumber,
                 isRegister: true,
             })
             if (!isEmpty(resultCheck)) return res.json(responseError(resultCheck));
             const hashedPassword = await bcrypt.hash(password, 10);
             const result = await UsersService.create({
                 email,
-                phoneNumber,
                 password: hashedPassword,
-                type,
-                fullName,
+                name,
             })
             const accessToken = jwt.sign({
                 email: email,
-                phoneNumber: phoneNumber,
                 userObjId: result._id,
-                type: result?.type,
             },
                 configJwt.secret,
                 // {expiresIn: configJwt.expires}
             )
             const decoded = jwt.verify(accessToken, configJwt.secret);
-            // const expiresDate = moment(decoded.exp * 1000).format('YYYY-MM-DD HH:mm:ss');
             const paramsExpires = {};
             paramsExpires.userObjId = result._id;
-            // paramsExpires.expiresDate = expiresDate;
-            // await UsersService.updateExpiresDate(paramsExpires);
             delete result._doc.password;
             return res.json({
                 success: true,
@@ -162,13 +144,11 @@ module.exports.DEFAULT = {
             // clear verify code
             await UsersService.updateConditions({
                 email,
-                verifyCode: "",
             })
             // Return token
             const accessToken = jwt.sign({
                 email: user.email,
-                userObjId: user._id,
-                type: user.type,
+                userObjId: user._id
             },
                 configJwt.secret,
                 // {expiresIn: configJwt.expires}
@@ -190,134 +170,6 @@ module.exports.DEFAULT = {
         } catch (err) {
             console.log(err, 'err')
             return res.json(err);
-        }
-    },
-    forgot: async (req, res) => {
-        // #swagger.tags = ['Auth'] 
-        // #swagger.summary = 'Send otp forgot'
-        try {
-            const errors = await validateResult(forgotValidator, req);
-            if (!isEmpty(errors)) {
-                return res.json(responseError(40003, errors));
-            }
-            const { email } = req.body;
-            const findUser = await UsersService.findByConditions({
-                email,
-            })
-            if (isEmpty(findUser)) return res.json(responseError(40100));
-            // if (findUser?.email !== email) return res.json(responseError(40101));
-            const verifyCode = generateRandomString();
-            const result = await UsersService.updateConditions({
-                email,
-                verifyCode
-            })
-            if (!isEmpty(result)) {
-                delete result.verifyCode;
-                const content = `Your verify code: ${verifyCode}`;
-                await sendMail(findUser?.email, 'QR_SYSTEM', content);
-                return res.json(responseSuccess(10200, result));
-            }
-            return res.json(responseError(40102));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-    verify: async (req, res) => {
-        // #swagger.tags = ['Auth'] 
-        // #swagger.summary = 'Validate otp forgot'
-        try {
-            const errors = await validateResult(verifyValidator, req);
-            if (!isEmpty(errors)) {
-                return res.json(responseError(40003, errors));
-            }
-            const { verifyCode, email } = req.body;
-            const findUser = await UsersService.findByConditions({
-                email,
-            })
-            if (isEmpty(findUser)) return res.json(responseError(40100));
-            if (findUser?.verifyCode !== verifyCode) return res.json(responseError(40104));
-            return res.json(responseSuccess(10202));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-    resetPassword: async (req, res) => {
-        // #swagger.tags = ['Auth'] 
-        // #swagger.summary = 'Reset password'
-        try {
-            const errors = await validateResult(resetPWValidator, req);
-            if (!isEmpty(errors)) {
-                return res.json(responseError(40003, errors));
-            }
-            const { email, password, confirmPassword } = req.body;
-            const findUser = await UsersService.findByConditions({
-                email,
-            })
-            if (isEmpty(findUser)) return res.json(responseError(40100));
-            if (password !== confirmPassword) return res.json(responseError(40103));
-            // if (findUser?.verifyCode !== verifyCode) return res.json(responseError(40104));
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const result = await UsersService.updateConditions({
-                email,
-                password: hashedPassword
-            })
-            if (!isEmpty(result)) {
-                return res.json(responseSuccess(10201, result));
-            }
-            return res.json(responseError(40105));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-    verifyRegis: async (req, res) => {
-        try {
-            // #swagger.tags = ['Auth'] 
-            // #swagger.summary = 'Send otp register'
-            // const errors = await validateResult(registerValidator, req);
-            // if (!isEmpty(errors)) {
-            //     return res.json(responseError(40003, errors));
-            // }
-            const { email, phoneNumber } = req.body;
-            const resultCheck = await checkValid({
-                email,
-                phoneNumber,
-            })
-            if (!isEmpty(resultCheck)) return res.json(responseError(resultCheck));
-            const verifyCode = generateRandomString();
-            const result = await VerifiesService.create({
-                verifyCode
-            })
-            if (!isEmpty(result)) {
-                const content = `Your verify code: ${verifyCode}`;
-                await sendMail(email, 'XKLD_SYSTEM', content);
-                delete result.verifyCode;
-
-                return res.json(responseSuccess(10200, {
-                    _id: result?._id,
-                }));
-            }
-            return res.json(responseError(40102));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-    validRegis: async (req, res) => {
-        // #swagger.tags = ['Auth'] 
-        // #swagger.summary = 'Validate otp register'
-        try {
-            const { verifyCode, verifyObjId } = req.body;
-            const findVerify = await VerifiesService.findByConditions({
-                verifyObjId,
-            })
-            if (findVerify?.verifyCode !== verifyCode) return res.json(responseError(40108));
-            return res.json(responseSuccess(10202));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
         }
     },
 
