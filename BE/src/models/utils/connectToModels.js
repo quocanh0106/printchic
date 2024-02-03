@@ -4,7 +4,7 @@ const { connectDatabase } = require('../../utils/shared');
 
 const UsersSchema = require('../Users');
 const SettingModels = require('../Setting');
-const ProductsModels = require('../products');
+const ProductsModels = require('../Products');
 const BlogsModels = require('../Blogs');
 const CategoryBlogsModels = require('../CategoryBlog');
 const CategoryProductModels = require('../CategoryProduct');
