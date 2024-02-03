@@ -6,9 +6,7 @@ const { GENDER_FOR_WORK } = require('../utils/constants');
 const registerValidator = [
     check('email').notEmpty().withMessage('Email không được để trống')
         .isEmail().withMessage('Email không đúng định dạng!'),
-    check('phoneNumber').notEmpty().withMessage('Số điện thoại không được để trống'),
-    check('type').notEmpty().withMessage('type must be required'),
-    check('fullName').notEmpty().withMessage('Bạn phải điền đầy đủ tên của bạn'),
+    check('name').notEmpty().withMessage('Bạn phải điền đầy đủ tên của bạn'),
 ];
 const loginValidator = [
     check('email').notEmpty().withMessage('email must be required'),

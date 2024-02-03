@@ -3,41 +3,25 @@
 const { connectDatabase } = require('../../utils/shared');
 
 const UsersSchema = require('../Users');
-const VerifiesSchema = require('../Verifies');
-const PostsSchema = require('../Posts');
-const ChargingHistoriesSchema = require('../ChargingHistories');
-const UserPostsSchema = require('../UserPosts');
-const ChargingProfilesSchema = require('../ChargingProfiles');
-const AttachmentsSchema = require('../Attachments');
-const AttachmentEntitiesSchema = require('../AttachmentEntities');
-const NewsSchema = require('../News');
-const ConfigsSchema = require('../Configs');
-const AdvertisementsSchema = require('../Advertisements');
-const CountriesSchema = require('../Countries');
-const CitiesSchema = require('../Cities');
-const TrackingBusinessesSchema = require('../TrackingBusinesses');
-const NotificationsSchema = require('../Notifications');
-const XKLDCompaniesSchema = require('../XKLDCompanies');
+const SettingModels = require('../Setting');
+const ProductsModels = require('../products');
+const BlogsModels = require('../Blogs');
+const CategoryBlogsModels = require('../CategoryBlog');
+const CategoryProductModels = require('../CategoryProduct');
+const FaqsModels = require('../Faqs');
+const LanguagesModels = require('../Languages');
 
 const models = {};
 
 module.exports = {
     users: UsersSchema,
-    verifies: VerifiesSchema,
-    posts: PostsSchema,
-    charging_histories: ChargingHistoriesSchema,
-    user_posts: UserPostsSchema,
-    charging_profiles: ChargingProfilesSchema,
-    attachments: AttachmentsSchema,
-    attachment_entities: AttachmentEntitiesSchema,
-    news: NewsSchema,
-    configs: ConfigsSchema,
-    advertisements: AdvertisementsSchema,
-    countries: CountriesSchema,
-    cities: CitiesSchema,
-    tracking_businesses: TrackingBusinessesSchema,
-    notifications: NotificationsSchema,
-    xkldCompanies: XKLDCompaniesSchema,
+    settings: SettingModels,
+    products: ProductsModels,
+    blogs: BlogsModels,
+    category_blog: CategoryBlogsModels,
+    category_product: CategoryProductModels,
+    faqs: FaqsModels,
+    languages: LanguagesModels,
     connectToModels: ({ databaseName, currentModels = [], otherModels = [] }) => {
         const conn = connectDatabase(databaseName);
         otherModels.map((model) => {
