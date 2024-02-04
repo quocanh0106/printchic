@@ -12,5 +12,11 @@ export default defineNuxtConfig({
   ],
   i18n: {
     vueI18n: './configs/i18n.config.ts' // if you are using custom path, default 
-  }
+  },
+  components: {
+    global: true,
+    dirs: [
+      './components', // Add your components directory here
+    ],
+  },
 })
