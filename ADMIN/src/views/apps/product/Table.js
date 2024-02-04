@@ -2,16 +2,13 @@
 import { useEffect, useCallback, useState } from 'react'
 
 // ** Next Import
-import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@mui/x-data-grid'
-import Tooltip from '@mui/material/Tooltip'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -20,17 +17,15 @@ import Icon from 'src/@core/components/icon'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Utils Import
-import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
-import TableHeader from 'src/views/apps/productCategory/TableHeader'
+import TableHeader from 'src/views/apps/product/TableHeader'
 import OptionsMenu from 'src/@core/components/option-menu'
 
 // ** Vars

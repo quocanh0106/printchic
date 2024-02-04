@@ -9,7 +9,7 @@ import PageHeader from 'src/@core/components/page-header'
 import Table from 'src/views/apps/productCategory/Table'
 import RoleCards from 'src/views/apps/roles/RoleCards'
 
-const RolesComponent = () => {
+const ProductCategory = () => {
   return (
     <Grid container spacing={6}>
       <PageHeader
@@ -26,4 +26,4 @@ const RolesComponent = () => {
   )
 }
 
-export default RolesComponent
+export default ProductCategory
