@@ -6,6 +6,11 @@ bode {
   --base-font-family:'Manrope';
 }
 
+// css apply for all page
+.page-container{
+}
+
+// For Button Css
 .primary-btn{
   background-color: #3372DB;
   padding: 12px 24px 12px 24px;
@@ -14,6 +19,17 @@ bode {
   min-width: 135px;
 }
 
-.txt-white{
-  color: white;
+.secondary-btn{
+  background-color: white;
+  border: 1px solid #3372DB;
+  padding: 12px 24px 12px 24px;
+  border-radius: 3px;
+  height: 46px;
+  min-width: 135px;
+}
+
+// for custom text
+
+.txt-primary{
+  color: #3372DB;
 }

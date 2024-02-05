@@ -1,4 +1,19 @@
 {
   "welcome": "hello eng",
-  "ContactUs": "Contact Us"
+  "ContactUs": "Contact Us",
+  "viewAll": "View All",
+  "homePage": {
+    "introductionTitle" : "Global Print-on-Demand Service",
+    "introductionDes-1" : "We are the leading provider of reliable and trustworthy Print-on-Demand Dropshipping Fulfillment Services. We offer a suite of powerful features that help you grow your businesses and reach new customers worldwide.",
+    "introductionDes-2" : "Access a catalog of over 350 products.",
+    "introductionDes-3" : "Enjoy competitive and flexible product pricing with no hidden fees.",
+    "introductionDes-4" : "Manage your orders easily, track the production status, and get notified when your products are shipped.",
+    "topCategory" : "Top Categories",
+    "onDemandFullFilementService" : "PrintChic Print on Demand Fulfillment Service",
+    "onDemandFullFilementServiceDes1" : "We’re the experts in print-on-demand solutions,",
+    "onDemandFullFilementServiceDes2" : "trusted to deliver by merchants worldwide!"
+  },
+  "button" :{
+    "tryForNow" : "Try for Now"
+  }
 }
