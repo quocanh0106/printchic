@@ -13,7 +13,7 @@ const ProductComponent = () => {
     <Grid container spacing={6}>
     <PageHeader
       title={
-        <Typography variant='h4' sx={{ mb: 6 }}>
+        <Typography variant='h4'>
           Product Category
         </Typography>
       }

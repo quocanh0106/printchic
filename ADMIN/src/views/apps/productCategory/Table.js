@@ -1,17 +1,14 @@
 // ** React Imports
-import { useEffect, useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 // ** Next Import
-import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@mui/x-data-grid'
-import Tooltip from '@mui/material/Tooltip'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -20,18 +17,19 @@ import Icon from 'src/@core/components/icon'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ** Custom Components Imports
-import CustomChip from 'src/@core/components/mui/chip'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Utils Import
-import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
-import TableHeader from 'src/views/apps/productCategory/TableHeader'
 import OptionsMenu from 'src/@core/components/option-menu'
+import TableHeader from 'src/views/apps/productCategory/TableHeader'
+
+// ** Components Imports
+import AddDialogProduct from './AddDialogProduct'
 
 // ** Vars
 const userRoleObj = {
@@ -74,12 +72,12 @@ const columns = [
           <CustomAvatar
             skin='light'
             sx={{ mr: 4, width: 30, height: 30 }}
-            color={userRoleObj[row.role].color || 'primary'}
+            color={userRoleObj[row.category].color || 'primary'}
           >
-            <Icon icon={userRoleObj[row.role].icon} />
+            <Icon icon={userRoleObj[row.category].icon} />
           </CustomAvatar>
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.role}
+            {row.category}
           </Typography>
         </Box>
       )
@@ -93,7 +91,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-          {row.currentPlan}
+          {row.description}
         </Typography>
       )
     }
@@ -101,12 +99,12 @@ const columns = [
   {
     flex: 0.25,
     minWidth: 190,
-    field: 'parent+category',
+    field: 'parentCategory',
     headerName: 'Parent Category',
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{ color: 'text.secondary' }}>
-          {row.billing}
+          {row.parentCategory}
         </Typography>
       )
     }
@@ -143,11 +141,11 @@ const UserList = () => {
   const [plan, setPlan] = useState('')
   const [value, setValue] = useState('')
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
+  const [createDialog, setOpenCreateDialog] = useState(false)
 
   // ** Hooks
   const dispatch = useDispatch()
   const store = useSelector(state => state.user)
-  console.log(store, 'store')
   useEffect(() => {
     dispatch(
       fetchData({
@@ -171,7 +169,7 @@ const UserList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} />
+          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange}  setVisible={setOpenCreateDialog}/>
           <DataGrid
             autoHeight
             rowHeight={62}
@@ -184,6 +182,7 @@ const UserList = () => {
           />
         </Card>
       </Grid>
+      <AddDialogProduct visible={createDialog} setVisible={setOpenCreateDialog} />
     </Grid>
   )
 }

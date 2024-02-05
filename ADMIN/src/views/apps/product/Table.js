@@ -69,12 +69,12 @@ const columns = [
           <CustomAvatar
             skin='light'
             sx={{ mr: 4, width: 30, height: 30 }}
-            color={userRoleObj[row.role].color || 'primary'}
+            color={userRoleObj[row.category].color || 'primary'}
           >
-            <Icon icon={userRoleObj[row.role].icon} />
+            <Icon icon={userRoleObj[row.category].icon} />
           </CustomAvatar>
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.role}
+            {row.category}
           </Typography>
         </Box>
       )
@@ -88,7 +88,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-          {row.currentPlan}
+          {row.description}
         </Typography>
       )
     }
@@ -96,12 +96,12 @@ const columns = [
   {
     flex: 0.25,
     minWidth: 190,
-    field: 'parent+category',
+    field: 'parentCategory',
     headerName: 'Parent Category',
     renderCell: ({ row }) => {
       return (
         <Typography noWrap sx={{ color: 'text.secondary' }}>
-          {row.billing}
+          {row.parentCategory}
         </Typography>
       )
     }

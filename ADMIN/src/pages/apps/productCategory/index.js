@@ -7,14 +7,13 @@ import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
 import Table from 'src/views/apps/productCategory/Table'
-import RoleCards from 'src/views/apps/roles/RoleCards'
 
 const ProductCategory = () => {
   return (
     <Grid container spacing={6}>
       <PageHeader
         title={
-          <Typography variant='h4' sx={{ mb: 6 }}>
+          <Typography variant='h4'>
             Product Category
           </Typography>
         }
