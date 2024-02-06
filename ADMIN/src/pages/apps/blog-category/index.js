@@ -6,15 +6,15 @@ import Typography from '@mui/material/Typography'
 import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
-import Table from 'src/views/apps/productCategory/Table'
+import Table from 'src/views/apps/blogCategory/Table'
 
-const ProductCategory = () => {
+const BlogCategoryComponent = () => {
   return (
     <Grid container spacing={6}>
       <PageHeader
         title={
           <Typography variant='h4'>
-            Product Category
+            Blog Category
           </Typography>
         }
       />
@@ -25,4 +25,4 @@ const ProductCategory = () => {
   )
 }
 
-export default ProductCategory
+export default BlogCategoryComponent

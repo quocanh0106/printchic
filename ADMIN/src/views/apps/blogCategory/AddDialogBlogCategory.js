@@ -17,10 +17,8 @@ import { styled } from '@mui/material/styles'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Third Party Imports
-import Payment from 'payment'
 
 // ** Util Import
-import { formatCVC, formatCreditCardNumber, formatExpirationDate } from 'src/@core/utils/format'
 
 // ** Styled Component Imports
 
@@ -29,9 +27,9 @@ import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
 import { MenuItem } from '@mui/material'
+import { useDropzone } from 'react-dropzone'
 import { Controller, useForm } from 'react-hook-form'
 import Icon from 'src/@core/components/icon'
-import { useDropzone } from 'react-dropzone'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -80,15 +78,11 @@ const DialogAddCard = ({ visible, setVisible }) => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    dob: null,
-    email: '',
-    radio: '',
-    select: '',
-    lastName: '',
-    password: '',
-    textarea: '',
-    firstName: '',
-    checkbox: false
+    id: 0,
+    bannerImg: '',
+    title: '',
+    description: '',
+    status: '',
   })
 
   const img = files.map(file => (
@@ -122,7 +116,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
         </CustomCloseButton>
         <Box sx={{ mb: 4, textAlign: 'center' }}>
           <Typography variant='h3' sx={{ mb: 3 }}>
-            Add New Product Category
+            Add New Blog Category
           </Typography>
         </Box>
 
@@ -165,34 +159,6 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     aria-describedby='validation-basic-textarea'
                     {...(errors.textarea && { helperText: 'This field is required' })}
                   />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Controller
-                name='parentCategory'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue=''
-                    label='Country'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.select)}
-                    aria-describedby='validation-basic-select'
-                    {...(errors.select && { helperText: 'This field is required' })}
-                  >
-                    <MenuItem value='UK'>UK</MenuItem>
-                    <MenuItem value='USA'>USA</MenuItem>
-                    <MenuItem value='Australia'>Australia</MenuItem>
-                    <MenuItem value='Germany'>Germany</MenuItem>
-                  </CustomTextField>
                 )}
               />
             </Grid>

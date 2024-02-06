@@ -25,7 +25,7 @@ import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
-import TableHeader from 'src/views/apps/product/TableHeader'
+import TableHeader from 'src/views/apps/blog/TableHeader'
 
 // ** Components Imports
 
@@ -59,7 +59,7 @@ const UserList = () => {
       flex: 0.17,
       minWidth: 50,
       field: 'id',
-      headerName: 'Product ID',
+      headerName: 'Blog ID',
       renderCell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -86,7 +86,7 @@ const UserList = () => {
     {
       flex: 0.3,
       minWidth: 120,
-      headerName: 'Product Name',
+      headerName: 'Blog Name',
       field: 'title',
       renderCell: ({ row }) => {
         return (

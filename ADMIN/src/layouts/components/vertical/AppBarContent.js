@@ -13,6 +13,8 @@ import ShortcutsDropdown from 'src/@core/layouts/components/shared-components/Sh
 
 // ** Hook Import
 import { useAuth } from 'src/hooks/useAuth'
+import { IconButton } from '@mui/material'
+import { Icon } from '@iconify/react'
 
 const AppBarContent = props => {
   // ** Props
