@@ -25,9 +25,11 @@ import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
-import TableHeader from 'src/views/apps/product/TableHeader'
+import TableHeader from 'src/views/apps/blogCategory/TableHeader'
 
 // ** Components Imports
+import AddDialogProduct from './AddDialogBlogCategory'
+import DialogEditCard from './EditDialogBlogCategory'
 
 
 const UserList = () => {
@@ -56,10 +58,10 @@ const UserList = () => {
 
   const columns = [
     {
-      flex: 0.17,
+      flex: 0.05,
       minWidth: 50,
-      field: 'id',
-      headerName: 'Product ID',
+      field: 'Id',
+      headerName: 'No',
       renderCell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -70,14 +72,14 @@ const UserList = () => {
     },
     {
       flex: 0.2,
-      field: 'category',
+      field: 'title',
       minWidth: 170,
       headerName: 'Category',
       renderCell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.category}
+              {row.title}
             </Typography>
           </Box>
         )
@@ -86,25 +88,12 @@ const UserList = () => {
     {
       flex: 0.3,
       minWidth: 120,
-      headerName: 'Product Name',
-      field: 'title',
+      headerName: 'description',
+      field: 'Description',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.title}
-          </Typography>
-        )
-      }
-    },
-    {
-      flex: 0.3,
-      minWidth: 120,
-      headerName: 'Stock',
-      field: 'stock',
-      renderCell: ({ row }) => {
-        return (
-          <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.stock}
+            {row.description}
           </Typography>
         )
       }
@@ -112,25 +101,12 @@ const UserList = () => {
     {
       flex: 0.25,
       minWidth: 190,
-      field: 'createdAt',
-      headerName: 'Create date',
+      field: 'parentCategory',
+      headerName: 'Parent Category',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
             {row.parentCategory}
-          </Typography>
-        )
-      }
-    },
-    {
-      flex: 0.25,
-      minWidth: 190,
-      field: 'status',
-      headerName: 'Status',
-      renderCell: ({ row }) => {
-        return (
-          <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {row.status}
           </Typography>
         )
       }
@@ -159,8 +135,8 @@ const UserList = () => {
                 }
               },
               {
-                text: row.isPublic ? 'Set to Private' : 'Set to Public',
-                icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
+                text: 'Product list',
+                icon: <Icon icon='eos-icons:product-classes' fontSize={20} />
               },
               {
                 text: 'Delete',
@@ -198,6 +174,8 @@ const UserList = () => {
           />
         </Card>
       </Grid>
+      <AddDialogProduct visible={createDialog} setVisible={setOpenCreateDialog} />
+      <DialogEditCard visible={editDialog} setVisible={setOpenEditDialog} rowData={rowData} />
     </Grid>
   )
 }

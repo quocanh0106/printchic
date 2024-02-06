@@ -24,7 +24,7 @@ const navigation = () => {
     {
       title: 'Product Category',
       icon: 'iconamoon:store-light',
-      path: '/apps/productCategory'
+      path: '/apps/product-category'
     },
     {
       title: 'Product',
@@ -34,7 +34,7 @@ const navigation = () => {
     {
       title: 'Blog Category',
       icon: 'ph:book-bookmark-light',
-      path: '/apps/blogCategory'
+      path: '/apps/blog-category'
     },
     {
       title: 'Blog',
@@ -44,7 +44,7 @@ const navigation = () => {
     {
       title: 'Setting',
       icon: 'tabler:settings',
-      path: '/apps/generalSetting'
+      path: '/apps/general-setting'
     },
     // {
     //   sectionTitle: 'Apps & Pages'

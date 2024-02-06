@@ -6,15 +6,23 @@ import Typography from '@mui/material/Typography'
 import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
-import Table from 'src/views/apps/roles/Table'
-import RoleCards from 'src/views/apps/roles/RoleCards'
+import Table from 'src/views/apps/blog/Table'
 
-const RolesComponent = () => {
+const BlogComponent = () => {
   return (
     <Grid container spacing={6}>
-        Blog
+    <PageHeader
+      title={
+        <Typography variant='h4'>
+          Blog
+        </Typography>
+      }
+    />
+    <Grid item xs={12}>
+      <Table />
     </Grid>
+  </Grid>
   )
 }
 
-export default RolesComponent
+export default BlogComponent

@@ -7,6 +7,7 @@ import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
 import Table from 'src/views/apps/product/Table'
+import FormCreate from 'src/views/apps/product/create/FormCreate'
 
 const ProductComponent = () => {
   return (
@@ -19,7 +20,7 @@ const ProductComponent = () => {
       }
     />
     <Grid item xs={12}>
-      <Table />
+      <FormCreate />
     </Grid>
   </Grid>
   )

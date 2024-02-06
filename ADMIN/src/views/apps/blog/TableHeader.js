@@ -12,7 +12,6 @@ import { forwardRef } from 'react'
 import DatePicker from 'react-datepicker'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import Link from 'next/link'
 
 const TableHeader = props => {
   // ** State
@@ -58,9 +57,9 @@ const TableHeader = props => {
                   <CustomTextField
                     fullWidth
                     value={value}
-                    label='Search for Product'
+                    label='Search for Blog'
                     onChange={onChange}
-                    placeholder='Search Product name, ID'
+                    placeholder='Search Blog name, ID'
                     error={Boolean(errors.firstName)}
                     aria-describedby='validation-basic-first-name'
                     {...(errors.firstName && { helperText: 'This field is required' })}
@@ -160,14 +159,9 @@ const TableHeader = props => {
                 >
                   Search
                 </Button>
-                <Box
-                  component={Link}
-                  href='/apps/product/create'
-                >
-                  <Button variant='contained' onClick={() => setVisible(true)}>
-                    Create
-                  </Button>
-                </Box>
+                <Button variant='contained' onClick={() => setVisible(true)}>
+                  Create
+                </Button>
               </div>
             </Grid>
           </Grid>
