@@ -15,7 +15,7 @@ const ProductComponent = () => {
     <PageHeader
       title={
         <Typography variant='h4'>
-          Product
+          Create Product
         </Typography>
       }
     />
