@@ -7,7 +7,7 @@
       </li>
     </ul>
     <div class="nav-bar-action">
-      <b-button class="primary-btn cursor-pointer txt-white">{{ $t("ContactUs") }}</b-button>
+      <b-button class="primary-btn cursor-pointer text-white">{{ $t("ContactUs") }}</b-button>
     </div>
   </div>
 </template>
@@ -38,8 +38,9 @@ defineProps({
   align-items: center;
   padding: 1rem 2rem;
   background-color: white;
-  width: 100vw;
+  width: 100%;
   flex-direction: row;
+  padding: 30px 120px;
 }
 
 .nav-bar a {
