@@ -31,9 +31,16 @@
     "distictBodyTitle4" : "Whole process tracking",
     "distictBodyDescription4" : "Track all your orders from producing to shipping. Get everything under your control.",
     "customerReview" : "Customer reviews",
-    "customerReviewSubtitle" : "We’re the experts in on demand solutions trusted to deliver by merchants worldwide!"
+    "customerReviewSubtitle" : "We’re the experts in on demand solutions trusted to deliver by merchants worldwide!",
+    "ourBlogStory" : "Our Blog Stories",
+    "faqQuestions" : "Frequently asked questions.",
+    "howCanWeHelp" : "How can we help?",
+    "howCanWeHelpDesc" : "In addition to the quality of prints, we also provide unparalleled services. Our team of experienced industry professionals works tirelessly to manage your products. We take pride in what we do and can fulfill your on-demand needs."
   },
   "button" :{
-    "tryForNow" : "Try for Now"
+    "tryForNow" : "Try for Now",
+    "viewAll" :"View All",
+    "getStarted" : "Get Started",
+    "tryForFree" : "Try for free"
   }
 }

@@ -154,6 +154,12 @@
 
        <!-- blog story -->
        <blog class="custom-padding" />
+
+       <!-- Frequently asked question -->
+       <faq class="custom-padding" />
+
+       <!-- help -->
+       <help class="custom-padding" />
      </div>
    </template>
    
@@ -167,11 +173,15 @@
    import carousel from "../../components/carousel.vue";
    import cardInfor from "../../components/cardInfor.vue";
    import blog from "../../components/blog.vue";
+   import faq from "../../components/faq.vue";
+   import help from "../../components/help.vue";
    export default {
      components: {
        carousel,
        cardInfor,
-       blog
+       blog,
+       faq,
+       help
      },
      data() {
        return {
