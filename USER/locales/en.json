@@ -29,7 +29,9 @@
     "distictBodyTitle3" : "Competitive base cost",
     "distictBodyDescription3" : "With in-house manufactory located in Vietnam, we control and optimize product cost very seriously. That’s why our custom product base costs are low.",
     "distictBodyTitle4" : "Whole process tracking",
-    "distictBodyDescription4" : "Track all your orders from producing to shipping. Get everything under your control."
+    "distictBodyDescription4" : "Track all your orders from producing to shipping. Get everything under your control.",
+    "customerReview" : "Customer reviews",
+    "customerReviewSubtitle" : "We’re the experts in on demand solutions trusted to deliver by merchants worldwide!"
   },
   "button" :{
     "tryForNow" : "Try for Now"
