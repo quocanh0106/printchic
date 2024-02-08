@@ -137,9 +137,7 @@
                   </p>
              </div>
            </div>
-           <div class="motive-body-right-wrapper w-1/2">
-               <img :src="distictThumbnails" />
-           </div>
+           <img :src="distictThumbnails" />
          </div>
        </div>
 
