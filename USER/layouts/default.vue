@@ -2,7 +2,7 @@
   <div class="default">
     <navbar />
     <slot />
-    <footerComponent />
+    <footerComponent class="custom-padding"/>
   </div>
 </template>
 

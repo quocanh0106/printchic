@@ -42,5 +42,20 @@
     "viewAll" :"View All",
     "getStarted" : "Get Started",
     "tryForFree" : "Try for free"
+  },
+  "footer" : {
+    "about" : "About",
+    "aboutUs" : "About Us",
+    "contactUs" : "Contact Us",
+    "privacyPolicy" : "Privacy Policy",
+    "returnAndRefund" : "Return and Refund",
+    "productCatalog" :"Product Catalog",
+    "customMerchanise" : "Custom Merchandise",
+    "demoStore" : "Demo Store",
+    "VNCommunity" : "Vietnamese Seller Community",
+    "GlobalCommunity" : "Global Seller Community",
+    "quickAccess" : "Quick Access",
+    "ourBlogPost" : "Our Blog Posts",
+    "termOfService" : "Term Of Service"
   }
 }
