@@ -43,12 +43,13 @@
              <img :src="arrowUpRight" />
            </a>
          </div>
+         <swiperComponent class="mt-12 mb-8" />
        </div>
    
        <!-- Card Infor and Process Explaination -->
-       <div class="home-page-proccess-wrapper w-full mt-40">
+       <div class="home-page-proccess-wrapper w-auto">
          <div
-           class="home-page-proccess flex flex-row justify-between w-full mt-20"
+           class="home-page-proccess flex flex-row justify-between w-auto mt-20"
          >
            <div class="process-intro w-1/2 fullfillment-title">
              <h1 class="font-semibold introduction-title">
@@ -173,20 +174,22 @@
    import blog from "../../components/blog.vue";
    import faq from "../../components/faq.vue";
    import help from "../../components/help.vue";
+   import swiperComponent from "../../components/swiperComponent.vue";
    export default {
      components: {
        carousel,
        cardInfor,
        blog,
        faq,
-       help
+       help,
+       swiperComponent,
      },
      data() {
        return {
          introImage,
          arrowUpRight,
          cardThumbnail,
-         distictThumbnails
+         distictThumbnails,
        };
      },
    };
