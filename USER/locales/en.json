@@ -11,9 +11,51 @@
     "topCategory" : "Top Categories",
     "onDemandFullFilementService" : "PrintChic Print on Demand Fulfillment Service",
     "onDemandFullFilementServiceDes1" : "We’re the experts in print-on-demand solutions,",
-    "onDemandFullFilementServiceDes2" : "trusted to deliver by merchants worldwide!"
+    "onDemandFullFilementServiceDes2" : "trusted to deliver by merchants worldwide!",
+    "cardTitle1" : "Create PrintChic account",
+    "cardDescription1" : "You can start your fulfillment with PrintChic by creating a fulfilment store. Then, connect your integrated selling store with PrintChic.",
+    "cardTitle2" : "Make sales and process orders",
+    "cardDescription2" : "Customers make orders. PrintChic puts orders into production and charges for fulfillment. You take the profit.",
+    "cardTitle3" : "Product Fulfilled",
+    "cardDescription3" : "PrintChic takes care of the entire fulfilment process and produces your orders in our in-house Vietnam factory and US, EU, China facilities.",
+    "cardTitle4" : "Packed and Shipped",
+    "cardDescription4" : "We ship to anywhere in the world. Our packaging service allows you to personalise brand dispatch.",
+    "distictMotive" : "What makes Printchic different?",
+    "distictMotiveDes" : "Cost-effective solutions for personalisation of print on demand products, regardless of how high the volumes",
+    "distictBodyTitle1" : "Over 350+ custom products",
+    "distictBodyDescription1" : "Don’t stop at t-shirts, hoodies, masks and mugs. Diversify your store with less competitive products like polo shirts, hats, sweaters, ornaments.",
+    "distictBodyTitle2" : "In-house manufactory",
+    "distictBodyDescription2" : "Your products are produced under strict control – Best quality guaranteed. We try our best to process your orders faster than other suppliers.",
+    "distictBodyTitle3" : "Competitive base cost",
+    "distictBodyDescription3" : "With in-house manufactory located in Vietnam, we control and optimize product cost very seriously. That’s why our custom product base costs are low.",
+    "distictBodyTitle4" : "Whole process tracking",
+    "distictBodyDescription4" : "Track all your orders from producing to shipping. Get everything under your control.",
+    "customerReview" : "Customer reviews",
+    "customerReviewSubtitle" : "We’re the experts in on demand solutions trusted to deliver by merchants worldwide!",
+    "ourBlogStory" : "Our Blog Stories",
+    "faqQuestions" : "Frequently asked questions.",
+    "howCanWeHelp" : "How can we help?",
+    "howCanWeHelpDesc" : "In addition to the quality of prints, we also provide unparalleled services. Our team of experienced industry professionals works tirelessly to manage your products. We take pride in what we do and can fulfill your on-demand needs."
   },
   "button" :{
-    "tryForNow" : "Try for Now"
+    "tryForNow" : "Try for Now",
+    "viewAll" :"View All",
+    "getStarted" : "Get Started",
+    "tryForFree" : "Try for free"
+  },
+  "footer" : {
+    "about" : "About",
+    "aboutUs" : "About Us",
+    "contactUs" : "Contact Us",
+    "privacyPolicy" : "Privacy Policy",
+    "returnAndRefund" : "Return and Refund",
+    "productCatalog" :"Product Catalog",
+    "customMerchanise" : "Custom Merchandise",
+    "demoStore" : "Demo Store",
+    "VNCommunity" : "Vietnamese Seller Community",
+    "GlobalCommunity" : "Global Seller Community",
+    "quickAccess" : "Quick Access",
+    "ourBlogPost" : "Our Blog Posts",
+    "termOfService" : "Term Of Service"
   }
 }

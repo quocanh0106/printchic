@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "vite-plugin-vuetify": "^2.0.1"
-  },
-  "dependencies": {
-    "swiper": "^11.0.6"
-  }
-}

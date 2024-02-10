@@ -1,5 +1,7 @@
-bode {
-  color: red
+@import url('https://fonts.googleapis.com/css?family=Manrope');
+
+body {
+  font-family: 'Manrope';
 }
 
 :root {
@@ -7,7 +9,8 @@ bode {
 }
 
 // css apply for all page
-.page-container{
+.custom-padding{
+  padding:80px 120px;
 }
 
 // For Button Css
@@ -32,4 +35,22 @@ bode {
 
 .txt-primary{
   color: #3372DB;
+}
+
+.border-primary{
+  border: 1px solid #3372DB;
+}
+
+.border-left-primary{
+  border-left: 2px solid #3372DB;
+}
+
+.section-title{
+  font-size: 32px;
+  line-height: 41.6px;
+}
+
+.section-content{
+  font-size: 16px;
+  line-height: 24px;
 }
