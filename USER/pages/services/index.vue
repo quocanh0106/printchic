@@ -192,7 +192,12 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <div class="tips-body"></div>
+        <div class="tips-body flex mt-12 justify-between">
+          <img :src="tipImg"/>
+          <div class="tips-body-content rounded-lg bg-white p-6">
+            gw
+          </div>
+        </div>
       </div>
       <!-- Frequently asked question -->
       <faq class="custom-padding" />
@@ -213,6 +218,7 @@ import serviceThumbnail2 from "../../assets/images/servicePageThumbNail2.png";
 import serviceThumbnail3 from "../../assets/images/servicePageThumbNail3.png";
 import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
 import fullFillMentCenter from "../../assets/images/fullFillMentCenter.png";
+import tipImg from "../../assets/images/tipsImg.png"
 
 //import componet
 import cardInfor from "../../components/cardInfor.vue";
@@ -241,6 +247,7 @@ export default {
       serviceThumbnail1,
       serviceThumbnail2,
       serviceThumbnail3,
+      tipImg,
       thumbNailImgBlog: [
         {
           img: serviceThumbnail1,
