@@ -13,6 +13,10 @@ body {
   padding:80px 120px;
 }
 
+.bg-light-blue-custom{
+  background-color: #EFF4FF;
+}
+
 // For Button Css
 .primary-btn{
   background-color: #3372DB;
@@ -54,4 +58,38 @@ body {
 .section-content{
   font-size: 16px;
   line-height: 24px;
+}
+
+// max-width, height custom
+
+.mw-790px{
+  max-width: 790px;
+}
+
+.mw-379px{
+  max-width: 379px;
+}
+
+.mw-584px{
+  max-width: 584px;
+}
+
+.mw-276px{
+  max-width: 276px;
+}
+
+.mw-433px{
+  max-width: 433px;
+}
+
+.mw-353px{
+  max-width: 353px;
+}
+
+.mh-183px{
+  min-height: 183px;
+}
+
+.mw-100px{
+  min-width: 100px;
 }
