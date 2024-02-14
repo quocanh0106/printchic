@@ -8,7 +8,7 @@
           <a :href="item.href">{{ item.label }}</a>
         </li>
       </ul>
-      <b-button class="primary-btn cursor-pointer text-white">{{ $t("navBar.signUp") }}</b-button>
+      <v-button class="primary-btn cursor-pointer text-white">{{ $t("navBar.signUp") }}</v-button>
     </div>
   </div>
 </template>
@@ -22,8 +22,8 @@ defineProps({
   links: {
     type: Array,
     default: () => [
-      { label: 'Home', href: '/' },
-      { label: 'Products', href: '/' },
+      { label: 'Home', href: '/home' },
+      { label: 'Products', href: '/product' },
       { label: 'How it works', href: '/' },
       { label: 'Blog', href: '/' },
       { label: 'About us', href: '/' },

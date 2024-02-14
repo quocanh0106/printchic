@@ -192,10 +192,18 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <div class="tips-body flex mt-12 justify-between">
+        <div class="tips-body flex mt-12 justify-between gap-x-8">
           <img :src="tipImg"/>
           <div class="tips-body-content rounded-lg bg-white p-6">
-            gw
+            <h1 class="font-semibold section-title"> {{ $t("servicePage.podTipsContent1") }} </h1>
+            <h1 class="font-semibold section-title mt-12"> {{ $t("servicePage.podTipsContent2") }} </h1>
+            <p class="section-content mt-3">  {{ $t("servicePage.podTipsContent3") }} </p>
+            <ul class="bullet-tips ml-5">
+              <li>{{ $t("servicePage.podTipsContent4") }}</li>
+              <li>{{ $t("servicePage.podTipsContent5") }}</li>
+              <li>{{ $t("servicePage.podTipsContent6") }}</li>
+            </ul>  
+            <h1 class="font-semibold section-title mt-12"> {{ $t("servicePage.podTipsContent7") }} </h1>
           </div>
         </div>
       </div>
@@ -329,5 +337,8 @@ export default {
 }
 .pod-tips {
   background-color: #f9fafb;
+}
+.bullet-tips{
+  list-style-type:disc;
 }
 </style>

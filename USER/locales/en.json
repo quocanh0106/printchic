@@ -98,7 +98,20 @@
     "fullFillMentCenterSubDes2" : "We carefully control our consistent output standards, compliant quality with our global partners & supply chain network.",
     "enjoyOurPODProduct" : "Enjoy Our POD products",
     "topPOD" : "Top Current Trending Print on demand Products",
-    "podTips" : "Tips for Print on demand"
+    "podTips" : "Tips for Print on demand",
+    "podTipsContent1" : "Pick your niches",
+    "podTipsContent2" : "Create unique and relevant designs",
+    "podTipsContent3" : "Why customers should buy your print-on-demand products? Obviously, it’s the designs that capture customers’ interest. You must create designs that hit the sweet spot of unique and appealing designs. If you’re not familiar with the design process, here are some suggestions for you: ",
+    "podTipsContent4" : "Hire freelance designers from Fiverr or Upwork.",
+    "podTipsContent5" : "Use simple online design tools like Canva to make your designs.",
+    "podTipsContent6" : "Make simple designs using our Mockup Generator.",
+    "podTipsContent7" : "Promote your products with social media marketing and advertising"
+  },
+  "productList" : {
+    "mensClothing" : "Men's Clothing",
+    "showing" : "Showing",
+    "sortBy" : "Sort by",
+    "select" : "Select"
   },
   "button" :{
     "tryForNow" : "Try for Now",
