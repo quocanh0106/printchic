@@ -10,18 +10,7 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
-          <swiper-slide><img :src="introImage" /></swiper-slide>
+          <swiper-slide v-for="item,index in items" :key="index"><img :src="item" /></swiper-slide>
         </swiper>
     </div>
   </div>
@@ -58,6 +47,10 @@ export default {
     showPagination: {
       type: Boolean,
       default : true
+    },
+    items: {
+      type: Array,
+      default : [introImage,introImage,introImage,introImage,introImage,introImage],
     }
   },
   data() {

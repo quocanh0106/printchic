@@ -24,7 +24,7 @@ defineProps({
     default: () => [
       { label: 'Home', href: '/home' },
       { label: 'Products', href: '/product' },
-      { label: 'How it works', href: '/' },
+      { label: 'How it works', href: '/how-it-works' },
       { label: 'Blog', href: '/' },
       { label: 'About us', href: '/' },
     ],

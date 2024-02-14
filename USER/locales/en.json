@@ -105,13 +105,36 @@
     "podTipsContent4" : "Hire freelance designers from Fiverr or Upwork.",
     "podTipsContent5" : "Use simple online design tools like Canva to make your designs.",
     "podTipsContent6" : "Make simple designs using our Mockup Generator.",
-    "podTipsContent7" : "Promote your products with social media marketing and advertising"
+    "podTipsContent7" : "Promote your products with social media marketing and advertising",
+    "aboutPjmTitle" : "About Pajamas",
+    "aboutPjmContent" : "Check out PrintChic's awesome print-on-demand Men's Pajamas! We've got a huge range of cool Men's Pajamas with all-over prints in different sizes and colors, our service helps retailers broaden their product offerings and increase earnings seamlessly. Enjoy the perfect blend of style and comfort with our pajama sets and pajama pants. Merchants can create unique, market-setting designs using our advanced printing technology. Whether you're looking for comfy loungewear or hunting for a rad gift, PrintChic's Men's Pajamas are top-notch in terms of quality, comfort, and that personal touch."
   },
   "productList" : {
     "mensClothing" : "Men's Clothing",
     "showing" : "Showing",
     "sortBy" : "Sort by",
-    "select" : "Select"
+    "select" : "Select",
+    "filter" : "Filter",
+    "saleTag" : "sale",
+    "clearAll" : "Clear All"
+  },
+  "howItWorks" : {
+    "headerTitle" : "We will make it easier for you from the first time.",
+    "headerDesc1" : "Welcome to TrackIt, the best way to track and buy your favorite items online!",
+    "headerDesc2" : "Exclusive personalized, unique merchandise for you to sell, build brand globally.",
+    "partnerTitle" : "We partner with diverse organizations on various projects and campaigns.",
+    "step1": "step 1",
+    "step1Title" : "Create PrintChic account",
+    "step1Desc" :"You can start your fulfillment with PrintChic by creating a fulfilment store. Then, connect your integrated selling store with PrintChic.",
+    "step2": "step 2",
+    "step2Title" : "Make sales and process orders",
+    "step2Desc" : "Customers make orders. PrintChic puts orders into production and charges for fulfillment. You take the profit.",
+    "step3": "step 3",
+    "step3Title" : "Product Fulfilled",
+    "step3Desc" : "PrintChic takes care of the entire fulfilment process and produces your orders in our in-house Vietnam factory and US, EU, China facilities.",
+    "step4": "step4",
+    "step4Title":"Packed and Shipped",
+    "step4Desc":"We ship to anywhere in the world. Our packaging service allows you to personalise brand dispatch."
   },
   "button" :{
     "tryForNow" : "Try for Now",
@@ -121,7 +144,10 @@
     "signUpForFree" : "Sign Up for free",
     "aboutUs" : "About Us",
     "seePricing" : "See Pricing",
-    "exploreOurCatalog" : "Explore Our Catalog"
+    "exploreOurCatalog" : "Explore Our Catalog",
+    "seeMore":"See More",
+    "CTA" : "CTA Here",
+    "learnMore":"Learn More"
   },
   "footer" : {
     "about" : "About",
