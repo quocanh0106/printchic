@@ -5,15 +5,15 @@ const { validateNumber, validateEnum, validateDateByFormat, validateObjectId,
 
 const createValidator = [
     check('title').notEmpty().withMessage('title must be required'),
-    check('content').notEmpty().withMessage('content must be required')
+    check('description').notEmpty().withMessage('description must be required')
 ]
 const updateValidator = [
     ...createValidator,
-    validateObjectId('newObjId', true),
+    validateObjectId('categoryProductId', true),
 ]
-const validateNewObjIdValidator = validateObjectId('newObjId', true);
+const validateCatProIdValidator = validateObjectId('categoryProductId', true);
 module.exports = {
     createValidator,
     updateValidator,
-    validateNewObjIdValidator,
+    validateCatProIdValidator,
 };

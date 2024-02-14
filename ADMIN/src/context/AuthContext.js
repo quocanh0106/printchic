@@ -10,10 +10,13 @@ import axios from 'axios'
 // ** Config
 import authConfig from 'src/configs/auth'
 
+// ** Third Party Components
+import toast from 'react-hot-toast'
+
 // ** Defaults
 const defaultProvider = {
   user: null,
-  loading: true,
+  loading: false,
   setUser: () => null,
   setLoading: () => Boolean,
   login: () => Promise.resolve(),
@@ -28,50 +31,23 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
-  useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-      if (storedToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
-            headers: {
-              Authorization: storedToken
-            }
-          })
-          .then(async response => {
-            setLoading(false)
-            setUser({ ...response.data.userData })
-          })
-          .catch(() => {
-            localStorage.removeItem('userData')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
-            setUser(null)
-            setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/login')
-            }
-          })
-      } else {
-        setLoading(false)
-      }
-    }
-    initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleLogin = (params, errorCallback) => {
     axios
-      .post(authConfig.loginEndpoint, params)
+      .post(`http://localhost:8000/${authConfig.loginEndpoint}`, params)
       .then(async response => {
+        if(response.status == 200 && response.data.statusCode == '40106') {
+          toast.error(response.data.message, {
+            duration: 2000
+          })
+          return
+        }
         params.rememberMe
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
           : null
-        const returnUrl = router.query.returnUrl
-        setUser({ ...response.data.userData })
-        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        setUser({ ...response.data.data })
+        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.data)) : null
+        const redirectURL = '/apps/dashboard'
         router.replace(redirectURL)
       })
       .catch(err => {

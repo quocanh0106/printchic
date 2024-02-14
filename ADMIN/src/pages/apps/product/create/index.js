@@ -26,7 +26,7 @@ const ProductComponent = () => {
           <Button variant='tonal' color='secondary' sx={{ mr: 3 }}>
             Cancel
           </Button>
-          <Button variant='contained'>
+          <Button variant='contained' onClick>
             Create
           </Button>
         </Box>

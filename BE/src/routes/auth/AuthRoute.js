@@ -6,10 +6,11 @@ const {
     verifyToken,
 } = require('../../utils/common.js');
 
-authRouter.use(async (req, res, next) => {
-    await verifyToken(req, res, next);
-});
+// authRouter.use(async (req, res, next) => {
+//     await verifyToken(req, res, next);
+// });
 require('./UsersRoute')(authRouter);
+require('./CategoryProductRoute')(authRouter);
 
 
 module.exports = authRouter;

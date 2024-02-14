@@ -86,8 +86,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@vuexy.com'
+  password: 'vanlong12345',
+  email: 'lelong.bk.2609@gmail.com'
 }
 
 const LoginPage = () => {
@@ -194,7 +194,7 @@ const LoginPage = () => {
             </Box>
             <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}>
               <Typography variant='body2' sx={{ mb: 2, color: 'primary.main' }}>
-                Admin: <strong>admin@vuexy.com</strong> / Pass: <strong>admin</strong>
+                Admin: <strong>lelong.bk.2609@gmail.com</strong> / Pass: <strong>vanlong12345</strong>
               </Typography>
               <Typography variant='body2' sx={{ color: 'primary.main' }}>
                 Client: <strong>client@vuexy.com</strong> / Pass: <strong>client</strong>
@@ -214,7 +214,7 @@ const LoginPage = () => {
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      placeholder='admin@vuexy.com'
+                      placeholder='Enter your email address'
                       error={Boolean(errors.email)}
                       {...(errors.email && { helperText: errors.email.message })}
                     />
@@ -276,9 +276,9 @@ const LoginPage = () => {
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
-                <Typography href='/register' component={LinkStyled}>
+                {/* <Typography href='/register' component={LinkStyled}>
                   Create an account
-                </Typography>
+                </Typography> */}
               </Box>
               <Divider
                 sx={{

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const { common } = require('./Common');
 const ConfigsBase = {
   languageId: {
-    type: ObjectId, default: null, require: true, ref: 'languages',
+    type: ObjectId, default: null, require: false, ref: 'languages',
   },
   title: {
     type: String, trim: true,
