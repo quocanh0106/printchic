@@ -15,6 +15,7 @@ const create = async (data) => {
         const set = {};
         set.title = data.title;
         set.description = data.description;
+        set.parentCategory = data.parentCategory;
         set.bannerImg = data.bannerImg;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
@@ -31,9 +32,6 @@ const list = async (data) => {
         const conditions = {
             isDeleted: IS_DELETED[200],
         };
-        if (status) {
-            conditions.status = status;
-        }
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
@@ -91,14 +89,14 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.title)) {
             set.title = data.title;
         }
-        if (!isEmpty(data?.content)) {
-            set.content = data.content;
+        if (!isEmpty(data?.description)) {
+            set.description = data.description;
         }
-        if (!isEmpty(data?.image)) {
-            set.image = data.image;
+        if (!isEmpty(data?.bannerImg)) {
+            set.bannerImg = data.bannerImg;
         }
-        if (!isEmpty(data?.banner)) {
-            set.banner = data.banner;
+        if (!isEmpty(data?.parentCategory)) {
+            set.parentCategory = data.parentCategory;
         }
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);

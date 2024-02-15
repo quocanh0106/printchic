@@ -21,9 +21,26 @@ const beforeUploadMulti = (req, res, next) => {
 };
 
 module.exports.AUTH = {
-
+    list: async (req, res) => {
+        // #swagger.tags = ['Tin tức'] 
+        // #swagger.summary = 'Danh sách tin tức'
+        /* #swagger.security = [{
+               "apiKeyAuth": [],
+        }] */
+        try {
+            const result = await CategoryProductService.list({
+                ...req.query,
+            })
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10392, result));
+            }
+            return res.json(responseSuccess(10392, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
     create: async (req, res) => {
-        console.log('reqaaaaaaaaaaaaa', req.file)
         // #swagger.tags = ['Tin tức'] 
         // #swagger.summary = 'Tạo mới tin tức'
         /* #swagger.security = [{
@@ -64,7 +81,7 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const { categoryProductId } = req.body;
+            const { categoryProductId } = req.query;
             const result = await CategoryProductService.updateDelete({
                 categoryProductId,
             })
