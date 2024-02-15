@@ -80,6 +80,7 @@ export const deleteCategoryProduct = createAsyncThunk('appCalendar/deleteEvent',
     })
   }
   await dispatch(fetchEvents())
+  
   return response.data.event
 })
 

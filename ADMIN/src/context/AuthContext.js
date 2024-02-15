@@ -36,8 +36,6 @@ const AuthProvider = ({ children }) => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       if (storedToken) {
         setUser(JSON.parse(window.localStorage.getItem('userData')))
-        // const returnUrl = router.query.returnUrl || '/apps/dashboard'
-        // router.replace(returnUrl)
       }
     }
     initAuth()
@@ -48,10 +46,11 @@ const AuthProvider = ({ children }) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_URL_API}/${authConfig.loginEndpoint}`, params)
       .then(async response => {
-        if(response.status == 200 && response.data.statusCode == '40106') {
+        if (response.status == 200 && response.data.statusCode == '40106') {
           toast.error(response.data.message, {
             duration: 2000
           })
+
           return
         }
         params.rememberMe

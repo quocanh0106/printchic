@@ -106,7 +106,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
   })
 
   const img = files.map(file => (
-    <Box sx={{ position: 'relative' }}>
+    <Box key={file.name} sx={{ position: 'relative' }}>
       <CustomCloseButton onClick={() => setFiles([])}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
@@ -203,7 +203,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     {...(errors.select && { helperText: 'This field is required' })}
                   >
                     {
-                      store.data.map(ele => <MenuItem value={ele._id}>{ele.title}</MenuItem>)
+                      store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)
                     }
                   </CustomTextField>
                 )}

@@ -55,7 +55,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 const DialogEditCard = ({ visible, setVisible, rowData }) => {
   const store = useSelector(state => state.categoryProduct)
   const dispatch = useDispatch()
-  // ** States
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -208,7 +207,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                     {...(errors.select && { helperText: 'This field is required' })}
                   >
                     {
-                      store.data.map(ele => <MenuItem value={ele._id}>{ele.title}</MenuItem>)
+                      store.data.map(ele => <MenuItem  key={file.name} value={ele._id}>{ele.title}</MenuItem>)
                     }
                   </CustomTextField>
                 )}

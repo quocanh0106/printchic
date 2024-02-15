@@ -4,22 +4,6 @@ const navigation = () => {
       title: 'Dashboard',
       icon: 'material-symbols:dashboard-outline-rounded',
       path: '/apps/dashboard'
-      // badgeContent: 'new',
-      // badgeColor: 'error',
-      // children: [
-      //   {
-      //     title: 'Analytics',
-      //     path: '/dashboards/analytics'
-      //   },
-      //   {
-      //     title: 'CRM',
-      //     path: '/dashboards/crm'
-      //   },
-      //   {
-      //     title: 'eCommerce',
-      //     path: '/dashboards/ecommerce'
-      //   }
-      // ]
     },
     {
       title: 'Product Category',
@@ -46,6 +30,7 @@ const navigation = () => {
       icon: 'tabler:settings',
       path: '/apps/general-setting'
     },
+    
     // {
     //   sectionTitle: 'Apps & Pages'
     // },

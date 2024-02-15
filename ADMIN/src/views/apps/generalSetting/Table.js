@@ -168,7 +168,7 @@ const UserList = () => {
   }))
 
   const img = files.map(file => (
-    <Box sx={{ position: 'relative' }}>
+    <Box key={file.name} sx={{ position: 'relative' }}>
       <CustomCloseButton onClick={() => setFiles([])}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
