@@ -1,5 +1,5 @@
 // ** React Imports
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -17,10 +17,8 @@ import { styled } from '@mui/material/styles'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Third Party Imports
-import Payment from 'payment'
 
 // ** Util Import
-import { formatCVC, formatCreditCardNumber, formatExpirationDate } from 'src/@core/utils/format'
 
 // ** Styled Component Imports
 
@@ -28,10 +26,12 @@ import { formatCVC, formatCreditCardNumber, formatExpirationDate } from 'src/@co
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { MenuItem } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
-import Icon from 'src/@core/components/icon'
+import { CircularProgress, MenuItem, fabClasses } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
+import { Controller, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'src/@core/components/icon'
+import { addCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -53,8 +53,12 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 const DialogAddCard = ({ visible, setVisible }) => {
+  const dispatch = useDispatch()
+  const store = useSelector(state => state.categoryProduct)
+  
   // ** States
   const [files, setFiles] = useState([])
+  const [loading, setLoading] = useState(false)
 
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
@@ -67,12 +71,22 @@ const DialogAddCard = ({ visible, setVisible }) => {
     }
   })
 
+  useEffect(() => {
+    dispatch(fetchEvents())
+  }, [])
+
   const handleClose = () => {
     setVisible(false)
   }
 
   const onSubmit = (value) => {
-    console.log('value', value)
+    setLoading(true)
+    const formData = new FormData();
+    formData.append("title", value.title);
+    formData.append("description", value.description);
+    formData.append("parentCategory", value.parentCategory);
+    formData.append("file", files[0]);
+    dispatch(addCategoryProduct({ formData, setVisible, setLoading }))
   }
 
   const {
@@ -178,7 +192,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     select
                     fullWidth
                     defaultValue=''
-                    label='Country'
+                    label='Parent category'
                     SelectProps={{
                       value: value,
                       onChange: e => onChange(e)
@@ -188,10 +202,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     aria-describedby='validation-basic-select'
                     {...(errors.select && { helperText: 'This field is required' })}
                   >
-                    <MenuItem value='UK'>UK</MenuItem>
-                    <MenuItem value='USA'>USA</MenuItem>
-                    <MenuItem value='Australia'>Australia</MenuItem>
-                    <MenuItem value='Germany'>Germany</MenuItem>
+                    {
+                      store.data.map(ele => <MenuItem value={ele._id}>{ele.title}</MenuItem>)
+                    }
                   </CustomTextField>
                 )}
               />
@@ -223,6 +236,16 @@ const DialogAddCard = ({ visible, setVisible }) => {
         }}
       >
         <Button variant='contained' sx={{ mr: 1 }} onClick={handleSubmit(onSubmit)}>
+          {loading ? (
+            <CircularProgress
+              sx={{
+                color: 'common.white',
+                width: '20px !important',
+                height: '20px !important',
+                mr: theme => theme.spacing(2)
+              }}
+            />
+          ) : null}
           Create
         </Button>
         <Button variant='tonal' color='secondary' onClick={handleClose}>

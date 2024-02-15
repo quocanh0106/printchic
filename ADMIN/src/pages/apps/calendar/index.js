@@ -26,7 +26,7 @@ import {
   handleSelectEvent,
   handleAllCalendars,
   handleCalendarsUpdate
-} from 'src/store/apps/calendar'
+} from 'src/store/apps/categoryProduct'
 
 // ** CalendarColors
 const calendarsColor = {

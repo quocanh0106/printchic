@@ -31,10 +31,22 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
+  useEffect(() => {
+    const initAuth = async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      if (storedToken) {
+        setUser(JSON.parse(window.localStorage.getItem('userData')))
+        // const returnUrl = router.query.returnUrl || '/apps/dashboard'
+        // router.replace(returnUrl)
+      }
+    }
+    initAuth()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleLogin = (params, errorCallback) => {
     axios
-      .post(`http://localhost:8000/${authConfig.loginEndpoint}`, params)
+      .post(`${process.env.NEXT_PUBLIC_URL_API}/${authConfig.loginEndpoint}`, params)
       .then(async response => {
         if(response.status == 200 && response.data.statusCode == '40106') {
           toast.error(response.data.message, {

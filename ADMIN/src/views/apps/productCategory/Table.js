@@ -30,6 +30,7 @@ import TableHeader from 'src/views/apps/productCategory/TableHeader'
 // ** Components Imports
 import AddDialogProduct from './AddDialogProduct'
 import DialogEditCard from './EditDialogProduct'
+import { deleteCategoryProduct } from 'src/store/apps/categoryProduct'
 
 
 const UserList = () => {
@@ -43,7 +44,7 @@ const UserList = () => {
 
   // ** Hooks
   const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
+  const store = useSelector(state => state.categoryProduct)
   useEffect(() => {
     dispatch(
       fetchData({
@@ -58,9 +59,9 @@ const UserList = () => {
 
   const columns = [
     {
-      flex: 0.05,
+      flex: 0.18,
       minWidth: 50,
-      field: 'Id',
+      field: '_id',
       headerName: 'No',
       renderCell: ({ row }) => {
         return (
@@ -88,8 +89,8 @@ const UserList = () => {
     {
       flex: 0.3,
       minWidth: 120,
-      headerName: 'description',
-      field: 'Description',
+      headerName: 'Description',
+      field: 'description',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
@@ -106,7 +107,7 @@ const UserList = () => {
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {row.parentCategory}
+            { store?.data?.find(ele => ele._id == row.parentCategory)?.title }
           </Typography>
         )
       }
@@ -140,7 +141,12 @@ const UserList = () => {
               },
               {
                 text: 'Delete',
-                icon: <Icon icon='tabler:trash' fontSize={20} />
+                icon: <Icon icon='tabler:trash' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => {
+                    dispatch(deleteCategoryProduct(row._id))
+                  }
+                }
               },
             ]}
           />
