@@ -13,13 +13,25 @@ body {
   padding:80px 120px;
 }
 
+.bg-light-blue-custom{
+  background-color: #EFF4FF;
+}
+
+.bg-light-gray-custom{
+  background-color: #FAFBFF;
+}
+
+.bg-light-gray1-custom{
+  background-color: #F9FAFB;
+}
 // For Button Css
 .primary-btn{
   background-color: #3372DB;
   padding: 12px 24px 12px 24px;
   border-radius: 3px;
   height: 46px;
-  min-width: 135px;
+  text-align: center;
+  // min-width: 135px;
 }
 
 .secondary-btn{
@@ -41,6 +53,14 @@ body {
   border: 1px solid #3372DB;
 }
 
+.txt-gray{
+  color: #98A2B3;
+}
+
+.txt-dark-blue{
+  color: #475467;
+}
+
 .border-left-primary{
   border-left: 2px solid #3372DB;
 }
@@ -53,4 +73,46 @@ body {
 .section-content{
   font-size: 16px;
   line-height: 24px;
+}
+
+// max-width, height custom
+
+.mw-790px{
+  max-width: 790px;
+}
+
+.mw-379px{
+  max-width: 379px;
+}
+
+.mw-584px{
+  max-width: 584px;
+}
+
+.mw-276px{
+  max-width: 276px;
+}
+
+.mw-433px{
+  max-width: 433px;
+}
+
+.mw-353px{
+  max-width: 353px;
+}
+
+.mh-183px{
+  min-height: 183px;
+}
+
+.mw-100px{
+  min-width: 100px;
+}
+
+.mw-892px{
+  max-width: 892px;
+}
+
+.mw-378px{
+  max-width: 378px;
 }

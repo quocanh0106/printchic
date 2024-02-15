@@ -1,13 +1,14 @@
 <template>
   <div class="nav-bar">
     <img :src="Logo" />
-    <ul class="nav-bar-wrapper">
-      <li v-for="(item, index) in links" :key="index">
-        <a :href="item.href">{{ item.label }}</a>
-      </li>
-    </ul>
-    <div class="nav-bar-action">
-      <b-button class="primary-btn cursor-pointer text-white">{{ $t("ContactUs") }}</b-button>
+    <customInput />
+    <div class="nav-bar-action flex items-center">
+      <ul class="nav-bar-wrapper">
+        <li v-for="(item, index) in links" :key="index">
+          <a :href="item.href">{{ item.label }}</a>
+        </li>
+      </ul>
+      <v-button class="primary-btn cursor-pointer text-white">{{ $t("navBar.signUp") }}</v-button>
     </div>
   </div>
 </template>
@@ -15,14 +16,15 @@
 <script setup>
 const { locale } = useI18n()
 import Logo from '../assets/svg/Logo.svg'
-
+import customInput from './customInput.vue'
 defineProps({
+  components:{customInput},
   links: {
     type: Array,
     default: () => [
-      { label: 'Home', href: '/' },
-      { label: 'Catalog', href: '/' },
-      { label: 'How it works', href: '/' },
+      { label: 'Home', href: '/home' },
+      { label: 'Products', href: '/product' },
+      { label: 'How it works', href: '/how-it-works' },
       { label: 'Blog', href: '/' },
       { label: 'About us', href: '/' },
     ],
