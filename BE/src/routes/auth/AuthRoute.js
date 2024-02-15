@@ -11,6 +11,7 @@ const {
 // });
 require('./UsersRoute')(authRouter);
 require('./CategoryProductRoute')(authRouter);
+require('./Product')(authRouter);
 
 
 module.exports = authRouter;

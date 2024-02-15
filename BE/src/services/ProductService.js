@@ -1,5 +1,5 @@
 const {
-    category_product: CategoryProductModels,
+    products: ProductsModels,
 } = require('../models/utils/connectToModels');
 
 const {
@@ -13,13 +13,20 @@ const create = async (data) => {
     console.log('data', data)
     try {
         const set = {};
-        set.title = data.title;
+        set.handleUrl = data.handleUrl;
+        set.categoryProductTd = convertToObjectId(data.categoryProductTd);
+        set.metaDescription = data.metaDescription;
+        set.type = data.type;
         set.description = data.description;
-        set.parentCategory = data.parentCategory;
-        set.bannerImg = data.bannerImg;
+        set.sku = data.sku;
+        set.price = data.price;
+        set.options = data.options;
+        set.buttonLink = data.buttonLink;
+        set.status = data.status;
+        set.media = data.media;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
-        const result = await CategoryProductModels.create(set);
+        const result = await ProductsModels.create(set);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -50,7 +57,7 @@ const list = async (data) => {
             customLabels: MY_CUSTOM_LABELS,
             // populate,
         };
-        const result = await CategoryProductModels.paginate(conditions, options);
+        const result = await ProductsModels.paginate(conditions, options);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -109,12 +116,12 @@ const updateDelete = async (data) => {
     try {
         const conditions = {
             isDeleted: IS_DELETED[200],
-            _id: data.categoryProductId,
+            _id: data.productId,
         };
         const set = {
             isDeleted: IS_DELETED[300],
         }
-        const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
+        const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')

@@ -1,6 +1,5 @@
 module.exports.DEFAULT = {
   uploadSingle: async (req, res) => {
-    console.log('reqqqqq', req.file)
       try {
         if (!req.file) {
           next(new Error('No file uploaded!'));

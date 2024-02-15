@@ -75,6 +75,12 @@ exports.CODES_SUCCESS = {
     10471: "Tải lên mẫu CV thành công!",
     10472: "Xóa mẫu CV thành công!",
     10473: "Danh sách mẫu CV thành công!",
+    /* 10500 -> 10600 news */
+    10500: "Tạo mới sản phẩm thành công!",
+    10501: "Danh sách sản phẩm thành công!",
+    10502: "Xóa sản phẩm thành công!",
+    10503: "Cập nhật sản phẩm thành công!",
+    10504: "Chi tiết sản phẩm thành công!",
 }
 
 exports.CODES_ERROR = {

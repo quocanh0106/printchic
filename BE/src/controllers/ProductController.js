@@ -1,24 +1,12 @@
 require('dotenv').config()
-const CategoryProductService = require('../services/CategoryProductService');
-const { upload, uploadMultipleImage } = require('../configs/configMulter');
-const moment = require('moment-timezone');
+const ProductService = require('../services/ProductService');
 const {
     responseError,
     validateResult,
     isEmpty,
     responseSuccess,
-    urlImage,
-    urlFromFilename,
 } = require('../utils/shared');
-const { createValidator, validateNewObjIdValidator, updateValidator, validateCatProIdValidator } = require('../validators/NewsValidator');
-const CloudinaryService = require('../services/CategoryProductService');
-const beforeUploadMulti = (req, res, next) => {
-    uploadMultipleImage(req, res, (err) => {
-        if (err) return res.json(responseError(40005))
-        if (isEmpty(req.files)) return res.json(responseError(40115))
-        return next();
-    });
-};
+const { createValidator, validateNewObjIdValidator, updateValidator, validateProIdValidator } = require('../validators/ProductValidator');
 
 module.exports.AUTH = {
     list: async (req, res) => {
@@ -28,13 +16,13 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
-            const result = await CategoryProductService.list({
+            const result = await ProductService.list({
                 ...req.query,
             })
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10392, result));
+                return res.json(responseSuccess(10501, result));
             }
-            return res.json(responseSuccess(10392, []));
+            return res.json(responseSuccess(10501, []));
         } catch (errors) {
             console.log(errors, 'errors')
             return res.json(responseError(40004, errors));
@@ -49,18 +37,17 @@ module.exports.AUTH = {
         // beforeUploadMulti(req, res, async () => {
 
         try {
+            console.log('req',req.body, req.files)
             const errors = await validateResult(createValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            if (req.file) {
-                req.body.bannerImg = req.file.path;
-            } else {
-                return res.json(responseError("bannerImg must be required!"))
+            if (req.files) {
+                req.body.media = req.files;
             }
-            const result = await CategoryProductService.create(req.body)
+            const result = await ProductService.create(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10391, result));
+                return res.json(responseSuccess(10500, result));
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
@@ -77,13 +64,13 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
-            const errors = await validateResult(validateCatProIdValidator, req);
+            const errors = await validateResult(validateProIdValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const { categoryProductId } = req.query;
-            const result = await CategoryProductService.updateDelete({
-                categoryProductId,
+            const { productId } = req.query;
+            const result = await ProductService.updateDelete({
+                productId,
             })
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10393, result));
@@ -105,7 +92,7 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const result = await CategoryProductService.updateConditions(req.body)
+            const result = await ProductService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10394, result));
             }
@@ -125,7 +112,7 @@ module.exports.DEFAULT = {
                "apiKeyAuth": [],
         }] */
         try {
-            const result = await CategoryProductService.list({
+            const result = await ProductService.list({
                 ...req.query,
             })
             if (!isEmpty(result)) {
@@ -148,7 +135,7 @@ module.exports.DEFAULT = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const result = await CategoryProductService.findByConditions({
+            const result = await ProductService.findByConditions({
                 newObjId: req.query.newObjId,
             })
             if (!isEmpty(result)) {
