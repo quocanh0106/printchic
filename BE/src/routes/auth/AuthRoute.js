@@ -12,6 +12,7 @@ const {
 require('./UsersRoute')(authRouter);
 require('./CategoryProductRoute')(authRouter);
 require('./Product')(authRouter);
+require('./CategoryBlogRoute')(authRouter);
 
 
 module.exports = authRouter;

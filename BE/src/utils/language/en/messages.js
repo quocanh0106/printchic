@@ -82,11 +82,13 @@ exports.CODES_SUCCESS = {
     10551: "Upgrade candidate successfully!",
     10502: "List internal post successfully!",
     10503: "Update internal post successfully!",
-    /* 10601 -> 10640 external candidate*/
-    10601: "Create external candidate successfully!",
-    10602: "List external candidate successfully!",
-    10603: "Update external candidate successfully!",
-    10604: "Delete external candidate successfully!",
+
+    /* 10600 -> 10699 news */
+    10600: "Create new category blog successfully!",
+    10601: "Get list category blog successfully!",
+    10602: "Delete category blog successfully!",
+    10603: "Update category blog successfully!",
+    10604: "Get detail category blog successfully!",
 
 }
 exports.CODES_ERROR = {

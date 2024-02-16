@@ -8,7 +8,7 @@
  *
  * @return {String}
  */
-const getLang = () => global?.language || 'vi';
+const getLang = () => global?.language || 'en';
 const { getMessage, getMessageValidator } = require('./language');
 
 const _m = (code, type) => getMessage(getLang(), type)[code] || '';
