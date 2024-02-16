@@ -1,9 +1,9 @@
 <template>
   <div class="card-infor">
-    <div class="card-info-wrapper flex m-4">
+    <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
       <img :src="imgSrc" />
       <div class="card-des flex flex-col">
-        <h1 class="font-semibold card-title">{{ title }}</h1>
+        <h1 class="font-semibold card-title" v-if="showTitle">{{ title }}</h1>
         <p class="card-description mt-2">{{ description }}</p>
       </div>
     </div>
@@ -25,6 +25,14 @@ export default {
       type: String,
       default: "",
     },
+    showTitle: {
+      type: Boolean,
+      default:true,
+    },
+    changeToFlexCol: {
+      type: Boolean,
+      default:false,
+    }
   },
   data() {
     return {};

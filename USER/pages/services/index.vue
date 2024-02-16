@@ -211,7 +211,7 @@
       <faq class="custom-padding" />
 
       <!-- help -->
-      <help class="custom-padding" />
+      <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="custom-padding" />
     </div>
   </div>
 </template>

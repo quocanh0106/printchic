@@ -50,7 +50,7 @@ export default {
     },
     items: {
       type: Array,
-      default : [introImage,introImage,introImage,introImage,introImage,introImage],
+      default : [introImage,introImage,introImage,introImage,introImage,introImage,introImage,introImage,introImage,introImage],
     }
   },
   data() {

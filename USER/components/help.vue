@@ -2,10 +2,10 @@
     <div class="help-section-wrapper">
         <div class="help-section text-center">
             <div class="help-header section-title font-semibold">
-                <h1> {{ $t("homePage.howCanWeHelp") }}</h1>
+                <h1> {{ headerTitle }}</h1>
             </div>
             <div class="help-content section-content mt-4">
-                <p>  {{ $t("homePage.howCanWeHelpDesc") }} </p>
+                <p>  {{ headerDesc }} </p>
             </div>
             <div class="help-actions cursor-pointer mt-8">
                  <v-button class="primary-btn text-white">
@@ -22,11 +22,22 @@
 
 <script>
 export default {
+    props:{
+        headerTitle: {
+            type: String,
+            default: ""
+        },
+        headerDesc : {
+            type: String,
+            default: ""
+        }
+    },
     data() {
         return {
             property: 'value',
         };
     },
+    
 }
 </script>
 

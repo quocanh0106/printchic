@@ -18,7 +18,7 @@ body {
 }
 
 .bg-light-gray-custom{
-  background-color: #FAFBFF;
+  background-color: #FAFBFF !important;
 }
 
 .bg-light-gray1-custom{
@@ -79,6 +79,10 @@ body {
 
 .mw-790px{
   max-width: 790px;
+}
+
+.mw-768px{
+  max-width: 768px;
 }
 
 .mw-379px{

@@ -83,7 +83,7 @@
     <faq class="mt-20 custom-padding" />
 
     <!-- help -->
-    <help class="mt-20 custom-padding" />
+    <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20 custom-padding" />
   </div>
 </template>
 

@@ -41,7 +41,7 @@
         </div>
         <div class="right-block-wrapper mt-12">
           <div class="product-list mb-10">
-            <div class="product-card cursor-pointer"  v-for="(item,index) in listProduct" :key="index">
+            <div class="product-card cursor-pointer" @click="toProductDetail(item)"  v-for="(item,index) in listProduct" :key="index">
               <img class="product-thumbnail" :src="item.imgUrl"/>
               <p class="mt-3 txt-gray font-medium">SKU: {{ item.sku }}</p>
               <p class="mt-1 txt-dark-blue font-semibold">{{ item.title }}</p>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <!-- help -->
-    <help  class="mt-20"/>
+    <help  :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20"/>
   </div>
 </template>
 
@@ -219,6 +219,10 @@ export default {
   methods : {
     clearAllFilterBy(){
       this.filterBy = [];
+    },
+    toProductDetail(item){
+      let id = 1
+      this.$router.push(`/product/${id}`);
     }
   }
 }
