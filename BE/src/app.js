@@ -6,9 +6,9 @@ const express = require('express');
 const path = require('path');
 // const {config} = require('./configs/configEnvSchema');
 const { LANGUAGES } = require('./utils/constants');
-global.language = global?.language || 'vi';
+global.language = global?.language || 'en';
 const middleware = (req, res, next) => {
-    const language = req.headers['x-language'] || global?.language || 'vi';
+    const language = req.headers['x-language'] || global?.language || 'en';
     if (typeof language !== 'undefined' && language.length > 0) {
         if (LANGUAGES.includes(String(language))
             && String(language) !== String(global?.language)

@@ -1,5 +1,5 @@
 require('dotenv').config()
-const CategoryProductService = require('../services/CategoryProductService');
+const CategoryBlogService = require('../services/CategoryBlogService');
 const { upload, uploadMultipleImage } = require('../configs/configMulter');
 const moment = require('moment-timezone');
 const {
@@ -7,18 +7,8 @@ const {
     validateResult,
     isEmpty,
     responseSuccess,
-    urlImage,
-    urlFromFilename,
 } = require('../utils/shared');
-const { createValidator, validateNewObjIdValidator, updateValidator, validateCatProIdValidator } = require('../validators/CategoryProductValidator');
-const CloudinaryService = require('../services/CategoryProductService');
-const beforeUploadMulti = (req, res, next) => {
-    uploadMultipleImage(req, res, (err) => {
-        if (err) return res.json(responseError(40005))
-        if (isEmpty(req.files)) return res.json(responseError(40115))
-        return next();
-    });
-};
+const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator } = require('../validators/CategoryBlogValidator');
 
 module.exports.AUTH = {
     list: async (req, res) => {
@@ -28,13 +18,13 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
-            const result = await CategoryProductService.list({
+            const result = await CategoryBlogService.list({
                 ...req.query,
             })
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10392, result));
+                return res.json(responseSuccess(10601, result));
             }
-            return res.json(responseSuccess(10392, []));
+            return res.json(responseSuccess(10601, []));
         } catch (errors) {
             console.log(errors, 'errors')
             return res.json(responseError(40004, errors));
@@ -58,9 +48,9 @@ module.exports.AUTH = {
             } else {
                 return res.json(responseError("bannerImg must be required!"))
             }
-            const result = await CategoryProductService.create(req.body)
+            const result = await CategoryBlogService.create(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10391, result));
+                return res.json(responseSuccess(10600, result));
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
@@ -77,16 +67,16 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
-            const errors = await validateResult(validateCatProIdValidator, req);
+            const errors = await validateResult(validateCatBlogIdValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const { categoryProductId } = req.query;
-            const result = await CategoryProductService.updateDelete({
-                categoryProductId,
+            const { categoryBlogId } = req.query;
+            const result = await CategoryBlogService.updateDelete({
+                categoryBlogId,
             })
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10393, result));
+                return res.json(responseSuccess(10602, result));
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
@@ -105,56 +95,11 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            const result = await CategoryProductService.updateConditions(req.body)
+            const result = await CategoryBlogService.updateConditions(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10394, result));
+                return res.json(responseSuccess(10603, result));
             }
             return res.json(responseSuccess(40213, []));
-
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-}
-module.exports.DEFAULT = {
-    list: async (req, res) => {
-        // #swagger.tags = ['Tin tức'] 
-        // #swagger.summary = 'Danh sách tin tức'
-        /* #swagger.security = [{
-               "apiKeyAuth": [],
-        }] */
-        try {
-            const result = await CategoryProductService.list({
-                ...req.query,
-            })
-            if (!isEmpty(result)) {
-                return res.json(responseSuccess(10392, result));
-            }
-            return res.json(responseSuccess(10392, []));
-        } catch (errors) {
-            console.log(errors, 'errors')
-            return res.json(responseError(40004, errors));
-        }
-    },
-    info: async (req, res) => {
-        // #swagger.tags = ['Tin tức'] 
-        // #swagger.summary = 'Chi tiết tin tức'
-        /* #swagger.security = [{
-               "apiKeyAuth": [],
-        }] */
-        try {
-            const errors = await validateResult(validateNewObjIdValidator, req);
-            if (!isEmpty(errors)) {
-                return res.json(responseError(40004, errors));
-            }
-            const result = await CategoryProductService.findByConditions({
-                newObjId: req.query.newObjId,
-            })
-            if (!isEmpty(result)) {
-                return res.json(responseSuccess(10394, result));
-            }
-            return res.json(responseSuccess(40214, []));
 
         } catch (errors) {
             console.log(errors, 'errors')

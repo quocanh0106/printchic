@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const ObjectId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 const { common } = require('./Common');
@@ -24,6 +25,8 @@ const UserPostsBase = {
   },
 }
 const UserPosts = { ...UserPostsBase, ...common };
-const UserPostsSchema = new Schema(UserPosts, { versionKey: false });
-const CategoryBlogsModels = mongoose.model('category_blog', UserPostsSchema);
+const CategoryBlogSchema = new Schema(UserPosts, { versionKey: false });
+CategoryBlogSchema.plugin(mongoosePaginate);
+
+const CategoryBlogsModels = mongoose.model('category_blog', CategoryBlogSchema);
 module.exports = CategoryBlogsModels;
