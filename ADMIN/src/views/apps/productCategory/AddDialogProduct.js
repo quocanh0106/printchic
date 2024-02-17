@@ -32,6 +32,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import { addCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
+import toast from 'react-hot-toast'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -71,12 +72,25 @@ const DialogAddCard = ({ visible, setVisible }) => {
     }
   })
 
-  useEffect(() => {
-    dispatch(fetchEvents())
-  }, [])
-
   const handleClose = () => {
     setVisible(false)
+  }
+
+  const callBackSubmit = (data) => {
+    console.log('data',data)
+    if (data.success) {
+      setVisible(false)
+      toast.success('New category product created successfully', {
+        duration: 2000
+      })
+    } else {
+      toast.error(data.message, {
+        duration: 2000
+      })
+    }
+    reset()
+    setFiles([])
+    setLoading(false)
   }
 
   const onSubmit = (value) => {
@@ -86,11 +100,12 @@ const DialogAddCard = ({ visible, setVisible }) => {
     formData.append("description", value.description);
     formData.append("parentCategory", value.parentCategory);
     formData.append("file", files[0]);
-    dispatch(addCategoryProduct({ formData, setVisible, setLoading }))
+    dispatch(addCategoryProduct({ formData, callBackSubmit }))
   }
 
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors }
   } = useForm({

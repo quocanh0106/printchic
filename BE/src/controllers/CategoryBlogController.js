@@ -95,6 +95,9 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
+            if (req.file) {
+                req.body.bannerImg = req.file.path;
+            }
             const result = await CategoryBlogService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10603, result));

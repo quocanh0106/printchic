@@ -30,7 +30,7 @@ import TableHeader from 'src/views/apps/productCategory/TableHeader'
 // ** Components Imports
 import AddDialogProduct from './AddDialogProduct'
 import DialogEditCard from './EditDialogProduct'
-import { deleteCategoryProduct } from 'src/store/apps/categoryProduct'
+import { deleteCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
 
 
 const UserList = () => {
@@ -42,19 +42,18 @@ const UserList = () => {
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
 
+  const [query, setQuery] = useState({
+    page: 1,
+    search: ''
+  })
+
   // ** Hooks
   const dispatch = useDispatch()
   const store = useSelector(state => state.categoryProduct)
+
   useEffect(() => {
-    dispatch(
-      fetchData({
-        role: '',
-        q: value,
-        status: '',
-        currentPlan: plan
-      })
-    )
-  }, [dispatch, plan, value])
+    dispatch(fetchEvents())
+  }, [])
 
 
   const columns = [
@@ -107,7 +106,7 @@ const UserList = () => {
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            { store?.data?.find(ele => ele._id == row.parentCategory)?.title }
+            {store?.data?.find(ele => ele._id == row.parentCategory)?.title}
           </Typography>
         )
       }
@@ -167,7 +166,7 @@ const UserList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} />
+          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} query={query} setQuery={setQuery} />
           <DataGrid
             autoHeight
             rowHeight={62}

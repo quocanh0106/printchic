@@ -13,6 +13,7 @@ require('./UsersRoute')(authRouter);
 require('./CategoryProductRoute')(authRouter);
 require('./Product')(authRouter);
 require('./CategoryBlogRoute')(authRouter);
+require('./SettingRoute')(authRouter);
 
 
 module.exports = authRouter;

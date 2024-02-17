@@ -28,7 +28,7 @@ const create = async (data) => {
 };
 const list = async (data) => {
     try {
-        const { sortKey = "created", sortOrder = -1, page = 1, limit = 10 } = data;
+        const { sortKey = "created", sortOrder = -1, page = 1, limit = 100 } = data;
         const conditions = {
             isDeleted: IS_DELETED[200],
         };

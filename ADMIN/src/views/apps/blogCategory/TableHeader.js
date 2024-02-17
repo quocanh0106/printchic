@@ -9,6 +9,8 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 // ** React Imports
 import { Fade } from '@mui/material'
 import { forwardRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 
 const TableHeader = props => {
   // ** State
@@ -18,10 +20,11 @@ const TableHeader = props => {
   })
 
   // ** Props
-  const { plan, handlePlanChange, handleFilter, value, setVisible } = props
+  const { plan, handlePlanChange, handleFilter, value, setVisible, query } = props
+  const dispatch = useDispatch()
 
   const searchProductCategory = () => {
-    console.log('searchching')
+    dispatch(fetchCategoryBlog({ ...query, search: value.trim() }))
   }
 
   return (
@@ -38,20 +41,6 @@ const TableHeader = props => {
           placeholder='Search for category'
           onChange={e => handleFilter(e.target.value)}
         />
-        <div>
-          <CustomTextField
-            select
-            value={plan}
-            defaultValue='Select Plan'
-            SelectProps={{ displayEmpty: true, value: plan, onChange: e => handlePlanChange(e) }}
-          >
-            <MenuItem value=''>Status</MenuItem>
-            <MenuItem value='basic'>Basic</MenuItem>
-            <MenuItem value='company'>Company</MenuItem>
-            <MenuItem value='enterprise'>Enterprise</MenuItem>
-            <MenuItem value='team'>Team</MenuItem>
-          </CustomTextField>
-        </div>
         <Button
           variant='contained'
           onClick={() => searchProductCategory()}

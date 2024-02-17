@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { DataGrid } from '@mui/x-data-grid'
+import { LANG } from '../../../constant/index'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -23,70 +23,56 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/user'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import { Button, IconButton, MenuItem } from '@mui/material'
+import { Button, CircularProgress, Divider, IconButton, MenuItem } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import styled from '@emotion/styled'
-
-// ** Custom Components Imports
-
-const dataFake = [
-  {
-    id: 1,
-    description: 'Site name',
-    listOptions: []
-  },
-  {
-    id: 2,
-    description: 'Meta Title',
-    listOptions: []
-  },
-  {
-    id: 3,
-    description: 'Meta Description',
-    listOptions: []
-  },
-  {
-    id: 4,
-    description: 'Head tag for Homepage',
-    listOptions: []
-  },
-  {
-    id: 5,
-    description: 'Footer tag for Homepage',
-    listOptions: []
-  },
-  {
-    id: 6,
-    description: 'Header for all',
-    listOptions: []
-  },
-  {
-    id: 7,
-    description: 'Default language',
-    listOptions: []
-  },
-]
+import { Controller, useForm } from 'react-hook-form'
+import { fetchEventsSetting, updateSetting } from 'src/store/apps/setting'
+import toast from 'react-hot-toast'
 
 const UserList = () => {
   // ** State
-  const [plan, setPlan] = useState([])
-  const [value, setValue] = useState('')
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState()
+  const [loading, setLoading] = useState(false)
 
   // ** Hooks
+  const {
+    control,
+    reset,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    siteName: '',
+    metaTitle: '',
+    metaDescription: '',
+    headTag: '',
+    footerTag: '',
+    headEmbedAll: '',
+    headTagAll: '',
+    footerTagAll: '',
+    language: ''
+  })
   const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
+  const store = useSelector(state => state.setting)
   useEffect(() => {
     dispatch(
-      fetchData({
-        role: '',
-        q: value,
-        status: '',
-        currentPlan: plan
-      })
+      fetchEventsSetting()
     )
-  }, [dispatch, plan, value])
+  }, [dispatch])
+
+  useEffect(() => {
+    setValue('siteName', store.data.siteName)
+    setValue('metaTitle', store.data.metaTitle)
+    setValue('metaDescription', store.data.metaDescription)
+    setValue('headTag', store.data.headTag)
+    setValue('footerTag', store.data.footerTag)
+    setValue('headEmbedAll', store.data.headEmbedAll)
+    setValue('headTagAll', store.data.headTagAll)
+    setValue('footerTagAll', store.data.footerTagAll)
+    setValue('language', store.data.language)
+    setFiles(store.data.imageFeature)
+  }, [store])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -94,63 +80,9 @@ const UserList = () => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file)))
+      setFiles(Object.assign(acceptedFiles[0]))
     }
   })
-
-  const columns = [
-    {
-      flex: 0.05,
-      minWidth: 50,
-      field: 'id',
-      headerName: 'No',
-      renderCell: ({ row }) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {row.id}
-          </Box>
-        )
-      }
-    },
-    {
-      flex: 0.2,
-      field: 'description',
-      minWidth: 170,
-      headerName: 'Description',
-      renderCell: ({ row }) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.description}
-            </Typography>
-          </Box>
-        )
-      }
-    },
-    {
-      flex: 0.25,
-      minWidth: 190,
-      field: 'parentCategory',
-      headerName: 'Value',
-      renderCell: (row) => {
-        return (
-          <CustomTextField
-            select
-            fullWidth
-            value={plan}
-            defaultValue='Select Plan'
-            SelectProps={{ displayEmpty: true, value: plan, onChange: e => handlePlanChange(e) }}
-          >
-            <MenuItem value=''>Status</MenuItem>
-            <MenuItem value='basic'>Basic</MenuItem>
-            <MenuItem value='company'>Company</MenuItem>
-            <MenuItem value='enterprise'>Enterprise</MenuItem>
-            <MenuItem value='team'>Team</MenuItem>
-          </CustomTextField>
-        )
-      }
-    }
-  ]
 
   const CustomCloseButton = styled(IconButton)(({ theme }) => ({
     top: 0,
@@ -167,29 +99,307 @@ const UserList = () => {
     }
   }))
 
-  const img = files.map(file => (
-    <Box key={file.name} sx={{ position: 'relative' }}>
-      <CustomCloseButton onClick={() => setFiles([])}>
-        <Icon icon='tabler:x' fontSize='1.25rem' />
-      </CustomCloseButton>
-      <img width={'70%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
-    </Box>
-  ))
+  const img = <Box sx={{ position: 'relative' }}>
+    <CustomCloseButton onClick={() => setFiles()}>
+      <Icon icon='tabler:x' fontSize='1.25rem' />
+    </CustomCloseButton>
+    {
+      typeof files === "string" ?
+        <img width={'70%'} className='single-file-image' src={files} />
+        :
+        <img width={'70%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
+    }
+  </Box>
 
-  const handlePlanChange = useCallback(e => {
-    setPlan(e.target.value)
-  }, [])
+  const callBackSubmit = (data) => {
+    if (data.success) {
+      toast.success('Update setting successfully', {
+        duration: 2000
+      })
+      const anchor = document.querySelector('body')
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'smooth' })
+      }
+    } else {
+      toast.error(data.message, {
+        duration: 2000
+      })
+    }
+    setLoading(false)
+  }
+
+  const onSubmit = (values) => {
+    setLoading(true)
+    const formData = new FormData();
+    formData.append("settingId", store.data._id);
+    formData.append("siteName", values.siteName);
+    formData.append("metaTitle", values.metaTitle);
+    formData.append("metaDescription", values.metaDescription);
+
+    formData.append("headTag", values.headTag);
+    formData.append("footerTag", values.footerTag);
+    formData.append("headEmbedAll", values.headEmbedAll);
+    formData.append("headTagAll", values.headTagAll);
+    formData.append("footerTagAll", values.footerTagAll);
+    formData.append("language", values.language);
+
+    typeof files === "string" || formData.append("file", files);
+    dispatch(updateSetting({ formData, callBackSubmit }))
+  }
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <Card>
-          <DataGrid
-            autoHeight
-            rowHeight={62}
-            rows={dataFake}
-            columns={columns}
-          />
+        <Card sx={{ p: 4 }}>
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Site name
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='siteName'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Site name'
+                    error={Boolean(errors.siteName)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.siteName && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Meta Title
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='metaTitle'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Meta Title'
+                    error={Boolean(errors.metaTitle)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaTitle && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Meta Description
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='metaDescription'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Meta Description'
+                    error={Boolean(errors.metaDescription)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescription && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Head Tag
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='headTag'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Head Tag'
+                    error={Boolean(errors.headTag)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTag && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Footer Tag
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='footerTag'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Footer Tag'
+                    error={Boolean(errors.footerTag)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTag && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Head Embed All
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='headEmbedAll'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Head Embed All'
+                    error={Boolean(errors.headEmbedAll)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headEmbedAll && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Head Tag All
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='headTagAll'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Head Tag All'
+                    error={Boolean(errors.headTagAll)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagAll && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Footer Tag All
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='footerTagAll'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    required
+                    onChange={onChange}
+                    placeholder='Footer Tag All'
+                    error={Boolean(errors.footerTagAll)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagAll && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Divider sx={{ mb: 2 }} />
+          <Grid container xs={12}>
+            <Grid item xs={4} sm={4}>
+              <Typography variant='h5' noWrap sx={{ mb: 5 }}>
+                Language
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
+              <Controller
+                name='language'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    select
+                    fullWidth
+                    defaultValue=''
+                    SelectProps={{
+                      value: value,
+                      onChange: e => onChange(e)
+                    }}
+                    id='validation-basic-select'
+                    error={Boolean(errors.language)}
+                    aria-describedby='validation-basic-select'
+                    {...(errors.language && { helperText: 'This field is required' })}
+                  >
+                    {
+                      LANG.map(ele => <MenuItem key={ele.value} value={ele.value}>{ele?.label}</MenuItem>)
+                    }
+                  </CustomTextField>
+                )}
+              />
+            </Grid>
+          </Grid>
         </Card>
         <Card sx={{ mt: 5 }}>
           <Box sx={{ my: 5, ml: 5 }}>
@@ -198,7 +408,7 @@ const UserList = () => {
             </Typography>
             <Box>
               {
-                files.length ? img :
+                files ? img :
                   <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
                     <input {...getInputProps()} />
                     Upload
@@ -209,7 +419,17 @@ const UserList = () => {
         </Card>
       </Grid>
       <Box sx={{ width: '100%', textAlign: 'right' }}>
-        <Button variant='contained' sx={{ mt: 5 }}>
+        <Button variant='contained' sx={{ mt: 5 }} onClick={handleSubmit(onSubmit)}>
+          {loading ? (
+            <CircularProgress
+              sx={{
+                color: 'common.white',
+                width: '20px !important',
+                height: '20px !important',
+                mr: theme => theme.spacing(2)
+              }}
+            />
+          ) : null}
           Save
         </Button>
       </Box>
