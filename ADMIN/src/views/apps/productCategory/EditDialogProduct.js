@@ -65,7 +65,6 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
-      console.log(Object.assign(acceptedFiles[0]))
       setFiles(Object.assign(acceptedFiles[0]))
     }
   })
@@ -102,7 +101,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     formData.append("title", value.title);
     formData.append("description", value.description);
     formData.append("parentCategory", value.parentCategory);
-    formData.append("file", files);
+    typeof files === "string" || formData.append("file", files);
     dispatch(updateCategoryProduct({ formData, setVisible, setLoading }))
   }
 
@@ -202,12 +201,12 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                       onChange: e => onChange(e)
                     }}
                     id='validation-basic-select'
-                    error={Boolean(errors.select)}
+                    error={Boolean(errors.parentCategory)}
                     aria-describedby='validation-basic-select'
-                    {...(errors.select && { helperText: 'This field is required' })}
+                    {...(errors.parentCategory && { helperText: 'This field is required' })}
                   >
                     {
-                      store.data.map(ele => <MenuItem  key={file.name} value={ele._id}>{ele.title}</MenuItem>)
+                      store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.title}</MenuItem>)
                     }
                   </CustomTextField>
                 )}

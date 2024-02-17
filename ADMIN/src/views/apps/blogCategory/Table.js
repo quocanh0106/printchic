@@ -30,6 +30,7 @@ import TableHeader from 'src/views/apps/blogCategory/TableHeader'
 // ** Components Imports
 import AddDialogProduct from './AddDialogBlogCategory'
 import DialogEditCard from './EditDialogBlogCategory'
+import { deleteCategoryBlog, fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 
 
 const UserList = () => {
@@ -41,24 +42,23 @@ const UserList = () => {
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
 
+  const [query, setQuery] = useState({
+    page: 1,
+    search: ''
+  })
+
   // ** Hooks
   const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
+  const store = useSelector(state => state.categoryBlog)
+
   useEffect(() => {
-    dispatch(
-      fetchData({
-        role: '',
-        q: value,
-        status: '',
-        currentPlan: plan
-      })
-    )
-  }, [dispatch, plan, value])
+    dispatch(fetchCategoryBlog())
+  }, [])
 
 
   const columns = [
     {
-      flex: 0.05,
+      flex: 0.18,
       minWidth: 50,
       field: 'Id',
       headerName: 'No',
@@ -66,6 +66,21 @@ const UserList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {row.id}
+          </Box>
+        )
+      }
+    },
+    {
+      flex: 0.2,
+      field: 'handleUrl',
+      minWidth: 170,
+      headerName: 'Handle URL',
+      renderCell: ({ row }) => {
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
+              {row.handleUrl}
+            </Typography>
           </Box>
         )
       }
@@ -101,12 +116,12 @@ const UserList = () => {
     {
       flex: 0.25,
       minWidth: 190,
-      field: 'parentCategory',
-      headerName: 'Parent Category',
+      field: 'metaDescription',
+      headerName: 'Meta Description',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {row.parentCategory}
+            {row.metaDescription}
           </Typography>
         )
       }
@@ -135,12 +150,17 @@ const UserList = () => {
                 }
               },
               {
-                text: 'Product list',
+                text: 'Blog list',
                 icon: <Icon icon='eos-icons:product-classes' fontSize={20} />
               },
               {
                 text: 'Delete',
-                icon: <Icon icon='tabler:trash' fontSize={20} />
+                icon: <Icon icon='tabler:trash' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => {
+                    dispatch(deleteCategoryBlog(row._id))
+                  }
+                }
               },
             ]}
           />
@@ -161,7 +181,7 @@ const UserList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} />
+          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} query={query} />
           <DataGrid
             autoHeight
             rowHeight={62}

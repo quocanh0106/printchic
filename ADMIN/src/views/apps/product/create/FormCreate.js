@@ -5,8 +5,8 @@ import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Custom Components Imports
-import 'react-quill/dist/quill.snow.css'
-import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css'
+// import ReactQuill from 'react-quill';
 import { useState } from 'react'
 import { Box } from '@mui/system'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
@@ -178,7 +178,7 @@ const FormCreate = () => {
             <Typography>
               Description
             </Typography>
-            <ReactQuill theme="snow" value={value} onChange={setValue} />;
+            {/* <ReactQuill theme="snow" value={value} onChange={setValue} />; */}
           </Box>
         </Card>
         <Card sx={{ p: 4, mt: 4 }}>

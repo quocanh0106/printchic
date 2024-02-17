@@ -8,9 +8,7 @@ import axios from 'axios'
 // ** Fetch Events
 export const fetchEvents = createAsyncThunk('appCalendar/fetchEvents', async query => {
   const response = await axios.get(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryProduct/list`, {
-    params: {
-      query
-    }
+    params: query
   })
 
   return response.data
@@ -23,19 +21,7 @@ export const addCategoryProduct = createAsyncThunk('appCalendar/addCategoryProdu
       'Content-Type': 'multipart/form-data',
     }
   })
-  console.log('response', response)
-  if (response.data.success) {
-    event.setVisible(false)
-    toast.success('New category product created successfully', {
-      duration: 2000
-    })
-    event.setLoading(false)
-  } else {
-    toast.error(response.data.message, {
-      duration: 2000
-    })
-    event.setLoading(false)
-  }
+  event.callBackSubmit(response.data)
   await dispatch(fetchEvents())
 
   return response.data.event

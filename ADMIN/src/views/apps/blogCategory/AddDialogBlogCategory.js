@@ -26,10 +26,13 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { MenuItem } from '@mui/material'
+import { CircularProgress, MenuItem } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { Controller, useForm } from 'react-hook-form'
 import Icon from 'src/@core/components/icon'
+import { addCategoryBlog } from 'src/store/apps/categoryBlog'
+import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -51,8 +54,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 const DialogAddCard = ({ visible, setVisible }) => {
+  const dispatch = useDispatch()
+
   // ** States
   const [files, setFiles] = useState([])
+  const [loading, setLoading] = useState(false)
 
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
@@ -65,17 +71,12 @@ const DialogAddCard = ({ visible, setVisible }) => {
     }
   })
 
-  const handleClose = () => {
-    setVisible(false)
-  }
 
-  const onSubmit = (value) => {
-    console.log('value', value)
-  }
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     id: 0,
@@ -84,6 +85,38 @@ const DialogAddCard = ({ visible, setVisible }) => {
     description: '',
     status: '',
   })
+
+  const handleClose = () => {
+    setVisible(false)
+  }
+
+  const callBackSubmit = (data) => {
+    console.log('data', data)
+    if (data.success) {
+      setVisible(false)
+      toast.success('New category blog created successfully', {
+        duration: 2000
+      })
+    } else {
+      toast.error(data.message, {
+        duration: 2000
+      })
+    }
+    reset()
+    setFiles([])
+    setLoading(false)
+  }
+
+  const onSubmit = (value) => {
+    setLoading(true)
+    const formData = new FormData();
+    formData.append("title", value.title);
+    formData.append("handleUrl", value.handleUrl);
+    formData.append("metaDescription", value.metaDescription);
+    formData.append("description", value.description);
+    formData.append("file", files[0]);
+    dispatch(addCategoryBlog({ formData, callBackSubmit }))
+  }
 
   const img = files.map(file => (
     <Box key={file.name} sx={{ position: 'relative' }}>
@@ -124,6 +157,46 @@ const DialogAddCard = ({ visible, setVisible }) => {
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12}>
               <Controller
+                name='handleUrl'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Handle URL'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Handle URL'
+                    error={Boolean(errors.handleUrl)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.handleUrl && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name='metaDescription'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Meta Description'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Meta Description'
+                    error={Boolean(errors.metaDescription)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescription && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
                 name='title'
                 control={control}
                 rules={{ required: true }}
@@ -135,9 +208,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     required
                     onChange={onChange}
                     placeholder='Leonard'
-                    error={Boolean(errors.firstName)}
+                    error={Boolean(errors.title)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.firstName && { helperText: 'This field is required' })}
+                    {...(errors.title && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -155,9 +228,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     required
                     {...field}
                     label='Description'
-                    error={Boolean(errors.textarea)}
+                    error={Boolean(errors.description)}
                     aria-describedby='validation-basic-textarea'
-                    {...(errors.textarea && { helperText: 'This field is required' })}
+                    {...(errors.description && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -189,6 +262,16 @@ const DialogAddCard = ({ visible, setVisible }) => {
         }}
       >
         <Button variant='contained' sx={{ mr: 1 }} onClick={handleSubmit(onSubmit)}>
+          {loading ? (
+            <CircularProgress
+              sx={{
+                color: 'common.white',
+                width: '20px !important',
+                height: '20px !important',
+                mr: theme => theme.spacing(2)
+              }}
+            />
+          ) : null}
           Create
         </Button>
         <Button variant='tonal' color='secondary' onClick={handleClose}>

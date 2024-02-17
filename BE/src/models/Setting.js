@@ -11,6 +11,30 @@ const settingBase = {
   languageId: {
     type: ObjectId, default: null, require: true, ref: 'languages',
   },
+  imageFeature: {
+    type: String, trim: true,
+  },
+  metaTitle: {
+    type: String, trim: true,
+  },
+  metaDescription: {
+    type: String, trim: true,
+  },
+  headTag: {
+    type: String, trim: true,
+  },
+  footerTag: {
+    type: String, trim: true,
+  },
+  headEmbedAll: {
+    type: String, trim: true,
+  },
+  headTagAll: {
+    type: String, trim: true,
+  },
+  footerTagAll: {
+    type: String, trim: true,
+  },
   language: {
     type: String, trim: true,
   },
