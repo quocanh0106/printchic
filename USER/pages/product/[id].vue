@@ -1,9 +1,37 @@
 <template>
   <div class="product-detail-wrapper">
-    <div class="product-detail-head-block flex">
-      <div class="display-image"></div>
-      <div class="product-variant-and-infor"></div>
+    <div class="product-detail-head-block flex justify-between gap-x-16 custom-padding">
+      <div class="display-image flex flex-col gap-y-10">
+        <VueGallery :photos="photos" />
+        <img :src="productInfo"/>
+      </div>
+      <div class="product-variant-and-infor">
+        <h1 class="section-title font-semibold product-name">{{ product.name }}</h1>
+        <p class="product-sku mt-2">SKU: {{ product.sku }}</p>
+        <div class="price-n-ship mt-6 flex items-center gap-x-2">
+          <span class="price">${{ product.price }}</span>
+          <span class="include-ship-tag bg-light-blue-custom" v-show="product.includeShipping">{{ $t('productDetail.includeShipping') }}</span>
+        </div>
+        <p class="product-description mt-6">
+          {{ product.description }}
+        </p>
+        <div class="product-option mt-8 flex flex-col gap-y-5">
+          <span v-for="item,index in product.option" :key="index">
+            <h1 class="text-black font-semibold leading-3">{{ item.optionName }}</h1>
+            <span class="option-variant flex gap-x-3">
+              <v-button class="secondary-btn mt-4 txt-primary variant-button cursor-pointer" v-for="variant,ind in item.optionVariant" :key="ind" >
+                {{ variant }}
+              </v-button >
+            </span>
+          </span>
+        </div>
+        <div class="action-button w-100 mt-8 flex flex-col">
+          <v-button class="primary-btn w-100 text-center text-white cursor-pointer">{{ $t('productDetail.downloadMockup') }}</v-button>
+          <v-button class="secondary-btn w-100  text-center cursor-pointer mt-3">{{ $t('productDetail.contactSupport') }}</v-button>
+        </div>
+      </div>
     </div>
+    
 
     <!-- Tab -->
     <div class="tab-info-wrapper custom-padding">
@@ -55,39 +83,57 @@
 <script>
 //component
 import help from "../../components/help.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-
-// Import Swiper styles
-import "swiper/css";
-
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-
+import VueGallery from "../../components/vueGalery.vue";
 // asset
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import productInfo from "../../assets/svg/productInfo.svg";
 
 export default {
   components: {
     help,
-    Swiper,
-    SwiperSlide,
+    VueGallery
   },
   data() {
     return {
       arrowUpRight,
-      FreeMode,
-      Navigation,
-      Thumbs,
+      productInfo,
       tab: null,
-      thumbsSwiper: null,
+      photos: [
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-01-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-02-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-03-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-04-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-05-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-06-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-07-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-08-min.jpg',
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-08-min.jpg',
+      ],
+      product: {
+        name: 'Colorblast Heavyweight T-Shirt Comfort Colors 1745 (Made in US)',
+        sku : 'ARPSVN',
+        price: '15.75',
+        includeShipping: true,
+        description: 'Made for training, travel, or lounging, our insanely-soft Flowknit fabric is jam-packed with performance features like moisture-wicking and anti-odor benefits.',
+        option: [
+          {
+            optionName: 'Size',
+            optionVariant: ['S', 'M', 'L']
+          },
+          {
+            optionName: 'Color',
+            optionVariant: ['red', 'green', 'yellow']
+          },
+          {
+            optionName: 'Material',
+            optionVariant: ['Cotton', 'Silk', 'Fabric']
+          }
+        ],
+        moreInformation: ''
+      }
     };
   },
   method: {
-    setThumbsSwiper(swiper) {
-      this.thumbsSwiper = swiper;
-    },
   },
 };
 </script>
@@ -110,5 +156,16 @@ export default {
     background-color: transparent !important;
     box-shadow: none !important;
   }
+}
+.variant-button{
+  padding: 12px 24px;
+  min-width: 0px !important;
+}
+.include-ship-tag{
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.tab-info-wrapper{
+  padding-top: 0px !important;
 }
 </style>

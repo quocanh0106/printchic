@@ -1,35 +1,53 @@
 <template>
     <div class="custom-input">
         <v-text-field
-        label="Main input"
+        :label="$t('navBar.search')"
         :rules="rules"
         class='custom-text-field'
+        prepend-inner-icon="mdi-magnify"
         hide-details="auto"
+        v-model="querySearch"
+        @keyup.enter="searchProduct"
     >
-    <template v-slot:append>
-      <v-icon color="green">
-        mdi-search
-      </v-icon>
-    </template>
     </v-text-field>
     </div>
 </template>
 
 <script>
+import searchIcon from '../assets/svg/searchIcon.svg'
 
 export default {
  components: {
   },
   data() {
     return {
+      querySearch:''
     };
   },
+  methods:{
+    searchProduct() {
+      console.log(this.querySearch, 'sadasd');
+      const url = `/search-result?querySearch=${this.querySearch}`;
+      // this.$router.push({path:'/search-result',query: this.querySearch})
+      window.location.href = url;
+    }
+  },
+  mounted(){
+    this.querySearch = '';
+  }
 }
 </script>
 
 <style lang="scss" scoped>
     .custom-text-field{
-        width:328px;
+        width:20vw;
         max-width:328px;
+        :deep(.v-field__overlay){
+          background-color: transparent;
+        }
+        :deep(.v-field__outline){
+          border: 1px solid #EAECF0 !important;
+          border-radius: 4px;
+        }
     }
 </style>

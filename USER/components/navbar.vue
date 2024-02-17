@@ -1,38 +1,148 @@
 <template>
-  <div class="nav-bar">
-    <img :src="Logo" />
-    <customInput />
-    <div class="nav-bar-action flex items-center">
-      <ul class="nav-bar-wrapper">
-        <li v-for="(item, index) in links" :key="index">
-          <a :href="item.href">{{ item.label }}</a>
-        </li>
-      </ul>
-      <v-button class="primary-btn cursor-pointer text-white">{{ $t("navBar.signUp") }}</v-button>
+  <div class="nav-bar-outer-wrapper-all-screen">
+    <div class="nav-bar" v-show="pc">
+      <img
+        :src="Logo"
+        class="cursor-pointer"
+        @click="this.$router.push('/home')"
+      />
+      <customInput />
+      <div class="nav-bar-action flex items-center">
+        <ul class="nav-bar-wrapper">
+          <li v-for="(item, index) in links" :key="index">
+            <a class="navigation-menu" :href="item.href">{{ item.label }}</a>
+          </li>
+          <li class="navigation-menu primary-btn cursor-pointer text-white">
+            {{ $t("navBar.signUp") }}
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class="nav-bar-mobile flex justify-between" v-show="mobile">
+      <img
+        :src="Logo"
+        class="cursor-pointer"
+        @click="this.$router.push('/home')"
+      />
+      <div class="mobile-nav-action flex items-center gap-x-5">
+        <img :src="searchIcon" />
+        <img :src="drawerIcon" @click.stop="drawer = !drawer" />
+      </div>
+    </div>
+    <v-card class="drawer" v-if="drawer">
+      <v-layout>
+        <v-navigation-drawer v-model="drawer" temporary>
+          <div class="logo-n-closebtn flex justify-between">
+            <img
+              :src="Logo"
+              class="cursor-pointer"
+              @click="this.$router.push('/home')"
+            />
+            <img :src="closeIcon" class="cursor-pointer" @click="drawer = false" />
+          </div>
+          <customInput class="search-input-mobile"/>
+          <v-divider></v-divider>
+
+          <v-list density="compact" nav>
+            <v-list-item
+              prepend-icon="mdi-view-dashboard"
+              title="Home"
+              value="home"
+            ></v-list-item>
+            <v-list-item
+              prepend-icon="mdi-forum"
+              title="About"
+              value="about"
+            ></v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+      </v-layout>
+    </v-card>
   </div>
 </template>
 
-<script setup>
-const { locale } = useI18n()
-import Logo from '../assets/svg/Logo.svg'
-import customInput from './customInput.vue'
-defineProps({
-  components:{customInput},
-  links: {
-    type: Array,
-    default: () => [
-      { label: 'Home', href: '/home' },
-      { label: 'Products', href: '/product' },
-      { label: 'How it works', href: '/how-it-works' },
-      { label: 'Blog', href: '/' },
-      { label: 'About us', href: '/about-us' },
-    ],
+<script>
+import Logo from "../assets/svg/Logo.svg";
+import customInput from "./customInput.vue";
+import drawerIcon from "../assets/svg/drawerIcon.svg";
+import searchIcon from "../assets/svg/searchIcon.svg";
+import closeIcon from "../assets/svg/closeIcon.svg"
+export default {
+  components: {
+    customInput,
+  }, // Apply the mixin
+  props: {
+    links: {
+      type: Array,
+      default: () => [
+        { label: "Home", href: "/home" },
+        { label: "Products", href: "/product" },
+        { label: "How it works", href: "/how-it-works" },
+        { label: "Blog", href: "/" },
+        { label: "About us", href: "/about-us" },
+      ],
+    },
   },
-});
+  data() {
+    return {
+      Logo,
+      drawerIcon,
+      searchIcon,
+      closeIcon,
+      drawer: null,
+    };
+  },
+  computed: {
+    mobile() {
+      if (process.client) {
+        if (window.screen.width <= 600) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    tablet() {
+      if (process.client) {
+        if (window.screen.width > 600 && window.screen.width <= 992) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    pc() {
+      if (process.client) {
+        if (window.screen.width > 992) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    lgPc() {
+      if (process.client) {
+        if (window.screen.width > 2000) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    extraPc() {
+      if (process.client) {
+        if (window.screen.width > 2500) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .nav-bar {
   /* Your navigation bar styles here */
   display: flex;
@@ -58,9 +168,33 @@ defineProps({
   color: #007bff;
 }
 
-.nav-bar-wrapper{
+.nav-bar-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 2vw;
+}
+
+.navigation-menu {
+  font-size: 1vw;
+}
+.nav-bar-mobile {
+  padding: 16px 20px;
+}
+.drawer {
+  z-index: 1;
+  :deep(.v-navigation-drawer) {
+    width: 100% !important;
+  }
+}
+.logo-n-closebtn {
+  padding: 24px 16px;
+}
+.search-input-mobile{
+  padding: 24px 16px;
+  :deep(.v-input--horizontal){
+    width: 100vw;
+    max-width: 100%;
+  }
 }
 </style>

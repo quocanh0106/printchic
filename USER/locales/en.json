@@ -3,7 +3,8 @@
   "ContactUs": "Contact Us",
   "viewAll": "View All",
   "navBar":{
-    "signUp" : "Sign Up"
+    "signUp" : "Sign Up",
+    "search" : "Search for anything you need"
   },
   "prosAndConsPage": {
     "prosAndCons" : "Pros and Cons of POD",
@@ -174,7 +175,10 @@
 
   },
   "productDetail" : {
-    "relatedProduct" : "Related Products"
+    "relatedProduct" : "Related Products",
+    "includeShipping" : "Include shipping",
+    "downloadMockup" : "Download Mockup & Template",
+    "contactSupport" : "Contact Support"
   },
   "button" :{
     "tryForNow" : "Try for Now",
