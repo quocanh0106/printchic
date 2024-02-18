@@ -92,6 +92,9 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
+            if (req.files) {
+                req.body.media = req.files;
+            }
             const result = await ProductService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10394, result));

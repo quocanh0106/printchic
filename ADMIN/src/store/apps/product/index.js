@@ -28,24 +28,13 @@ export const addProduct = createAsyncThunk('product/addProduct', async (event, {
 })
 
 // ** Update Event
-export const updateCategoryProduct = createAsyncThunk('product/updateProduct', async (event, { dispatch }) => {
+export const updateProduct = createAsyncThunk('product/updateProduct', async (event, { dispatch }) => {
   const response = await axios.put(`${process.env.NEXT_PUBLIC_URL_API}/auth/product/update`, event.formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     }
   })
-  if (response.data.success) {
-    event.setVisible(false)
-    toast.success('Category product updated successfully', {
-      duration: 2000
-    })
-    event.setLoading(false)
-  } else {
-    toast.error(response.data.message, {
-      duration: 2000
-    })
-    event.setLoading(false)
-  }
+  event.callBackSubmit(response.data)
   await dispatch(fetchProduct())
 
   return response.data.event

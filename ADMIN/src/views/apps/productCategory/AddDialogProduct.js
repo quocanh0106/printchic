@@ -170,9 +170,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     required
                     onChange={onChange}
                     placeholder='Leonard'
-                    error={Boolean(errors.firstName)}
+                    error={Boolean(errors.title)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.firstName && { helperText: 'This field is required' })}
+                    {...(errors.title && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -190,9 +190,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                     required
                     {...field}
                     label='Description'
-                    error={Boolean(errors.textarea)}
+                    error={Boolean(errors.description)}
                     aria-describedby='validation-basic-textarea'
-                    {...(errors.textarea && { helperText: 'This field is required' })}
+                    {...(errors.description && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -201,7 +201,6 @@ const DialogAddCard = ({ visible, setVisible }) => {
               <Controller
                 name='parentCategory'
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     select
@@ -213,9 +212,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                       onChange: e => onChange(e)
                     }}
                     id='validation-basic-select'
-                    error={Boolean(errors.select)}
                     aria-describedby='validation-basic-select'
-                    {...(errors.select && { helperText: 'This field is required' })}
                   >
                     {
                       store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)

@@ -19,7 +19,7 @@ const create = async (data) => {
         set.img = data.img;
         set.tags = data.tags;
         set.title = data.title;
-        set.recommendProduct = data.recommendProduct;
+        set.recommendProduct = JSON.parse(data.recommendProduct);
         set.content = data.content;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
@@ -108,7 +108,7 @@ const updateConditions = async (data) => {
             set.categoryBlogId = data.categoryBlogId;
         }
         if (!isEmpty(data?.recommendProduct)) {
-            set.recommendProduct = data.recommendProduct;
+            set.recommendProduct = JSON.parse(data.recommendProduct);
         }
         if (!isEmpty(data?.tags)) {
             set.tags = data.tags;
@@ -139,8 +139,8 @@ const updateDelete = async (data) => {
 const updateStatus = async (data) => {
     try {
         const conditions = {};
-        if (data?.newObjId) {
-            conditions._id = convertToObjectId(data.newObjId);
+        if (data?.blogId) {
+            conditions._id = convertToObjectId(data.blogId);
         }
         const set = {};
         set.status = STATUS[data.status];

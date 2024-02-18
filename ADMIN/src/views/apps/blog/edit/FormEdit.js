@@ -23,7 +23,7 @@ import toast from 'react-hot-toast'
 import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { top100Films } from 'src/@fake-db/autocomplete'
-import { addBlog } from 'src/store/apps/blog'
+import { addBlog, fetchBlog, updateBlog } from 'src/store/apps/blog'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -49,7 +49,7 @@ const FormCreate = () => {
   const [listOPtionVariant, setListOptionVariant] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [column, setColumn] = useState([]);
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
 
@@ -57,7 +57,7 @@ const FormCreate = () => {
 
   const callBackSubmit = (data) => {
     if (data.success) {
-      toast.success('New Blog created successfully', {
+      toast.success('Blog updated successfully', {
         duration: 2000
       })
       router.replace('/apps/blog/')
@@ -75,15 +75,16 @@ const FormCreate = () => {
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
+    formData.append("blogId", router.query.id);
     formData.append("title", value.title);
     formData.append("content", value.content);
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
     formData.append("tags", value.tags);
-    formData.append('file', files[0]);
+    typeof files === "string" || formData.append("file", files);
 
-    dispatch(addBlog({ formData, callBackSubmit }))
+    dispatch(updateBlog({ formData, callBackSubmit }))
 
   }
 
@@ -108,11 +109,34 @@ const FormCreate = () => {
 
   const store = useSelector(state => state.categoryBlog)
   const storeProduct = useSelector(state => state.product)
+  const storeBlog = useSelector(state => state.blog)
 
   useEffect(() => {
     dispatch(fetchCategoryBlog())
     dispatch(fetchProduct())
+    dispatch(fetchBlog())
   }, [])
+
+  useEffect(() => {
+    if(storeBlog.data.length > 0) {
+      const data = storeBlog.data.find(ele => ele._id == router.query.id)
+      
+      const listRecommend = [];
+      storeProduct.data.forEach(ele => {
+        if(data?.recommendProduct?.includes(ele._id)) {
+          listRecommend.push(ele)
+        }
+      })
+      console.log('data',data)
+      setValue('blogCategory', data?.categoryBlogId?._id)
+      setValue('content', data?.content)
+      setValue('blogStatus', data?.status)
+      setValue('tags', data?.tags)
+      setValue('title', data?.title)
+      setValueRecommend(listRecommend)
+      setFiles(data?.img)
+    }
+  },[storeBlog, storeProduct, store, router.query.id])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -120,18 +144,21 @@ const FormCreate = () => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file)))
+      setFiles(Object.assign(acceptedFiles[0]))
     }
   })
 
-  const img = files.map(file => (
-    <Box key={file.name} sx={{ position: 'relative' }}>
-      <CustomCloseButton onClick={() => setFiles([])}>
-        <Icon icon='tabler:x' fontSize='1.25rem' />
-      </CustomCloseButton>
-      <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
-    </Box>
-  ))
+  const img = <Box sx={{ position: 'relative' }}>
+    <CustomCloseButton onClick={() => setFiles()}>
+      <Icon icon='tabler:x' fontSize='1.25rem' />
+    </CustomCloseButton>
+    {
+      typeof files === "string" ?
+        <img width={'100%'} className='single-file-image' src={files} />
+        :
+        <img width={'100%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
+    }
+  </Box>
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
@@ -150,7 +177,6 @@ const FormCreate = () => {
                 <CustomTextField
                   select
                   fullWidth
-                  defaultValue=''
                   label='Blog Status'
                   SelectProps={{
                     value: value,
@@ -229,7 +255,7 @@ const FormCreate = () => {
                 Thumnail Image
               </Typography>
               {
-                files.length ? img :
+                files ? img :
                   <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
                     <input {...getInputProps()} />
                     Upload

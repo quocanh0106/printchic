@@ -24,6 +24,7 @@ const create = async (data) => {
         set.variants = JSON.parse(data.variants);
         set.status = data.status;
         set.media = data.media;
+        set.currency = data.currency;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -89,25 +90,44 @@ const findByConditions = async (data) => {
 
 const updateConditions = async (data) => {
     console.log('data', data)
+
     try {
         const conditions = {};
-        if (data?.categoryProductId) {
-            conditions._id = convertToObjectId(data.categoryProductId);
+        if (data?.productId) {
+            conditions._id = convertToObjectId(data.productId);
         }
         const set = {};
         if (!isEmpty(data?.title)) {
             set.title = data.title;
         }
+        if (!isEmpty(data?.handleUrl)) {
+            set.handleUrl = data.handleUrl;
+        }
+        if (!isEmpty(data?.categoryProductId)) {
+            set.categoryProductId = convertToObjectId(data?.categoryProductId || '');
+        }
+        if (!isEmpty(data?.metaDescription)) {
+            set.metaDescription = data.metaDescription;
+        }
+        if (!isEmpty(data?.type)) {
+            set.type = data.type;
+        }
         if (!isEmpty(data?.description)) {
             set.description = data.description;
         }
-        if (!isEmpty(data?.bannerImg)) {
-            set.bannerImg = data.bannerImg;
+        if (!isEmpty(data?.variants)) {
+            set.variants = JSON.parse(data.variants);
         }
-        if (!isEmpty(data?.parentCategory)) {
-            set.parentCategory = data.parentCategory;
+        if (!isEmpty(data?.status)) {
+            set.status = data.status;
         }
-        const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
+        if (!isEmpty(data?.media)) {
+            set.media = data.media;
+        }
+        if (!isEmpty(data?.currency)) {
+            set.currency = data.currency;
+        }
+        const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')

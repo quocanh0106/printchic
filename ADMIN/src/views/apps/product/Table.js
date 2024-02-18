@@ -27,6 +27,7 @@ import { fetchData } from 'src/store/apps/user'
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/product/TableHeader'
 import { deleteProduct, fetchProduct } from 'src/store/apps/product'
+import { useRouter } from 'next/router'
 
 // ** Components Imports
 
@@ -41,6 +42,7 @@ const UserList = () => {
   const [rowData, setRowData] = useState({})
 
   // ** Hooks
+  const router = useRouter()
   const dispatch = useDispatch()
   const store = useSelector(state => state.product)
 
@@ -151,11 +153,7 @@ const UserList = () => {
                 text: 'Edit',
                 icon: <Icon icon='tabler:edit' fontSize={20} />,
                 menuItemProps: {
-                  onClick: () => {
-                    const tempRow = JSON.parse(JSON.stringify(row))
-                    setRowData(tempRow)
-                    setOpenEditDialog(true)
-                  }
+                  onClick: () => router.replace(`/apps/product/edit/${row._id}`)
                 }
               },
               {

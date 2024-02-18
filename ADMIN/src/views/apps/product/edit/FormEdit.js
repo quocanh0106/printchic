@@ -17,7 +17,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { addProduct } from 'src/store/apps/product'
+import { addProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 
@@ -56,7 +56,7 @@ const FormCreate = () => {
 
   const callBackSubmit = (data) => {
     if (data.success) {
-      toast.success('New product created successfully', {
+      toast.success('Product updated successfully', {
         duration: 2000
       })
       router.replace('/apps/product/')
@@ -68,10 +68,10 @@ const FormCreate = () => {
     setLoading(false)
   }
 
-
   const onSubmit = (value) => {
-    // setLoading(true)
-    const variant = listOPtionVariant.map((ele) => {
+    setLoading(true)
+    let tempListOPtionVariant = JSON.parse(JSON.stringify(listOPtionVariant))
+    let variant = tempListOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
       ele.stock = value[`stock-${ele.id}`]
@@ -80,6 +80,7 @@ const FormCreate = () => {
     })
     console.log('value', value)
     const formData = new FormData();
+    formData.append("productId", router.query.id);
     formData.append("title", value.title);
     formData.append("handleUrl", value.handleUrl);
     formData.append("metaDescription", value.metaDescription);
@@ -89,11 +90,11 @@ const FormCreate = () => {
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
+    // for (let i = 0; i < files.length; i++) {
+    //   formData.append('files', files[i]);
+    // }
 
-    dispatch(addProduct({ formData, callBackSubmit }))
+    dispatch(updateProduct({ formData, callBackSubmit }))
 
   }
 
@@ -117,10 +118,121 @@ const FormCreate = () => {
   const dispatch = useDispatch()
 
   const store = useSelector(state => state.categoryProduct)
+  const storeProduct = useSelector(state => state.product)
+
+  const URLtoFile = async (url) => {
+
+    const res = await fetch(url);
+    const blob = await res.blob();
+    // Gets URL data and read to blob
+  
+  
+    const mime = blob.type;
+    const ext = mime.slice(mime.lastIndexOf("/") + 1, mime.length);
+    // Gets blob MIME type (e.g. image/png) and extracts extension
+        
+    const file = new File([blob], `filename.${ext}`, {
+        type: mime,
+    })
+    // Creates new File object using blob data, extension and MIME type
+  
+    console.log(file);
+    return file
+  
+  }
 
   useEffect(() => {
     dispatch(fetchEvents())
+    dispatch(fetchProduct())
   }, [])
+
+  const handleListVariant = (data) => {
+    let tempVariant = []
+
+    const isExistOption_1 =  data.find(ele => ele.nameOption_1)
+    const isExistOption_2 =  data.find(ele => ele.nameOption_2)
+    const isExistOption_3 =  data.find(ele => ele.nameOption_3)
+
+    if(isExistOption_1) {
+      setValue(`nameVariant${count}`, isExistOption_1.nameOption_1)
+      tempVariant.push({
+        index: count,
+        option: []
+      })
+      count++
+    }
+    if(isExistOption_2) {
+      setValue(`nameVariant${count}`,isExistOption_2.nameOption_2)
+      tempVariant.push({
+        index: count,
+        option: []
+      })
+      count++
+    }
+    if(isExistOption_3) {
+      setValue(`nameVariant${count}`,isExistOption_3.nameOption_3)
+      tempVariant.push({
+        index: count,
+        option: []
+      })
+      count++
+    }
+
+    data.forEach(ele => {
+      if(ele?.nameOption_1) {
+        tempVariant[0].option.push({
+          index: countOption
+        })
+        setValue(`nameOption-${tempVariant[0].index}-${countOption}`, ele.nameVariant_1)
+        countOption++
+      } else if(ele?.nameOption_2) {
+        tempVariant[1].option.push({
+          index: countOption
+        })
+        setValue(`nameOption-${tempVariant[1].index}-${countOption}`, ele.nameVariant_2)
+        countOption++
+      } else if(ele?.nameOption_3) {
+        tempVariant[2].option.push({
+          index: countOption
+        })
+        setValue(`nameOption-${tempVariant[2].index}-${countOption}`, ele.nameVariant_3)
+        countOption++
+      }
+    })
+
+    data.forEach(ele => {
+      setValue(`price-${ele.id}`, ele.price)
+      setValue(`sku-${ele.id}`, ele.sku)
+      setValue(`stock-${ele.id}`, ele.stock)
+    })
+
+    setListOptionVariant(data)
+    setListVariant(tempVariant)
+  }
+
+  useEffect(() => {
+    if(storeProduct.data.length > 0) {
+      const data = storeProduct.data.find(ele => ele._id == router.query.id)
+
+      const listFile = [];
+      data?.media?.forEach(ele => {
+        listFile.push(URLtoFile(ele.path))
+      })
+
+      handleListVariant(data.variants)
+
+      console.log('listFile',listFile)
+      setValue('title', data?.title)
+      setValue('handleUrl', data?.handleUrl)
+      setValue('metaDescription', data?.metaDescription)
+      setValue('productStatus', data?.status)
+      setValue('description', data?.description)
+      setValue('currency', data?.currency)
+      setValue('productType', data?.type)
+      setValue('productCategory', data?.categoryProductId)
+      setFiles(data?.media)
+    }
+  }, [storeProduct, store,  router.query.id])
 
   console.log('errors', errors)
 
@@ -263,8 +375,6 @@ const FormCreate = () => {
   }
 
   const getListVariant = () => {
-    
-  console.log('listVariant',listVariant)
     if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant)) {
       setOpenDialog(true)
     } else {
@@ -381,12 +491,15 @@ const FormCreate = () => {
     setFiles([...filtered])
   }
 
-  const fileList = files.map(file => (
+  const fileList = files?.map(file => (
     <Box key={file.name} sx={{ position: 'relative', width: '49%' }}>
       <CustomCloseButton onClick={() => handleRemoveFile(file)}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
-      <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
+      {
+        typeof file.path == 'string' ? <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={file.path} /> : <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
+      }
+      
     </Box>
   ))
 
@@ -424,7 +537,7 @@ const FormCreate = () => {
               )}
             />
             <Controller
-              name='ProductCategory'
+              name='productCategory'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
@@ -439,9 +552,9 @@ const FormCreate = () => {
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
-                  error={Boolean(errors.ProductCategory)}
+                  error={Boolean(errors.productCategory)}
                   aria-describedby='validation-basic-select'
-                  {...(errors.ProductCategory && { helperText: 'This field is required' })}
+                  {...(errors.productCategory && { helperText: 'This field is required' })}
                 >
                   {
                     store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)
@@ -534,7 +647,7 @@ const FormCreate = () => {
                   </Typography>
                 </Box>
               </div>
-              {files.length ? (
+              {files?.length ? (
                 <Fragment>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>{fileList}</Box>
                   <div className='buttons'>
@@ -558,7 +671,6 @@ const FormCreate = () => {
                     <CustomTextField
                       fullWidth
                       select
-                      defaultValue=''
                       label='Currency'
                       SelectProps={{
                         value: value,

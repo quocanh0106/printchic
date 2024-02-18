@@ -26,7 +26,8 @@ import { fetchData } from 'src/store/apps/user'
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/blog/TableHeader'
-import { fetchBlog } from 'src/store/apps/blog'
+import { deleteBlog, fetchBlog } from 'src/store/apps/blog'
+import { useRouter } from 'next/router'
 
 // ** Components Imports
 
@@ -39,12 +40,14 @@ const UserList = () => {
   const [createDialog, setOpenCreateDialog] = useState(false)
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
+
   const [query, setQuery] = useState({
     page: 1,
     search: ''
   })
 
   // ** Hooks
+  const router = useRouter()
   const dispatch = useDispatch()
   const store = useSelector(state => state.blog)
 
@@ -137,11 +140,7 @@ const UserList = () => {
                 text: 'Edit',
                 icon: <Icon icon='tabler:edit' fontSize={20} />,
                 menuItemProps: {
-                  onClick: () => {
-                    const tempRow = JSON.parse(JSON.stringify(row))
-                    setRowData(tempRow)
-                    setOpenEditDialog(true)
-                  }
+                  onClick: () => router.replace(`/apps/blog/edit/${row._id}`)
                 }
               },
               {
@@ -150,7 +149,12 @@ const UserList = () => {
               },
               {
                 text: 'Delete',
-                icon: <Icon icon='tabler:trash' fontSize={20} />
+                icon: <Icon icon='tabler:trash' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => {
+                    dispatch(deleteBlog(row._id))
+                  }
+                }
               },
             ]}
           />

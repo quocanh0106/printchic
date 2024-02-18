@@ -24,7 +24,7 @@ const blogBase = {
     type: String, trim: true,
   },
   tags: {
-    type: Array,
+    type: String,
   },
   recommendProduct: {
     type: Array,

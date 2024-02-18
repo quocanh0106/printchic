@@ -7,6 +7,9 @@ const ProductsBase = {
     handleUrl: {
         type: String, trim: true,
     },
+    title: {
+        type: String, trim: true,
+    },
     categoryProductId: {
         type: ObjectId, trim: true, ref: 'category_product',
     },
