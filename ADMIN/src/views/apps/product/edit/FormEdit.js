@@ -71,6 +71,7 @@ const FormCreate = () => {
   const onSubmit = (value) => {
     setLoading(true)
     let tempListOPtionVariant = JSON.parse(JSON.stringify(listOPtionVariant))
+
     let variant = tempListOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
@@ -89,6 +90,7 @@ const FormCreate = () => {
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
+
     // for (let i = 0; i < files.length; i++) {
     //   formData.append('files', files[i]);
     // }
@@ -122,20 +124,24 @@ const FormCreate = () => {
   const URLtoFile = async (url) => {
 
     const res = await fetch(url);
-    const blob = await res.blob();
-    // Gets URL data and read to blob
 
+    const blob = await res.blob();
+
+    // Gets URL data and read to blob
 
     const mime = blob.type;
     const ext = mime.slice(mime.lastIndexOf("/") + 1, mime.length);
+
     // Gets blob MIME type (e.g. image/png) and extracts extension
-
     const file = new File([blob], `filename.${ext}`, {
-      type: mime,
-    })
-    // Creates new File object using blob data, extension and MIME type
 
+      type: mime,
+
+    })
+
+    // Creates new File object using blob data, extension and MIME type
     console.log(file);
+
     return file
 
   }
@@ -146,10 +152,12 @@ const FormCreate = () => {
   }, [])
 
   const getUniqueValues = (array, propertyName) => {
+
     const values = new Set();
     array.forEach(obj => {
       values.add(obj[propertyName]);
     });
+
     return Array.from(values);
   };
 

@@ -31,6 +31,7 @@ const TableHeader = props => {
   })
 
   const dispatch = useDispatch()
+  
   const searchProductCategory = () => {
     dispatch(fetchProduct({ ...query, search: value.trim() }))
   }
