@@ -74,7 +74,6 @@ const FormCreate = () => {
     let variant = tempListOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
-      ele.stock = value[`stock-${ele.id}`]
 
       return ele
     })
@@ -220,7 +219,6 @@ const FormCreate = () => {
     data.forEach(ele => {
       setValue(`price-${ele.id}`, ele.price)
       setValue(`sku-${ele.id}`, ele.sku)
-      setValue(`stock-${ele.id}`, ele.stock)
     })
 
     setListOptionVariant(data)
@@ -329,35 +327,6 @@ const FormCreate = () => {
     },)
     listColumnOptions.push({
       flex: 0.2,
-      field: 'stock',
-      minWidth: 170,
-      headerName: 'STOCK',
-      renderCell: ({ row }) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Controller
-              name={`stock-${row.id}`}
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  value={value}
-                  required
-                  onChange={onChange}
-                  placeholder='STOCK'
-                  error={Boolean(errors[`stock-${row.id}`])}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors[`stock-${row.id}`] && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Box>
-        )
-      }
-    },)
-    listColumnOptions.push({
-      flex: 0.2,
       field: 'price',
       minWidth: 170,
       headerName: 'Price',
@@ -405,8 +374,7 @@ const FormCreate = () => {
               nameOption_1,
               nameVariant_1,
               sku: null,
-              price: 0,
-              stock: 0
+              price: 0
             })
             idCount = idCount + 1
           })
@@ -426,7 +394,6 @@ const FormCreate = () => {
               nameVariant_2,
               sku: null,
               price: 0,
-              stock: 0
             })
             idCount = idCount + 1
           })
@@ -451,8 +418,7 @@ const FormCreate = () => {
                 nameVariant_2,
                 nameVariant_3,
                 sku: null,
-                price: 0,
-                stock: 0
+                price: 0
               })
               idCount = idCount + 1
             })
@@ -790,7 +756,7 @@ const FormCreate = () => {
                 }}
               />
             ) : null}
-            Create
+            Update
           </Button>
         </Box>
       </Grid>

@@ -41,6 +41,11 @@ const UserList = () => {
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
 
+  const [query, setQuery] = useState({
+    page: 1,
+    search: ''
+  })
+
   // ** Hooks
   const router = useRouter()
   const dispatch = useDispatch()
@@ -89,24 +94,6 @@ const UserList = () => {
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
             {row.title}
-          </Typography>
-        )
-      }
-    },
-    {
-      flex: 0.3,
-      minWidth: 120,
-      headerName: 'Stock',
-      field: 'stock',
-      renderCell: ({ row }) => {
-        let quantity = 0;
-        row.variants.forEach(ele => {
-          quantity = Number(quantity) + Number(ele.stock)
-        })
-        
-        return (
-          <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {quantity}
           </Typography>
         )
       }
@@ -188,7 +175,7 @@ const UserList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <TableHeader plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} />
+          <TableHeader query={query} plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} />
           <DataGrid
             autoHeight
             rowHeight={62}

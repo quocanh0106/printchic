@@ -74,7 +74,6 @@ const FormCreate = () => {
     const variant = listOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
-      ele.stock = value[`stock-${ele.id}`]
 
       return ele
     })
@@ -202,35 +201,6 @@ const FormCreate = () => {
     },)
     listColumnOptions.push({
       flex: 0.2,
-      field: 'stock',
-      minWidth: 170,
-      headerName: 'STOCK',
-      renderCell: ({ row }) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Controller
-              name={`stock-${row.id}`}
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  value={value}
-                  required
-                  onChange={onChange}
-                  placeholder='STOCK'
-                  error={Boolean(errors[`stock-${row.id}`])}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors[`stock-${row.id}`] && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Box>
-        )
-      }
-    },)
-    listColumnOptions.push({
-      flex: 0.2,
       field: 'price',
       minWidth: 170,
       headerName: 'Price',
@@ -263,8 +233,8 @@ const FormCreate = () => {
   }
 
   const getListVariant = () => {
-    
-  console.log('listVariant',listVariant)
+
+    console.log('listVariant', listVariant)
     if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant)) {
       setOpenDialog(true)
     } else {
@@ -281,7 +251,6 @@ const FormCreate = () => {
               nameVariant_1,
               sku: null,
               price: 0,
-              stock: 0
             })
             idCount = idCount + 1
           })
@@ -301,7 +270,6 @@ const FormCreate = () => {
               nameVariant_2,
               sku: null,
               price: 0,
-              stock: 0
             })
             idCount = idCount + 1
           })
@@ -327,7 +295,6 @@ const FormCreate = () => {
                 nameVariant_3,
                 sku: null,
                 price: 0,
-                stock: 0
               })
               idCount = idCount + 1
             })
@@ -344,7 +311,7 @@ const FormCreate = () => {
       setOpenDialog(true)
     }
   }
-  
+
   const handleEditorChange = (event, editor) => {
     console.log('evnet', editor.getData())
     const data = editor.getData()
@@ -686,7 +653,7 @@ const FormCreate = () => {
           <CustomCloseButton onClick={() => setOpenDialog(false)}>
             <Icon icon='tabler:x' fontSize='1.25rem' />
           </CustomCloseButton>
-          <Card>
+          <Card sx={{ width: '100%' }}>
             <DataGrid
               autoHeight
               rowHeight={62}
@@ -694,6 +661,11 @@ const FormCreate = () => {
               columns={column}
               disableRowSelectionOnClick
             />
+            <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+              <Button variant='contained' sx={{ m: 4 }} onClick={() => setOpenDialog(false)}>
+                Save
+              </Button>
+            </Box>
           </Card>
         </DialogContent>
       </Dialog>

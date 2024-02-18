@@ -13,6 +13,8 @@ import DatePicker from 'react-datepicker'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { fetchProduct } from 'src/store/apps/product'
 
 const TableHeader = props => {
   // ** State
@@ -28,8 +30,9 @@ const TableHeader = props => {
     status: '',
   })
 
+  const dispatch = useDispatch()
   const searchProductCategory = () => {
-    dispatch(fetchEvents({...query, search: value.trim()}))
+    dispatch(fetchProduct({ ...query, search: value.trim() }))
   }
 
   const CustomInput = forwardRef(({ ...props }, ref) => {
@@ -37,7 +40,7 @@ const TableHeader = props => {
   })
 
   // ** Props
-  const { plan, handlePlanChange, handleFilter, value, setVisible } = props
+  const { plan, handlePlanChange, handleFilter, value, setVisible, query } = props
 
   const onsubmit = (values) => {
     console.log('searchching', values)
@@ -53,26 +56,15 @@ const TableHeader = props => {
       <DatePickerWrapper>
         <form>
           <Grid container spacing={5}>
-            <Grid item xs={6} sm={4}>
-              <Controller
-                name='search'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value}
-                    label='Search for Product'
-                    onChange={onChange}
-                    placeholder='Search Product name, ID'
-                    error={Boolean(errors.firstName)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.firstName && { helperText: 'This field is required' })}
-                  />
-                )}
+            <Grid item xs={10} sm={10}>
+              <CustomTextField
+                value={value}
+                fullWidth
+                placeholder='Search for category'
+                onChange={e => handleFilter(e.target.value)}
               />
             </Grid>
-            <Grid item xs={2} sm={2}>
+            {/* <Grid item xs={2} sm={2}>
               <Controller
                 name='categoryName'
                 control={control}
@@ -154,13 +146,13 @@ const TableHeader = props => {
                   </CustomTextField>
                 )}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={2} sm={2}>
               <div style={{ height: '100%', display: 'flex', alignItems: 'self-end' }}>
                 <Button
                   sx={{ mr: 2 }}
                   variant='contained'
-                  onClick={handleSubmit(onsubmit)}
+                  onClick={() => searchProductCategory()}
                 >
                   Search
                 </Button>
