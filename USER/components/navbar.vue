@@ -43,17 +43,8 @@
           <customInput class="search-input-mobile"/>
           <v-divider></v-divider>
 
-          <v-list density="compact" nav>
-            <v-list-item
-              prepend-icon="mdi-view-dashboard"
-              title="Home"
-              value="home"
-            ></v-list-item>
-            <v-list-item
-              prepend-icon="mdi-forum"
-              title="About"
-              value="about"
-            ></v-list-item>
+          <v-list density="compact" class="navigation-menu-mobile" nav v-for="url,index in links" :key="index">
+            <a :href="url.href">{{ url.label }}</a>
           </v-list>
         </v-navigation-drawer>
       </v-layout>
@@ -196,5 +187,9 @@ export default {
     width: 100vw;
     max-width: 100%;
   }
+}
+
+.navigation-menu-mobile{
+  padding: 24px 16px;
 }
 </style>
