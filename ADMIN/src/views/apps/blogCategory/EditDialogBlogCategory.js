@@ -67,6 +67,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
+      clearErrors("file")
       setFiles(Object.assign(acceptedFiles[0]))
     }
   })
@@ -75,6 +76,8 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     control,
     setValue,
     reset,
+    clearErrors,
+    setError,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -114,15 +117,19 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
   }
 
   const onSubmit = (value) => {
-    setLoading(true)
-    const formData = new FormData();
-    formData.append("categoryBlogId", rowData._id);
-    formData.append("title", value.title);
-    formData.append("handleUrl", value.handleUrl);
-    formData.append("metaDescription", value.metaDescription);
-    formData.append("description", value.description);
-    typeof files === "string" || formData.append("file", files[0]);
-    dispatch(updateCategoryBlog({ formData, callBackSubmit }))
+    if (files) {
+      setLoading(true)
+      const formData = new FormData();
+      formData.append("categoryBlogId", rowData._id);
+      formData.append("title", value.title);
+      formData.append("handleUrl", value.handleUrl);
+      formData.append("metaDescription", value.metaDescription);
+      formData.append("description", value.description);
+      typeof files === "string" || formData.append("file", files);
+      dispatch(updateCategoryBlog({ formData, callBackSubmit }))
+    } else {
+      setError('file', { type: 'custom', message: 'This field is required' })
+    }
   }
 
   const img = <Box sx={{ position: 'relative' }}>
@@ -259,6 +266,9 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                       </Button>
                   }
                 </Box>
+                {
+                  errors.file ? <Typography sx={{ color: 'red' }}>This field is required</Typography> : <></>
+                }
               </Box>
             </Grid>
           </Grid>
@@ -282,7 +292,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
               }}
             />
           ) : null}
-          Create
+          Update
         </Button>
         <Button variant='tonal' color='secondary' onClick={handleClose}>
           Cancel
