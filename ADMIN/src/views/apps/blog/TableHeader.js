@@ -12,6 +12,7 @@ import { forwardRef } from 'react'
 import DatePicker from 'react-datepicker'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import Link from 'next/link'
 
 const TableHeader = props => {
   // ** State
@@ -159,9 +160,14 @@ const TableHeader = props => {
                 >
                   Search
                 </Button>
+                <Box
+                  component={Link}
+                  href='/apps/blog/create'
+                >
                 <Button variant='contained' onClick={() => setVisible(true)}>
                   Create
                 </Button>
+                </Box>
               </div>
             </Grid>
           </Grid>

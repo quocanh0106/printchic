@@ -10,6 +10,8 @@ import categoryProduct from 'src/store/apps/categoryProduct'
 import categoryBlog from 'src/store/apps/categoryBlog'
 import permissions from 'src/store/apps/permissions'
 import setting from 'src/store/apps/setting'
+import product from 'src/store/apps/product'
+import blog from 'src/store/apps/blog'
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const store = configureStore({
     categoryProduct,
     categoryBlog,
     permissions,
+    product,
+    blog,
     setting
   },
   middleware: getDefaultMiddleware =>

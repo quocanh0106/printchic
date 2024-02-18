@@ -41,22 +41,28 @@ const FileUploaderMultiple = () => {
   }
 
   const fileList = files.map(file => (
-    <ListItem key={file.name}>
-      <div className='file-details'>
-        <div className='file-preview'>{renderFilePreview(file)}</div>
-        <div>
-          <Typography className='file-name'>{file.name}</Typography>
-          <Typography className='file-size' variant='body2'>
-            {Math.round(file.size / 100) / 10 > 1000
-              ? `${(Math.round(file.size / 100) / 10000).toFixed(1)} mb`
-              : `${(Math.round(file.size / 100) / 10).toFixed(1)} kb`}
-          </Typography>
-        </div>
-      </div>
-      <IconButton onClick={() => handleRemoveFile(file)}>
-        <Icon icon='tabler:x' fontSize={20} />
-      </IconButton>
-    </ListItem>
+    <Box key={file.name} sx={{ position: 'relative' }}>
+    <CustomCloseButton onClick={() => handleRemoveFile(file)}>
+      <Icon icon='tabler:x' fontSize='1.25rem' />
+    </CustomCloseButton>
+    <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
+  </Box>
+    // <ListItem key={file.name}>
+    //   <div className='file-details'>
+    //     <div className='file-preview'>{renderFilePreview(file)}</div>
+    //     <div>
+    //       <Typography className='file-name'>{file.name}</Typography>
+    //       <Typography className='file-size' variant='body2'>
+    //         {Math.round(file.size / 100) / 10 > 1000
+    //           ? `${(Math.round(file.size / 100) / 10000).toFixed(1)} mb`
+    //           : `${(Math.round(file.size / 100) / 10).toFixed(1)} kb`}
+    //       </Typography>
+    //     </div>
+    //   </div>
+    //   <IconButton onClick={() => handleRemoveFile(file)}>
+    //     <Icon icon='tabler:x' fontSize={20} />
+    //   </IconButton>
+    // </ListItem>
   ))
 
   const handleRemoveAllFiles = () => {

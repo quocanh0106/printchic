@@ -8,17 +8,16 @@ import { Box } from '@mui/system'
 import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
-import Table from 'src/views/apps/product/Table'
-import FormCreate from 'src/views/apps/product/create/FormCreate'
+import FormCreate from 'src/views/apps/blog/create/FormCreate'
 
-const ProductComponent = () => {
+const BlogComponent = () => {
   return (
     <Grid container spacing={6}>
       <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyItems: 'space-between', mt: 5, ml: 5 }}>
         <PageHeader
           title={
             <Typography variant='h4'>
-              Create Product
+              Create Blog
             </Typography>
           }
         />
@@ -30,4 +29,4 @@ const ProductComponent = () => {
   )
 }
 
-export default ProductComponent
+export default BlogComponent

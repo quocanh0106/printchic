@@ -6,10 +6,8 @@ const { validateNumber, validateEnum, validateDateByFormat, validateObjectId,
 const createValidator = [
     check('handleUrl').notEmpty().withMessage('handleUrl must be required'),
     check('description').notEmpty().withMessage('description must be required'),
-    check('sku').notEmpty().withMessage('sku must be required'),
-    check('price').notEmpty().withMessage('price must be required'),
-    check('options').notEmpty().withMessage('options must be required'),
-    check('buttonLink').notEmpty().withMessage('buttonLink must be required'),
+    check('type').notEmpty().withMessage('type must be required'),
+    check('variants').notEmpty().withMessage('variants must be required'),
     check('metaDescription').notEmpty().withMessage('metaDescription must be required')
 ]
 const updateValidator = [

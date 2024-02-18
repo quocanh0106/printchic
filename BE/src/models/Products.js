@@ -7,7 +7,7 @@ const ProductsBase = {
     handleUrl: {
         type: String, trim: true,
     },
-    categoryProductTd: {
+    categoryProductId: {
         type: ObjectId, trim: true, ref: 'category_product',
     },
     languageId: {
@@ -22,22 +22,13 @@ const ProductsBase = {
     description: {
         type: String, trim: true,
     },
-    sku: {
-        type: String, trim: true,
-    },
-    price: {
-        type: String, trim: true,
-    },
     media: {
-        type: Array, trim: true,
-    },
-    options: {
         type: Array, trim: true,
     },
     variants: {
         type: Array, trim: true,
     },
-    buttonLink: {
+    currency: {
         type: String, trim: true,
     },
     status: {

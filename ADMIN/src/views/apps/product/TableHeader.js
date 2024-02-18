@@ -28,6 +28,10 @@ const TableHeader = props => {
     status: '',
   })
 
+  const searchProductCategory = () => {
+    dispatch(fetchEvents({...query, search: value.trim()}))
+  }
+
   const CustomInput = forwardRef(({ ...props }, ref) => {
     return <CustomTextField fullWidth inputRef={ref} {...props} sx={{ width: '100%' }} />
   })

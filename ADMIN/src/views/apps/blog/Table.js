@@ -26,6 +26,7 @@ import { fetchData } from 'src/store/apps/user'
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/blog/TableHeader'
+import { fetchBlog } from 'src/store/apps/blog'
 
 // ** Components Imports
 
@@ -38,20 +39,18 @@ const UserList = () => {
   const [createDialog, setOpenCreateDialog] = useState(false)
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
+  const [query, setQuery] = useState({
+    page: 1,
+    search: ''
+  })
 
   // ** Hooks
   const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
+  const store = useSelector(state => state.blog)
+
   useEffect(() => {
-    dispatch(
-      fetchData({
-        role: '',
-        q: value,
-        status: '',
-        currentPlan: plan
-      })
-    )
-  }, [dispatch, plan, value])
+    dispatch(fetchBlog())
+  }, [])
 
 
   const columns = [
@@ -77,7 +76,7 @@ const UserList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.category}
+              {row.categoryBlogId?.title}
             </Typography>
           </Box>
         )
@@ -97,32 +96,6 @@ const UserList = () => {
       }
     },
     {
-      flex: 0.3,
-      minWidth: 120,
-      headerName: 'Stock',
-      field: 'stock',
-      renderCell: ({ row }) => {
-        return (
-          <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.stock}
-          </Typography>
-        )
-      }
-    },
-    {
-      flex: 0.25,
-      minWidth: 190,
-      field: 'createdAt',
-      headerName: 'Create date',
-      renderCell: ({ row }) => {
-        return (
-          <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {row.parentCategory}
-          </Typography>
-        )
-      }
-    },
-    {
       flex: 0.25,
       minWidth: 190,
       field: 'status',
@@ -131,6 +104,19 @@ const UserList = () => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
             {row.status}
+          </Typography>
+        )
+      }
+    },
+    {
+      flex: 0.3,
+      minWidth: 120,
+      headerName: 'Created At',
+      field: 'createdAt',
+      renderCell: ({ row }) => {
+        return (
+          <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
+            {row.createdAt}
           </Typography>
         )
       }

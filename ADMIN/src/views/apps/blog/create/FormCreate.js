@@ -17,9 +17,12 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { addProduct } from 'src/store/apps/product'
+import { addProduct, fetchProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
+import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
+import { top100Films } from 'src/@fake-db/autocomplete'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -35,10 +38,6 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
     transform: 'translate(7px, -5px)'
   }
 }))
-
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Fade ref={ref} {...props} />
-})
 
 let count = 0
 let countOption = 0
@@ -82,15 +81,13 @@ const FormCreate = () => {
     formData.append("title", value.title);
     formData.append("handleUrl", value.handleUrl);
     formData.append("metaDescription", value.metaDescription);
-    formData.append("status", value.productStatus);
+    formData.append("status", value.blogStatus);
     formData.append("description", value.description);
     formData.append("currency", value.currency);
-    formData.append("categoryProductId", value.ProductCategory);
+    formData.append("categoryProductId", value.blogCategory);
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
+    formData.append('files', files[0]);
 
     dispatch(addProduct({ formData, callBackSubmit }))
 
@@ -103,8 +100,8 @@ const FormCreate = () => {
     setValue,
     formState: { errors }
   } = useForm({
-    productStatus: '',
-    ProductCategory: '',
+    blogStatus: '',
+    blogCategory: '',
     productType: '',
     title: '',
     lastName: '',
@@ -115,10 +112,12 @@ const FormCreate = () => {
   })
   const dispatch = useDispatch()
 
-  const store = useSelector(state => state.categoryProduct)
+  const store = useSelector(state => state.categoryBlog)
+  const storeProduct = useSelector(state => state.product)
 
   useEffect(() => {
-    dispatch(fetchEvents())
+    dispatch(fetchCategoryBlog())
+    dispatch(fetchProduct())
   }, [])
 
   console.log('errors', errors)
@@ -359,37 +358,23 @@ const FormCreate = () => {
   }
 
   const { getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
+    },
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file)))
     }
   })
 
-  const renderFilePreview = file => {
-    if (file.type.startsWith('image')) {
-      return <img width={38} height={38} alt={file.name} src={URL.createObjectURL(file)} />
-    } else {
-      return <Icon icon='tabler:file-description' />
-    }
-  }
-
-  const handleRemoveFile = file => {
-    const uploadedFiles = files
-    const filtered = uploadedFiles.filter(i => i.name !== file.name)
-    setFiles([...filtered])
-  }
-
-  const fileList = files.map(file => (
-    <Box key={file.name} sx={{ position: 'relative', width: '49%' }}>
-      <CustomCloseButton onClick={() => handleRemoveFile(file)}>
+  const img = files.map(file => (
+    <Box key={file.name} sx={{ position: 'relative' }}>
+      <CustomCloseButton onClick={() => setFiles([])}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
       <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
     </Box>
   ))
-
-  const handleRemoveAllFiles = () => {
-    setFiles([])
-  }
 
   return (
     <>
@@ -397,7 +382,7 @@ const FormCreate = () => {
         <Grid item xs={4}>
           <Card sx={{ p: 4 }}>
             <Controller
-              name='productStatus'
+              name='blogStatus'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
@@ -405,15 +390,15 @@ const FormCreate = () => {
                   select
                   fullWidth
                   defaultValue=''
-                  label='Product Status'
+                  label='Blog Status'
                   SelectProps={{
                     value: value,
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
-                  error={Boolean(errors.productStatus)}
+                  error={Boolean(errors.blogStatus)}
                   aria-describedby='validation-basic-select'
-                  {...(errors.productStatus && { helperText: 'This field is required' })}
+                  {...(errors.blogStatus && { helperText: 'This field is required' })}
                 >
                   <MenuItem value='public'>Public</MenuItem>
                   <MenuItem value='private'>Private</MenuItem>
@@ -421,7 +406,7 @@ const FormCreate = () => {
               )}
             />
             <Controller
-              name='ProductCategory'
+              name='blogCategory'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
@@ -430,15 +415,15 @@ const FormCreate = () => {
                   select
                   fullWidth
                   defaultValue=''
-                  label='Product Category'
+                  label='Blog Category'
                   SelectProps={{
                     value: value,
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
-                  error={Boolean(errors.ProductCategory)}
+                  error={Boolean(errors.blogCategory)}
                   aria-describedby='validation-basic-select'
-                  {...(errors.ProductCategory && { helperText: 'This field is required' })}
+                  {...(errors.blogCategory && { helperText: 'This field is required' })}
                 >
                   {
                     store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)
@@ -446,25 +431,48 @@ const FormCreate = () => {
                 </CustomTextField>
               )}
             />
+            <CustomAutocomplete
+              multiple
+              sx={{ width: '100%', mt: 4 }}
+              options={storeProduct.data}
+              filterSelectedOptions
+              id='autocomplete-multiple-outlined'
+              getOptionLabel={option => option.title || ''}
+              renderInput={params => <CustomTextField {...params} label='filterSelectedOptions' placeholder='Products' />}
+            />
             <Controller
-              name='productType'
+              name='tags'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
-                  sx={{ mt: 4 }}
                   fullWidth
+                  sx={{ mt: 4 }}
                   value={value}
-                  label='Enter Product Type'
+                  label='tags'
                   required
                   onChange={onChange}
-                  placeholder='Enter Product Type'
-                  error={Boolean(errors.productType)}
+                  placeholder='tags'
+                  error={Boolean(errors.tags)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.productType && { helperText: 'This field is required' })}
+                  {...(errors.tags && { helperText: 'This field is required' })}
                 />
               )}
             />
+          </Card>
+          <Card sx={{ p: 4 , mt: 4}}>
+            <Box>
+              <Typography>
+                Thumnail Image
+              </Typography>
+              {
+                files.length ? img :
+                  <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
+                    <input {...getInputProps()} />
+                    Upload
+                  </Button>
+              }
+            </Box>
           </Card>
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
@@ -494,6 +502,9 @@ const FormCreate = () => {
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   fullWidth
+                  type='textarea'
+                  multiline
+                  rows={12}
                   value={value}
                   sx={{ mt: 3 }}
                   label='Description'
@@ -506,143 +517,6 @@ const FormCreate = () => {
                 />
               )}
             />
-          </Card>
-          <Card sx={{ p: 4, mt: 4 }}>
-            <Fragment>
-              <div {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
-                <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                  <Box
-                    sx={{
-                      mb: 8.75,
-                      width: 48,
-                      height: 48,
-                      display: 'flex',
-                      borderRadius: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: theme => `rgba(${theme.palette.customColors.main}, 0.08)`
-                    }}
-                  >
-                    <Icon icon='tabler:upload' fontSize='1.75rem' />
-                  </Box>
-                  <Typography variant='h4' sx={{ mb: 2.5 }}>
-                    Drop files here or click to upload.
-                  </Typography>
-                </Box>
-              </div>
-              {files.length ? (
-                <Fragment>
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>{fileList}</Box>
-                  <div className='buttons'>
-                    <Button color='error' variant='outlined' onClick={handleRemoveAllFiles}>
-                      Remove All
-                    </Button>
-                  </div>
-                </Fragment>
-              ) : null}
-            </Fragment>
-          </Card>
-          <Card sx={{ p: 4, mt: 4 }}>
-            <Grid container xs={12} sx={{ mt: 4 }}>
-              <Grid item xs={12}>
-                <Controller
-                  name='currency'
-                  control={control}
-                  required
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      select
-                      defaultValue=''
-                      label='Currency'
-                      SelectProps={{
-                        value: value,
-                        onChange: e => onChange(e)
-                      }}
-                      id='validation-basic-select'
-                      error={Boolean(errors.currency)}
-                      aria-describedby='validation-basic-select'
-                      {...(errors.currency && { helperText: 'This field is required' })}
-                    >
-                      <MenuItem value='USD'>USD</MenuItem>
-                      <MenuItem value='VND'>VND</MenuItem>
-                      <MenuItem value='EUR'>EUR</MenuItem>
-                    </CustomTextField>
-                  )}
-                />
-              </Grid>
-            </Grid>
-          </Card>
-          <Card sx={{ p: 4, mt: 4 }}>
-            {
-              listVariant.map(el => {
-                return <Box key={el.index}>
-                  <Box sx={{ width: '100%', display: 'flex', alignItems: 'flex-end', justifyItems: 'space-between' }}>
-                    <Controller
-                      name={`nameVariant` + el.index}
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { value, onChange } }) => (
-                        <CustomTextField
-                          fullWidth
-                          value={value}
-                          label='Name Variant'
-                          required
-                          onChange={onChange}
-                          placeholder='Enter Name Variant'
-                          error={Boolean(errors[`nameVariant${el.index}`])}
-                          aria-describedby='validation-basic-first-name'
-                          {...(errors[`nameVariant` + el.index] && { helperText: 'This field is required' })}
-                        />
-                      )}
-                    />
-                    <Icon icon='tabler:trash' fontSize={25} onClick={() => removeVariant(el.index)} />
-                  </Box>
-                  <Box sx={{ ml: 5 }}>
-                    {
-                      el.option?.map(option => {
-                        return <Box key={option.index} sx={{ width: '100%', display: 'flex', alignItems: 'flex-end', justifyItems: 'space-between' }}>
-                          <Controller
-                            name={`nameOption-${el.index}-${option.index}`}
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field: { value, onChange } }) => (
-                              <CustomTextField
-                                sx={{ mt: 3 }}
-                                fullWidth
-                                value={value}
-                                label='Attribute'
-                                required
-                                onChange={onChange}
-                                placeholder='Enter Attribute'
-                                error={Boolean(errors[`nameOption-${el.index}-${option.index}`])}
-                                aria-describedby='validation-basic-first-name'
-                                {...(errors[`nameOption-${el.index}-${option.index}`] && { helperText: 'This field is required' })}
-                              />
-                            )}
-                          />
-                          <Icon icon='tabler:trash' fontSize={25} onClick={() => removeOption(el.index, option.index)} />
-                        </Box>
-                      })
-                    }
-                    <Button onClick={() => handleAddOptionVariant(el.index)} sx={{ justifyContent: 'start', width: '100%' }}>
-                      Add options for this variant
-                    </Button>
-                  </Box>
-                </Box>
-              })
-            }
-            {
-              listVariant.length < 3 ? <Button onClick={handleAddVariant} sx={{ justifyContent: 'start', width: '100%' }}>
-                Add options like size or color
-              </Button> : <></>
-            }
-
-            <Button variant='contained' onClick={getListVariant}>
-              Fill list variants
-            </Button>
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>
@@ -664,36 +538,6 @@ const FormCreate = () => {
           </Button>
         </Box>
       </Grid>
-      <Dialog
-        fullWidth
-        open={openDialog}
-        maxWidth={'xl'}
-        scroll='body'
-        onClose={() => setOpenDialog(false)}
-        TransitionComponent={Transition}
-        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
-      >
-        <DialogContent
-          sx={{
-            pb: theme => `${theme.spacing(8)} !important`,
-            px: theme => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
-            pt: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
-          }}
-        >
-          <CustomCloseButton onClick={() => setOpenDialog(false)}>
-            <Icon icon='tabler:x' fontSize='1.25rem' />
-          </CustomCloseButton>
-          <Card>
-            <DataGrid
-              autoHeight
-              rowHeight={62}
-              rows={listOPtionVariant}
-              columns={column}
-              disableRowSelectionOnClick
-            />
-          </Card>
-        </DialogContent>
-      </Dialog>
     </>
   )
 }

@@ -26,6 +26,7 @@ import { fetchData } from 'src/store/apps/user'
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/product/TableHeader'
+import { deleteProduct, fetchProduct } from 'src/store/apps/product'
 
 // ** Components Imports
 
@@ -41,17 +42,11 @@ const UserList = () => {
 
   // ** Hooks
   const dispatch = useDispatch()
-  const store = useSelector(state => state.user)
+  const store = useSelector(state => state.product)
+
   useEffect(() => {
-    dispatch(
-      fetchData({
-        role: '',
-        q: value,
-        status: '',
-        currentPlan: plan
-      })
-    )
-  }, [dispatch, plan, value])
+    dispatch(fetchProduct())
+  }, [])
 
 
   const columns = [
@@ -70,14 +65,14 @@ const UserList = () => {
     },
     {
       flex: 0.2,
-      field: 'category',
+      field: 'categoryProductId',
       minWidth: 170,
       headerName: 'Category',
       renderCell: ({ row }) => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.category}
+              {row.categoryProductId?.title}
             </Typography>
           </Box>
         )
@@ -102,9 +97,13 @@ const UserList = () => {
       headerName: 'Stock',
       field: 'stock',
       renderCell: ({ row }) => {
+        let quantity = 0;
+        row.variants.forEach(ele => {
+          quantity = Number(quantity) + Number(ele.stock)
+        })
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.stock}
+            {quantity}
           </Typography>
         )
       }
@@ -164,7 +163,12 @@ const UserList = () => {
               },
               {
                 text: 'Delete',
-                icon: <Icon icon='tabler:trash' fontSize={20} />
+                icon: <Icon icon='tabler:trash' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => {
+                    dispatch(deleteProduct(row._id))
+                  }
+                }
               },
             ]}
           />

@@ -1,6 +1,5 @@
 const {
-    products: ProductsModels,
-    category_product: CategoryProductModels,
+    blogs: BlogsModels,
 } = require('../models/utils/connectToModels');
 
 const {
@@ -15,18 +14,16 @@ const create = async (data) => {
     console.log('data', data)
     try {
         const set = {};
-        set.title = data.title;
-        set.handleUrl = data.handleUrl;
-        set.categoryProductId = convertToObjectId(data.categoryProductId);
-        set.metaDescription = data.metaDescription;
-        set.type = data.type;
-        set.description = data.description;
-        set.variants = JSON.parse(data.variants);
+        set.categoryBlogId = data.categoryBlogId;
         set.status = data.status;
-        set.media = data.media;
+        set.img = data.img;
+        set.tags = data.tags;
+        set.title = data.title;
+        set.recommendProduct = data.recommendProduct;
+        set.content = data.content;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
-        const result = await ProductsModels.create(set);
+        const result = await BlogsModels.create(set);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -56,10 +53,10 @@ const list = async (data) => {
             // select: REMOVE_FIELDS,
             customLabels: MY_CUSTOM_LABELS,
             populate : [
-                populateModel('categoryProductId')
+                populateModel('categoryBlogId')
             ]
         };
-        const result = await ProductsModels.paginate(conditions, options);
+        const result = await BlogsModels.paginate(conditions, options);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -76,10 +73,10 @@ const findByConditions = async (data) => {
             conditions._id = convertToObjectId(data.newObjId);
         }
         if (data?.getAll) {
-            const result = await CategoryProductModels.find(conditions);
+            const result = await BlogsModels.find(conditions);
             return promiseResolve(result);
         }
-        const result = await CategoryProductModels.findOne(conditions);
+        const result = await BlogsModels.findOne(conditions);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -91,23 +88,32 @@ const updateConditions = async (data) => {
     console.log('data', data)
     try {
         const conditions = {};
-        if (data?.categoryProductId) {
-            conditions._id = convertToObjectId(data.categoryProductId);
+        if (data?.blogId) {
+            conditions._id = convertToObjectId(data.blogId);
         }
         const set = {};
         if (!isEmpty(data?.title)) {
             set.title = data.title;
         }
-        if (!isEmpty(data?.description)) {
-            set.description = data.description;
+        if (!isEmpty(data?.content)) {
+            set.content = data.content;
         }
-        if (!isEmpty(data?.bannerImg)) {
-            set.bannerImg = data.bannerImg;
+        if (!isEmpty(data?.img)) {
+            set.img = data.img;
         }
-        if (!isEmpty(data?.parentCategory)) {
-            set.parentCategory = data.parentCategory;
+        if (!isEmpty(data?.status)) {
+            set.status = data.status;
         }
-        const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
+        if (!isEmpty(data?.categoryBlogId)) {
+            set.categoryBlogId = data.categoryBlogId;
+        }
+        if (!isEmpty(data?.recommendProduct)) {
+            set.recommendProduct = data.recommendProduct;
+        }
+        if (!isEmpty(data?.tags)) {
+            set.tags = data.tags;
+        }
+        const result = await BlogsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -118,12 +124,12 @@ const updateDelete = async (data) => {
     try {
         const conditions = {
             isDeleted: IS_DELETED[200],
-            _id: data.productId,
+            _id: data.blogId,
         };
         const set = {
             isDeleted: IS_DELETED[300],
         }
-        const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
+        const result = await BlogsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -138,7 +144,7 @@ const updateStatus = async (data) => {
         }
         const set = {};
         set.status = STATUS[data.status];
-        const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
+        const result = await BlogsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')

@@ -11,19 +11,13 @@ const blogBase = {
   categoryBlogId: {
     type: ObjectId, default: null, require: true, ref: 'category_blog',
   },
-  handleUrl: {
-    type: String, trim: true,
-  },
-  metaDescription: {
-    type: String, trim: true,
-  },
   title: {
     type: String, trim: true,
   },
-  thumbImg: {
+  status: {
     type: String, trim: true,
   },
-  bannerImg: {
+  img: {
     type: String, trim: true,
   },
   content: {
@@ -32,7 +26,7 @@ const blogBase = {
   tags: {
     type: Array,
   },
-  recommend: {
+  recommendProduct: {
     type: Array,
   },
 }
