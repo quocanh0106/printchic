@@ -65,6 +65,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
+      clearErrors("file")
       setFiles(Object.assign(acceptedFiles[0]))
     }
   })
@@ -72,6 +73,8 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
   const {
     control,
     setValue,
+    setError,
+    clearErrors,
     handleSubmit,
     formState: { errors }
   } = useForm({

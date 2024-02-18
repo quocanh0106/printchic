@@ -41,7 +41,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 let count = 0
-let countOption = 0
+let countOption = 1
 
 const FormCreate = () => {
   const [listVariant, setListVariant] = useState([]);
@@ -125,20 +125,20 @@ const FormCreate = () => {
     const res = await fetch(url);
     const blob = await res.blob();
     // Gets URL data and read to blob
-  
-  
+
+
     const mime = blob.type;
     const ext = mime.slice(mime.lastIndexOf("/") + 1, mime.length);
     // Gets blob MIME type (e.g. image/png) and extracts extension
-        
+
     const file = new File([blob], `filename.${ext}`, {
-        type: mime,
+      type: mime,
     })
     // Creates new File object using blob data, extension and MIME type
-  
+
     console.log(file);
     return file
-  
+
   }
 
   useEffect(() => {
@@ -146,14 +146,22 @@ const FormCreate = () => {
     dispatch(fetchProduct())
   }, [])
 
+  const getUniqueValues = (array, propertyName) => {
+    const values = new Set();
+    array.forEach(obj => {
+      values.add(obj[propertyName]);
+    });
+    return Array.from(values);
+  };
+
   const handleListVariant = (data) => {
     let tempVariant = []
 
-    const isExistOption_1 =  data.find(ele => ele.nameOption_1)
-    const isExistOption_2 =  data.find(ele => ele.nameOption_2)
-    const isExistOption_3 =  data.find(ele => ele.nameOption_3)
+    const isExistOption_1 = data.find(ele => ele.nameOption_1)
+    const isExistOption_2 = data.find(ele => ele.nameOption_2)
+    const isExistOption_3 = data.find(ele => ele.nameOption_3)
 
-    if(isExistOption_1) {
+    if (isExistOption_1) {
       setValue(`nameVariant${count}`, isExistOption_1.nameOption_1)
       tempVariant.push({
         index: count,
@@ -161,16 +169,16 @@ const FormCreate = () => {
       })
       count++
     }
-    if(isExistOption_2) {
-      setValue(`nameVariant${count}`,isExistOption_2.nameOption_2)
+    if (isExistOption_2) {
+      setValue(`nameVariant${count}`, isExistOption_2.nameOption_2)
       tempVariant.push({
         index: count,
         option: []
       })
       count++
     }
-    if(isExistOption_3) {
-      setValue(`nameVariant${count}`,isExistOption_3.nameOption_3)
+    if (isExistOption_3) {
+      setValue(`nameVariant${count}`, isExistOption_3.nameOption_3)
       tempVariant.push({
         index: count,
         option: []
@@ -178,27 +186,36 @@ const FormCreate = () => {
       count++
     }
 
-    data.forEach(ele => {
-      if(ele?.nameOption_1) {
+    if (isExistOption_1) {
+      const uniqueNameVariant_1 = getUniqueValues(data, 'nameVariant_1');
+      uniqueNameVariant_1.forEach(ele => {
         tempVariant[0].option.push({
           index: countOption
         })
-        setValue(`nameOption-${tempVariant[0].index}-${countOption}`, ele.nameVariant_1)
+        setValue(`nameOption-${tempVariant[0].index}-${countOption}`, ele)
         countOption++
-      } else if(ele?.nameOption_2) {
+      })
+    }
+    if (isExistOption_2) {
+      const uniqueNameVariant_2 = getUniqueValues(data, 'nameVariant_2');
+      uniqueNameVariant_2.forEach(ele => {
         tempVariant[1].option.push({
           index: countOption
         })
-        setValue(`nameOption-${tempVariant[1].index}-${countOption}`, ele.nameVariant_2)
+        setValue(`nameOption-${tempVariant[1].index}-${countOption}`, ele)
         countOption++
-      } else if(ele?.nameOption_3) {
+      })
+    }
+    if (isExistOption_3) {
+      const uniqueNameVariant_3 = getUniqueValues(data, 'nameVariant_3');
+      uniqueNameVariant_3.forEach(ele => {
         tempVariant[2].option.push({
           index: countOption
         })
-        setValue(`nameOption-${tempVariant[2].index}-${countOption}`, ele.nameVariant_3)
+        setValue(`nameOption-${tempVariant[2].index}-${countOption}`, ele)
         countOption++
-      }
-    })
+      })
+    }
 
     data.forEach(ele => {
       setValue(`price-${ele.id}`, ele.price)
@@ -211,7 +228,7 @@ const FormCreate = () => {
   }
 
   useEffect(() => {
-    if(storeProduct.data.length > 0) {
+    if (storeProduct.data.length > 0) {
       const data = storeProduct.data.find(ele => ele._id == router.query.id)
 
       const listFile = [];
@@ -220,8 +237,6 @@ const FormCreate = () => {
       })
 
       handleListVariant(data.variants)
-
-      console.log('listFile',listFile)
       setValue('title', data?.title)
       setValue('handleUrl', data?.handleUrl)
       setValue('metaDescription', data?.metaDescription)
@@ -232,7 +247,7 @@ const FormCreate = () => {
       setValue('productCategory', data?.categoryProductId)
       setFiles(data?.media)
     }
-  }, [storeProduct, store,  router.query.id])
+  }, [storeProduct, store, router.query.id])
 
   console.log('errors', errors)
 
@@ -454,7 +469,7 @@ const FormCreate = () => {
       setOpenDialog(true)
     }
   }
-  
+
   const handleEditorChange = (event, editor) => {
     console.log('evnet', editor.getData())
     const data = editor.getData()
@@ -499,7 +514,7 @@ const FormCreate = () => {
       {
         typeof file.path == 'string' ? <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={file.path} /> : <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
       }
-      
+
     </Box>
   ))
 

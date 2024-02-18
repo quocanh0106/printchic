@@ -68,6 +68,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
+      clearErrors("file")
       setFiles(acceptedFiles.map(file => Object.assign(file)))
     }
   })
@@ -94,18 +95,24 @@ const DialogAddCard = ({ visible, setVisible }) => {
   }
 
   const onSubmit = (value) => {
-    setLoading(true)
-    const formData = new FormData();
-    formData.append("title", value.title);
-    formData.append("description", value.description);
-    formData.append("parentCategory", value.parentCategory);
-    formData.append("file", files[0]);
-    dispatch(addCategoryProduct({ formData, callBackSubmit }))
+    if(files[0]) {
+      setLoading(true)
+      const formData = new FormData();
+      formData.append("title", value.title);
+      formData.append("description", value.description);
+      formData.append("parentCategory", value.parentCategory);
+      formData.append("file", files[0]);
+      dispatch(addCategoryProduct({ formData, callBackSubmit }))
+    } else {
+      setError('file', { type: 'custom', message: 'This field is required' })
+    }
   }
 
   const {
     control,
     reset,
+    setError,
+    clearErrors,
     handleSubmit,
     formState: { errors }
   } = useForm({
@@ -235,6 +242,9 @@ const DialogAddCard = ({ visible, setVisible }) => {
                       </Button>
                   }
                 </Box>
+                {
+                  errors.file ? <Typography sx={{color: 'red'}}>This field is required</Typography> : <></>
+                }
               </Box>
             </Grid>
           </Grid>
