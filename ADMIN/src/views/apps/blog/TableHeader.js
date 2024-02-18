@@ -13,6 +13,8 @@ import DatePicker from 'react-datepicker'
 import { Controller, useForm } from 'react-hook-form'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import Link from 'next/link'
+import { fetchBlog } from 'src/store/apps/blog'
+import { useDispatch } from 'react-redux'
 
 const TableHeader = props => {
   // ** State
@@ -33,10 +35,11 @@ const TableHeader = props => {
   })
 
   // ** Props
-  const { plan, handlePlanChange, handleFilter, value, setVisible } = props
+  const { plan, handlePlanChange, handleFilter, value, setVisible, query } = props
+  const dispatch = useDispatch()
 
-  const onsubmit = (values) => {
-    console.log('searchching', values)
+  const searchProductCategory = () => {
+    dispatch(fetchBlog({ ...query, search: value.trim() }))
   }
 
   return (
@@ -49,106 +52,12 @@ const TableHeader = props => {
       <DatePickerWrapper>
         <form>
           <Grid container spacing={5}>
-            <Grid item xs={6} sm={4}>
-              <Controller
-                name='search'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value}
-                    label='Search for Blog'
-                    onChange={onChange}
-                    placeholder='Search Blog name, ID'
-                    error={Boolean(errors.firstName)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.firstName && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={2} sm={2}>
-              <Controller
-                name='categoryName'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue='ALL'
-                    label='Search by Category'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.select)}
-                    aria-describedby='validation-basic-select'
-                    {...(errors.select && { helperText: 'This field is required' })}
-                  >
-                    <MenuItem value='ALL'>All</MenuItem>
-                    <MenuItem value='UK'>UK</MenuItem>
-                    <MenuItem value='USA'>USA</MenuItem>
-                    <MenuItem value='Australia'>Australia</MenuItem>
-                    <MenuItem value='Germany'>Germany</MenuItem>
-                  </CustomTextField>
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={2} sm={2}>
-              <Controller
-                name='dob'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <DatePicker
-                    selected={value}
-                    onChange={e => onChange(e)}
-                    placeholderText='MM/DD/YYYY'
-                    customInput={
-                      <CustomInput
-                        value={value}
-                        onChange={onChange}
-                        label='Date of Birth'
-                        error={Boolean(errors.dob)}
-                        aria-describedby='validation-basic-dob'
-                        {...(errors.dob && { helperText: 'This field is required' })}
-                      />
-                    }
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={2} sm={2}>
-              <Controller
-                name='status'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue='ALL'
-                    label='Status'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.select)}
-                    aria-describedby='validation-basic-select'
-                    {...(errors.select && { helperText: 'This field is required' })}
-                  >
-                    <MenuItem value='ALL'>All</MenuItem>
-                    <MenuItem value='UK'>UK</MenuItem>
-                    <MenuItem value='USA'>USA</MenuItem>
-                    <MenuItem value='Australia'>Australia</MenuItem>
-                    <MenuItem value='Germany'>Germany</MenuItem>
-                  </CustomTextField>
-                )}
+            <Grid item xs={10} sm={10}>
+            <CustomTextField
+                value={value}
+                fullWidth
+                placeholder='Search for category'
+                onChange={e => handleFilter(e.target.value)}
               />
             </Grid>
             <Grid item xs={2} sm={2}>
@@ -156,7 +65,7 @@ const TableHeader = props => {
                 <Button
                   sx={{ mr: 2 }}
                   variant='contained'
-                  onClick={handleSubmit(onsubmit)}
+                  onClick={() => searchProductCategory()}
                 >
                   Search
                 </Button>
