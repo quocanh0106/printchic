@@ -270,4 +270,48 @@ export default {
 .review-wrapper {
   background-color: #eff4ff;
 }
+
+/* Tablet and below styles */
+@media (max-width: 1024px) {
+  .home-page-introduction-wrapper {
+    flex-direction: column; /* Stack content vertically on smaller screens */
+    padding: 20px; /* Reduce padding */
+    .introduction-title {
+      font-size: 32px; /* Adjust font size for tablet */
+      line-height: 42px;
+      width: 100%; /* Use full width */
+    }
+    .introduction-description {
+      font-size: 14px; /* Adjust font size for readability */
+      line-height: 22px;
+    }
+  }
+
+  .home-page-top-category,
+  .home-page-proccess-wrapper,
+  .distict-motive-wrapper {
+    padding: 20px; /* Uniform padding for sections */
+  }
+
+  .home-page-top-category .top-category-header .top-category-title,
+  .home-page-proccess-wrapper .process-intro .introduction-title,
+  .distict-motive-wrapper .motive-header .section-title {
+    font-size: 24px; /* Adjust main section titles */
+  }
+
+  .motive-body {
+    display: flex;
+    flex-direction: column;
+
+    // Target all child elements except the last one to add vertical spacing
+    & > *:not(:last-child) {
+      margin-bottom: 1rem; // Assuming '4' translates to 1rem, adjust as needed
+    }
+  }
+
+  .review-wrapper,
+  .custom-padding {
+    padding: 20px; /* Adjust padding for custom sections */
+  }
+}
 </style>
