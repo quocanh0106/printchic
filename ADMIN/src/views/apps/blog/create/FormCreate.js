@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, Dialog, DialogContent, Fade, List, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, List, ListItem, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -73,6 +73,7 @@ const FormCreate = () => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
       ele.stock = value[`stock-${ele.id}`]
+
       return ele
     })
     console.log('variant', typeof variant)
@@ -340,7 +341,9 @@ const FormCreate = () => {
       setOpenDialog(true)
     }
   }
+
   console.log('listOPtionVariant', listOPtionVariant)
+
   const handleEditorChange = (event, editor) => {
     console.log('evnet', editor.getData())
     const data = editor.getData()

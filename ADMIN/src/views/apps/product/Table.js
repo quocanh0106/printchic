@@ -101,6 +101,7 @@ const UserList = () => {
         row.variants.forEach(ele => {
           quantity = Number(quantity) + Number(ele.stock)
         })
+        
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
             {quantity}
