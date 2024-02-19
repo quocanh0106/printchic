@@ -48,6 +48,12 @@ module.exports.AUTH = {
             } else {
                 return res.json(responseError("bannerImg must be required!"))
             }
+
+            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body)
+            if (checkExistBlogCategory) {
+                return res.json(responseSuccess(10605,[]));
+            }
+
             const result = await CategoryBlogService.create(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10600, result));
@@ -98,6 +104,12 @@ module.exports.AUTH = {
             if (req.file) {
                 req.body.bannerImg = req.file.path;
             }
+
+            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body)
+            if (checkExistBlogCategory && checkExistBlogCategory?._id.toHexString() !== req.body.categoryBlogId) {
+                return res.json(responseSuccess(10605,[]));
+            }
+
             const result = await CategoryBlogService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10603, result));

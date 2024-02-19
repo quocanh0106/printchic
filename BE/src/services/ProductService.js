@@ -165,6 +165,23 @@ const updateStatus = async (data) => {
         return promiseReject(err);
     }
 }
+
+
+const checkExist = async (data) => {
+    try {
+        const conditions = {
+            isDeleted: IS_DELETED[200],
+            title: data?.title
+        };
+        const checkExistTitle = await ProductsModels.findOne(conditions);
+        return promiseResolve(checkExistTitle);
+    } catch (err) {
+        console.log(err, 'err')
+        return promiseReject(err);
+    }
+}
+
+
 module.exports = {
     create,
     findByConditions,
@@ -172,4 +189,5 @@ module.exports = {
     updateDelete,
     updateStatus,
     list,
+    checkExist
 };

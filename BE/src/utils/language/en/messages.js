@@ -77,26 +77,38 @@ exports.CODES_SUCCESS = {
     10472: "Delete template cv successfully!",
     10473: "List template cv successfully!",
     /* 10501 -> 10550 internal post */
-    10501: "Create internal post successfully!",
-    /* 10551 -> 10600 upgrade candidate */
-    10551: "Upgrade candidate successfully!",
-    10502: "List internal post successfully!",
-    10503: "Update internal post successfully!",
 
-    /* 10600 -> 10699 news */
+    /* 10551 -> 10600 category Product */
+    10500: "Create new category product successfully!",
+    10501: "Get list category product successfully!",
+    10502: "Delete category product successfully!",
+    10503: "Update category product successfully!",
+    10504: "Get detail category product successfully!",
+    10505: "Product category already exists!",
+
+    /* 10600 -> 10699 Category Blog */
     10600: "Create new category blog successfully!",
     10601: "Get list category blog successfully!",
     10602: "Delete category blog successfully!",
     10603: "Update category blog successfully!",
     10604: "Get detail category blog successfully!",
+    10605: "Blog category already exists!",
 
-    /* 10700 -> 10799 news */
+    /* 10700 -> 10799 Blogs */
     10700: "Create new Blog successfully!",
     10701: "Get list Blog successfully!",
     10702: "Delete Blog successfully!",
     10703: "Update Blog successfully!",
     10704: "Get detail Blog successfully!",
     10705: "Blog already exists!",
+
+    /* 10800 -> 10900 Product */
+    10800: "Create new product successfully!",
+    10801: "Get list product successfully!",
+    10802: "Delete product successfully!",
+    10803: "Update product successfully!",
+    10804: "Get detail product successfully!",
+    10805: "Product already exists!",
 
 }
 exports.CODES_ERROR = {

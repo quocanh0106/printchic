@@ -58,6 +58,12 @@ module.exports.AUTH = {
             } else {
                 return res.json(responseError("bannerImg must be required!"))
             }
+
+            const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
+            if (checkExistProductCategory) {
+                return res.json(responseSuccess(10505,[]));
+            }
+
             const result = await CategoryProductService.create(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10391, result));
@@ -108,6 +114,12 @@ module.exports.AUTH = {
             if (req.file) {
                 req.body.bannerImg = req.file.path;
             }
+
+            const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
+            if (checkExistProductCategory && checkExistProductCategory?._id.toHexString() !== req.body.categoryProductId) {
+                return res.json(responseSuccess(10505,[]));
+            }
+
             const result = await CategoryProductService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10394, result));

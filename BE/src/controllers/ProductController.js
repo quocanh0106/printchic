@@ -45,9 +45,15 @@ module.exports.AUTH = {
             if (req.files) {
                 req.body.media = req.files;
             }
+
+            const checkExistProduct = await ProductService.checkExist(req.body)
+            if (checkExistProduct) {
+                return res.json(responseSuccess(10805,[]));
+            }
+
             const result = await ProductService.create(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10500, result));
+                return res.json(responseSuccess(10800, result));
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
@@ -95,9 +101,15 @@ module.exports.AUTH = {
             if (req.files) {
                 req.body.media = req.files;
             }
+
+            const checkExistProduct = await CategoryProductService.checkExist(req.body)
+            if (checkExistProduct && checkExistProduct?._id.toHexString() !== req.body.productId) {
+                return res.json(responseSuccess(10805,[]));
+            }
+
             const result = await ProductService.updateConditions(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10394, result));
+                return res.json(responseSuccess(10803, result));
             }
             return res.json(responseSuccess(40213, []));
 
