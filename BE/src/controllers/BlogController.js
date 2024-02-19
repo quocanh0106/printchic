@@ -7,6 +7,7 @@ const {
     validateResult,
     isEmpty,
     responseSuccess,
+    convertToObjectId,
 } = require('../utils/shared');
 const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator } = require('../validators/BlogValidator');
 
@@ -48,9 +49,15 @@ module.exports.AUTH = {
             } else {
                 return res.json(responseError("bannerImg must be required!"))
             }
+
+            const checkExistBlog = await BlogService.checkExist(req.body)
+            if (checkExistBlog) {
+                return res.json(responseSuccess(10705,[]));
+            }
+
             const result = await BlogService.create(req.body)
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10600, result));
+                return res.json(responseSuccess(10700, result));
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
@@ -98,6 +105,12 @@ module.exports.AUTH = {
             if (req.file) {
                 req.body.img = req.file.path;
             }
+
+            const checkExistBlog = await BlogService.checkExist(req.body)
+            if (checkExistBlog && checkExistBlog?._id.toHexString() !== req.body.blogId) {
+                return res.json(responseSuccess(10705,[]));
+            }
+
             const result = await BlogService.updateConditions(req.body)
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10603, result));

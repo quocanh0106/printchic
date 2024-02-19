@@ -7,11 +7,11 @@ const {
     isEmpty, regExpSearch, trimValue, generatorTime, facetPaginationAggregate,
     convertResultAggregatePagination,
     populateModel,
+    responseError,
 } = require('../utils/shared');
 const { IS_DELETED, STATUS } = require('../utils/constants');
 const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const create = async (data) => {
-    console.log('data', data)
     try {
         const set = {};
         set.categoryBlogId = data.categoryBlogId;
@@ -52,7 +52,7 @@ const list = async (data) => {
             lean: true,
             // select: REMOVE_FIELDS,
             customLabels: MY_CUSTOM_LABELS,
-            populate : [
+            populate: [
                 populateModel('categoryBlogId')
             ]
         };
@@ -151,6 +151,20 @@ const updateStatus = async (data) => {
         return promiseReject(err);
     }
 }
+
+const checkExist = async (data) => {
+    try {
+        const conditions = {
+            isDeleted: IS_DELETED[200],
+            title: data?.title
+        };
+        const checkExistTitle = await BlogsModels.findOne(conditions);
+        return promiseResolve(checkExistTitle);
+    } catch (err) {
+        console.log(err, 'err')
+        return promiseReject(err);
+    }
+}
 module.exports = {
     create,
     findByConditions,
@@ -158,4 +172,5 @@ module.exports = {
     updateDelete,
     updateStatus,
     list,
+    checkExist
 };

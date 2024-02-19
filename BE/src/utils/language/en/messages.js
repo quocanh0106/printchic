@@ -90,6 +90,14 @@ exports.CODES_SUCCESS = {
     10603: "Update category blog successfully!",
     10604: "Get detail category blog successfully!",
 
+    /* 10700 -> 10799 news */
+    10700: "Create new Blog successfully!",
+    10701: "Get list Blog successfully!",
+    10702: "Delete Blog successfully!",
+    10703: "Update Blog successfully!",
+    10704: "Get detail Blog successfully!",
+    10705: "Blog already exists!",
+
 }
 exports.CODES_ERROR = {
     40000: 'Username or password is wrong. Please try again!',
