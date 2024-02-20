@@ -92,7 +92,26 @@ module.exports.AUTH = {
                 categoryProductId,
             })
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10393, result));
+                return res.json(responseSuccess(10502, result));
+            }
+            return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
+    info: async (req, res) => {
+        try {
+            const errors = await validateResult(validateCatProIdValidator, req);
+            if (!isEmpty(errors)) {
+                return res.json(responseError(40004, errors));
+            }
+            const { categoryProductId } = req.query;
+            const result = await CategoryProductService.findByConditions({
+                categoryProductId,
+            })
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10501, result));
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {

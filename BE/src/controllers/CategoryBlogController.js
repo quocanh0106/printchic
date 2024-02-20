@@ -90,6 +90,25 @@ module.exports.AUTH = {
             return res.json(responseError(40004, errors));
         }
     },
+    info: async (req, res) => {
+        try {
+            const errors = await validateResult(validateCatBlogIdValidator, req);
+            if (!isEmpty(errors)) {
+                return res.json(responseError(40004, errors));
+            }
+            const { categoryBlogId } = req.query;
+            const result = await CategoryBlogService.findByConditions({
+                categoryBlogId,
+            })
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10601, result));
+            }
+            return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
     update: async (req, res) => {
         // #swagger.tags = ['Tin tức'] 
         // #swagger.summary = 'cập nhật tin tức'

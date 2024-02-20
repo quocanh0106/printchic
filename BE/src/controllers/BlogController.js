@@ -83,7 +83,26 @@ module.exports.AUTH = {
                 blogId,
             })
             if (!isEmpty(result)) {
-                return res.json(responseSuccess(10602, result));
+                return res.json(responseSuccess(10702, result));
+            }
+            return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
+    info: async (req, res) => {
+        try {
+            const errors = await validateResult(validateCatBlogIdValidator, req);
+            if (!isEmpty(errors)) {
+                return res.json(responseError(40004, errors));
+            }
+            const { blogId } = req.query;
+            const result = await BlogService.findByConditions({
+                blogId,
+            })
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10704, result));
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {

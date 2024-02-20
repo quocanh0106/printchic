@@ -63,6 +63,26 @@ module.exports.AUTH = {
         // })
 
     },
+    info: async (req, res) => {
+        try {
+            const errors = await validateResult(validateProIdValidator, req);
+            if (!isEmpty(errors)) {
+                return res.json(responseError(40004, errors));
+            }
+            const { productId } = req.query;
+            console.log('productId',productId)
+            const result = await ProductService.findByConditions({
+                productId,
+            })
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10804, result));
+            }
+            return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
     delete: async (req, res) => {
         // #swagger.tags = ['Tin tức'] 
         // #swagger.summary = 'Xóa tin tức'

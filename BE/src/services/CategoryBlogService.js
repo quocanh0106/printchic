@@ -61,11 +61,10 @@ const list = async (data) => {
 const findByConditions = async (data) => {
     try {
         const conditions = {
-            isDeleted: IS_DELETED[200],
-            status: STATUS[100]
+            isDeleted: IS_DELETED[200]
         };
-        if (data?.newObjId) {
-            conditions._id = convertToObjectId(data.newObjId);
+        if (data?.categoryBlogId) {
+            conditions._id = convertToObjectId(data.categoryBlogId);
         }
         if (data?.getAll) {
             const result = await CategoryBlogsModels.find(conditions);

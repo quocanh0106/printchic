@@ -70,17 +70,16 @@ const list = async (data) => {
 const findByConditions = async (data) => {
     try {
         const conditions = {
-            isDeleted: IS_DELETED[200],
-            status: STATUS[100]
+            isDeleted: IS_DELETED[200]
         };
-        if (data?.newObjId) {
-            conditions._id = convertToObjectId(data.newObjId);
+        if (data?.productId) {
+            conditions._id = convertToObjectId(data.productId);
         }
         if (data?.getAll) {
-            const result = await CategoryProductModels.find(conditions);
+            const result = await ProductsModels.find(conditions);
             return promiseResolve(result);
         }
-        const result = await CategoryProductModels.findOne(conditions);
+        const result = await ProductsModels.findOne(conditions);
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
