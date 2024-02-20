@@ -9,8 +9,9 @@ const {
     responseSuccess,
     urlImage,
     urlFromFilename,
+    findDuplicateIndexes,
 } = require('../utils/shared');
-const { createValidator, validateNewObjIdValidator, updateValidator, validateCatProIdValidator } = require('../validators/CategoryProductValidator');
+const { createValidator, validateNewObjIdValidator, updateValidator, validateCatProIdValidator, validateValidator } = require('../validators/CategoryProductValidator');
 const CloudinaryService = require('../services/CategoryProductService');
 const beforeUploadMulti = (req, res, next) => {
     uploadMultipleImage(req, res, (err) => {
@@ -61,7 +62,7 @@ module.exports.AUTH = {
 
             const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
             if (checkExistProductCategory) {
-                return res.json(responseSuccess(10505,[]));
+                return res.json(responseSuccess(10505, []));
             }
 
             const result = await CategoryProductService.create(req.body)
@@ -119,6 +120,76 @@ module.exports.AUTH = {
             return res.json(responseError(40004, errors));
         }
     },
+    validate: async (req, res) => {
+        try {
+            let errorsNotFoundCategoryParent = []
+            let errorsExistTitle = []
+
+            const errors = await validateResult(validateValidator, req)
+
+            // Check if parentCategory does not exist in database
+            const promises = req.body.listCategoryProduct.map(async (ele, index) => {
+                if (ele.parentCategory) {
+                    const result = await CategoryProductService.findByConditions({
+                        categoryProductId: ele.parentCategory,
+                    })
+                    if (result == null) {
+                        errorsNotFoundCategoryParent.unshift({
+                            value: '',
+                            msg: 'Can not find category by parentCategory',
+                            param: `listCategoryProduct[${index}].parentCategory`,
+                            location: 'body'
+                        })
+                    }
+                }
+
+                // Check if the list has records with title already exist
+                const result = await CategoryProductService.checkExist({
+                    title: ele.title,
+                })
+                console.log('result',result)
+                if (result) {
+                    errorsExistTitle.unshift({
+                        value: '',
+                        msg: 'Category product already exists',
+                        param: `listCategoryProduct[${index}].title`,
+                        location: 'body'
+                    })
+                }
+            })
+
+            // Check if the list has records with the same title
+            const duplicateTitleErrors = findDuplicateIndexes(req.body.listCategoryProduct)[0]?.map(ele => {
+                return {
+                    value: '',
+                    msg: 'The excel file has 2 records with the same title',
+                    param: `listCategoryProduct[${ele}].title`,
+                    location: 'body'
+                }
+            }) || [];
+
+            console.log('errorsExistTitle',errorsExistTitle)
+
+            // Wait for all promises to resolve
+            await Promise.all(promises);
+
+            if (!isEmpty(errorsNotFoundCategoryParent) || !isEmpty(errors) || !isEmpty(duplicateTitleErrors) || !isEmpty(errorsExistTitle)) {
+                return res.json(responseError(40004, [...errorsNotFoundCategoryParent, ...errors, ...duplicateTitleErrors, ...errorsExistTitle]));
+            }
+
+            //     const { categoryProductId } = req.query;
+            //     const result = await CategoryProductService.findByConditions({
+            //         categoryProductId,
+            //     })
+            //     if (!isEmpty(result)) {
+            //         return res.json(responseSuccess(10501, result));
+            //     }
+            //     return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
     update: async (req, res) => {
         // #swagger.tags = ['Tin tức'] 
         // #swagger.summary = 'cập nhật tin tức'
@@ -136,7 +207,7 @@ module.exports.AUTH = {
 
             const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
             if (checkExistProductCategory && checkExistProductCategory?._id.toHexString() !== req.body.categoryProductId) {
-                return res.json(responseSuccess(10505,[]));
+                return res.json(responseSuccess(10505, []));
             }
 
             const result = await CategoryProductService.updateConditions(req.body)

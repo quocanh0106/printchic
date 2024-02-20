@@ -69,6 +69,7 @@ const isValidDate = (date, formatDate = '') => {
     return isValidDate;
 };
 const responseError = (statusCode, errors = {}) => {
+    console.log('errors 222222',errors)
     const response = {};
     response.success = false;
     response.statusCode = statusCode;
@@ -253,6 +254,27 @@ const generateExpiredTime = (value, unit) => {
     }
     return result;
 }
+
+const findDuplicateIndexes = (array) => {
+    const duplicateIndexes = {};
+    
+    array.forEach((obj, index) => {
+        if (!duplicateIndexes[obj.title]) {
+            duplicateIndexes[obj.title] = [index];
+        } else {
+            duplicateIndexes[obj.title].push(index);
+        }
+    });
+
+    // Filter out objects with unique titles
+    const result = Object.entries(duplicateIndexes)
+        .filter(([title, indexes]) => indexes.length > 1)
+        .map(([title, indexes]) => indexes);
+
+    return result;
+}
+
+
 module.exports = {
     generatorTime,
     responseSuccess,
@@ -282,5 +304,6 @@ module.exports = {
     convertUpperCase,
     urlFromFilename,
     generateExpiredTime,
+    findDuplicateIndexes
 }
 
