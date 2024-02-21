@@ -37,6 +37,12 @@ const ProductsBase = {
     status: {
         type: Number, trim: true,
     },
+price: {
+        type: Number, trim: true,
+    },
+    priceSale: {
+        type: Number, trim: true,
+    },
 }
 const Products = { ...ProductsBase, ...common };
 const ProductsSchema = new Schema(Products, { versionKey: false });

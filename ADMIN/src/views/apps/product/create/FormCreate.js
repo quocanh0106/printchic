@@ -87,6 +87,8 @@ const FormCreate = () => {
     formData.append("currency", value.currency);
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
+    formData.append("price", value.price);
+    priceSale && formData.append("priceSale", value.priceSale);
     formData.append("variants", JSON.stringify(variant));
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
@@ -215,12 +217,9 @@ const FormCreate = () => {
                 <CustomTextField
                   fullWidth
                   value={value}
-                  required
                   onChange={onChange}
                   placeholder='Price'
-                  error={Boolean(errors[`price-${row.id}`])}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors[`price-${row.id}`] && { helperText: 'This field is required' })}
                 />
               )}
             />
@@ -228,13 +227,10 @@ const FormCreate = () => {
         )
       }
     },)
-    console.log('listColumnOptions', listColumnOptions)
     setColumn(listColumnOptions)
   }
 
   const getListVariant = () => {
-
-    console.log('listVariant', listVariant)
     if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant)) {
       setOpenDialog(true)
     } else {
@@ -435,6 +431,40 @@ const FormCreate = () => {
                 />
               )}
             />
+            <Controller
+              name='price'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Enter Price'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Price'
+                  error={Boolean(errors.price)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.price && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='priceSale'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Enter Price Sale'
+                  onChange={onChange}
+                  placeholder='Enter Price Sale'
+                  aria-describedby='validation-basic-first-name'
+                />
+              )}
+            />
           </Card>
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
@@ -525,7 +555,7 @@ const FormCreate = () => {
                     <CustomTextField
                       fullWidth
                       select
-                      defaultValue=''
+                      defaultValue='USD'
                       label='Currency'
                       SelectProps={{
                         value: value,
@@ -537,7 +567,6 @@ const FormCreate = () => {
                       {...(errors.currency && { helperText: 'This field is required' })}
                     >
                       <MenuItem value='USD'>USD</MenuItem>
-                      <MenuItem value='VND'>VND</MenuItem>
                       <MenuItem value='EUR'>EUR</MenuItem>
                     </CustomTextField>
                   )}
@@ -661,7 +690,7 @@ const FormCreate = () => {
               columns={column}
               disableRowSelectionOnClick
             />
-            <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
               <Button variant='contained' sx={{ m: 4 }} onClick={() => setOpenDialog(false)}>
                 Save
               </Button>

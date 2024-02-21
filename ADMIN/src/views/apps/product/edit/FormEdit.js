@@ -90,6 +90,8 @@ const FormCreate = () => {
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
+    formData.append("price", value.price);
+    priceSale && formData.append("priceSale", value.priceSale);
 
     // for (let i = 0; i < files.length; i++) {
     //   formData.append('files', files[i]);
@@ -114,6 +116,8 @@ const FormCreate = () => {
     password: '',
     textarea: '',
     firstName: '',
+    price: '',
+    priceSale: '',
     checkbox: false
   })
   const dispatch = useDispatch()
@@ -251,6 +255,8 @@ const FormCreate = () => {
       setValue('currency', data?.currency)
       setValue('productType', data?.type)
       setValue('productCategory', data?.categoryProductId)
+      setValue('price', data?.price)
+      setValue('priceSale', data?.priceSale)
       setFiles(data?.media)
     }
   }, [storeProduct, store, router.query.id])
@@ -567,6 +573,40 @@ const FormCreate = () => {
                   error={Boolean(errors.productType)}
                   aria-describedby='validation-basic-first-name'
                   {...(errors.productType && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+<Controller
+              name='price'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Enter Price'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Price'
+                  error={Boolean(errors.price)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.price && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='priceSale'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Enter Price Sale'
+                  onChange={onChange}
+                  placeholder='Enter Price Sale'
+                  aria-describedby='validation-basic-first-name'
                 />
               )}
             />

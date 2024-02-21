@@ -25,6 +25,8 @@ const create = async (data) => {
         set.status = data.status;
         set.media = data.media;
         set.currency = data.currency;
+set.price = data.price;
+        set.priceSale = data.priceSale;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -125,6 +127,12 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.currency)) {
             set.currency = data.currency;
+        }
+if (!isEmpty(data?.price)) {
+            set.price = data.price;
+        }
+        if (!isEmpty(data?.priceSale)) {
+            set.priceSale = data.priceSale;
         }
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
