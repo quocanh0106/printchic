@@ -2,14 +2,16 @@ require('dotenv').config()
 const BlogService = require('../services/BlogService');
 const { upload, uploadMultipleImage } = require('../configs/configMulter');
 const moment = require('moment-timezone');
+const CategoryBlogService = require('../services/CategoryBlogService');
 const {
     responseError,
     validateResult,
     isEmpty,
     responseSuccess,
     convertToObjectId,
+    findDuplicateIndexes,
 } = require('../utils/shared');
-const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator } = require('../validators/BlogValidator');
+const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator, validateBlogValidator } = require('../validators/BlogValidator');
 
 module.exports.AUTH = {
     list: async (req, res) => {
@@ -52,7 +54,7 @@ module.exports.AUTH = {
 
             const checkExistBlog = await BlogService.checkExist(req.body)
             if (checkExistBlog) {
-                return res.json(responseSuccess(10705,[]));
+                return res.json(responseSuccess(10705, []));
             }
 
             const result = await BlogService.create(req.body)
@@ -127,7 +129,7 @@ module.exports.AUTH = {
 
             const checkExistBlog = await BlogService.checkExist(req.body)
             if (checkExistBlog && checkExistBlog?._id.toHexString() !== req.body.blogId) {
-                return res.json(responseSuccess(10705,[]));
+                return res.json(responseSuccess(10705, []));
             }
 
             const result = await BlogService.updateConditions(req.body)
@@ -136,6 +138,65 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40213, []));
 
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
+
+    validate: async (req, res) => {
+        try {
+            let errorsExistTitle = []
+            let errorsNotFoundCategoryBlogId = []
+
+            const errors = await validateResult(validateBlogValidator, req)
+
+            const promises = req.body.listBlog.map(async (ele, index) => {
+                // Check if categoryBlogId not exists
+                const categoryBlog = await CategoryBlogService.findByConditions({
+                    categoryBlogId: ele.categoryBlogId,
+                })
+                if (categoryBlog == null) {
+                    errorsNotFoundCategoryBlogId.unshift({
+                        value: '',
+                        msg: 'Can not find category by categoryBlogId',
+                        param: `listBlog[${index}].categoryBlogId`,
+                        location: 'body'
+                    })
+                }
+
+                // Check if the list has records with title already exist
+                const result = await BlogService.checkExist({
+                    title: ele.title,
+                })
+                if (result) {
+                    errorsExistTitle.unshift({
+                        value: '',
+                        msg: 'Category blog already exists',
+                        param: `listBlog[${index}].title`,
+                        location: 'body'
+                    })
+                }
+            })
+
+            // Check if the list has records with the same title
+            const duplicateTitleErrors = findDuplicateIndexes(req.body.listBlog, 'title')[0]?.map(ele => {
+                return {
+                    value: '',
+                    msg: 'The excel file has 2 records with the same title',
+                    param: `listBlog[${ele}].title`,
+                    location: 'body'
+                }
+            }) || [];
+
+            // Wait for all promises to resolve
+            await Promise.all(promises);
+            const listError = [...errors, ...duplicateTitleErrors, ...errorsExistTitle, ...errorsNotFoundCategoryBlogId]
+            if (!isEmpty(listError)) {
+                return res.json(responseError(40004, listError));
+            } else {
+                return res.json(responseSuccess(10706));
+            }
         } catch (errors) {
             console.log(errors, 'errors')
             return res.json(responseError(40004, errors));

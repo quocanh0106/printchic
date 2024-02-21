@@ -102,6 +102,7 @@ exports.CODES_SUCCESS = {
     10703: "Update Blog successfully!",
     10704: "Get detail Blog successfully!",
     10705: "Blog already exists!",
+    10706: "Validate Blog successfully!",
 
     /* 10800 -> 10900 Product */
     10800: "Create new product successfully!",
