@@ -255,14 +255,14 @@ const generateExpiredTime = (value, unit) => {
     return result;
 }
 
-const findDuplicateIndexes = (array) => {
+const findDuplicateIndexes = (array, field) => {
     const duplicateIndexes = {};
     
     array.forEach((obj, index) => {
-        if (!duplicateIndexes[obj.title]) {
-            duplicateIndexes[obj.title] = [index];
+        if (!duplicateIndexes[obj[field]]) {
+            duplicateIndexes[obj[field]] = [index];
         } else {
-            duplicateIndexes[obj.title].push(index);
+            duplicateIndexes[obj[field]].push(index);
         }
     });
 

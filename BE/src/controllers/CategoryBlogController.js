@@ -7,8 +7,9 @@ const {
     validateResult,
     isEmpty,
     responseSuccess,
+    findDuplicateIndexes,
 } = require('../utils/shared');
-const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator } = require('../validators/CategoryBlogValidator');
+const { createValidator, validateNewObjIdValidator, updateValidator, validateCatBlogIdValidator, validateCatBlogValidator } = require('../validators/CategoryBlogValidator');
 
 module.exports.AUTH = {
     list: async (req, res) => {
@@ -49,7 +50,7 @@ module.exports.AUTH = {
                 return res.json(responseError("bannerImg must be required!"))
             }
 
-            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body)
+            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body?.title)
             if (checkExistBlogCategory) {
                 return res.json(responseSuccess(10605,[]));
             }
@@ -124,7 +125,7 @@ module.exports.AUTH = {
                 req.body.bannerImg = req.file.path;
             }
 
-            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body)
+            const checkExistBlogCategory = await CategoryBlogService.checkExist(req.body?.title)
             if (checkExistBlogCategory && checkExistBlogCategory?._id.toHexString() !== req.body.categoryBlogId) {
                 return res.json(responseSuccess(10605,[]));
             }
@@ -135,6 +136,75 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40213, []));
 
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
+    validate: async (req, res) => {
+        try {
+            let errorsExistTitle = []
+            let errorsExistHandleUrl = []
+
+            const errors = await validateResult(validateCatBlogValidator, req)
+
+            const promises = req.body.listCategoryBlog.map(async (ele, index) => {
+
+                // Check if the list has records with title already exist
+                const result = await CategoryBlogService.checkExist({
+                    title: ele.title,
+                })
+                if (result) {
+                    errorsExistTitle.unshift({
+                        value: '',
+                        msg: 'Category blog already exists',
+                        param: `listCategoryBlog[${index}].title`,
+                        location: 'body'
+                    })
+                }
+
+                // Check if the list has records with handleUrl already exist
+                const resultHandleUrl = await CategoryBlogService.checkExist({
+                    handleUrl: ele.handleUrl,
+                })
+                if (resultHandleUrl) {
+                    errorsExistHandleUrl.unshift({
+                        value: '',
+                        msg: 'Category blog already exists',
+                        param: `listCategoryBlog[${index}].handleUrl`,
+                        location: 'body'
+                    })
+                }
+            })
+
+            // Check if the list has records with the same title
+            const duplicateTitleErrors = findDuplicateIndexes(req.body.listCategoryBlog, 'title')[0]?.map(ele => {
+                return {
+                    value: '',
+                    msg: 'The excel file has 2 records with the same title',
+                    param: `listCategoryBlog[${ele}].title`,
+                    location: 'body'
+                }
+            }) || [];
+
+            // Check if the list has records with the same title
+            const duplicateHandleUrlErrors = findDuplicateIndexes(req.body.listCategoryBlog, 'handleUrl')[0]?.map(ele => {
+                return {
+                    value: '',
+                    msg: 'The excel file has 2 records with the same handle url',
+                    param: `listCategoryBlog[${ele}].handleUrl`,
+                    location: 'body'
+                }
+            }) || [];
+
+            // Wait for all promises to resolve
+            await Promise.all(promises);
+            const listError = [...errorsExistHandleUrl, ...errors, ...duplicateTitleErrors, ...errorsExistTitle, ...duplicateHandleUrlErrors]
+            if (!isEmpty(listError)) {
+                return res.json(responseError(40004, listError));
+            } else {
+                return res.json(responseSuccess(10506));
+            }
         } catch (errors) {
             console.log(errors, 'errors')
             return res.json(responseError(40004, errors));

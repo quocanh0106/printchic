@@ -85,6 +85,7 @@ exports.CODES_SUCCESS = {
     10503: "Update category product successfully!",
     10504: "Get detail category product successfully!",
     10505: "Product category already exists!",
+    10506: "Validate product category successfully!",
 
     /* 10600 -> 10699 Category Blog */
     10600: "Create new category blog successfully!",

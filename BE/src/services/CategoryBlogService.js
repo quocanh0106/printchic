@@ -144,7 +144,7 @@ const checkExist = async (data) => {
     try {
         const conditions = {
             isDeleted: IS_DELETED[200],
-            title: data?.title
+            ...data
         };
         const checkExistTitle = await CategoryBlogsModels.findOne(conditions);
         return promiseResolve(checkExistTitle);

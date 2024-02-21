@@ -60,7 +60,7 @@ module.exports.AUTH = {
                 return res.json(responseError("bannerImg must be required!"))
             }
 
-            const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
+            const checkExistProductCategory = await CategoryProductService.checkExist(req.body?.title)
             if (checkExistProductCategory) {
                 return res.json(responseSuccess(10505, []));
             }
@@ -159,7 +159,7 @@ module.exports.AUTH = {
             })
 
             // Check if the list has records with the same title
-            const duplicateTitleErrors = findDuplicateIndexes(req.body.listCategoryProduct)[0]?.map(ele => {
+            const duplicateTitleErrors = findDuplicateIndexes(req.body.listCategoryProduct, 'title')[0]?.map(ele => {
                 return {
                     value: '',
                     msg: 'The excel file has 2 records with the same title',
@@ -172,19 +172,12 @@ module.exports.AUTH = {
 
             // Wait for all promises to resolve
             await Promise.all(promises);
-
-            if (!isEmpty(errorsNotFoundCategoryParent) || !isEmpty(errors) || !isEmpty(duplicateTitleErrors) || !isEmpty(errorsExistTitle)) {
-                return res.json(responseError(40004, [...errorsNotFoundCategoryParent, ...errors, ...duplicateTitleErrors, ...errorsExistTitle]));
+            const listError = [...errorsNotFoundCategoryParent, ...errors, ...duplicateTitleErrors, ...errorsExistTitle]
+            if (!isEmpty(listError)) {
+                return res.json(responseError(40004, listError));
+            } else {
+                return res.json(responseSuccess(10506));
             }
-
-            //     const { categoryProductId } = req.query;
-            //     const result = await CategoryProductService.findByConditions({
-            //         categoryProductId,
-            //     })
-            //     if (!isEmpty(result)) {
-            //         return res.json(responseSuccess(10501, result));
-            //     }
-            //     return res.json(responseSuccess(40212, []));
         } catch (errors) {
             console.log(errors, 'errors')
             return res.json(responseError(40004, errors));
@@ -205,7 +198,7 @@ module.exports.AUTH = {
                 req.body.bannerImg = req.file.path;
             }
 
-            const checkExistProductCategory = await CategoryProductService.checkExist(req.body)
+            const checkExistProductCategory = await CategoryProductService.checkExist(req.body?.title)
             if (checkExistProductCategory && checkExistProductCategory?._id.toHexString() !== req.body.categoryProductId) {
                 return res.json(responseSuccess(10505, []));
             }
