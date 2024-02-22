@@ -144,6 +144,13 @@ const UserList = () => {
                 }
               },
               {
+                text: 'Preview',
+                icon: <Icon icon='icon-park-outline:preview-open' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_USER_API}/${row?.handleUrl}`)
+                }
+              },
+              {
                 text: row.isPublic ? 'Set to Private' : 'Set to Public',
                 icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
               },

@@ -31,6 +31,7 @@ import TableHeader from 'src/views/apps/productCategory/TableHeader'
 import AddDialogProduct from './AddDialogProduct'
 import DialogEditCard from './EditDialogProduct'
 import { deleteCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
+import { openInNewTab } from 'src/utils'
 
 
 const UserList = () => {
@@ -132,6 +133,13 @@ const UserList = () => {
                     setRowData(tempRow)
                     setOpenEditDialog(true)
                   }
+                }
+              },
+              {
+                text: 'Preview',
+                icon: <Icon icon='icon-park-outline:preview-open' fontSize={20} />,
+                menuItemProps: {
+                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_USER_API}/${row?._id}`)
                 }
               },
               {
