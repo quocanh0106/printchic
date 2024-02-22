@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, List, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, FormControlLabel, List, ListItem, MenuItem, Radio, RadioGroup, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -24,6 +24,7 @@ import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { top100Films } from 'src/@fake-db/autocomplete'
 import { addBlog } from 'src/store/apps/blog'
+import PopoverAddContent from '../components/PopoverAddContent'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -40,18 +41,19 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   }
 }))
 
-let count = 0
-let countOption = 0
+let idItemsContent = 2;
 
 const FormCreate = () => {
-  const [listVariant, setListVariant] = useState([]);
-  const [tempListVariant, setTempListVariant] = useState([]);
-  const [listOPtionVariant, setListOptionVariant] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [column, setColumn] = useState([]);
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
+  const [contentType, setContentType] = useState('text')
   const [valueRecommend, setValueRecommend] = useState([])
+  const [listItemsContent, setListItemContent] = useState([{
+    id: 1,
+    type: 'title',
+    value: '',
+
+  }])
 
   const router = useRouter()
 
@@ -71,12 +73,12 @@ const FormCreate = () => {
 
   const onSubmit = (value) => {
     setLoading(true)
-    
+
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
     formData.append("title", value.title);
-    formData.append("content", value.content);
+    // formData.append("content", value.content);
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -135,6 +137,27 @@ const FormCreate = () => {
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
+  }
+
+  const handleAddEleContent = (type, idToFind) => {
+    const tempListItemsContent = JSON.parse(JSON.stringify(listItemsContent));
+    const index = tempListItemsContent.findIndex(obj => obj.id === idToFind);
+
+    if (index !== -1) {
+      // Insert the new object after the found object
+      tempListItemsContent.splice(index + 1, 0, {
+        id: idItemsContent,
+        type: type,
+        value: '',
+
+      });
+      idItemsContent++
+      setListItemContent(tempListItemsContent)
+      console.log('tempListItemsContent', tempListItemsContent)
+    } else {
+      console.log('Object not found');
+    }
+
   }
 
   return (
@@ -223,7 +246,7 @@ const FormCreate = () => {
               )}
             />
           </Card>
-          <Card sx={{ p: 4 , mt: 4}}>
+          <Card sx={{ p: 4, mt: 4 }}>
             <Box>
               <Typography>
                 Thumnail Image
@@ -258,28 +281,53 @@ const FormCreate = () => {
                 />
               )}
             />
-            <Controller
-              name='content'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  type='textarea'
-                  multiline
-                  rows={12}
-                  value={value}
-                  sx={{ mt: 3 }}
-                  label='Description'
-                  required
-                  onChange={onChange}
-                  placeholder='content'
-                  error={Boolean(errors.content)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.content && { helperText: 'This field is required' })}
-                />
-              )}
-            />
+          </Card>
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Typography variant='h4'>
+              Content
+            </Typography>
+            <Grid item xs={12} sm={6}>
+              <RadioGroup row aria-label='controlled' name='controlled' value={contentType} onChange={(e) => setContentType(e.target.value)}>
+                <FormControlLabel value='text' control={<Radio />} label='text' sx={{ pr: 4 }} />
+                <FormControlLabel value='html' control={<Radio />} label='html' />
+              </RadioGroup>
+            </Grid>
+            {
+              listItemsContent.map(ele => <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
+                {
+                  ele.type == 'title' &&
+                  <CustomTextField
+                    fullWidth
+                    sx={{ mt: 4 }}
+                    label={ele?.type}
+                    required
+                    aria-describedby='validation-basic-first-name'
+                  />
+                }
+                {
+                  ele.type == 'text' &&
+                  <CustomTextField
+                    type='textarea'
+                    rows={6}
+                    multiline
+                    fullWidth
+                    sx={{ mt: 4 }}
+                    label={ele?.type}
+                    required
+                    aria-describedby='validation-basic-first-name'
+                  />
+                }
+                {
+                  ele.type == 'img' &&
+                  <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1, mt: 3 , width: '80%'}}>
+                    <input {...getInputProps()} />
+                    Upload
+                  </Button>
+                }
+                <Icon icon='tabler:trash' fontSize={30} onClick={() => removeVariant(el.index)} />
+              </Box>)
+            }
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>
