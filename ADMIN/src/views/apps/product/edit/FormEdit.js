@@ -91,7 +91,7 @@ const FormCreate = () => {
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
     formData.append("price", value.price);
-    priceSale && formData.append("priceSale", value.priceSale);
+    value.priceSale && formData.append("priceSale", value.priceSale);
 
     // for (let i = 0; i < files.length; i++) {
     //   formData.append('files', files[i]);
@@ -246,7 +246,7 @@ const FormCreate = () => {
         listFile.push(URLtoFile(ele.path))
       })
 
-      handleListVariant(data.variants)
+      data?.variants && handleListVariant(data?.variants)
       setValue('title', data?.title)
       setValue('handleUrl', data?.handleUrl)
       setValue('metaDescription', data?.metaDescription)
@@ -518,7 +518,7 @@ const FormCreate = () => {
                   defaultValue=''
                   label='Product Status'
                   SelectProps={{
-                    value: value,
+                    value: value || "",
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
@@ -543,7 +543,7 @@ const FormCreate = () => {
                   defaultValue=''
                   label='Product Category'
                   SelectProps={{
-                    value: value,
+                    value: value || "",
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
@@ -576,7 +576,7 @@ const FormCreate = () => {
                 />
               )}
             />
-<Controller
+            <Controller
               name='price'
               control={control}
               rules={{ required: true }}
@@ -701,13 +701,13 @@ const FormCreate = () => {
                       fullWidth
                       select
                       label='Currency'
+                      sx={{textAlign: 'left'}}
                       SelectProps={{
-                        value: value,
+                        value: value || "",
                         onChange: e => onChange(e)
                       }}
-                      id='validation-basic-select'
+                      id='custom-select'
                       error={Boolean(errors.currency)}
-                      aria-describedby='validation-basic-select'
                       {...(errors.currency && { helperText: 'This field is required' })}
                     >
                       <MenuItem value='USD'>USD</MenuItem>

@@ -29,7 +29,9 @@ export const updateSetting = createAsyncThunk('appSetting/updateEvent', async (e
 export const settingSlice = createSlice({
   name: 'setting',
   initialState: {
-    data: {},
+    data: {
+      language: ""
+    },
   },
   reducers: {},
   extraReducers: builder => {

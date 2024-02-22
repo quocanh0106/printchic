@@ -1,29 +1,25 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, List, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import IconButton from '@mui/material/IconButton'
 
 // ** Custom Components Imports
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
-import { Fragment, forwardRef, useEffect, useState } from 'react'
-import { Box } from '@mui/system'
-import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
-import Icon from 'src/@core/components/icon'
 import styled from '@emotion/styled'
-import { DataGrid } from '@mui/x-data-grid'
-import { useDropzone } from 'react-dropzone'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { addProduct, fetchProduct } from 'src/store/apps/product'
+import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
-import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
-import { top100Films } from 'src/@fake-db/autocomplete'
-import { addBlog, fetchBlog, updateBlog } from 'src/store/apps/blog'
+import { fetchBlog, updateBlog } from 'src/store/apps/blog'
+import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import { fetchProduct } from 'src/store/apps/product'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -40,15 +36,7 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   }
 }))
 
-let count = 0
-let countOption = 0
-
-const FormCreate = () => {
-  const [listVariant, setListVariant] = useState([]);
-  const [tempListVariant, setTempListVariant] = useState([]);
-  const [listOPtionVariant, setListOptionVariant] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [column, setColumn] = useState([]);
+const FormEdit = () => {
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
@@ -179,7 +167,7 @@ const FormCreate = () => {
                   fullWidth
                   label='Blog Status'
                   SelectProps={{
-                    value: value,
+                    value: value || "",
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
@@ -204,7 +192,7 @@ const FormCreate = () => {
                   defaultValue=''
                   label='Blog Category'
                   SelectProps={{
-                    value: value,
+                    value: value || "",
                     onChange: e => onChange(e)
                   }}
                   id='validation-basic-select'
@@ -323,7 +311,7 @@ const FormCreate = () => {
                 }}
               />
             ) : null}
-            Create
+            Update
           </Button>
         </Box>
       </Grid>
@@ -331,4 +319,4 @@ const FormCreate = () => {
   )
 }
 
-export default FormCreate
+export default FormEdit

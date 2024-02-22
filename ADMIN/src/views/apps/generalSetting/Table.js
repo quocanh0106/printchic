@@ -51,17 +51,13 @@ const UserList = () => {
     headEmbedAll: '',
     headTagAll: '',
     footerTagAll: '',
-    language: ''
+    language: 'VN'
   })
   const dispatch = useDispatch()
   const store = useSelector(state => state.setting)
-  useEffect(() => {
-    dispatch(
-      fetchEventsSetting()
-    )
-  }, [dispatch])
 
   useEffect(() => {
+    setValue('language', store.data.language)
     setValue('siteName', store.data.siteName)
     setValue('metaTitle', store.data.metaTitle)
     setValue('metaDescription', store.data.metaDescription)
@@ -70,9 +66,15 @@ const UserList = () => {
     setValue('headEmbedAll', store.data.headEmbedAll)
     setValue('headTagAll', store.data.headTagAll)
     setValue('footerTagAll', store.data.footerTagAll)
-    setValue('language', store.data.language)
     setFiles(store.data.imageFeature)
   }, [store])
+
+  useEffect(() => {
+    dispatch(
+      fetchEventsSetting()
+    )
+  }, [dispatch])
+
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -165,7 +167,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Site name'
@@ -192,7 +194,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Meta Title'
@@ -219,7 +221,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Meta Description'
@@ -246,7 +248,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Head Tag'
@@ -273,7 +275,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Footer Tag'
@@ -300,7 +302,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Head Embed All'
@@ -327,7 +329,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Head Tag All'
@@ -354,7 +356,7 @@ const UserList = () => {
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
-                    value={value}
+                    value={value || ""}
                     required
                     onChange={onChange}
                     placeholder='Footer Tag All'
@@ -382,9 +384,9 @@ const UserList = () => {
                   <CustomTextField
                     select
                     fullWidth
-                    defaultValue=''
+                    defaultValue=""
                     SelectProps={{
-                      value: value,
+                      value: value || "",
                       onChange: e => onChange(e)
                     }}
                     id='validation-basic-select'
@@ -392,12 +394,14 @@ const UserList = () => {
                     aria-describedby='validation-basic-select'
                     {...(errors.language && { helperText: 'This field is required' })}
                   >
+                    <MenuItem value="">None</MenuItem>
                     {
                       LANG.map(ele => <MenuItem key={ele.value} value={ele.value}>{ele?.label}</MenuItem>)
                     }
                   </CustomTextField>
                 )}
               />
+
             </Grid>
           </Grid>
         </Card>
