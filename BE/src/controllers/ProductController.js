@@ -1,5 +1,6 @@
 require('dotenv').config()
 const ProductService = require('../services/ProductService');
+const CategoryProductService = require('../services/CategoryProductService');
 const {
     responseError,
     validateResult,

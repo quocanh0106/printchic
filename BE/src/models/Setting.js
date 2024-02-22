@@ -14,6 +14,9 @@ const settingBase = {
   imageFeature: {
     type: String, trim: true,
   },
+  siteName: {
+    type: String, trim: true,
+  },
   metaTitle: {
     type: String, trim: true,
   },
