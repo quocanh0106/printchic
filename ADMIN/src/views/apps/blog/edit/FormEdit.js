@@ -68,7 +68,7 @@ const FormEdit = () => {
     setLoading(true)
     const tempList = [...listItemsContent]
     const promises = tempList.map(async ele => {
-      if (ele.type === 'img') {
+      if (ele.type === 'img' && typeof ele.value[0] !== 'string') {
         const formData = new FormData();
         formData.append('file', ele.value[0]);
         const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
@@ -81,7 +81,7 @@ const FormEdit = () => {
       return ele
     })
     await Promise.all(promises);
-
+    console.log('tempListtempListtempList',tempList)
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
@@ -223,9 +223,9 @@ const FormEdit = () => {
     let tempListItemsContent = [...listItemsContent]
     tempListItemsContent = tempListItemsContent.map(ele => {
       if (ele.id == id) {
-        ele.value = e.target.value
+        return { ...ele, value: e.target.value };
       }
-      return ele
+      return { ...ele }; 
     })
     setListItemContent(tempListItemsContent)
   }
@@ -234,9 +234,9 @@ const FormEdit = () => {
     let tempListItemsContent = [...listItemsContent]
     tempListItemsContent = tempListItemsContent.map(ele => {
       if (ele.id == id) {
-        ele.value = e.target.value
+        return { ...ele, value: e.target.value };
       }
-      return ele
+      return { ...ele }; 
     })
     setListItemContent(tempListItemsContent)
   }

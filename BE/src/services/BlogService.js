@@ -95,7 +95,7 @@ const updateConditions = async (data) => {
             set.title = data.title;
         }
         if (!isEmpty(data?.content)) {
-            set.content = data.content;
+            set.content = JSON.parse(data.content);
         }
         if (!isEmpty(data?.img)) {
             set.img = data.img;
