@@ -70,10 +70,12 @@ const FormCreate = () => {
   const onSubmit = async (value) => {
     setLoading(true)
     const tempList = [...listItemsContent]
+    
     const promises = tempList.map(async ele => {
       if (ele.type === 'img') {
         const formData = new FormData();
         formData.append('file', ele.value[0]);
+
         const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -81,6 +83,7 @@ const FormCreate = () => {
         })
         ele.value[0] = response.data?.secure_url
       }
+
       return ele
     })
     await Promise.all(promises);
@@ -164,9 +167,6 @@ const FormCreate = () => {
       });
       idItemsContent++
       setListItemContent(tempListItemsContent)
-      console.log('tempListItemsContent', tempListItemsContent)
-    } else {
-      console.log('Object not found');
     }
 
   }
@@ -197,6 +197,7 @@ const FormCreate = () => {
       if (ele.id == id) {
         ele.value = e.target.value
       }
+
       return ele
     })
     setListItemContent(tempListItemsContent)
@@ -208,6 +209,7 @@ const FormCreate = () => {
       if (ele.id == id) {
         ele.value = e.target.value
       }
+
       return ele
     })
     setListItemContent(tempListItemsContent)

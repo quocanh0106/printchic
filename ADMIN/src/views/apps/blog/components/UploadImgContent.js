@@ -32,8 +32,6 @@ function UploadImgContent({ id, listItemsContent, setListItemContent }) {
       let tempListItemsContent = [...listItemsContent]
       tempListItemsContent.map((ele) => {
         if (ele.id == id) {
-          console.log('da vao', id)
-          console.log('aaa', acceptedFiles.map(file => Object.assign(file)))
           ele.value = acceptedFiles.map(file => Object.assign(file))
         }
 
@@ -45,9 +43,7 @@ function UploadImgContent({ id, listItemsContent, setListItemContent }) {
   })
 
   const img = listItemsContent?.map(ele => {
-    console.log('file', ele)
     if (ele.id === id && ele.value[0] && (ele.value[0].name || (typeof ele.value[0] === "string" && ele.value[0]))) {
-      console.log('ele.value[0]', typeof ele.value[0].name)
       return (
         <Box key={ele.id} sx={{ position: 'relative' }}>
           <CustomCloseButton onClick={() => setFiles([])}>

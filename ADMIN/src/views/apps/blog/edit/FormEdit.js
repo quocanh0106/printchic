@@ -67,10 +67,12 @@ const FormEdit = () => {
   const onSubmit = async (value) => {
     setLoading(true)
     const tempList = [...listItemsContent]
+    
     const promises = tempList.map(async ele => {
       if (ele.type === 'img' && typeof ele.value[0] !== 'string') {
         const formData = new FormData();
         formData.append('file', ele.value[0]);
+
         const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -78,10 +80,10 @@ const FormEdit = () => {
         })
         ele.value[0] = response.data?.secure_url
       }
+
       return ele
     })
     await Promise.all(promises);
-    console.log('tempListtempListtempList',tempList)
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
@@ -139,7 +141,6 @@ const FormEdit = () => {
       })
       const maxId = data?.content.reduce((max, item) => item.id > max ? item.id : max, data?.content[0].id);
 
-      console.log('data', data)
       setValue('blogCategory', data?.categoryBlogId?._id)
       idItemsContent = maxId + 1
       setListItemContent(data?.content)
@@ -192,9 +193,6 @@ const FormEdit = () => {
       });
       idItemsContent++
       setListItemContent(tempListItemsContent)
-      console.log('tempListItemsContent', tempListItemsContent)
-    } else {
-      console.log('Object not found');
     }
 
   }
@@ -223,8 +221,10 @@ const FormEdit = () => {
     let tempListItemsContent = [...listItemsContent]
     tempListItemsContent = tempListItemsContent.map(ele => {
       if (ele.id == id) {
+
         return { ...ele, value: e.target.value };
       }
+
       return { ...ele }; 
     })
     setListItemContent(tempListItemsContent)
@@ -234,8 +234,10 @@ const FormEdit = () => {
     let tempListItemsContent = [...listItemsContent]
     tempListItemsContent = tempListItemsContent.map(ele => {
       if (ele.id == id) {
+
         return { ...ele, value: e.target.value };
       }
+
       return { ...ele }; 
     })
     setListItemContent(tempListItemsContent)
