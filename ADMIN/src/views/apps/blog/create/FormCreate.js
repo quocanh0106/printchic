@@ -26,6 +26,7 @@ import { top100Films } from 'src/@fake-db/autocomplete'
 import { addBlog } from 'src/store/apps/blog'
 import PopoverAddContent from '../components/PopoverAddContent'
 import UploadImgContent from '../components/UploadImgContent'
+import axios from 'axios'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -49,13 +50,7 @@ const FormCreate = () => {
   const [loading, setLoading] = useState(false)
   const [contentType, setContentType] = useState('text')
   const [valueRecommend, setValueRecommend] = useState([])
-  const [listItemsContent, setListItemContent] = useState([{
-    id: 1,
-    type: 'title',
-    value: '',
-
-  }])
-  console.log('listItemsContent',listItemsContent)
+  const [listItemsContent, setListItemContent] = useState([])
   const router = useRouter()
 
   const callBackSubmit = (data) => {
@@ -72,14 +67,29 @@ const FormCreate = () => {
     setLoading(false)
   }
 
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     setLoading(true)
+    const tempList = [...listItemsContent]
+    const promises = tempList.map(async ele => {
+      if (ele.type === 'img') {
+        const formData = new FormData();
+        formData.append('file', ele.value[0]);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        ele.value[0] = response.data?.secure_url
+      }
+      return ele
+    })
+    await Promise.all(promises);
 
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
     formData.append("title", value.title);
-    // formData.append("content", value.content);
+    formData.append("content", JSON.stringify(tempList));
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -141,7 +151,7 @@ const FormCreate = () => {
   }
 
   const handleAddEleContent = (type, idToFind) => {
-    const tempListItemsContent = JSON.parse(JSON.stringify(listItemsContent));
+    const tempListItemsContent = [...listItemsContent]
     const index = tempListItemsContent.findIndex(obj => obj.id === idToFind);
 
     if (index !== -1) {
@@ -159,6 +169,48 @@ const FormCreate = () => {
       console.log('Object not found');
     }
 
+  }
+
+  const handleAddEleContentFirst = (type, idToFind) => {
+    const tempListItemsContent = [...listItemsContent]
+
+    tempListItemsContent.unshift({
+      id: idToFind,
+      type: type,
+      value: '',
+
+    });
+    idItemsContent++
+    setListItemContent(tempListItemsContent)
+
+  }
+
+  const handleRemoveEleContent = (idToFind) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.filter(item => item.id !== idToFind);
+    setListItemContent(tempListItemsContent)
+  }
+
+  const onChangeContentTitle = (e, id) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.map(ele => {
+      if (ele.id == id) {
+        ele.value = e.target.value
+      }
+      return ele
+    })
+    setListItemContent(tempListItemsContent)
+  }
+
+  const onChangeContentText = (e, id) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.map(ele => {
+      if (ele.id == id) {
+        ele.value = e.target.value
+      }
+      return ele
+    })
+    setListItemContent(tempListItemsContent)
   }
 
   return (
@@ -293,8 +345,9 @@ const FormCreate = () => {
                 <FormControlLabel value='html' control={<Radio />} label='html' />
               </RadioGroup>
             </Grid>
+            <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
             {
-              listItemsContent.map(ele => <Box ket={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+              listItemsContent.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                 <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
                 {
                   ele.type == 'title' &&
@@ -302,6 +355,7 @@ const FormCreate = () => {
                     fullWidth
                     sx={{ mt: 4 }}
                     label={ele?.type}
+                    onChange={(e) => onChangeContentTitle(e, ele.id)}
                     required
                     aria-describedby='validation-basic-first-name'
                   />
@@ -313,6 +367,7 @@ const FormCreate = () => {
                     rows={6}
                     multiline
                     fullWidth
+                    onChange={(e) => onChangeContentText(e, ele.id)}
                     sx={{ mt: 4 }}
                     label={ele?.type}
                     required
@@ -321,9 +376,9 @@ const FormCreate = () => {
                 }
                 {
                   ele.type == 'img' &&
-                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent}/>
+                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
                 }
-                <Icon icon='tabler:trash' fontSize={30} onClick={() => removeVariant(el.index)} />
+                <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
               </Box>)
             }
           </Card>

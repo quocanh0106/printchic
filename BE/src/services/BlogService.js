@@ -20,7 +20,7 @@ const create = async (data) => {
         set.tags = data.tags;
         set.title = data.title;
         set.recommendProduct = JSON.parse(data.recommendProduct);
-        set.content = data.content;
+        set.content = JSON.parse(data.content);
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await BlogsModels.create(set);

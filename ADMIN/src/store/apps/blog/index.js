@@ -70,7 +70,6 @@ export const blogSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchBlog.fulfilled, (state, action) => {
-      console.log('ád', action.payload)
       state.data = action.payload.data.items
       state.total = action.payload.data?.paginator?.itemCount
       state.params = action.payload.data.params

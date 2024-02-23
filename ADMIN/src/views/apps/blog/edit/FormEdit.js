@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, FormControlLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
@@ -20,6 +20,9 @@ import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { fetchBlog, updateBlog } from 'src/store/apps/blog'
 import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 import { fetchProduct } from 'src/store/apps/product'
+import axios from 'axios'
+import PopoverAddContent from '../components/PopoverAddContent'
+import UploadImgContent from '../components/UploadImgContent'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -36,10 +39,14 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   }
 }))
 
+let idItemsContent = 2;
+
 const FormEdit = () => {
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
+  const [contentType, setContentType] = useState('text')
+  const [listItemsContent, setListItemContent] = useState([])
 
   const router = useRouter()
 
@@ -57,15 +64,30 @@ const FormEdit = () => {
     setLoading(false)
   }
 
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     setLoading(true)
-    
+    const tempList = [...listItemsContent]
+    const promises = tempList.map(async ele => {
+      if (ele.type === 'img') {
+        const formData = new FormData();
+        formData.append('file', ele.value[0]);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        ele.value[0] = response.data?.secure_url
+      }
+      return ele
+    })
+    await Promise.all(promises);
+
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
     formData.append("blogId", router.query.id);
     formData.append("title", value.title);
-    formData.append("content", value.content);
+    formData.append("content", JSON.stringify(tempList));
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -106,25 +128,28 @@ const FormEdit = () => {
   }, [])
 
   useEffect(() => {
-    if(storeBlog.data.length > 0) {
+    if (storeBlog.data.length > 0) {
       const data = storeBlog.data.find(ele => ele._id == router.query.id)
-      
+
       const listRecommend = [];
       storeProduct.data.forEach(ele => {
-        if(data?.recommendProduct?.includes(ele._id)) {
+        if (data?.recommendProduct?.includes(ele._id)) {
           listRecommend.push(ele)
         }
       })
-      console.log('data',data)
+      const maxId = data?.content.reduce((max, item) => item.id > max ? item.id : max, data?.content[0].id);
+
+      console.log('data', data)
       setValue('blogCategory', data?.categoryBlogId?._id)
-      setValue('content', data?.content)
+      idItemsContent = maxId + 1
+      setListItemContent(data?.content)
       setValue('blogStatus', data?.status)
       setValue('tags', data?.tags)
       setValue('title', data?.title)
       setValueRecommend(listRecommend)
       setFiles(data?.img)
     }
-  },[storeBlog, storeProduct, store, router.query.id])
+  }, [storeBlog, storeProduct, store, router.query.id])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -150,6 +175,70 @@ const FormEdit = () => {
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
+  }
+
+
+  const handleAddEleContent = (type, idToFind) => {
+    const tempListItemsContent = [...listItemsContent]
+    const index = tempListItemsContent.findIndex(obj => obj.id === idToFind);
+
+    if (index !== -1) {
+      // Insert the new object after the found object
+      tempListItemsContent.splice(index + 1, 0, {
+        id: idItemsContent,
+        type: type,
+        value: '',
+
+      });
+      idItemsContent++
+      setListItemContent(tempListItemsContent)
+      console.log('tempListItemsContent', tempListItemsContent)
+    } else {
+      console.log('Object not found');
+    }
+
+  }
+
+  const handleAddEleContentFirst = (type, idToFind) => {
+    const tempListItemsContent = [...listItemsContent]
+
+    tempListItemsContent.unshift({
+      id: idToFind,
+      type: type,
+      value: '',
+
+    });
+    idItemsContent++
+    setListItemContent(tempListItemsContent)
+
+  }
+
+  const handleRemoveEleContent = (idToFind) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.filter(item => item.id !== idToFind);
+    setListItemContent(tempListItemsContent)
+  }
+
+  const onChangeContentTitle = (e, id) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.map(ele => {
+      if (ele.id == id) {
+        ele.value = e.target.value
+      }
+      return ele
+    })
+    setListItemContent(tempListItemsContent)
+  }
+
+  const onChangeContentText = (e, id) => {
+    let tempListItemsContent = [...listItemsContent]
+    tempListItemsContent = tempListItemsContent.map(ele => {
+      if (ele.id == id) {
+        ele.value = e.target.value
+      }
+      return ele
+    })
+    setListItemContent(tempListItemsContent)
   }
 
   return (
@@ -237,7 +326,7 @@ const FormEdit = () => {
               )}
             />
           </Card>
-          <Card sx={{ p: 4 , mt: 4}}>
+          <Card sx={{ p: 4, mt: 4 }}>
             <Box>
               <Typography>
                 Thumnail Image
@@ -272,28 +361,56 @@ const FormEdit = () => {
                 />
               )}
             />
-            <Controller
-              name='content'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  type='textarea'
-                  multiline
-                  rows={12}
-                  value={value}
-                  sx={{ mt: 3 }}
-                  label='Description'
-                  required
-                  onChange={onChange}
-                  placeholder='content'
-                  error={Boolean(errors.content)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.content && { helperText: 'This field is required' })}
-                />
-              )}
-            />
+          </Card>
+
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Typography variant='h4'>
+              Content
+            </Typography>
+            <Grid item xs={12} sm={6}>
+              <RadioGroup row aria-label='controlled' name='controlled' value={contentType} onChange={(e) => setContentType(e.target.value)}>
+                <FormControlLabel value='text' control={<Radio />} label='text' sx={{ pr: 4 }} />
+                <FormControlLabel value='html' control={<Radio />} label='html' />
+              </RadioGroup>
+            </Grid>
+            <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
+            {
+              listItemsContent?.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
+                {
+                  ele.type == 'title' &&
+                  <CustomTextField
+                    fullWidth
+                    value={ele.value}
+                    sx={{ mt: 4 }}
+                    label={ele?.type}
+                    onChange={(e) => onChangeContentTitle(e, ele.id)}
+                    required
+                    aria-describedby='validation-basic-first-name'
+                  />
+                }
+                {
+                  ele.type == 'text' &&
+                  <CustomTextField
+                    type='textarea'
+                    rows={6}
+                    value={ele.value}
+                    multiline
+                    fullWidth
+                    onChange={(e) => onChangeContentText(e, ele.id)}
+                    sx={{ mt: 4 }}
+                    label={ele?.type}
+                    required
+                    aria-describedby='validation-basic-first-name'
+                  />
+                }
+                {
+                  ele.type == 'img' &&
+                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
+                }
+                <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
+              </Box>)
+            }
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>

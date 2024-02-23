@@ -7,7 +7,7 @@ import Icon from 'src/@core/components/icon'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
-  right: '10%',
+  right: 0,
   color: 'grey.500',
   position: 'absolute',
   boxShadow: theme.shadows[2],
@@ -29,7 +29,7 @@ function UploadImgContent({ id, listItemsContent, setListItemContent }) {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif']
     },
     onDrop: acceptedFiles => {
-      let tempListItemsContent = JSON.parse(JSON.stringify(listItemsContent))
+      let tempListItemsContent = [...listItemsContent]
       tempListItemsContent.map((ele) => {
         if (ele.id == id) {
           console.log('da vao', id)
@@ -40,27 +40,35 @@ function UploadImgContent({ id, listItemsContent, setListItemContent }) {
         return ele
       })
       setListItemContent(tempListItemsContent)
-      // setFiles(acceptedFiles.map(file => Object.assign(file)))
+      setFiles(acceptedFiles.map(file => Object.assign(file)))
     }
   })
 
-  const img = listItemsContent?.value?.map(file => {
-    console.log('file', file)
-    return (
-      <Box key={file.name} sx={{ position: 'relative' }}>
-        <CustomCloseButton onClick={() => setFiles([])}>
-          <Icon icon='tabler:x' fontSize='1.25rem' />
-        </CustomCloseButton>
-        <img width={'89%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
-      </Box>
-    )
+  const img = listItemsContent?.map(ele => {
+    console.log('file', ele)
+    if (ele.id === id && ele.value[0] && (ele.value[0].name || (typeof ele.value[0] === "string" && ele.value[0]))) {
+      console.log('ele.value[0]', typeof ele.value[0].name)
+      return (
+        <Box key={ele.id} sx={{ position: 'relative' }}>
+          <CustomCloseButton onClick={() => setFiles([])}>
+            <Icon icon='tabler:x' fontSize='1.25rem' />
+          </CustomCloseButton>
+          {
+            typeof ele.value[0] === "string" ?
+              <img width={'100%'} className='single-file-image' src={ele.value[0]} />
+              :
+              <img width={'100%'} key={ele.value[0].name} alt={ele.value[0].name} className='single-file-image' src={URL.createObjectURL(ele.value[0])} />
+          }
+        </Box>
+      )
+    }
   })
 
   return (
     <Box sx={{ width: '80%', mt: 5 }}>
       {
-        listItemsContent?.value?.length ? img :
-          <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1, width: '80%' }}>
+        listItemsContent.find(ele => ele.id == id)?.value.length > 0 ? img :
+          <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ width: '100%' }}>
             <input {...getInputProps()} />
             Upload
           </Button>
