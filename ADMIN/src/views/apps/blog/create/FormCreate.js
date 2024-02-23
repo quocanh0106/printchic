@@ -25,6 +25,7 @@ import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { top100Films } from 'src/@fake-db/autocomplete'
 import { addBlog } from 'src/store/apps/blog'
 import PopoverAddContent from '../components/PopoverAddContent'
+import UploadImgContent from '../components/UploadImgContent'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -54,7 +55,7 @@ const FormCreate = () => {
     value: '',
 
   }])
-
+  console.log('listItemsContent',listItemsContent)
   const router = useRouter()
 
   const callBackSubmit = (data) => {
@@ -293,7 +294,7 @@ const FormCreate = () => {
               </RadioGroup>
             </Grid>
             {
-              listItemsContent.map(ele => <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+              listItemsContent.map(ele => <Box ket={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                 <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
                 {
                   ele.type == 'title' &&
@@ -320,10 +321,7 @@ const FormCreate = () => {
                 }
                 {
                   ele.type == 'img' &&
-                  <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1, mt: 3 , width: '80%'}}>
-                    <input {...getInputProps()} />
-                    Upload
-                  </Button>
+                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent}/>
                 }
                 <Icon icon='tabler:trash' fontSize={30} onClick={() => removeVariant(el.index)} />
               </Box>)
