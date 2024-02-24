@@ -1,166 +1,307 @@
 <template>
-  <div class="page-container">
-    <carousel />
-    <div class="home-page-introduction-wrapper mt-20">
-      <div class="introduction-description">
-        <h1 class="font-semibold introduction-title">
-          {{ $t("homePage.introductionTitle") }}
-        </h1>
-        <div class="introduction-actions cursor-pointer mt-8">
-          <v-button class="primary-btn text-white">
-            {{ $t("ContactUs") }}
-          </v-button>
+  <div class="all-screen-home-wrapper">
+    <div class="page-container" v-show="pc">
+      <carousel />
+      <div class="home-page-introduction-wrapper mt-20">
+        <div class="introduction-description">
+          <h1 class="font-semibold introduction-title">
+            {{ $t("homePage.introductionTitle") }}
+          </h1>
+          <div class="introduction-actions cursor-pointer mt-8">
+            <v-button class="primary-btn text-white">
+              {{ $t("ContactUs") }}
+            </v-button>
 
-          <v-button class="secondary-btn cursor-pointer ml-4">
-            {{ $t("button.tryForNow") }}
-          </v-button>
+            <v-button class="secondary-btn cursor-pointer ml-4">
+              {{ $t("button.tryForNow") }}
+            </v-button>
+          </div>
+        </div>
+        <div class="introduction-description">
+          <p class="introduction-description mt-5">
+            {{ $t("homePage.introductionDes-1") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-2") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-3") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-4") }}
+          </p>
         </div>
       </div>
-      <div class="introduction-description">
-        <p class="introduction-description mt-5">
-          {{ $t("homePage.introductionDes-1") }}
-        </p>
-        <p class="introduction-description mt-2">
-          &#8226; {{ $t("homePage.introductionDes-2") }}
-        </p>
-        <p class="introduction-description mt-2">
-          &#8226; {{ $t("homePage.introductionDes-3") }}
-        </p>
-        <p class="introduction-description mt-2">
-          &#8226; {{ $t("homePage.introductionDes-4") }}
-        </p>
-      </div>
-    </div>
 
-    <!-- Category -->
-    <div class="home-page-top-category mt-28">
-      <div class="top-category-header">
-        <h1 class="top-category-title font-semibold">
-          {{ $t("homePage.topCategory") }}
-        </h1>
-        <a class="top-category-view-all txt-primary cursor-pointer">
-          <p>{{ $t("viewAll") }}</p>
-          <img :src="arrowUpRight" />
-        </a>
-      </div>
-      <swiperComponent class="mt-12 mb-8" />
-    </div>
-
-    <!-- Card Infor and Process Explaination -->
-    <div class="home-page-proccess-wrapper w-auto">
-      <div
-        class="home-page-proccess flex flex-row justify-between w-auto mt-20"
-      >
-        <div class="process-intro w-1/2 fullfillment-title">
-          <h1 class="font-semibold introduction-title">
-            {{ $t("homePage.onDemandFullFilementService") }}
+      <!-- Category -->
+      <div class="home-page-top-category mt-28">
+        <div class="top-category-header">
+          <h1 class="top-category-title font-semibold">
+            {{ $t("homePage.topCategory") }}
           </h1>
-          <p class="introduction-description mt-5">
-            {{ $t("homePage.onDemandFullFilementServiceDes1") }}
-          </p>
-          <p class="introduction-description">
-            {{ $t("homePage.onDemandFullFilementServiceDes2") }}
-          </p>
-          <a class="flex gap-1 txt-primary cursor-pointer mt-10">
-            <p>{{ $t("button.tryForNow") }}</p>
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row">
+            <p>{{ $t("viewAll") }}</p>
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <div class="process-card flex flex-col w-1/2">
-          <cardInfor
-            :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle1')"
-            :description="$t('homePage.cardDescription1')"
-          />
-          <cardInfor
-            :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle2')"
-            :description="$t('homePage.cardDescription2')"
-          />
-          <cardInfor
-            :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle3')"
-            :description="$t('homePage.cardDescription3')"
-          />
-          <cardInfor
-            :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle4')"
-            :description="$t('homePage.cardDescription4')"
-          />
+        <swiperComponent class="mt-12 mb-8" />
+      </div>
+
+      <!-- Card Infor and Process Explaination -->
+      <div class="home-page-proccess-wrapper w-auto">
+        <div
+          class="home-page-proccess flex flex-row justify-between w-auto mt-20"
+        >
+          <div class="process-intro w-1/2 fullfillment-title">
+            <h1 class="font-semibold introduction-title">
+              {{ $t("homePage.onDemandFullFilementService") }}
+            </h1>
+            <p class="introduction-description mt-5">
+              {{ $t("homePage.onDemandFullFilementServiceDes1") }}
+            </p>
+            <p class="introduction-description">
+              {{ $t("homePage.onDemandFullFilementServiceDes2") }}
+            </p>
+            <a class="flex gap-1 txt-primary cursor-pointer mt-10">
+              <p>{{ $t("button.tryForNow") }}</p>
+              <img :src="arrowUpRight" />
+            </a>
+          </div>
+          <div class="process-card flex flex-col w-1/2">
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle1')"
+              :description="$t('homePage.cardDescription1')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle2')"
+              :description="$t('homePage.cardDescription2')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle3')"
+              :description="$t('homePage.cardDescription3')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle4')"
+              :description="$t('homePage.cardDescription4')"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
-    <!--Printchic Distinctive  -->
+      <!--Printchic Distinctive  -->
 
-    <div class="distict-motive-wrapper">
-      <div class="motive-header text-center">
-        <h3 class="section-title font-semibold">
-          {{ $t("homePage.distictMotive") }}
-        </h3>
-        <p class="motive-description mt-4">
-          {{ $t("homePage.distictMotiveDes") }}
-        </p>
-      </div>
-
-      <div class="motive-body flex mt-12 w-100 space-x-64">
-        <div class="motive-body-left-wrapper w-1/2">
-          <div class="motive-body-left border-left-primary">
-            <h5 class="txt-primary font-semibold">
-              {{ $t("homePage.distictBodyTitle1") }}
-            </h5>
-            <p class="mt-3">
-              {{ $t("homePage.distictBodyDescription1") }}
-            </p>
-          </div>
-          <div class="motive-body-left mt-8">
-            <h5 class="font-semibold">
-              {{ $t("homePage.distictBodyTitle2") }}
-            </h5>
-            <p class="mt-3">
-              {{ $t("homePage.distictBodyDescription2") }}
-            </p>
-          </div>
-          <div class="motive-body-left mt-8">
-            <h5 class="font-semibold">
-              {{ $t("homePage.distictBodyTitle3") }}
-            </h5>
-            <p class="mt-3">
-              {{ $t("homePage.distictBodyDescription3") }}
-            </p>
-          </div>
-          <div class="motive-body-left mt-8">
-            <h5 class="font-semibold">
-              {{ $t("homePage.distictBodyTitle4") }}
-            </h5>
-            <p class="mt-3">
-              {{ $t("homePage.distictBodyDescription4") }}
-            </p>
-          </div>
+      <div class="distict-motive-wrapper">
+        <div class="motive-header text-center">
+          <h3 class="section-title font-semibold">
+            {{ $t("homePage.distictMotive") }}
+          </h3>
+          <p class="motive-description mt-4">
+            {{ $t("homePage.distictMotiveDes") }}
+          </p>
         </div>
-        <img :src="distictThumbnails" />
-      </div>
-    </div>
 
-    <!-- Customer Review -->
-    <div class="review-wrapper text-center custom-padding">
-      <div class="review-header">
-        <h1 class="section-title font-semibold">
-          {{ $t("homePage.customerReview") }}
+        <div class="motive-body flex mt-12 w-100 space-x-64">
+          <div class="motive-body-left-wrapper w-1/2">
+            <div class="motive-body-left border-left-primary">
+              <h5 class="txt-primary font-semibold">
+                {{ $t("homePage.distictBodyTitle1") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription1") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle2") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription2") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle3") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription3") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle4") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription4") }}
+              </p>
+            </div>
+          </div>
+          <img :src="distictThumbnails" />
+        </div>
+      </div>
+
+      <!-- Customer Review -->
+      <div class="review-wrapper text-center custom-padding">
+        <div class="review-header">
+          <h1 class="section-title font-semibold">
+            {{ $t("homePage.customerReview") }}
+          </h1>
+          <p class="mt-4">{{ $t("homePage.customerReviewSubtitle") }}</p>
+        </div>
+        <carousel class="mt-12" />
+      </div>
+
+      <!-- blog story -->
+      <blog class="custom-padding" />
+
+      <!-- Frequently asked question -->
+      <faq class="custom-padding" />
+
+      <!-- help -->
+      <help
+        :headerTitle="$t('homePage.howCanWeHelp')"
+        :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        class="custom-padding"
+      />
+    </div>
+    <div class="mobile-page-container" v-show="mobile">
+      <div class="introduction-banner-mobile text-white flex flex-col">
+        <h1 class="font-semibold section-title">
+          {{ $t("homePage.introductionTitle") }}
         </h1>
-        <p class="mt-4">{{ $t("homePage.customerReviewSubtitle") }}</p>
+        <div class="introduction-description">
+          <p class="introduction-description mt-5">
+            {{ $t("homePage.introductionDes-1") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-2") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-3") }}
+          </p>
+          <p class="introduction-description mt-2">
+            &#8226; {{ $t("homePage.introductionDes-4") }}
+          </p>
+        </div>
+        <div class="introduction-actions-mobile cursor-pointer flex items-center justify-center mt-8">
+            <a class="primary-btn text-white w-100 items-center justify-center flex">
+              <p>{{ $t("ContactUs") }}</p>
+              <img :src="arrowUpRightWhite" />
+            </a>
+            <v-button class="secondary-btn txt-primary cursor-pointer  w-100 ml-4">
+              {{ $t("button.tryForNow") }}
+            </v-button>
+          </div>
       </div>
-      <carousel class="mt-12" />
+
+      <!-- Card Infor and Process Explaination -->
+      <div class="home-page-proccess-mobile-wrapper w-auto">
+        <div
+          class="home-page-proccess-mobile bg-light-gray1-custom flex flex-col justify-center items-center w-auto custom-padding-mobile"
+        >
+          <div class="process-intro-mobile text-center fullfillment-title flex flex-col items-center">
+            <h1 class="font-semibold section-title">
+              {{ $t("homePage.onDemandFullFilementService") }}
+            </h1>
+            <p class="introduction-description mt-5">
+              {{ $t("homePage.onDemandFullFilementServiceDes1") }}
+            </p>
+            <p class="introduction-description">
+              {{ $t("homePage.onDemandFullFilementServiceDes2") }}
+            </p>
+            <a class="flex gap-1 txt-primary cursor-pointer mt-10">
+              <p>{{ $t("button.tryForNow") }}</p>
+              <img :src="arrowUpRight" />
+            </a>
+          </div>
+          <div class="process-card flex flex-col mt-10">
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle1')"
+              :description="$t('homePage.cardDescription1')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle2')"
+              :description="$t('homePage.cardDescription2')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle3')"
+              :description="$t('homePage.cardDescription3')"
+            />
+            <cardInfor
+              :imgSrc="cardThumbnail"
+              :title="$t('homePage.cardTitle4')"
+              :description="$t('homePage.cardDescription4')"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!--Printchic Distinctive  -->
+
+      <div class="distict-motive-mobile-wrapper custom-padding-mobile">
+        <div class="motive-header text-center flex flex-col items-center mt-12">
+          <h3 class="section-title font-semibold">
+            {{ $t("homePage.distictMotive") }}
+          </h3>
+          <p class="motive-description mt-4">
+            {{ $t("homePage.distictMotiveDes") }}
+          </p>
+        </div>
+
+        <div class="motive-body flex flex-col mt-12 w-100 space-x-64">
+          <div class="motive-body-left-wrapper">
+            <div class="motive-body-left border-left-primary">
+              <h5 class="txt-primary font-semibold">
+                {{ $t("homePage.distictBodyTitle1") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription1") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle2") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription2") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle3") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription3") }}
+              </p>
+            </div>
+            <div class="motive-body-left mt-8">
+              <h5 class="font-semibold">
+                {{ $t("homePage.distictBodyTitle4") }}
+              </h5>
+              <p class="mt-3">
+                {{ $t("homePage.distictBodyDescription4") }}
+              </p>
+            </div>
+          </div>
+          <img :src="distictThumbnails" />
+        </div>
+      </div>
+
+      <!-- Frequently asked question -->
+      <faq class="custom-padding-mobile" />
+      <!-- help -->
+      <help
+        :headerTitle="$t('homePage.howCanWeHelp')"
+        :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        class="custom-padding-mobile"
+      />
     </div>
-
-    <!-- blog story -->
-    <blog class="custom-padding" />
-
-    <!-- Frequently asked question -->
-    <faq class="custom-padding" />
-
-    <!-- help -->
-    <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="custom-padding" />
   </div>
 </template>
 
@@ -169,6 +310,7 @@
 import introImage from "../../assets/images/introImage.png";
 import distictThumbnails from "../../assets/images/distictThumbnail.png";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
+import arrowUpRightWhite from "../../assets/svg/iconUpRightWhite.svg";
 import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
 // import component
 import carousel from "../../components/carousel.vue";
@@ -186,10 +328,58 @@ export default {
     help,
     swiperComponent,
   },
+  computed: {
+    mobile() {
+      if (process.client) {
+        if (window.screen.width <= 600) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    tablet() {
+      if (process.client) {
+        if (window.screen.width > 600 && window.screen.width <= 992) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    pc() {
+      if (process.client) {
+        if (window.screen.width > 992) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    lgPc() {
+      if (process.client) {
+        if (window.screen.width > 2000) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    extraPc() {
+      if (process.client) {
+        if (window.screen.width > 2500) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+  },
   data() {
     return {
       introImage,
       arrowUpRight,
+      arrowUpRightWhite,
       cardThumbnail,
       distictThumbnails,
     };
@@ -313,5 +503,12 @@ export default {
   .custom-padding {
     padding: 20px; /* Adjust padding for custom sections */
   }
+}
+
+.introduction-banner-mobile {
+  background: url("../../assets/images/introImage.png");
+  background-size: cover;
+  padding: 190px 16px;
+  height: 800px;
 }
 </style>

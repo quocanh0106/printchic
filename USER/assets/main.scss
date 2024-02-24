@@ -13,8 +13,12 @@ body {
   padding:80px 120px;
 }
 
+.custom-padding-mobile{
+  padding:40px 16px;
+}
+
 .bg-light-blue-custom{
-  background-color: #EFF4FF;
+  background-color: #EFF4FF !important;
 }
 
 .bg-light-gray-custom{
@@ -37,10 +41,11 @@ body {
 .secondary-btn{
   background-color: white;
   border: 1px solid #3372DB;
-  padding: 12px 24px 12px 24px;
+  padding: 9px 24px 12px 24px;
   border-radius: 3px;
   height: 46px;
   min-width: 135px;
+  text-align: center;
 }
 
 // for custom text
@@ -51,6 +56,14 @@ body {
 
 .border-primary{
   border: 1px solid #3372DB;
+}
+
+.border-bottom-primary{
+  border-bottom: 1px solid #3372DB;
+}
+
+.border-secondary{
+  border: 1px solid #D1E0FF
 }
 
 .txt-gray{
@@ -68,6 +81,9 @@ body {
 .section-title{
   font-size: 32px;
   line-height: 41.6px;
+  @media screen and (max-width: 600px) {
+    font-size: 24px;
+  }
 }
 
 .section-content{
@@ -119,4 +135,11 @@ body {
 
 .mw-378px{
   max-width: 378px;
+}
+
+// img size
+.thumbnail-img{
+  max-width: 183px;
+  min-width: 183px;
+  height: 183px;
 }

@@ -47,4 +47,11 @@ export default {
         border-radius: 12px;
         background: linear-gradient(264.44deg, #EFF4FF 0.42%, rgba(239, 244, 255, 0) 162.58%);
     }
+    @media screen and (max-width: 600px) {
+        .help-section {
+            /* Add your styles for screens under 600px here */
+            padding: 50px 5vw; /* Example adjustment for smaller screens */
+            /* You can adjust padding, font-size, or any other properties as needed */
+        }
+    }
 </style>

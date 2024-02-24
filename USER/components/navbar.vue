@@ -43,7 +43,7 @@
           <customInput class="search-input-mobile"/>
           <v-divider></v-divider>
 
-          <v-list density="compact" class="navigation-menu-mobile" nav v-for="url,index in links" :key="index">
+          <v-list density="compact" class="navigation-menu-mobile" @click="isCurrentUrl(url.href)" v-for="(url, index) in links" :key="index" :class="{ 'bg-light-blue-custom': isActive }">
             <a :href="url.href">{{ url.label }}</a>
           </v-list>
         </v-navigation-drawer>
@@ -69,7 +69,7 @@ export default {
         { label: "Home", href: "/home" },
         { label: "Products", href: "/product" },
         { label: "How it works", href: "/how-it-works" },
-        { label: "Blog", href: "/" },
+        { label: "Blog", href: "/blog" },
         { label: "About us", href: "/about-us" },
       ],
     },
@@ -81,6 +81,7 @@ export default {
       searchIcon,
       closeIcon,
       drawer: null,
+      isActive: false,
     };
   },
   computed: {
@@ -130,6 +131,16 @@ export default {
       }
     },
   },
+  methods: {
+    isCurrentUrl(url) {
+      console.log(this.$route, 'PATH')
+      console.log(url, 'URL')
+      if(this.$route.href  == url ){
+        console.log('TRUE')
+        this.isActive = !this.isActive
+      } // Check if the link's URL is the current URL
+    }
+  }
 };
 </script>
 
@@ -176,6 +187,8 @@ export default {
   z-index: 1;
   :deep(.v-navigation-drawer) {
     width: 100% !important;
+    background-color: white;
+    z-index: 10;
   }
 }
 .logo-n-closebtn {
