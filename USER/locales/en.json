@@ -186,6 +186,22 @@
     "socialNetwork" : "Social Network",
     "contactViaMessenger" : "Quick chat via messenger",
     "reviewOurSupport" : "Review our support FAQs page for quick solutions."
+    ,"contactUs" : "Contact Us",
+    "yourName": "Your Name",
+    "fillYourName": "Fill in your name",
+    "yourEmail": "Your Email",
+    "fillYourMail" : "Fill in Your Email",
+    "fillYourMessage" : "Fill in your message",
+    "yourMessage": "Your Message",
+    "submit" :"Submit",
+    "fullFillMentTitle": "Global Fulfillment Centers",
+    "fullFillMentDes" : "Our extensive manufacturing network overseas allows us to accept larger projects and turn orders around in a timely manner.",
+    "vietNameBaseTitle" : "Vietnam-based Production Capacity",
+    "manufactureFacility" : "Manufacture Facility",
+    "highQualityProduct" : "High Quality Product",
+    "highShipment" : "Highest shipments per day",
+    "investEquip" : "invested in equipment & technologies",
+    "highQualityWorkForce" : "high-quality workforce"
   },
   "button" :{
     "tryForNow" : "Try for Now",
