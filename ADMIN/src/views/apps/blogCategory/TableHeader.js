@@ -11,6 +11,7 @@ import { Fade } from '@mui/material'
 import { forwardRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import Link from 'next/link'
 
 const TableHeader = props => {
   // ** State
@@ -47,6 +48,14 @@ const TableHeader = props => {
         >
           Search
         </Button>
+        <Box
+          component={Link}
+          href='/apps/blog-category/import-excel'
+        >
+          <Button sx={{ width: '135px' }} variant='contained'>
+            Import excel
+          </Button>
+        </Box>
         <Button variant='contained' onClick={() => setVisible(true)}>
           Create
         </Button>
