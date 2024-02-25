@@ -70,7 +70,7 @@ const FormCreate = () => {
   const onSubmit = async (value) => {
     setLoading(true)
     const tempList = [...listItemsContent]
-    
+
     const promises = tempList.map(async ele => {
       if (ele.type === 'img') {
         const formData = new FormData();
@@ -92,7 +92,7 @@ const FormCreate = () => {
 
     const formData = new FormData();
     formData.append("title", value.title);
-    formData.append("content", JSON.stringify(tempList));
+    formData.append("content",contentType == 'text' ? JSON.stringify(tempList) : value.html );
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -347,41 +347,69 @@ const FormCreate = () => {
                 <FormControlLabel value='html' control={<Radio />} label='html' />
               </RadioGroup>
             </Grid>
-            <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
             {
-              listItemsContent.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
-                {
-                  ele.type == 'title' &&
-                  <CustomTextField
-                    fullWidth
-                    sx={{ mt: 4 }}
-                    label={ele?.type}
-                    onChange={(e) => onChangeContentTitle(e, ele.id)}
-                    required
-                    aria-describedby='validation-basic-first-name'
+              contentType == 'text' ?
+                <>
+                  <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
+                  {
+                    listItemsContent.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                      <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
+                      {
+                        ele.type == 'title' &&
+                        <CustomTextField
+                          fullWidth
+                          sx={{ mt: 4 }}
+                          label={ele?.type}
+                          onChange={(e) => onChangeContentTitle(e, ele.id)}
+                          required
+                          aria-describedby='validation-basic-first-name'
+                        />
+                      }
+                      {
+                        ele.type == 'text' &&
+                        <CustomTextField
+                          type='textarea'
+                          rows={6}
+                          multiline
+                          fullWidth
+                          onChange={(e) => onChangeContentText(e, ele.id)}
+                          sx={{ mt: 4 }}
+                          label={ele?.type}
+                          required
+                          aria-describedby='validation-basic-first-name'
+                        />
+                      }
+                      {
+                        ele.type == 'img' &&
+                        <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
+                      }
+                      <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
+                    </Box>)
+                  }
+                </>
+                :
+                <>
+                  <Controller
+                    name='html'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomTextField
+                        type='textarea'
+                        fullWidth
+                        value={value}
+                        rows={12}
+                        multiline
+                        required
+                        onChange={onChange}
+                        placeholder='html'
+                        error={Boolean(errors.html)}
+                        aria-describedby='validation-basic-first-name'
+                        {...(errors.html && { helperText: 'This field is required' })}
+                      />
+                    )}
                   />
-                }
-                {
-                  ele.type == 'text' &&
-                  <CustomTextField
-                    type='textarea'
-                    rows={6}
-                    multiline
-                    fullWidth
-                    onChange={(e) => onChangeContentText(e, ele.id)}
-                    sx={{ mt: 4 }}
-                    label={ele?.type}
-                    required
-                    aria-describedby='validation-basic-first-name'
-                  />
-                }
-                {
-                  ele.type == 'img' &&
-                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
-                }
-                <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
-              </Box>)
+                </>
             }
           </Card>
         </Grid>
