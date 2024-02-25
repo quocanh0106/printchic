@@ -180,6 +180,13 @@
     "downloadMockup" : "Download Mockup & Template",
     "contactSupport" : "Contact Support"
   },
+  "contactUs" : {
+    "chatToUs" : "Chat to us",
+    "office": "Offices",
+    "socialNetwork" : "Social Network",
+    "contactViaMessenger" : "Quick chat via messenger",
+    "reviewOurSupport" : "Review our support FAQs page for quick solutions."
+  },
   "button" :{
     "tryForNow" : "Try for Now",
     "viewAll" :"View All",
