@@ -62,38 +62,53 @@
     </div>
 
     <!-- Vietnam-based Production Capacity -->
-    <div class="production-capacity bg-light-gray1-custom custom-padding">
-      <div class="content">
-        <h1 class="section-title font-semibold">
+    <div
+      class="w-100 production-capacity flex gap-x-8 bg-light-gray1-custom custom-padding"
+    >
+      <div class="content w-100">
+        <h1 class="section-title font-semibold mt-4">
           {{ $t("contactUs.vietNameBaseTitle") }}
         </h1>
-        <p>{{ $t("contactUs.fullFillMentDes") }}</p>
+        <p class="mt-4">{{ $t("contactUs.fullFillMentDes") }}</p>
       </div>
-      <div class="capacity-card-info">
-        <div class="process-card flex flex-col mt-10">
+      <div class="capacity-card-info w-100">
+        <div class="infor-card flex flex-col">
           <cardInfor
             :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle1')"
-            :description="$t('homePage.cardDescription1')"
+            title="+53,800-sq/ft"
+            :description="$t('contactUs.manufactureFacility')"
           />
           <cardInfor
             :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle2')"
-            :description="$t('homePage.cardDescription2')"
+            title="+420"
+            :description="$t('contactUs.highQualityProduct')"
           />
           <cardInfor
             :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle3')"
-            :description="$t('homePage.cardDescription3')"
+            title="+90,350"
+            :description="$t('contactUs.highShipment')"
           />
           <cardInfor
             :imgSrc="cardThumbnail"
-            :title="$t('homePage.cardTitle4')"
-            :description="$t('homePage.cardDescription4')"
+            title="$2.5 M+"
+            :description="$t('contactUs.investEquip')"
+          />
+          <cardInfor
+            :imgSrc="cardThumbnail"
+            title="+1000"
+            :description="$t('contactUs.highQualityWorkForce')"
           />
         </div>
       </div>
     </div>
+
+    <!-- help -->
+    <!-- help -->
+    <help
+      :headerTitle="$t('homePage.howCanWeHelp')"
+      :headerDesc="$t('homePage.howCanWeHelpDesc')"
+      class="custom-padding"
+    />
   </div>
 </template>
 <script>
@@ -101,8 +116,12 @@ import UK from "../../assets/svg/UK.svg";
 import US from "../../assets/svg/US.svg";
 import FRANCE from "../../assets/svg/FRANCE.svg";
 import GERMANY from "../../assets/svg/GERMANY.svg";
+import help from "../../components/help.vue";
 
 export default {
+  component: {
+    help,
+  },
   data() {
     return {
       UK,
@@ -159,5 +178,18 @@ export default {
 
 .current-text {
   min-width: 300px;
+}
+
+.infor-card {
+  :deep(h1) {
+    color: #3372db;
+    font-size: 40px !important;
+    font-weight: 500 !important;
+  }
+  :deep(p) {
+    color: #344054;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+  }
 }
 </style>
