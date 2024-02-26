@@ -18,20 +18,12 @@
           </div>
         </div>
         <div class="footer-right flex w-auto gap-x-32">
-          <div
-            class="flex flex-col"
-            v-for="(menu, index) in menuList"
-            :key="index"
-          >
+          <div class="flex flex-col" v-for="(menu, index) in menuList" :key="index">
             <h1 class="section-content txt-primary font-semibold">
               {{ menu.title }}
             </h1>
-            <div
-              class="section-content cursor-pointer"
-              v-for="(menuItem, ind) in menu.listUrl"
-              :key="ind"
-              @click="$router.push(`${menuItem.url}`)"
-            >
+            <div class="section-content cursor-pointer" v-for="(menuItem, ind) in menu.listUrl" :key="ind"
+              @click="$router.push(`${menuItem.url}`)">
               <p>{{ menuItem.urlName }}</p>
             </div>
           </div>
@@ -62,15 +54,16 @@
         </div>
       </div>
       <div class="colapse-menu">
-        <div v-for="(item,ind) in menuList" :key="ind">
-            <v-expansion-panels>
-                <v-expansion-panel  :title="item.title">
-                    <v-expansion-panel-content  v-for="url,index in item.listUrl" :key="index">
-                        <p>{{ url.urlName }}</p>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-            </v-expansion-panels>
-        </div>
+        <v-list class="back-color-light-primary" v-model:opened="open">
+          <v-list-group v-for="(item, ind) in menuList" :key="ind" :value="item.title"  class="color-primary">
+            <template v-slot:activator="{ props }">
+              <v-list-item v-bind="props" :title="item.title"></v-list-item>
+            </template>
+
+            <v-list-item v-for="({ urlName }, i) in item.listUrl" :key="i" :title="urlName"
+              :value="urlName" class="color-black"></v-list-item>
+          </v-list-group>
+        </v-list>
       </div>
     </div>
   </div>
@@ -84,6 +77,7 @@ import clockIcon from "../assets/svg/clock.svg";
 export default {
   data() {
     return {
+      open: ['Users'],
       property: "value",
       footerLogo,
       mailIcon,
@@ -103,6 +97,27 @@ export default {
             },
             {
               urlName: this.$t("footer.privacyPolicy"),
+              url: "",
+            },
+            {
+              urlName: this.$t("footer.returnAndRefund"),
+              url: "",
+            },
+          ],
+        },
+        {
+          title: this.$t("footer.productAndService"),
+          listUrl: [
+            {
+              urlName: this.$t("footer.product"),
+              url: "",
+            },
+            {
+              urlName: this.$t("footer.service"),
+              url: "",
+            },
+            {
+              urlName: this.$t("footer.ourFactory"),
               url: "",
             },
             {
@@ -198,11 +213,25 @@ export default {
   min-height: 451px;
   background-color: #fafbff;
 }
+
 .menu-section-wrapper {
   border-bottom: 1px solid #d1e0ff;
   min-height: 284px;
 }
+
 .mobile-logo {
   width: 132px;
+}
+
+.color-primary {
+  color: #3372DB;
+}
+
+.color-black {
+  color: black;
+}
+
+.back-color-light-primary {
+  background-color: #fafbff;
 }
 </style>

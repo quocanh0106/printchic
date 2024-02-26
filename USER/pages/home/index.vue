@@ -49,9 +49,7 @@
 
       <!-- Card Infor and Process Explaination -->
       <div class="home-page-proccess-wrapper w-auto">
-        <div
-          class="home-page-proccess flex flex-row justify-between w-auto mt-20"
-        >
+        <div class="home-page-proccess flex flex-row justify-between w-auto mt-20">
           <div class="process-intro w-1/2 fullfillment-title">
             <h1 class="font-semibold introduction-title">
               {{ $t("homePage.onDemandFullFilementService") }}
@@ -68,26 +66,14 @@
             </a>
           </div>
           <div class="process-card flex flex-col w-1/2">
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle1')"
-              :description="$t('homePage.cardDescription1')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle2')"
-              :description="$t('homePage.cardDescription2')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle3')"
-              :description="$t('homePage.cardDescription3')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle4')"
-              :description="$t('homePage.cardDescription4')"
-            />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle1')"
+              :description="$t('homePage.cardDescription1')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle2')"
+              :description="$t('homePage.cardDescription2')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle3')"
+              :description="$t('homePage.cardDescription3')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle4')"
+              :description="$t('homePage.cardDescription4')" />
           </div>
         </div>
       </div>
@@ -161,11 +147,8 @@
       <faq class="custom-padding" />
 
       <!-- help -->
-      <help
-        :headerTitle="$t('homePage.howCanWeHelp')"
-        :headerDesc="$t('homePage.howCanWeHelpDesc')"
-        class="custom-padding"
-      />
+      <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        class="custom-padding" />
     </div>
     <div class="mobile-page-container" v-show="mobile">
       <div class="introduction-banner-mobile text-white flex flex-col">
@@ -187,21 +170,33 @@
           </p>
         </div>
         <div class="introduction-actions-mobile cursor-pointer flex items-center justify-center mt-8">
-            <a class="primary-btn text-white w-100 items-center justify-center flex">
-              <p>{{ $t("ContactUs") }}</p>
-              <img :src="arrowUpRightWhite" />
-            </a>
-            <v-button class="secondary-btn txt-primary cursor-pointer  w-100 ml-4">
-              {{ $t("button.tryForNow") }}
-            </v-button>
-          </div>
+          <a class="primary-btn text-white w-100 items-center justify-center flex">
+            <p>{{ $t("ContactUs") }}</p>
+            <img :src="arrowUpRightWhite" />
+          </a>
+          <v-button class="secondary-btn txt-primary cursor-pointer  w-100 ml-4">
+            {{ $t("button.tryForNow") }}
+          </v-button>
+        </div>
+      </div>
+      <!-- Category -->
+      <div class="home-page-top-category mt-10">
+        <div class="top-category-header flex-column">
+          <h1 class="top-category-title font-semibold">
+            {{ $t("homePage.topCategory") }}
+          </h1>
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row">
+            <p>{{ $t("viewAll") }}</p>
+            <img :src="arrowUpRight" />
+          </a>
+        </div>
+        <swiperComponent class="mt-12 mb-8" :slidePerView="2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
       <div class="home-page-proccess-mobile-wrapper w-auto">
         <div
-          class="home-page-proccess-mobile bg-light-gray1-custom flex flex-col justify-center items-center w-auto custom-padding-mobile"
-        >
+          class="home-page-proccess-mobile bg-light-gray1-custom flex flex-col justify-center items-center w-auto custom-padding-mobile">
           <div class="process-intro-mobile text-center fullfillment-title flex flex-col items-center">
             <h1 class="font-semibold section-title">
               {{ $t("homePage.onDemandFullFilementService") }}
@@ -218,26 +213,14 @@
             </a>
           </div>
           <div class="process-card flex flex-col mt-10">
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle1')"
-              :description="$t('homePage.cardDescription1')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle2')"
-              :description="$t('homePage.cardDescription2')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle3')"
-              :description="$t('homePage.cardDescription3')"
-            />
-            <cardInfor
-              :imgSrc="cardThumbnail"
-              :title="$t('homePage.cardTitle4')"
-              :description="$t('homePage.cardDescription4')"
-            />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle1')"
+              :description="$t('homePage.cardDescription1')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle2')"
+              :description="$t('homePage.cardDescription2')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle3')"
+              :description="$t('homePage.cardDescription3')" />
+            <cardInfor :imgSrc="cardThumbnail" :title="$t('homePage.cardTitle4')"
+              :description="$t('homePage.cardDescription4')" />
           </div>
         </div>
       </div>
@@ -256,51 +239,42 @@
 
         <div class="motive-body flex flex-col mt-12 w-100 space-x-64">
           <div class="motive-body-left-wrapper">
-            <div class="motive-body-left border-left-primary">
-              <h5 class="txt-primary font-semibold">
-                {{ $t("homePage.distictBodyTitle1") }}
-              </h5>
-              <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription1") }}
-              </p>
-            </div>
-            <div class="motive-body-left mt-8">
-              <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle2") }}
-              </h5>
-              <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription2") }}
-              </p>
-            </div>
-            <div class="motive-body-left mt-8">
-              <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle3") }}
-              </h5>
-              <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription3") }}
-              </p>
-            </div>
-            <div class="motive-body-left mt-8">
-              <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle4") }}
-              </h5>
-              <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription4") }}
-              </p>
-            </div>
+            <img :src="distictThumbnails" class="mb-5" />
           </div>
-          <img :src="distictThumbnails" />
         </div>
+        <SwiperDescriptionMobile class="mt-12 mb-8" />
+      </div>
+
+      <!-- Customer Review -->
+      <div class="review-wrapper text-center custom-padding">
+        <div class="review-header">
+          <h1 class="section-title font-semibold">
+            {{ $t("homePage.customerReview") }}
+          </h1>
+          <p class="mt-4">{{ $t("homePage.customerReviewSubtitle") }}</p>
+        </div>
+        <carousel class="mt-12" />
+      </div>
+
+      <!-- blog story -->
+      <div class="home-page-top-category mt-10">
+        <div class="top-category-header flex-column">
+          <h1 class="top-category-title font-semibold">
+            {{ $t("homePage.ourBlogStory") }}
+          </h1>
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row mt-4">
+            <p>{{ $t("viewAll") }}</p>
+            <img :src="arrowUpRight" />
+          </a>
+        </div>
+        <SwiperBlogMobile class="mt-12 mb-8" :slidePerView="1" />
       </div>
 
       <!-- Frequently asked question -->
-      <faq class="custom-padding-mobile" />
+      <faq class="custom-padding-mobile pt-0" />
       <!-- help -->
-      <help
-        :headerTitle="$t('homePage.howCanWeHelp')"
-        :headerDesc="$t('homePage.howCanWeHelpDesc')"
-        class="custom-padding-mobile"
-      />
+      <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        class="custom-padding-mobile" />
     </div>
   </div>
 </template>
@@ -319,7 +293,11 @@ import blog from "../../components/blog.vue";
 import faq from "../../components/faq.vue";
 import help from "../../components/help.vue";
 import swiperComponent from "../../components/swiperComponent.vue";
+import SwiperDescriptionMobile from "./components/SwiperDescriptionMobile.vue";
+import SwiperBlogMobile from "./components/SwiperBlogMobile.vue";
+import { screenSizeMixin } from '~/mixins/screenSizeMixin';
 export default {
+  mixins: [screenSizeMixin],
   components: {
     carousel,
     cardInfor,
@@ -327,54 +305,10 @@ export default {
     faq,
     help,
     swiperComponent,
+    SwiperDescriptionMobile,
+    SwiperBlogMobile,
   },
-  computed: {
-    mobile() {
-      if (process.client) {
-        if (window.screen.width <= 600) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    tablet() {
-      if (process.client) {
-        if (window.screen.width > 600 && window.screen.width <= 992) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    pc() {
-      if (process.client) {
-        if (window.screen.width > 992) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    lgPc() {
-      if (process.client) {
-        if (window.screen.width > 2000) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    extraPc() {
-      if (process.client) {
-        if (window.screen.width > 2500) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-  },
+
   data() {
     return {
       introImage,
@@ -395,9 +329,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 30px 120px;
+
   .introduction-description {
     width: 100%;
   }
+
   .introduction-title {
     font-size: 40px;
     line-height: 50px;
@@ -418,22 +354,27 @@ export default {
 
 .home-page-top-category {
   padding: 30px 120px;
+
   .top-category-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .top-category-title {
       font-size: 50px;
       line-height: 41.6px;
     }
   }
+
   .top-category-view-all {
     display: flex;
   }
 }
+
 .home-page-proccess-wrapper {
   background-color: #f9fafb;
   padding: 80px 120px;
+
   .process-intro {
     .introduction-title {
       font-size: 40px;
@@ -442,16 +383,20 @@ export default {
     }
   }
 }
+
 .distict-motive-wrapper {
   padding: 80px 120px;
+
   .motive-title {
     font-size: 32px;
     line-height: 41.6px;
   }
+
   .motive-description {
     font-size: 16px;
     line-height: 24px;
   }
+
   .motive-body-left {
     padding: 0px 24px;
   }
@@ -464,15 +409,22 @@ export default {
 /* Tablet and below styles */
 @media (max-width: 1024px) {
   .home-page-introduction-wrapper {
-    flex-direction: column; /* Stack content vertically on smaller screens */
-    padding: 20px; /* Reduce padding */
+    flex-direction: column;
+    /* Stack content vertically on smaller screens */
+    padding: 20px;
+
+    /* Reduce padding */
     .introduction-title {
-      font-size: 32px; /* Adjust font size for tablet */
+      font-size: 32px;
+      /* Adjust font size for tablet */
       line-height: 42px;
-      width: 100%; /* Use full width */
+      width: 100%;
+      /* Use full width */
     }
+
     .introduction-description {
-      font-size: 14px; /* Adjust font size for readability */
+      font-size: 14px;
+      /* Adjust font size for readability */
       line-height: 22px;
     }
   }
@@ -480,13 +432,15 @@ export default {
   .home-page-top-category,
   .home-page-proccess-wrapper,
   .distict-motive-wrapper {
-    padding: 20px; /* Uniform padding for sections */
+    padding: 20px;
+    /* Uniform padding for sections */
   }
 
   .home-page-top-category .top-category-header .top-category-title,
   .home-page-proccess-wrapper .process-intro .introduction-title,
   .distict-motive-wrapper .motive-header .section-title {
-    font-size: 24px; /* Adjust main section titles */
+    font-size: 24px;
+    /* Adjust main section titles */
   }
 
   .motive-body {
@@ -494,14 +448,15 @@ export default {
     flex-direction: column;
 
     // Target all child elements except the last one to add vertical spacing
-    & > *:not(:last-child) {
+    &>*:not(:last-child) {
       margin-bottom: 1rem; // Assuming '4' translates to 1rem, adjust as needed
     }
   }
 
   .review-wrapper,
   .custom-padding {
-    padding: 20px; /* Adjust padding for custom sections */
+    padding: 20px;
+    /* Adjust padding for custom sections */
   }
 }
 

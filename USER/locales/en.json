@@ -229,6 +229,10 @@
     "GlobalCommunity" : "Global Seller Community",
     "quickAccess" : "Quick Access",
     "ourBlogPost" : "Our Blog Posts",
-    "termOfService" : "Term Of Service"
+    "termOfService" : "Term Of Service",
+    "productAndService" : "Products & Service",
+    "product" : "Products",
+    "service" : "Service",
+    "ourFactory" : "Our Factory"
   }
 }
