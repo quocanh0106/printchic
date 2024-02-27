@@ -3,8 +3,46 @@
     <div class="swiper-wrapper-outside">
       <swiper :slides-per-view="slidePerView" :space-between="50" :pagination="showPagination"
         :navigation="showNavigation" :modules="[Pagination, Navigation]" @swiper="onSwiper" @slideChange="onSlideChange">
-        <swiper-slide v-for="item, index in items" :key="index"><img :class="imgWidth100 && 'w-100'"
-            :src="item" /></swiper-slide>
+        <swiper-slide>
+          <div class="motive-body-left border-left-primary">
+            <h5 class="txt-primary font-semibold">
+              {{ $t("homePage.distictBodyTitle1") }}
+            </h5>
+            <p class="mt-3">
+              {{ $t("homePage.distictBodyDescription1") }}
+            </p>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="motive-body-left border-left-primary">
+            <h5 class="font-semibold">
+              {{ $t("homePage.distictBodyTitle2") }}
+            </h5>
+            <p class="mt-3">
+              {{ $t("homePage.distictBodyDescription2") }}
+            </p>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="motive-body-left border-left-primary">
+            <h5 class="font-semibold">
+              {{ $t("homePage.distictBodyTitle3") }}
+            </h5>
+            <p class="mt-3">
+              {{ $t("homePage.distictBodyDescription3") }}
+            </p>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div class="motive-body-left border-left-primary">
+            <h5 class="font-semibold">
+              {{ $t("homePage.distictBodyTitle4") }}
+            </h5>
+            <p class="mt-3">
+              {{ $t("homePage.distictBodyDescription4") }}
+            </p>
+          </div>
+        </swiper-slide>
       </swiper>
     </div>
   </div>
@@ -21,9 +59,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-// import asset
-import introImage from "../assets/images/introImage.png"
-
 export default {
   components: {
     Swiper,
@@ -32,7 +67,7 @@ export default {
   props: {
     slidePerView: {
       type: Number,
-      default: 4
+      default: 1
     },
     showNavigation: {
       type: Boolean,
@@ -42,20 +77,11 @@ export default {
       type: Boolean,
       default: true
     },
-    items: {
-      type: Array,
-      default: [introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage],
-    },
-    imgWidth100: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
       Pagination,
-      Navigation,
-      introImage,
+      Navigation
     };
   },
   methods: {
@@ -93,6 +119,10 @@ export default {
   :deep(.swiper-button-prev::after) {
     color: #1D2939;
     font-size: 16px;
+  }
+
+  .motive-body-left {
+    padding: 0px 24px;
   }
 }
 </style>
