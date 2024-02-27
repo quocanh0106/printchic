@@ -1,11 +1,18 @@
 <template>
   <div class="swiper">
     <div class="swiper-wrapper-outside">
-      <swiper :slides-per-view="slidePerView" :space-between="50" :pagination="showPagination"
-        :navigation="showNavigation" :modules="[Pagination, Navigation]" @swiper="onSwiper" @slideChange="onSlideChange">
-        <swiper-slide v-for="item, index in items" :key="index"><img :class="imgWidth100 && 'w-100'"
-            :src="item" /></swiper-slide>
-      </swiper>
+        <swiper
+          :slides-per-view="slidePerView"
+          :space-between="50"
+          :freeMode="isFreeMode"
+          :pagination="showPagination"
+          :navigation="showNavigation"
+          :modules="[Pagination,FreeMode, Navigation]"
+          @swiper="onSwiper"
+          @slideChange="onSlideChange"
+        >
+          <swiper-slide v-for="item,index in items" :key="index"><img :src="item" :class="imgWidth100 && 'w-100'" /></swiper-slide>
+        </swiper>
     </div>
   </div>
 </template>
@@ -13,13 +20,14 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import Swiper core and required modules
-import { Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation, FreeMode  } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import 'swiper/css/free-mode';
 
 // import asset
 import introImage from "../assets/images/introImage.png"
@@ -42,6 +50,14 @@ export default {
       type: Boolean,
       default: true
     },
+    isFreeMode: {
+      type: Boolean,
+      default : true
+    },
+    isFreeMode: {
+      type: Boolean,
+      default : true
+    },
     items: {
       type: Array,
       default: [introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage],
@@ -55,6 +71,7 @@ export default {
     return {
       Pagination,
       Navigation,
+      FreeMode,
       introImage,
     };
   },

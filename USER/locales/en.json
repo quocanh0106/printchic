@@ -231,7 +231,33 @@
     "fullFillMent4" : "Seamless integration with the world’s most powerful e-commerce platforms",
     "howMerchanizeCanHelpYourBusiness" : "How Merchize can help grow your business",
     "howMerchanizeCanHelpYourBusinessDes" : "Merchize brings merchants huge benefits in 4 very significant ways.",
-    "seePricing" : "See Pricing"
+    "seePricing" : "See Pricing",
+    "moreWayWeevSupportedBrand" : "More Ways We’ve Supported Brands",
+    "moreWayWeevSupportedBrandDes" : "Cost-effective solutions for personalisation of print on demand products, regardless of how high the volumes",
+    "infoCard1Title" : "Wholesale Production",
+    "infoCard1Des" : "Most of our products are available in tiered pricing. We can also provide bulk ordering at wholesale prices, offer discounts for certain sales thresholds, and maximize tremendous profit in the long run.",
+    "infoCard2Title"  : "Specific Fulfillment",
+    "infoCard2Des" : "We can then craft a specific fulfillment & warehousing solution that works hand-in-hand for your business, brand, or needs.",
+    "infoCard3Title" : "Branding Solutions",
+    "infoCard3Des" : "We provide a range of custom branding options that vary in terms of materials, types, placement, finish, and more. Our team will provide advice tailored your project needs and requirements",
+    "infoCard4Title" : "FBA Services",
+    "infoCard4Des" : "We provides an end-to-end print-on demand dropshiping fulfillment service to merchants selling through Amazon FBA.",
+    "manuFacturingGallery" : "Manufacturing Gallery",
+    "manuFacturingGalleryDes":"With a team of skilled labor, advanced equipment, expansive factory space, and extensive experience, we are well-equipped to manufacture products fast and efficiently."
+  },
+  "pod": {
+    "podProduct" : "Print on demand Products",
+    "podProductDes" : "Produced and shipped from 130+ printing facilities in 32 countries",
+    "checkList1" : "Sell globally, produce locally",
+    "checkList2" : "More sustainable with quality guaranteed",
+    "checkList3" : "No upfront fees or commitment",
+    "checkList4" : "Grow your businesses & reach new customers",
+    "templateTitle" : "Content will be display like this",
+    "templateDes" : "Create stunning t-shirt artwork in minutes with our free Design Maker",
+    "enjoyPOPProduct" : "Enjoy Our POD products",
+    "exploreOurCatalog" : "Explore Our Catalog",
+    "ourCustomizedClothing" : "Our Customized Clothing",
+    "ourCustomizedHomeDecor" : "Our Customized Home Decor"
   },
   "button" :{
     "tryForNow" : "Try for Now",
@@ -245,7 +271,8 @@
     "seeMore":"See More",
     "CTA" : "CTA Here",
     "learnMore":"Learn More",
-    "filter": "Filter"
+    "filter": "Filter",
+    "contactUs" : "Contact Us"
   },
   "footer" : {
     "about" : "About",

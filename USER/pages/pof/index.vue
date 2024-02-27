@@ -199,10 +199,10 @@
       <div class="distict-motive-wrapper">
         <div class="motive-header text-center">
           <h3 class="section-title font-semibold">
-            {{ $t("homePage.distictMotive") }}
+            {{ $t("pof.moreWayWeevSupportedBrand") }}
           </h3>
           <p class="motive-description mt-4">
-            {{ $t("homePage.distictMotiveDes") }}
+            {{ $t("pof.moreWayWeevSupportedBrandDes") }}
           </p>
         </div>
 
@@ -211,34 +211,34 @@
           <div class="motive-body-left-wrapper w-1/2">
             <div class="motive-body-left border-left-primary">
               <h5 class="txt-primary font-semibold">
-                {{ $t("homePage.distictBodyTitle1") }}
+                {{ $t("pof.infoCard1Title") }}
               </h5>
               <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription1") }}
+                {{ $t("pof.infoCard1Des") }}
               </p>
             </div>
             <div class="motive-body-left mt-8">
               <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle2") }}
+                {{ $t("pof.infoCard2Title") }}
               </h5>
               <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription2") }}
+                {{ $t("pof.infoCard2Des") }}
               </p>
             </div>
             <div class="motive-body-left mt-8">
               <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle3") }}
+                {{ $t("pof.infoCard3Title") }}
               </h5>
               <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription3") }}
+                {{ $t("pof.infoCard3Des") }}
               </p>
             </div>
             <div class="motive-body-left mt-8">
               <h5 class="font-semibold">
-                {{ $t("homePage.distictBodyTitle4") }}
+                {{ $t("pof.infoCard4Title") }}
               </h5>
               <p class="mt-3">
-                {{ $t("homePage.distictBodyDescription4") }}
+                {{ $t("pof.infoCard4Des") }}
               </p>
             </div>
           </div>
@@ -246,6 +246,16 @@
       </div>
     </div>
 
+    <!-- Manufacturing Galery -->
+    <div class="manufacturing-galery-wrapper">
+      <div class="header-of-manufacturing-galery custom-padding flex flex-col items-center justify-center">
+        <h1 class="section-title font-semibold">{{ $t('pof.manuFacturingGallery') }}</h1>
+        <p class="mt-4 mw-790px text-center">{{  $t('pof.manuFacturingGalleryDes') }}</p>
+      </div>
+
+      <swiperComponent class="manufacturing-galery mt-12 mb-8" :showPagination="false" :showNavigation="true" :slidePerView = "5"  />
+      
+    </div>
     <!-- help -->
     <help
       :headerTitle="$t('homePage.howCanWeHelp')"
@@ -677,6 +687,28 @@ export default {
 
 .motive-body-left{
   padding: 0px 24px;
+}
+
+.manufacturing-galery{
+  :deep(.swiper){
+    overflow: visible;
+  }
+  :deep(.swiper-slide:nth-child(even) img){
+    height: 50vh !important;
+  }
+  :deep(.swiper-slide:nth-child(odd)){
+    transform: translateY(10%);
+  }
+  :deep(.swiper-button-next){
+    background-color: white;
+    border-radius: 50px;
+    padding: 24px 24px;
+  }
+  :deep(.swiper-button-prev){
+    background-color: white;
+    border-radius: 50px;
+    padding: 24px 24px;
+  }
 }
 
 .item-tag-mobile {
