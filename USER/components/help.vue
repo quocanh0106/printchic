@@ -7,12 +7,12 @@
             <div class="help-content section-content mt-4">
                 <p>  {{ headerDesc }} </p>
             </div>
-            <div class="help-actions cursor-pointer mt-8">
+            <div class="help-actions cursor-pointer mt-8" :class="mobile && 'flex flex-column' ">
                  <v-button class="primary-btn text-white">
                    {{ $t("button.getStarted") }}
                  </v-button>
        
-                 <v-button class="secondary-btn cursor-pointer ml-4">
+                 <v-button class="secondary-btn cursor-pointer" :class="mobile ? 'ml-0 mt-5' : 'ml-4'">
                    {{ $t("button.tryForFree") }}
                  </v-button>
             </div>
@@ -21,7 +21,9 @@
 </template>
 
 <script>
+import { screenSizeMixin } from '~/mixins/screenSizeMixin';
 export default {
+  mixins: [screenSizeMixin],
     props:{
         headerTitle: {
             type: String,

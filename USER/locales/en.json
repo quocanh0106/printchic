@@ -244,7 +244,8 @@
     "exploreOurCatalog" : "Explore Our Catalog",
     "seeMore":"See More",
     "CTA" : "CTA Here",
-    "learnMore":"Learn More"
+    "learnMore":"Learn More",
+    "filter": "Filter"
   },
   "footer" : {
     "about" : "About",
