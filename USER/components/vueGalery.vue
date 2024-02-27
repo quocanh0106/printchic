@@ -1,27 +1,42 @@
 <template>
-    <div class="vueGallery">
-        <div class="activePhoto" :style="'background-image: url('+photos[activePhoto]+');'">
-        <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
-            <i class="fas fa-chevron-circle-left"></i>
-        </button>
-        <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
-            <i class="fas fa-chevron-circle-right"></i>
-        </button>
-        </div>
-        <div class="thumbnails">
-        <div
-            v-for="(photo, index) in photos"
-            :src="photo"
-            :key="index"
-            @click="activePhoto = index"
-            :class="{'active': activePhoto == index}" :style="'background-image: url('+photo+')'">
-        </div>
-        </div>
+  <div class="vueGallery" v-show="pc">
+    <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+      <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
+        <i class="fas fa-chevron-circle-left"></i>
+      </button>
+      <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
+        <i class="fas fa-chevron-circle-right"></i>
+      </button>
+    </div>
+    <div class="thumbnails">
+      <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
+        :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+      </div>
+    </div>
+  </div>
+  <!-- mobile -->
+  <div class="vueGallery-mobile" v-show="mobile">
+    <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+      <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
+        <i class="fas fa-chevron-circle-left"></i>
+      </button>
+      <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
+        <i class="fas fa-chevron-circle-right"></i>
+      </button>
+    </div>
+    <div class="thumbnails">
+      <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
+        :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+
 export default {
+  mixins: [screenSizeMixin],
   props: ['photos'],
   data() {
     return {
@@ -54,6 +69,7 @@ body {
   background-color: $brand;
   padding: 25px;
 }
+
 .container {
   padding: 6px;
   background-color: #fff;
@@ -61,8 +77,10 @@ body {
   max-width: 800px;
   box-shadow: 0 5px 8px #0000007a;
 }
+
 .heading {
   text-align: center;
+
   h1 {
     background: -webkit-linear-gradient(#fff, lighten($brand, 20%));
     -webkit-text-fill-color: transparent;
@@ -73,6 +91,7 @@ body {
     font-size: 4rem;
     color: #fff;
   }
+
   h4 {
     color: lighten($brand, 20%);
     text-align: center;
@@ -83,9 +102,10 @@ body {
 }
 
 .vueGallery {
-    display: flex;
-    width: 40vw;
-    height: 40vw;
+  display: flex;
+  width: 40vw;
+  height: 40vw;
+
   .activePhoto {
     width: 100%;
     margin-bottom: 5px;
@@ -109,24 +129,27 @@ body {
       &:hover {
         opacity: 1;
       }
+
       &.previous {
         padding: 0 1em 0 0.7em;
         left: 0;
-        background: -moz-linear-gradient(left,  rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
-        background: -webkit-linear-gradient(left,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
-        background: linear-gradient(to right,  rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#00000000',GradientType=1 );
+        background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
       }
+
       &.next {
         padding: 0 0.7em 0 1em;
         right: 0;
-        background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
-        background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 100%);
-        background: linear-gradient(to right,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#80000000',GradientType=1 );
+        background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
       }
     }
   }
+
   .thumbnails {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(10vh, 1fr));
@@ -146,6 +169,7 @@ body {
       &:hover {
         opacity: 0.6;
       }
+
       &.active {
         outline-color: $brand;
         opacity: 1;
@@ -154,4 +178,76 @@ body {
   }
 }
 
-</style>
+.vueGallery-mobile {
+  display: flex;
+  flex-direction: column;
+
+  .activePhoto {
+    width: 100%;
+    margin-bottom: 5px;
+    padding-bottom: 65%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid #fff;
+    position: relative;
+
+    button {
+      border: none;
+      background-color: transparent;
+      font-size: 32px;
+      color: #fff;
+      opacity: 0.5;
+      position: absolute;
+      outline: none;
+      height: 100%;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.previous {
+        padding: 0 1em 0 0.7em;
+        left: 0;
+        background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+      }
+
+      &.next {
+        padding: 0 0.7em 0 1em;
+        right: 0;
+        background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+      }
+    }
+  }
+
+  .thumbnails {
+    display: flex;
+    overflow-x: scroll;
+    div {
+      min-width: 30vw;
+      height: 30vw;
+      border: 2px solid #fff;
+      outline: 2px solid #fff;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 1;
+
+      &:hover {
+        opacity: 0.6;
+      }
+
+      &.active {
+        outline-color: $brand;
+        opacity: 1;
+      }
+    }
+  }
+}</style>
