@@ -466,4 +466,5 @@ export default {
   padding: 190px 16px;
   height: 800px;
 }
+
 </style>

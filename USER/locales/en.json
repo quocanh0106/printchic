@@ -265,7 +265,10 @@
     "enjoyPOPProduct" : "Enjoy Our POD products",
     "exploreOurCatalog" : "Explore Our Catalog",
     "ourCustomizedClothing" : "Our Customized Clothing",
-    "ourCustomizedHomeDecor" : "Our Customized Home Decor"
+    "ourCustomizedHomeDecor" : "Our Customized Home Decor",
+    "tryPOD" : "Try Print-on-demand with PrintChic today",
+    "signUpAsSeller" : "Sign up as a seller and get 50%* off your first order",
+    "signUpForFree" : "Sign up for free"
   },
   "button" :{
     "tryForNow" : "Try for Now",
@@ -299,6 +302,8 @@
     "productAndService" : "Products & Service",
     "product" : "Products",
     "service" : "Service",
-    "ourFactory" : "Our Factory"
+    "ourFactory" : "Our Factory",
+    "helpCenter" : "Help Center",
+    "whatIsPod" : "What is POD"
   }
 }

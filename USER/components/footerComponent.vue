@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="footer-right flex w-auto gap-x-32">
-          <div class="flex flex-col" v-for="(menu, index) in menuList" :key="index">
+          <div class="flex flex-col gap-y-3" v-for="(menu, index) in menuList" :key="index">
             <h1 class="section-content txt-primary font-semibold">
               {{ menu.title }}
             </h1>
@@ -32,8 +32,8 @@
       <div class="flex justify-between mt-4">
         <h1>© 2023 PrintChic. All rights reserved.</h1>
         <div class="flex">
-          <h1>{{ $t("footer.privacyPolicy") }}</h1>
-          <h1>{{ $t("footer.termOfService") }}</h1>
+          <h1 @click="$router.push('/privacy-policy')" class="mr-4 cursor-pointer">{{ $t("footer.privacyPolicy") }}</h1>
+          <h1 @click="$router.push('/terms-of-services')" class="cursor-pointer">{{ $t("footer.termOfService") }}</h1>
         </div>
       </div>
     </div>
@@ -96,10 +96,6 @@ export default {
               url: "contact-us",
             },
             {
-              urlName: this.$t("footer.privacyPolicy"),
-              url: "",
-            },
-            {
               urlName: this.$t("footer.returnAndRefund"),
               url: "",
             },
@@ -110,15 +106,15 @@ export default {
           listUrl: [
             {
               urlName: this.$t("footer.product"),
-              url: "",
+              url: "product",
             },
             {
               urlName: this.$t("footer.service"),
-              url: "",
+              url: "service",
             },
             {
               urlName: this.$t("footer.ourFactory"),
-              url: "",
+              url: "pof",
             },
             {
               urlName: this.$t("footer.returnAndRefund"),
@@ -131,23 +127,19 @@ export default {
           listUrl: [
             {
               urlName: this.$t("footer.ourBlogPost"),
-              url: "",
+              url: "blog",
             },
             {
               urlName: this.$t("footer.productCatalog"),
+              url: "product",
+            },
+            {
+              urlName: this.$t("footer.helpCenter"),
               url: "",
             },
             {
-              urlName: this.$t("footer.customMerchanise"),
-              url: "",
-            },
-            {
-              urlName: this.$t("footer.demoStore"),
-              url: "",
-            },
-            {
-              urlName: this.$t("footer.VNCommunity"),
-              url: "",
+              urlName: this.$t("footer.whatIsPod"),
+              url: "pod",
             },
             {
               urlName: this.$t("footer.GlobalCommunity"),
