@@ -1,36 +1,40 @@
-@import url('https://fonts.googleapis.com/css?family=Manrope');
+@import url("https://fonts.googleapis.com/css?family=Manrope");
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: 'Manrope';
+  font-family: "Manrope";
 }
 
 :root {
-  --base-font-family:'Manrope';
+  --base-font-family: "Manrope";
 }
 
 // css apply for all page
-.custom-padding{
-  padding:80px 120px;
+.custom-padding {
+  padding: 80px 120px;
 }
 
-.custom-padding-mobile{
-  padding:40px 16px;
+.custom-padding-mobile {
+  padding: 40px 16px;
 }
 
-.bg-light-blue-custom{
-  background-color: #EFF4FF !important;
+.bg-light-blue-custom {
+  background-color: #eff4ff !important;
 }
 
-.bg-light-gray-custom{
-  background-color: #FAFBFF !important;
+.bg-light-gray-custom {
+  background-color: #fafbff !important;
 }
 
-.bg-light-gray1-custom{
-  background-color: #F9FAFB;
+.bg-light-gray1-custom {
+  background-color: #f9fafb;
 }
 // For Button Css
-.primary-btn{
-  background-color: #3372DB;
+.primary-btn {
+  background-color: #3372db;
   padding: 9px 24px 12px 24px;
   border-radius: 3px;
   height: 46px;
@@ -39,12 +43,12 @@ body {
   // min-width: 135px;
 }
 
-.secondary-btn{
+.secondary-btn {
   background-color: white;
-  border: 1px solid #3372DB;
+  border: 1px solid #3372db;
   padding: 9px 24px 12px 24px;
   border-radius: 3px;
-  color: #3372DB;
+  color: #3372db;
   height: 46px;
   min-width: 135px;
   text-align: center;
@@ -52,43 +56,43 @@ body {
 
 // for custom text
 
-.txt-primary{
-  color: #3372DB;
+.txt-primary {
+  color: #3372db;
 }
 
-.border-primary{
-  border: 1px solid #3372DB;
+.border-primary {
+  border: 1px solid #3372db;
 }
 
-.border-bottom-primary{
-  border-bottom: 1px solid #3372DB;
+.border-bottom-primary {
+  border-bottom: 1px solid #3372db;
 }
 
-.border-secondary{
-  border: 1px solid #D1E0FF
+.border-secondary {
+  border: 1px solid #d1e0ff;
 }
 
-.border-blue{
-  border: 2px solid #D1E0FF
+.border-blue {
+  border: 2px solid #d1e0ff;
 }
 
-.txt-gray{
-  color: #98A2B3;
+.txt-gray {
+  color: #98a2b3;
 }
 
-.txt-dark-blue{
+.txt-dark-blue {
   color: #475467;
 }
 
-.border-left-primary{
-  border-left: 2px solid #3372DB;
+.border-left-primary {
+  border-left: 2px solid #3372db;
 }
 
-.txt-dark{
+.txt-dark {
   color: #344054;
 }
 
-.section-title{
+.section-title {
   font-size: 32px;
   line-height: 41.6px;
   @media screen and (max-width: 600px) {
@@ -96,59 +100,59 @@ body {
   }
 }
 
-.section-content{
+.section-content {
   font-size: 16px;
   line-height: 24px;
 }
 
 // max-width, height custom
 
-.mw-790px{
+.mw-790px {
   max-width: 790px;
 }
 
-.mw-768px{
+.mw-768px {
   max-width: 768px;
 }
 
-.mw-379px{
+.mw-379px {
   max-width: 379px;
 }
 
-.mw-584px{
+.mw-584px {
   max-width: 584px;
 }
 
-.mw-276px{
+.mw-276px {
   max-width: 276px;
 }
 
-.mw-433px{
+.mw-433px {
   max-width: 433px;
 }
 
-.mw-353px{
+.mw-353px {
   max-width: 353px;
 }
 
-.mh-183px{
+.mh-183px {
   min-height: 183px;
 }
 
-.mw-100px{
+.mw-100px {
   min-width: 100px;
 }
 
-.mw-892px{
+.mw-892px {
   max-width: 892px;
 }
 
-.mw-378px{
+.mw-378px {
   max-width: 378px;
 }
 
 // img size
-.thumbnail-img{
+.thumbnail-img {
   max-width: 183px;
   min-width: 183px;
   height: 183px;
