@@ -218,7 +218,7 @@ import help from "../../components/help.vue";
 import mailIcon from "../assets/svg/mail.svg";
 import contactThumb from "../../assets/images/contactUsFormThumb.png";
 import linkedin from "../../assets/svg/LinkedIn.svg";
-import facebook from "../../assets/svg/facebook.svg";
+import facebook from "../../assets/svg/Facebook.svg";
 import twitter from "../../assets/svg/Twitter.svg";
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
 import { screenSizeMixin } from '~/mixins/screenSizeMixin';
