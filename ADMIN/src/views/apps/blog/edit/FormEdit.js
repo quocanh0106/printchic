@@ -23,7 +23,54 @@ import { fetchProduct } from 'src/store/apps/product'
 import axios from 'axios'
 import PopoverAddContent from '../components/PopoverAddContent'
 import UploadImgContent from '../components/UploadImgContent'
+import dynamic from 'next/dynamic'
 
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
+
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
+    ],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+}
+
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'video',
+]
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
   right: 0,
@@ -39,14 +86,11 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   }
 }))
 
-let idItemsContent = 2;
-
 const FormEdit = () => {
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
-  const [contentType, setContentType] = useState('text')
-  const [listItemsContent, setListItemContent] = useState([])
+  const [content, setContent] = useState('');
 
   const router = useRouter()
 
@@ -66,30 +110,12 @@ const FormEdit = () => {
 
   const onSubmit = async (value) => {
     setLoading(true)
-    const tempList = [...listItemsContent]
-    
-    const promises = tempList.map(async ele => {
-      if (ele.type === 'img' && typeof ele.value[0] !== 'string') {
-        const formData = new FormData();
-        formData.append('file', ele.value[0]);
-
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        })
-        ele.value[0] = response.data?.secure_url
-      }
-
-      return ele
-    })
-    await Promise.all(promises);
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
     formData.append("blogId", router.query.id);
     formData.append("title", value.title);
-    formData.append("content", JSON.stringify(tempList));
+    formData.append("content", JSON.stringify(content));
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -139,11 +165,9 @@ const FormEdit = () => {
           listRecommend.push(ele)
         }
       })
-      const maxId = data?.content.reduce((max, item) => item.id > max ? item.id : max, data?.content[0].id);
 
       setValue('blogCategory', data?.categoryBlogId?._id)
-      idItemsContent = maxId + 1
-      setListItemContent(data?.content)
+      setContent(JSON.parse(data?.content))
       setValue('blogStatus', data?.status)
       setValue('tags', data?.tags)
       setValue('title', data?.title)
@@ -178,69 +202,13 @@ const FormEdit = () => {
     setValueRecommend(newValue)
   }
 
-
-  const handleAddEleContent = (type, idToFind) => {
-    const tempListItemsContent = [...listItemsContent]
-    const index = tempListItemsContent.findIndex(obj => obj.id === idToFind);
-
-    if (index !== -1) {
-      // Insert the new object after the found object
-      tempListItemsContent.splice(index + 1, 0, {
-        id: idItemsContent,
-        type: type,
-        value: '',
-
-      });
-      idItemsContent++
-      setListItemContent(tempListItemsContent)
-    }
-
-  }
-
-  const handleAddEleContentFirst = (type, idToFind) => {
-    const tempListItemsContent = [...listItemsContent]
-
-    tempListItemsContent.unshift({
-      id: idToFind,
-      type: type,
-      value: '',
-
-    });
-    idItemsContent++
-    setListItemContent(tempListItemsContent)
-
-  }
-
-  const handleRemoveEleContent = (idToFind) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.filter(item => item.id !== idToFind);
-    setListItemContent(tempListItemsContent)
-  }
-
-  const onChangeContentTitle = (e, id) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.map(ele => {
-      if (ele.id == id) {
-
-        return { ...ele, value: e.target.value };
-      }
-
-      return { ...ele }; 
-    })
-    setListItemContent(tempListItemsContent)
-  }
-
-  const onChangeContentText = (e, id) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.map(ele => {
-      if (ele.id == id) {
-
-        return { ...ele, value: e.target.value };
-      }
-
-      return { ...ele }; 
-    })
-    setListItemContent(tempListItemsContent)
+  const handleChangeContent = (content, delta, source, editor) => {
+    console.log('content', content)
+    setContent(content);
+    // You can also get the plain text content
+    // const text = editor.getText();
+    // Or get the contents in a different format
+    // const contents = editor.getContents();
   }
 
   return (
@@ -369,50 +337,7 @@ const FormEdit = () => {
             <Typography variant='h4'>
               Content
             </Typography>
-            <Grid item xs={12} sm={6}>
-              <RadioGroup row aria-label='controlled' name='controlled' value={contentType} onChange={(e) => setContentType(e.target.value)}>
-                <FormControlLabel value='text' control={<Radio />} label='text' sx={{ pr: 4 }} />
-                <FormControlLabel value='html' control={<Radio />} label='html' />
-              </RadioGroup>
-            </Grid>
-            <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
-            {
-              listItemsContent?.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
-                {
-                  ele.type == 'title' &&
-                  <CustomTextField
-                    fullWidth
-                    value={ele.value}
-                    sx={{ mt: 4 }}
-                    label={ele?.type}
-                    onChange={(e) => onChangeContentTitle(e, ele.id)}
-                    required
-                    aria-describedby='validation-basic-first-name'
-                  />
-                }
-                {
-                  ele.type == 'text' &&
-                  <CustomTextField
-                    type='textarea'
-                    rows={6}
-                    value={ele.value}
-                    multiline
-                    fullWidth
-                    onChange={(e) => onChangeContentText(e, ele.id)}
-                    sx={{ mt: 4 }}
-                    label={ele?.type}
-                    required
-                    aria-describedby='validation-basic-first-name'
-                  />
-                }
-                {
-                  ele.type == 'img' &&
-                  <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
-                }
-                <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
-              </Box>)
-            }
+            <QuillNoSSRWrapper value={content} onChange={handleChangeContent} modules={modules} formats={formats} theme="snow" />
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>

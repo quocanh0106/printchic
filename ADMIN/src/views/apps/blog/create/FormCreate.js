@@ -1,32 +1,73 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, FormControlLabel, List, ListItem, MenuItem, Radio, RadioGroup, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import IconButton from '@mui/material/IconButton'
 
 // ** Custom Components Imports
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
-import { Fragment, forwardRef, useEffect, useState } from 'react'
-import { Box } from '@mui/system'
-import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
-import Icon from 'src/@core/components/icon'
 import styled from '@emotion/styled'
-import { DataGrid } from '@mui/x-data-grid'
-import { useDropzone } from 'react-dropzone'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { addProduct, fetchProduct } from 'src/store/apps/product'
+import { Box } from '@mui/system'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
-import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
-import { top100Films } from 'src/@fake-db/autocomplete'
 import { addBlog } from 'src/store/apps/blog'
-import PopoverAddContent from '../components/PopoverAddContent'
-import UploadImgContent from '../components/UploadImgContent'
-import axios from 'axios'
+import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import { fetchProduct } from 'src/store/apps/product'
+
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
+
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
+    ],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+}
+
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'video',
+]
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -43,15 +84,21 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   }
 }))
 
-let idItemsContent = 2;
-
 const FormCreate = () => {
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
-  const [contentType, setContentType] = useState('text')
   const [valueRecommend, setValueRecommend] = useState([])
-  const [listItemsContent, setListItemContent] = useState([])
+  const [content, setContent] = useState('');
   const router = useRouter()
+
+  const handleChangeContent = (content, delta, source, editor) => {
+    console.log('content', content)
+    setContent(content);
+    // You can also get the plain text content
+    // const text = editor.getText();
+    // Or get the contents in a different format
+    // const contents = editor.getContents();
+  };
 
   const callBackSubmit = (data) => {
     if (data.success) {
@@ -69,30 +116,11 @@ const FormCreate = () => {
 
   const onSubmit = async (value) => {
     setLoading(true)
-    const tempList = [...listItemsContent]
-
-    const promises = tempList.map(async ele => {
-      if (ele.type === 'img') {
-        const formData = new FormData();
-        formData.append('file', ele.value[0]);
-
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        })
-        ele.value[0] = response.data?.secure_url
-      }
-
-      return ele
-    })
-    await Promise.all(promises);
-
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
     formData.append("title", value.title);
-    formData.append("content",contentType == 'text' ? JSON.stringify(tempList) : value.html );
+    formData.append("content", JSON.stringify(content));
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -106,8 +134,6 @@ const FormCreate = () => {
   const {
     control,
     handleSubmit,
-    getValues,
-    setValue,
     formState: { errors }
   } = useForm({
     blogStatus: '',
@@ -151,68 +177,6 @@ const FormCreate = () => {
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
-  }
-
-  const handleAddEleContent = (type, idToFind) => {
-    const tempListItemsContent = [...listItemsContent]
-    const index = tempListItemsContent.findIndex(obj => obj.id === idToFind);
-
-    if (index !== -1) {
-      // Insert the new object after the found object
-      tempListItemsContent.splice(index + 1, 0, {
-        id: idItemsContent,
-        type: type,
-        value: '',
-
-      });
-      idItemsContent++
-      setListItemContent(tempListItemsContent)
-    }
-
-  }
-
-  const handleAddEleContentFirst = (type, idToFind) => {
-    const tempListItemsContent = [...listItemsContent]
-
-    tempListItemsContent.unshift({
-      id: idToFind,
-      type: type,
-      value: '',
-
-    });
-    idItemsContent++
-    setListItemContent(tempListItemsContent)
-
-  }
-
-  const handleRemoveEleContent = (idToFind) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.filter(item => item.id !== idToFind);
-    setListItemContent(tempListItemsContent)
-  }
-
-  const onChangeContentTitle = (e, id) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.map(ele => {
-      if (ele.id == id) {
-        ele.value = e.target.value
-      }
-
-      return ele
-    })
-    setListItemContent(tempListItemsContent)
-  }
-
-  const onChangeContentText = (e, id) => {
-    let tempListItemsContent = [...listItemsContent]
-    tempListItemsContent = tempListItemsContent.map(ele => {
-      if (ele.id == id) {
-        ele.value = e.target.value
-      }
-
-      return ele
-    })
-    setListItemContent(tempListItemsContent)
   }
 
   return (
@@ -341,76 +305,7 @@ const FormCreate = () => {
             <Typography variant='h4'>
               Content
             </Typography>
-            <Grid item xs={12} sm={6}>
-              <RadioGroup row aria-label='controlled' name='controlled' value={contentType} onChange={(e) => setContentType(e.target.value)}>
-                <FormControlLabel value='text' control={<Radio />} label='text' sx={{ pr: 4 }} />
-                <FormControlLabel value='html' control={<Radio />} label='html' />
-              </RadioGroup>
-            </Grid>
-            {
-              contentType == 'text' ?
-                <>
-                  <PopoverAddContent handleAddEleContent={handleAddEleContentFirst} idContent={idItemsContent} />
-                  {
-                    listItemsContent.map(ele => <Box key={ele.id} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                      <PopoverAddContent handleAddEleContent={handleAddEleContent} idContent={ele.id} />
-                      {
-                        ele.type == 'title' &&
-                        <CustomTextField
-                          fullWidth
-                          sx={{ mt: 4 }}
-                          label={ele?.type}
-                          onChange={(e) => onChangeContentTitle(e, ele.id)}
-                          required
-                          aria-describedby='validation-basic-first-name'
-                        />
-                      }
-                      {
-                        ele.type == 'text' &&
-                        <CustomTextField
-                          type='textarea'
-                          rows={6}
-                          multiline
-                          fullWidth
-                          onChange={(e) => onChangeContentText(e, ele.id)}
-                          sx={{ mt: 4 }}
-                          label={ele?.type}
-                          required
-                          aria-describedby='validation-basic-first-name'
-                        />
-                      }
-                      {
-                        ele.type == 'img' &&
-                        <UploadImgContent id={ele.id} listItemsContent={listItemsContent} setListItemContent={setListItemContent} />
-                      }
-                      <Icon icon='tabler:trash' fontSize={30} onClick={() => handleRemoveEleContent(ele.id)} />
-                    </Box>)
-                  }
-                </>
-                :
-                <>
-                  <Controller
-                    name='html'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <CustomTextField
-                        type='textarea'
-                        fullWidth
-                        value={value}
-                        rows={12}
-                        multiline
-                        required
-                        onChange={onChange}
-                        placeholder='html'
-                        error={Boolean(errors.html)}
-                        aria-describedby='validation-basic-first-name'
-                        {...(errors.html && { helperText: 'This field is required' })}
-                      />
-                    )}
-                  />
-                </>
-            }
+            <QuillNoSSRWrapper value={content} onChange={handleChangeContent} modules={modules} formats={formats} theme="snow" />
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>

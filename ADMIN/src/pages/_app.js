@@ -56,6 +56,8 @@ import 'src/iconify-bundle/icons-bundle-react'
 // ** Global css styles
 import '../../styles/globals.css'
 
+import 'react-quill/dist/quill.snow.css'
+
 const clientSideEmotionCache = createEmotionCache()
 
 // ** Pace Loader

@@ -53,11 +53,14 @@ function MainContent() {
                   placeholder='Title'
                   error={Boolean(errors[`title-${row.id}`])}
                   aria-describedby='validation-basic-first-name'
+
                   {...(errors[`title-${row.id}`] && { helperText: 'This field is required' })}
                 />
+                
               )}
             />
           </Box>
+
         )
       }
     },
@@ -208,7 +211,9 @@ function MainContent() {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
       const newData = data.map((ele, index) => {
+
         return {
           title: ele[0],
           handleUrl: ele[1],

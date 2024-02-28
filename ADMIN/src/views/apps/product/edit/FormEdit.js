@@ -20,7 +20,53 @@ import { fetchEvents } from 'src/store/apps/categoryProduct'
 import { addProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
+import dynamic from 'next/dynamic'
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
 
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [
+      { list: 'ordered' },
+      { list: 'bullet' },
+      { indent: '-1' },
+      { indent: '+1' },
+    ],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+}
+
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'video',
+]
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
   right: 0,
@@ -51,6 +97,16 @@ const FormCreate = () => {
   const [column, setColumn] = useState([]);
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
+  const [content, setContent] = useState('');
+
+  const handleChangeContent = (content, delta, source, editor) => {
+    console.log('content', content)
+    setContent(content);
+    // You can also get the plain text content
+    // const text = editor.getText();
+    // Or get the contents in a different format
+    // const contents = editor.getContents();
+  };
 
   const router = useRouter()
 
@@ -85,17 +141,13 @@ const FormCreate = () => {
     formData.append("handleUrl", value.handleUrl);
     formData.append("metaDescription", value.metaDescription);
     formData.append("status", value.productStatus);
-    formData.append("description", value.description);
+    formData.append("description", JSON.stringify(content));
     formData.append("currency", value.currency);
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
     formData.append("price", value.price);
     value.priceSale && formData.append("priceSale", value.priceSale);
-
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append('files', files[i]);
-    // }
 
     dispatch(updateProduct({ formData, callBackSubmit }))
 
@@ -251,7 +303,7 @@ const FormCreate = () => {
       setValue('handleUrl', data?.handleUrl)
       setValue('metaDescription', data?.metaDescription)
       setValue('productStatus', data?.status)
-      setValue('description', data?.description)
+      setContent(JSON.parse(data?.description));
       setValue('currency', data?.currency)
       setValue('productType', data?.type)
       setValue('productCategory', data?.categoryProductId)
@@ -632,25 +684,10 @@ const FormCreate = () => {
                 />
               )}
             />
-            <Controller
-              name='description'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  value={value}
-                  sx={{ mt: 3 }}
-                  label='Description'
-                  required
-                  onChange={onChange}
-                  placeholder='description'
-                  error={Boolean(errors.description)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.description && { helperText: 'This field is required' })}
-                />
-              )}
-            />
+            <Typography variant='h5' sx={{ textAlign: 'left' }}>
+              Content
+            </Typography>
+            <QuillNoSSRWrapper value={content} onChange={handleChangeContent} modules={modules} formats={formats} theme="snow" />
           </Card>
           <Card sx={{ p: 4, mt: 4 }}>
             <Fragment>
@@ -701,7 +738,7 @@ const FormCreate = () => {
                       fullWidth
                       select
                       label='Currency'
-                      sx={{textAlign: 'left'}}
+                      sx={{ textAlign: 'left' }}
                       SelectProps={{
                         value: value || "",
                         onChange: e => onChange(e)
