@@ -9,7 +9,17 @@
       <p class="text-sm font-thin text-slate-400">
         Effective date: February 23, 2024
       </p>
-      <div class="policy-content mt-10">
+      <div class="flex policy-content" :class="mobile ? 'flex-column mt-5' : 'mt-10'">
+        <div class="nav-slide" v-if="mobile">
+          <p
+            v-for="(item, index) in anchorMenuData"
+            class="text-sm mb-3 pointer"
+            :class="item.isActive && 'blue'"
+            :key="index"
+          >
+            <a :href="item.anchor">{{ item.label }}</a>
+          </p>
+        </div>
         <div class="content mr-10">
           <div
             class="single-block mb-5"
@@ -25,7 +35,7 @@
             </p>
           </div>
         </div>
-        <div class="nav-slide">
+        <div class="nav-slide" v-if="!mobile">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -78,7 +88,7 @@
     <help
       :headerTitle="$t('privacyPolicy.helpTitle')"
       :headerDesc="$t('privacyPolicy.helpDes')"
-      class="custom-padding"
+      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -91,9 +101,11 @@ import fbIcon from "../../assets/svg/fb.svg";
 import twitterIcon from "../../assets/svg/x-social.svg";
 import Help from "../../components/help.vue";
 import { privacyPolicyData, anchorMenuData } from "./helpers/constants";
+import { screenSizeMixin } from "~/mixins/screenSizeMixin";
 
 export default {
   components: { Help },
+  mixins: [screenSizeMixin],
   data() {
     return {
       mailIcon,
@@ -113,6 +125,9 @@ export default {
 .privacy-policy-container {
   .side-padding {
     padding: 0 120px;
+    @media screen and (max-width: 600px) {
+      padding: 0 10px;
+    }
     .breadcrumb {
       padding-left: 0 !important;
       padding-right: 0 !important;
@@ -121,6 +136,9 @@ export default {
       display: flex;
       .content {
         width: 70%;
+        @media screen and (max-width: 600px) {
+          width: 100%;
+        }
       }
     }
   }
@@ -130,8 +148,16 @@ export default {
     display: flex;
     justify-content: space-between;
     background-color: #fafbff;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      padding: 10px;
+    }
     .single-info {
       width: 30%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
       .font-semibold:hover {
         color: #3372db;
         cursor: pointer;

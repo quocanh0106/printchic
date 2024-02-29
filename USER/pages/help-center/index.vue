@@ -120,7 +120,7 @@
     <help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      class="ml-5 mr-5 mt-10"
+      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
