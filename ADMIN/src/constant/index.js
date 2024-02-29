@@ -1,9 +1,5 @@
 const LANG = [
   {
-    label: 'VN',
-    value: 'VN'
-  },
-  {
     label: 'UK',
     value: 'UK'
   },
@@ -12,11 +8,23 @@ const LANG = [
     value: 'US'
   },
   {
+    label: 'DE',
+    value: 'DE'
+  },
+  {
     label: 'FR',
     value: 'FR'
   },
-]
+];
+
+const LANG_OBJECT = {
+  UK: 'UK',
+  US: 'US',
+  DE: 'DE',
+  FR: 'FR',
+}
 
 export {
-  LANG
+  LANG,
+  LANG_OBJECT
 }

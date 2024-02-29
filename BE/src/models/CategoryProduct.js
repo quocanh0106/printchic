@@ -8,10 +8,28 @@ const ConfigsBase = {
   languageId: {
     type: ObjectId, default: null, require: false, ref: 'languages',
   },
-  title: {
+  titleUK: {
     type: String, trim: true,
   },
-  description: {
+  titleUS: {
+    type: String, trim: true,
+  },
+  titleDE: {
+    type: String, trim: true,
+  },
+  titleFR: {
+    type: String, trim: true,
+  },
+  descriptionUK: {
+    type: String, trim: true,
+  },
+  descriptionUS: {
+    type: String, trim: true,
+  },
+  descriptionDE: {
+    type: String, trim: true,
+  },
+  descriptionFR: {
     type: String, trim: true,
   },
   bannerImg: {
