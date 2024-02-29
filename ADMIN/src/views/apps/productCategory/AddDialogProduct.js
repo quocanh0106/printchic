@@ -243,6 +243,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
+            {/* description */}
             <Grid item xs={12}>
               <Controller
                 name={`description${LANG_OBJECT.UK}`}
