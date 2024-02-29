@@ -32,6 +32,9 @@ import { Controller, useForm } from 'react-hook-form'
 import Icon from 'src/@core/components/icon'
 import { updateCategoryProduct } from 'src/store/apps/categoryProduct'
 import { useDispatch, useSelector } from 'react-redux'
+import { LANG, LANG_OBJECT } from 'src/constant'
+import toast from 'react-hot-toast'
+import { useSnackbar } from 'notistack'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -55,6 +58,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 const DialogEditCard = ({ visible, setVisible, rowData }) => {
   const store = useSelector(state => state.categoryProduct)
   const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar();
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -87,8 +91,10 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
   })
 
   useEffect(() => {
-    setValue('title', rowData.title)
-    setValue('parentCategory', rowData.parentCategory)
+    LANG.forEach(ele => {
+      setValue(`title${ele.value}`, rowData[`title${ele.value}`]);
+      setValue(`description${ele.value}`, rowData[`description${ele.value}`]);
+    })
     setValue('description', rowData.description)
     setFiles(rowData.bannerImg)
   }, [rowData])
@@ -97,15 +103,38 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     setVisible(false)
   }
 
+  const callBackSubmit = (data) => {
+    setLoading(false)
+    if (data.success) {
+      setVisible(false)
+      toast.success('Update category product created successfully', {
+        duration: 3000
+      })
+      reset()
+      setFiles([])
+    } else {
+      if(data.statusCode == 10505) {
+        data.errors.forEach(ele => {
+          enqueueSnackbar(`${ele} of product category already exists!`, { variant : 'error' });
+        })
+      } else {
+        toast.error(data.message, {
+          duration: 3000
+        })
+      }
+    }
+  }
   const onSubmit = (value) => {
     setLoading(true)
     const formData = new FormData();
     formData.append("categoryProductId", rowData._id);
-    formData.append("title", value.title);
-    formData.append("description", value.description);
+    LANG.forEach(ele => {
+      formData.append(`title${ele.value}`, value[`title${ele.value}`]);
+      formData.append(`description${ele.value}`, value[`description${ele.value}`]);
+    })
     formData.append("parentCategory", value.parentCategory);
     typeof files === "string" || formData.append("file", files);
-    dispatch(updateCategoryProduct({ formData, setVisible, setLoading }))
+    dispatch(updateCategoryProduct({ formData, callBackSubmit }))
   }
 
   const img = <Box sx={{ position: 'relative' }}>
@@ -150,27 +179,83 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12}>
               <Controller
-                name='title'
+                name={`title${LANG_OBJECT.UK}`}
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
                     value={value}
-                    label='Title'
+                    label={`Title ${LANG_OBJECT.UK}`}
                     required
                     onChange={onChange}
-                    placeholder='Leonard'
-                    error={Boolean(errors.firstName)}
+                    error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.firstName && { helperText: 'This field is required' })}
+                    {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.US}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.US}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.US}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.FR}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.FR}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.DE}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.DE}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
             </Grid>
             <Grid item xs={12}>
               <Controller
-                name='description'
+                name={`description${LANG_OBJECT.UK}`}
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
@@ -180,10 +265,70 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                     multiline
                     required
                     {...field}
-                    label='Description'
-                    error={Boolean(errors.textarea)}
+                    label={`Description ${LANG_OBJECT.UK}`}
+                    error={Boolean(errors[`description${LANG_OBJECT.UK}`])}
                     aria-describedby='validation-basic-textarea'
-                    {...(errors.textarea && { helperText: 'This field is required' })}
+                    {...(errors[`description${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name={`description${LANG_OBJECT.US}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomTextField
+                    rows={4}
+                    fullWidth
+                    multiline
+                    required
+                    {...field}
+                    label={`Description ${LANG_OBJECT.US}`}
+                    error={Boolean(errors[`description${LANG_OBJECT.US}`])}
+                    aria-describedby='validation-basic-textarea'
+                    {...(errors[`description${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name={`description${LANG_OBJECT.FR}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomTextField
+                    rows={4}
+                    fullWidth
+                    multiline
+                    required
+                    {...field}
+                    label={`Description ${LANG_OBJECT.FR}`}
+                    error={Boolean(errors[`description${LANG_OBJECT.FR}`])}
+                    aria-describedby='validation-basic-textarea'
+                    {...(errors[`description${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name={`description${LANG_OBJECT.DE}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomTextField
+                    rows={4}
+                    fullWidth
+                    multiline
+                    required
+                    {...field}
+                    label={`Description ${LANG_OBJECT.DE}`}
+                    error={Boolean(errors[`description${LANG_OBJECT.DE}`])}
+                    aria-describedby='validation-basic-textarea'
+                    {...(errors[`description${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -192,7 +337,6 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
               <Controller
                 name='parentCategory'
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     select
@@ -206,7 +350,6 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                     id='validation-basic-select'
                     error={Boolean(errors.parentCategory)}
                     aria-describedby='validation-basic-select'
-                    {...(errors.parentCategory && { helperText: 'This field is required' })}
                   >
                     {
                       store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.title}</MenuItem>)

@@ -34,18 +34,7 @@ export const updateCategoryProduct = createAsyncThunk('appCalendar/updateEvent',
       'Content-Type': 'multipart/form-data',
     }
   })
-  if (response.data.success) {
-    event.setVisible(false)
-    toast.success('Category product updated successfully', {
-      duration: 2000
-    })
-    event.setLoading(false)
-  } else {
-    toast.error(response.data.message, {
-      duration: 2000
-    })
-    event.setLoading(false)
-  }
+  event.callBackSubmit(response.data)
   await dispatch(fetchEvents())
 
   return response.data.event

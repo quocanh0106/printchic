@@ -60,9 +60,25 @@ module.exports.AUTH = {
                 return res.json(responseError("bannerImg must be required!"))
             }
 
-            const checkExistProductCategory = await CategoryProductService.checkExist(req.body?.title)
-            if (checkExistProductCategory) {
-                return res.json(responseSuccess(10505, []));
+            let fieldExistTitle = []
+            const checkExistProductCategory_UK = await CategoryProductService.checkExist({titleUK: req.body?.titleUK})
+            const checkExistProductCategory_US = await CategoryProductService.checkExist({titleUS: req.body?.titleUS})
+            const checkExistProductCategory_FR = await CategoryProductService.checkExist({titleFR: req.body?.titleFR})
+            const checkExistProductCategory_DE = await CategoryProductService.checkExist({titleDE: req.body?.titleDE})
+            if(checkExistProductCategory_UK) {
+                fieldExistTitle.push('titleUK')
+            }
+            if(checkExistProductCategory_US) {
+                fieldExistTitle.push('titleUS')
+            }
+            if(checkExistProductCategory_FR) {
+                fieldExistTitle.push('titleFR')
+            }
+            if(checkExistProductCategory_DE) {
+                fieldExistTitle.push('titleDE')
+            }
+            if (checkExistProductCategory_UK || checkExistProductCategory_US || checkExistProductCategory_FR || checkExistProductCategory_DE) {
+                return res.json(responseError(10505, fieldExistTitle));
             }
 
             const result = await CategoryProductService.create(req.body)
@@ -198,9 +214,25 @@ module.exports.AUTH = {
                 req.body.bannerImg = req.file.path;
             }
 
-            const checkExistProductCategory = await CategoryProductService.checkExist(req.body?.title)
-            if (checkExistProductCategory && checkExistProductCategory?._id.toHexString() !== req.body.categoryProductId) {
-                return res.json(responseSuccess(10505, []));
+            let fieldExistTitle = []
+            const checkExistProductCategory_UK = await CategoryProductService.checkExist({titleUK: req.body?.titleUK})
+            const checkExistProductCategory_US = await CategoryProductService.checkExist({titleUS: req.body?.titleUS})
+            const checkExistProductCategory_FR = await CategoryProductService.checkExist({titleFR: req.body?.titleFR})
+            const checkExistProductCategory_DE = await CategoryProductService.checkExist({titleDE: req.body?.titleDE})
+            if(checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.categoryProductId) {
+                fieldExistTitle.push('titleUK')
+            }
+            if(checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.categoryProductId) {
+                fieldExistTitle.push('titleUS')
+            }
+            if(checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.categoryProductId) {
+                fieldExistTitle.push('titleFR')
+            }
+            if(checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.categoryProductId) {
+                fieldExistTitle.push('titleDE')
+            }
+            if (fieldExistTitle.length > 0) {
+                return res.json(responseError(10505, fieldExistTitle));
             }
 
             const result = await CategoryProductService.updateConditions(req.body)
