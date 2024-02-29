@@ -13,8 +13,13 @@
             Welcome to our Help Center
           </p>
           <div class="search-group">
-            <v-text-field class="input-search"></v-text-field>
-            <v-btn color="primary"> Button </v-btn>
+            <v-text-field
+              class="input-search"
+              variant="solo"
+              prepend-inner-icon="mdi-magnify"
+              dense
+            ></v-text-field>
+            <v-btn color="primary"> Search </v-btn>
           </div>
         </div>
       </div>
@@ -27,20 +32,22 @@
             :class="item.isActive && 'blue'"
             :key="index"
           >
-            <a :href="item.anchor">{{ item.label }}</a>
+            {{ item.label }}
           </p>
         </div>
         <div class="content ml-10">
-          <div class="single-block mb-5">
+          <p>
+            <span class="font-bold text-cyan-700">16</span> Results found for
+            “warehouse”
+          </p>
+          <div class="single-block mb-5 mt-5">
             <v-expansion-panels class="expansions" variant="accordion">
               <v-expansion-panel v-for="item in 6" :key="item">
                 <v-expansion-panel-title
                   collapse-icon="mdi-minus"
                   expand-icon="mdi-plus"
                 >
-                  <span class="text-lg font-bold">
-                    Item
-                  </span>
+                  <span class="text-lg font-bold"> Item </span>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -51,6 +58,11 @@
               </v-expansion-panel>
             </v-expansion-panels>
           </div>
+          <v-pagination
+            :length="4"
+            color="primary"
+            variant="outlined"
+          ></v-pagination>
         </div>
       </div>
     </div>
@@ -162,14 +174,27 @@ export default {
       justify-content: center;
       flex-direction: column;
       .search-group {
-        width: 100%;
+        width: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 15px;
+        margin-top: 25px;
         gap: 15px;
         .input-search {
-          width: 300px;
+          display: flex;
+          justify-content: center;
+          ::v-deep(.v-input__control) {
+            width: 500px;
+            height: 36px;
+          }
+          ::v-deep(.v-field__field) {
+            height: 36px;
+          }
+          ::v-deep(.v-field__input) {
+            min-height: 36px;
+            padding: 0 10px;
+            display: inline-block;
+          }
         }
       }
     }
