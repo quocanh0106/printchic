@@ -7,3 +7,12 @@
     </NuxtLayout>
   </div>
 </template>
+
+<script>
+export default {
+  created() {
+    console.log("rere")
+  },
+  
+};
+</script>

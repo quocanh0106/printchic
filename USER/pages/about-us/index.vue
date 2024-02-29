@@ -82,7 +82,7 @@
           <p>{{ tag }}</p>
         </span>
       </div>
-      <div class="service-info-counter flex w-100 mt-12 justify-between">
+      <div class="service-info-counter w-100 flex mt-12 justify-between">
         <span v-for="(item, index) in serviceInfoCounter" :key="index">
           <cardCounterVue
             class="card-info-counter-aboutus"
