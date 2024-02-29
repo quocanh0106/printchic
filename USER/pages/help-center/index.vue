@@ -9,7 +9,10 @@
       <div class="search-section">
         <img :src="bgPic" alt="pic" />
         <div class="search-input-group">
-          <p class="text-2xl text-white font-medium">
+          <p
+            class="text-2xl text-white font-medium"
+            :class="mobile ? 'text-xl' : 'text-2xl'"
+          >
             Welcome to our Help Center
           </p>
           <div class="search-group">
@@ -19,13 +22,13 @@
               prepend-inner-icon="mdi-magnify"
               dense
             ></v-text-field>
-            <v-btn color="primary"> Search </v-btn>
+            <v-btn class="seach-btn" color="primary"> Search </v-btn>
           </div>
         </div>
       </div>
 
-      <div class="mt-10 flex">
-        <div class="nav-slide">
+      <div class="flex" :class="mobile ? 'flex-col mt-5' : 'mt-10'">
+        <div class="nav-slide" v-if="pc">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -35,7 +38,17 @@
             {{ item.label }}
           </p>
         </div>
-        <div class="content ml-10">
+        <div class="nav-slide mb-5" v-else>
+          <span
+            v-for="(item, index) in anchorMenuData"
+            class="text-sm mb-3 pointer mr-5"
+            :class="item.isActive && 'blue'"
+            :key="index"
+            >{{ item.label }}</span
+          >
+        </div>
+
+        <div class="content" :class="mobile ? 'ml-0' : 'ml-10'">
           <p>
             <span class="font-bold text-cyan-700">16</span> Results found for
             “warehouse”
@@ -107,7 +120,7 @@
     <help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      class="custom-padding"
+      class="ml-5 mr-5 mt-10"
     />
   </div>
 </template>
@@ -125,9 +138,11 @@ import {
   privacyPolicyData,
   anchorMenuData,
 } from "./helpers/constants";
+import { screenSizeMixin } from "~/mixins/screenSizeMixin";
 
 export default {
   components: { Help },
+  mixins: [screenSizeMixin],
   data() {
     return {
       mailIcon,
@@ -149,19 +164,27 @@ export default {
 .help-center-container {
   .side-padding {
     padding: 0 120px;
+    @media screen and (max-width: 600px) {
+      padding: 0 10px;
+    }
     .breadcrumb {
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
     .content {
       width: 70%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+      }
     }
   }
   .search-section {
     position: relative;
     img {
-      /* position: absolute; */
       width: 100%;
+      @media screen and (max-width: 600px) {
+        height: calc(100vw / 2);
+      }
     }
     .search-input-group {
       position: absolute;
@@ -180,12 +203,27 @@ export default {
         align-items: center;
         margin-top: 25px;
         gap: 15px;
+        @media screen and (max-width: 600px) {
+          flex-direction: column;
+          width: 100%;
+          padding: 0 20px;
+          .seach-btn {
+            width: 100%;
+          }
+        }
         .input-search {
           display: flex;
           justify-content: center;
+          width: 100%;
           ::v-deep(.v-input__control) {
             width: 500px;
             height: 36px;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+            }
+          }
+          ::v-deep(.v-input__details) {
+            padding: 0;
           }
           ::v-deep(.v-field__field) {
             height: 36px;
@@ -212,8 +250,16 @@ export default {
     display: flex;
     justify-content: space-between;
     background-color: #fafbff;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      padding: 10px;
+    }
     .single-info {
       width: 30%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
       .font-semibold:hover {
         color: #3372db;
         cursor: pointer;
@@ -230,5 +276,8 @@ export default {
 }
 .pointer {
   cursor: pointer;
+}
+.gap-10 {
+  gap: 10px;
 }
 </style>

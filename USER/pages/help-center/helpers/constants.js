@@ -86,39 +86,37 @@ export const privacyPolicyData = [
 
 export const anchorMenuData = [
   {
-    label: "Types Of Information Collected",
-    anchor: "#pp1",
+    label: "FAQS",
+    isActive: true
   },
   {
-    label: "Utilization Of Your Information",
-    anchor: "#pp2",
+    label: "Getting Started",
   },
   {
-    label: "Sharing And Disclosure Of Information",
-    anchor: "#pp3",
+    label: "Products & Pricing",
   },
   {
-    label: "Safeguarding Your Information",
-    anchor: "#pp4",
+    label: "Place Order",
   },
   {
-    label: "Cookies And Additional Tracking Technologies",
-    anchor: "#pp5",
+    label: "Shipping & Fulfillment",
   },
   {
-    label: "Links And Services From Third Parties",
-    anchor: "#pp6",
+    label: "Returns",
   },
   {
-    label: "Privacy Of Children",
-    anchor: "#pp7",
+    label: "Design & Mockups",
   },
   {
-    label: "Modifications To Our Privacy Policy",
-    anchor: "#pp8",
+    label: "Integration",
   },
   {
-    label: "Your Rights And Choices",
-    anchor: "#pp9",
+    label: "Billing & Taxes",
+  },
+  {
+    label: "Resources",
+  },
+  {
+    label: "Account",
   },
 ];
