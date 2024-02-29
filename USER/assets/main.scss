@@ -157,3 +157,9 @@ body {
   min-width: 183px;
   height: 183px;
 }
+
+.expansions {
+  .v-expansion-panel::before, .v-expansion-panel {
+    box-shadow: none !important;
+  }
+}
