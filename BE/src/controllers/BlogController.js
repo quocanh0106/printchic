@@ -52,9 +52,25 @@ module.exports.AUTH = {
                 return res.json(responseError("bannerImg must be required!"))
             }
 
-            const checkExistBlog = await BlogService.checkExist(req.body)
-            if (checkExistBlog) {
-                return res.json(responseSuccess(10705, []));
+            let fieldExistTitle = []
+            const checkExistProductCategory_UK = await BlogService.checkExist({titleUK: req.body?.titleUK})
+            const checkExistProductCategory_US = await BlogService.checkExist({titleUS: req.body?.titleUS})
+            const checkExistProductCategory_FR = await BlogService.checkExist({titleFR: req.body?.titleFR})
+            const checkExistProductCategory_DE = await BlogService.checkExist({titleDE: req.body?.titleDE})
+            if(checkExistProductCategory_UK) {
+                fieldExistTitle.push('titleUK')
+            }
+            if(checkExistProductCategory_US) {
+                fieldExistTitle.push('titleUS')
+            }
+            if(checkExistProductCategory_FR) {
+                fieldExistTitle.push('titleFR')
+            }
+            if(checkExistProductCategory_DE) {
+                fieldExistTitle.push('titleDE')
+            }
+            if (checkExistProductCategory_UK || checkExistProductCategory_US || checkExistProductCategory_FR || checkExistProductCategory_DE) {
+                return res.json(responseError(10705, fieldExistTitle));
             }
 
             const result = await BlogService.create(req.body)
@@ -127,9 +143,25 @@ module.exports.AUTH = {
                 req.body.img = req.file.path;
             }
 
-            const checkExistBlog = await BlogService.checkExist(req.body)
-            if (checkExistBlog && checkExistBlog?._id.toHexString() !== req.body.blogId) {
-                return res.json(responseSuccess(10705, []));
+            let fieldExistTitle = []
+            const checkExistProductCategory_UK = await BlogService.checkExist({titleUK: req.body?.titleUK})
+            const checkExistProductCategory_US = await BlogService.checkExist({titleUS: req.body?.titleUS})
+            const checkExistProductCategory_FR = await BlogService.checkExist({titleFR: req.body?.titleFR})
+            const checkExistProductCategory_DE = await BlogService.checkExist({titleDE: req.body?.titleDE})
+            if(checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.blogId) {
+                fieldExistTitle.push('titleUK')
+            }
+            if(checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.blogId) {
+                fieldExistTitle.push('titleUS')
+            }
+            if(checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.blogId) {
+                fieldExistTitle.push('titleFR')
+            }
+            if(checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.blogId) {
+                fieldExistTitle.push('titleDE')
+            }
+            if (fieldExistTitle.length > 0) {
+                return res.json(responseError(10705, fieldExistTitle));
             }
 
             const result = await BlogService.updateConditions(req.body)

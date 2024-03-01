@@ -24,6 +24,8 @@ import axios from 'axios'
 import PopoverAddContent from '../components/PopoverAddContent'
 import UploadImgContent from '../components/UploadImgContent'
 import dynamic from 'next/dynamic'
+import { LANG_OBJECT } from 'src/constant'
+import { useSnackbar } from 'notistack'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -90,9 +92,14 @@ const FormEdit = () => {
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
-  const [content, setContent] = useState('');
+
+  const [contentUK, setContentUK] = useState('');
+  const [contentUS, setContentUS] = useState('');
+  const [contentDE, setContentDE] = useState('');
+  const [contentFR, setContentFR] = useState('');
 
   const router = useRouter()
+  const { enqueueSnackbar } = useSnackbar();
 
   const callBackSubmit = (data) => {
     if (data.success) {
@@ -101,9 +108,13 @@ const FormEdit = () => {
       })
       router.replace('/apps/blog/')
     } else {
-      toast.error(data.message, {
-        duration: 2000
-      })
+      if(data.statusCode == 10705) {
+        data.errors.forEach(ele => {
+          enqueueSnackbar(`${ele} of blog already exists!`, { variant : 'error' });
+        })
+      } else {
+        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+      }
     }
     setLoading(false)
   }
@@ -114,8 +125,14 @@ const FormEdit = () => {
 
     const formData = new FormData();
     formData.append("blogId", router.query.id);
-    formData.append("title", value.title);
-    formData.append("content", JSON.stringify(content));
+    formData.append("titleUK", value.titleUK);
+    formData.append("titleUS", value.titleUS);
+    formData.append("titleDE", value.titleDE);
+    formData.append("titleFR", value.titleFR);
+    formData.append("contentUK", JSON.stringify(contentUK));
+    formData.append("contentUS", JSON.stringify(contentUS));
+    formData.append("contentDE", JSON.stringify(contentDE));
+    formData.append("contentFR", JSON.stringify(contentFR));
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -167,10 +184,16 @@ const FormEdit = () => {
       })
 
       setValue('blogCategory', data?.categoryBlogId?._id)
-      setContent(JSON.parse(data?.content))
+      setContentUK(data?.contentUK)
+      setContentUS(data?.contentUS)
+      setContentFR(data?.contentFR)
+      setContentDE(data?.contentDE)
       setValue('blogStatus', data?.status)
       setValue('tags', data?.tags)
-      setValue('title', data?.title)
+      setValue('titleUK', data?.titleUK)
+      setValue('titleUS', data?.titleUS)
+      setValue('titleFR', data?.titleFR)
+      setValue('titleDE', data?.titleDE)
       setValueRecommend(listRecommend)
       setFiles(data?.img)
     }
@@ -202,14 +225,21 @@ const FormEdit = () => {
     setValueRecommend(newValue)
   }
 
-  const handleChangeContent = (content, delta, source, editor) => {
-    console.log('content', content)
-    setContent(content);
-    // You can also get the plain text content
-    // const text = editor.getText();
-    // Or get the contents in a different format
-    // const contents = editor.getContents();
-  }
+  const handleChangeContentUK = (content, delta, source, editor) => {
+    setContentUK(content);
+  };
+
+  const handleChangeContentUS = (content, delta, source, editor) => {
+    setContentUS(content);
+  };
+
+  const handleChangeContentDE = (content, delta, source, editor) => {
+    setContentDE(content);
+  };
+
+  const handleChangeContentFR = (content, delta, source, editor) => {
+    setContentFR(content);
+  };
 
   return (
     <>
@@ -312,36 +342,116 @@ const FormEdit = () => {
           </Card>
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
-          <Card sx={{ p: 4 }}>
-            <Controller
-              name='title'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  value={value}
-                  label='Title'
-                  required
-                  onChange={onChange}
-                  placeholder='Title'
-                  error={Boolean(errors.title)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.title && { helperText: 'This field is required' })}
-                />
-              )}
-            />
+        <Card sx={{ p: 4 }}>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.UK}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.UK}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.US}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.US}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.US}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.FR}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.FR}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.DE}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.DE}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
           </Card>
-
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
-            <Typography variant='h4'>
-              Content
-            </Typography>
-            <QuillNoSSRWrapper value={content} onChange={handleChangeContent} modules={modules} formats={formats} theme="snow" />
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content UK 
+              </Typography>
+              <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content US
+              </Typography>
+              <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content DE
+              </Typography>
+              <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content FR
+              </Typography>
+              <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
+            </Box>
           </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>
-          <Button variant='tonal' color='secondary' sx={{ mr: 3 }} onClick={() => router.replace('/apps/product/')}>
+          <Button variant='tonal' color='secondary' sx={{ mr: 3 }} onClick={() => router.replace('/apps/blog/')}>
             Cancel
           </Button>
           <Button variant='contained' onClick={handleSubmit(onSubmit)}>

@@ -18,9 +18,15 @@ const create = async (data) => {
         set.status = data.status;
         set.img = data.img;
         set.tags = data.tags;
-        set.title = data.title;
+        set.titleUK = data.titleUK;
+        set.titleUS = data.titleUS;
+        set.titleDE = data.titleDE;
+        set.titleFR = data.titleFR;
         set.recommendProduct = JSON.parse(data.recommendProduct);
-        set.content = data.content;
+        set.contentUK = data.contentUK;
+        set.contentUS = data.contentUS;
+        set.contentDE = data.contentDE;
+        set.contentFR = data.contentFR;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await BlogsModels.create(set);
@@ -87,11 +93,29 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.blogId);
         }
         const set = {};
-        if (!isEmpty(data?.title)) {
-            set.title = data.title;
+        if (!isEmpty(data?.titleUK)) {
+            set.titleUK = data.titleUK;
         }
-        if (!isEmpty(data?.content)) {
-            set.content = JSON.parse(data.content);
+        if (!isEmpty(data?.titleUS)) {
+            set.titleUS = data.titleUS;
+        }
+        if (!isEmpty(data?.titleFR)) {
+            set.titleFR = data.titleFR;
+        }
+        if (!isEmpty(data?.titleDE)) {
+            set.titleDE = data.titleDE;
+        }
+        if (!isEmpty(data?.contentUK)) {
+            set.contentUK = JSON.parse(data.contentUK);
+        }
+        if (!isEmpty(data?.contentUS)) {
+            set.contentUS = JSON.parse(data.contentUS);
+        }
+        if (!isEmpty(data?.contentFR)) {
+            set.contentFR = JSON.parse(data.contentFR);
+        }
+        if (!isEmpty(data?.contentDE)) {
+            set.contentDE = JSON.parse(data.contentDE);
         }
         if (!isEmpty(data?.img)) {
             set.img = data.img;
@@ -148,7 +172,7 @@ const checkExist = async (data) => {
     try {
         const conditions = {
             isDeleted: IS_DELETED[200],
-            title: data?.title
+            ...data
         };
         const checkExistTitle = await BlogsModels.findOne(conditions);
         return promiseResolve(checkExistTitle);

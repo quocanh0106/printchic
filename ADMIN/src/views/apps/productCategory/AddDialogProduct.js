@@ -104,9 +104,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
           enqueueSnackbar(`${ele} of product category already exists!`, { variant : 'error' });
         })
       } else {
-        toast.error(data.message, {
-          duration: 3000
-        })
+        enqueueSnackbar(`${data.message}`, { variant : 'error' });
       }
     }
 
