@@ -73,6 +73,7 @@ const formats = [
   'image',
   'video',
 ]
+
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
   right: 0,

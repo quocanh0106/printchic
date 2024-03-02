@@ -21,7 +21,9 @@ import { addProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
+
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+
   ssr: false,
   loading: () => <p>Loading ...</p>,
 })
@@ -67,6 +69,7 @@ const formats = [
   'image',
   'video',
 ]
+
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
   right: 0,
@@ -102,6 +105,7 @@ const FormCreate = () => {
   const handleChangeContent = (content, delta, source, editor) => {
     console.log('content', content)
     setContent(content);
+
     // You can also get the plain text content
     // const text = editor.getText();
     // Or get the contents in a different format
@@ -121,6 +125,7 @@ const FormCreate = () => {
         duration: 2000
       })
     }
+    
     setLoading(false)
   }
 
