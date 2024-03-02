@@ -1,32 +1,34 @@
 <template>
-  <div class="vueGallery" v-show="pc">
-    <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
-      <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
-        <i class="fas fa-chevron-circle-left"></i>
-      </button>
-      <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
-        <i class="fas fa-chevron-circle-right"></i>
-      </button>
-    </div>
-    <div class="thumbnails">
-      <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
-        :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+  <div class="gallery-wrapper">
+    <div class="vueGallery" v-show="pc">
+      <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+        <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
+          <i class="fas fa-chevron-circle-left"></i>
+        </button>
+        <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
+          <i class="fas fa-chevron-circle-right"></i>
+        </button>
+      </div>
+      <div class="thumbnails">
+        <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
+          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+        </div>
       </div>
     </div>
-  </div>
-  <!-- mobile -->
-  <div class="vueGallery-mobile" v-show="mobile">
-    <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
-      <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
-        <i class="fas fa-chevron-circle-left"></i>
-      </button>
-      <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
-        <i class="fas fa-chevron-circle-right"></i>
-      </button>
-    </div>
-    <div class="thumbnails">
-      <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
-        :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+    <!-- mobile -->
+    <div class="vueGallery-mobile" v-show="mobile">
+      <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+        <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
+          <i class="fas fa-chevron-circle-left"></i>
+        </button>
+        <button type="button" aria-label="Next Photo" class="next" @click="nextPhoto()">
+          <i class="fas fa-chevron-circle-right"></i>
+        </button>
+      </div>
+      <div class="thumbnails">
+        <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
+          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+        </div>
       </div>
     </div>
   </div>

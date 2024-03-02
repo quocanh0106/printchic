@@ -11,7 +11,16 @@ const blogBase = {
   categoryBlogId: {
     type: ObjectId, default: null, require: true, ref: 'category_blog',
   },
-  title: {
+  titleUK: {
+    type: String, trim: true,
+  },
+  titleUS: {
+    type: String, trim: true,
+  },
+  titleDE: {
+    type: String, trim: true,
+  },
+  titleFR: {
     type: String, trim: true,
   },
   status: {
@@ -20,7 +29,16 @@ const blogBase = {
   img: {
     type: String, trim: true,
   },
-  content: {
+  contentUK: {
+    type: String, trim: true,
+  },
+  contentUS: {
+    type: String, trim: true,
+  },
+  contentDE: {
+    type: String, trim: true,
+  },
+  contentFR: {
     type: String, trim: true,
   },
   tags: {

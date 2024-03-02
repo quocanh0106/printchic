@@ -21,6 +21,17 @@ body {
   padding: 40px 16px;
 }
 
+.side-paddings {
+  padding: 0 120px;
+  @media screen and (max-width: 600px) {
+    padding: 0 10px;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 .bg-light-blue-custom {
   background-color: #eff4ff !important;
 }

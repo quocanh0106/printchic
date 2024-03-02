@@ -28,8 +28,18 @@
         </v-btn>
       </div>
 
-      <div class="mt-10 flex">
+      <div class="flex" :class="mobile ? 'flex-column mt-5' : 'mt-10'">
         <div class="content mr-10">
+          <div class="nav-slide mb-5" v-if="mobile">
+            <p
+              v-for="(item, index) in anchorMenuData"
+              class="text-sm mb-3 pointer"
+              :class="item.isActive && 'blue'"
+              :key="index"
+            >
+              <a :href="item.anchor">{{ item.label }}</a>
+            </p>
+          </div>
           <div
             class="single-block mb-5"
             v-for="(item, index) in privacyPolicyData"
@@ -44,7 +54,7 @@
             </p>
           </div>
         </div>
-        <div class="nav-slide">
+        <div class="nav-slide" v-if="!mobile">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -97,7 +107,7 @@
     <help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      class="custom-padding"
+      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -114,9 +124,11 @@ import {
   privacyPolicyData,
   anchorMenuData,
 } from "./helpers/constants";
+import { screenSizeMixin } from "~/mixins/screenSizeMixin";
 
 export default {
   components: { Help },
+  mixins: [screenSizeMixin],
   data() {
     return {
       mailIcon,
@@ -137,16 +149,25 @@ export default {
 .tos-container {
   .side-padding {
     padding: 0 120px;
+    @media screen and (max-width: 600px) {
+      padding: 0 10px;
+    }
     .breadcrumb {
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
     .content {
       width: 70%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+      }
     }
   }
   .nav-group {
     display: flex;
+    @media screen and (max-width: 600px) {
+      overflow-x: scroll;
+    }
     .nav-btn {
       text-transform: capitalize;
       font-size: 14px;
@@ -158,8 +179,16 @@ export default {
     display: flex;
     justify-content: space-between;
     background-color: #fafbff;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+      padding: 10px;
+    }
     .single-info {
       width: 30%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
       .font-semibold:hover {
         color: #3372db;
         cursor: pointer;

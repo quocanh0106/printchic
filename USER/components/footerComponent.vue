@@ -135,7 +135,7 @@ export default {
             },
             {
               urlName: this.$t("footer.helpCenter"),
-              url: "",
+              url: "help-center",
             },
             {
               urlName: this.$t("footer.whatIsPod"),
