@@ -94,6 +94,7 @@ const FormCreate = () => {
   const handleChangeContent = (content, delta, source, editor) => {
     console.log('content', content)
     setContent(content);
+    
     // You can also get the plain text content
     // const text = editor.getText();
     // Or get the contents in a different format

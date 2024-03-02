@@ -124,6 +124,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       }
     }
   }
+  
   const onSubmit = (value) => {
     setLoading(true)
     const formData = new FormData();
