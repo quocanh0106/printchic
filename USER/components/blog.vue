@@ -57,11 +57,11 @@
 
 <script>
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
-import { screenSizeMixin } from "~/mixins/screenSizeMixin";
+import { myMixin } from "~/mixins/myMixin";
 import SwiperBlogMobile from "../pages/home/components/SwiperBlogMobile";
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     SwiperBlogMobile,
   },

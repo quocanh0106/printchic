@@ -165,10 +165,10 @@ import VueGallery from "../../components/vueGalery.vue";
 // asset
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     help,
     VueGallery

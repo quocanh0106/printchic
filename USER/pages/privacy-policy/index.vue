@@ -101,11 +101,11 @@ import fbIcon from "../../assets/svg/fb.svg";
 import twitterIcon from "../../assets/svg/x-social.svg";
 import Help from "../../components/help.vue";
 import { privacyPolicyData, anchorMenuData } from "./helpers/constants";
-import { screenSizeMixin } from "~/mixins/screenSizeMixin";
+import { myMixin } from "~/mixins/myMixin";
 
 export default {
   components: { Help },
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   data() {
     return {
       mailIcon,
