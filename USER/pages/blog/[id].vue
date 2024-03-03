@@ -11,11 +11,13 @@
       <img :src="heroImg" alt="pic" />
     </div>
 
-    <div class="side-paddings flex gap-10 mb-10">
+    <div class="side-paddings" :class="mobile ? '' : 'flex gap-10 mb-10'">
       <div class="blog-content">
+        <!-- Title --------------------------------------------------------------------------->
         <div class="title text-3xl font-bold mb-5">
           Summer Products to Sell: 15 POD Ideas for This Season
         </div>
+        <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
           <v-btn class="p-1" size="sm" color="primary" variant="tonal">
             Selling Guide
@@ -28,7 +30,13 @@
           </div>
         </div>
 
-        <div class="content-info mt-10 mb-10">
+        <!-- [component] MenuExpanse --------------------------------------------------------------------------->
+        <div class="table-of-content" :class="mobile ? 'mt-5' : 'mt-10'">
+          <MenuExpanse :menuList="menuList" />
+        </div>
+
+        <!-- Content --------------------------------------------------------------------------->
+        <div class="content-info mb-10" :class="mobile ? 'mt-5' : 'mt-10'">
           As the days get longer and warmer, it’s prime time to prep your
           designs for those sizzling summer moments. If you want a sales chart
           hotter than the pavement in July, make sure your catalog is bursting
@@ -37,6 +45,7 @@
           ever by snagging some (or all) of these trendsetters! 
         </div>
 
+        <!-- Avatar and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
           <div class="avatar flex gap-2">
             <v-avatar :image="heroImg" size="50"></v-avatar>
@@ -53,7 +62,9 @@
           </div>
         </div>
       </div>
-      <div class="summary-block">
+
+      <!-- <?PC> Summary block --------------------------------------------------------------------------->
+      <div class="summary-block" v-show="pc">
         <div class="products mb-10">
           <span class="text-xl font-bold">Products</span>
           <div
@@ -79,10 +90,38 @@
       </div>
     </div>
 
-    <div class="related-post side-paddings">
+    <!-- [component] Block --------------------------------------------------------------------------->
+    <div class="related-post side-paddings" :class="mobile && 'mt-10'">
       <Blog title="Related Posts" />
     </div>
 
+    <!-- <?Mobile> Summary block --------------------------------------------------------------------------->
+    <div class="summary-block" v-show="mobile">
+      <div class="products mb-10">
+        <span class="text-xl font-bold">Products</span>
+        <div
+          class="info pt-3 pb-3 flex justify-between"
+          v-for="item in 3"
+          :key="item"
+        >
+          <span>T-shirts</span>
+          <span class="text-slate-400">12</span>
+        </div>
+      </div>
+      <div class="trending-topics">
+        <span class="text-xl font-bold">Trending Topics</span>
+        <div
+          class="info pt-3 pb-3 flex justify-between font-bold text-slate-500 align-start"
+          v-for="item in 3"
+          :key="item"
+        >
+          What are best-selling Christmas print on demand ornament?
+          <img :src="popupBoxIcon" alt="icon" />
+        </div>
+      </div>
+    </div>
+
+    <!-- [Component] Help --------------------------------------------------------------------------->
     <Help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
@@ -102,14 +141,21 @@ import popupBoxIcon from "../../assets/svg/popup-box.svg";
 import Help from "../../components/help.vue";
 import { screenSizeMixin } from "~/mixins/screenSizeMixin";
 import Blog from "../../components/blog.vue";
+import MenuExpanse from "../../components/MenuExpanse.vue";
 
 export default {
   name: "BlogDetailVue",
-  components: { Help, Blog },
+  components: { Help, Blog, MenuExpanse },
   mixins: [screenSizeMixin],
   data() {
     return {
       breadcrumbItems: ["Home", "Blog Posts", "Selling Guide"],
+      menuList: [
+        "Yard signs",
+        "What are best-selling Christmas print on demand ornament?",
+        "Doormats +10 Best Free Print on Demand Design Software and Tools An Ultimate Guide On How To Make And Sell Merch For Creators",
+        "Ornaments",
+      ],
       heroImg,
       linkIcon,
       linkedinIcon,
@@ -133,6 +179,9 @@ export default {
   }
   .blog-content {
     width: 75%;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+    }
     .link-bar {
       display: flex;
       justify-content: space-between;
@@ -146,11 +195,25 @@ export default {
     padding-top: 20px;
     padding-bottom: 20px;
   }
+  .table-of-content {
+    width: 45%;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+      z-index: 99999;
+    }
+  }
   .summary-block {
     width: 25%;
     border: 1px solid #eaecf0;
     border-radius: 8px;
     padding: 15px;
+    @media screen and (max-width: 600px) {
+      width: 100%;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 0;
+    }
     .info {
       border-bottom: 1px solid #eaecf0;
     }
