@@ -7,7 +7,16 @@ const ProductsBase = {
     handleUrl: {
         type: String, trim: true,
     },
-    title: {
+    titleUS: {
+        type: String, trim: true,
+    },
+    titleUK: {
+        type: String, trim: true,
+    },
+    titleFR: {
+        type: String, trim: true,
+    },
+    titleDE: {
         type: String, trim: true,
     },
     categoryProductId: {
@@ -22,7 +31,16 @@ const ProductsBase = {
     type: {
         type: String, trim: true,
     },
-    description: {
+    descriptionUK: {
+        type: String, trim: true,
+    },
+    descriptionUS: {
+        type: String, trim: true,
+    },
+    descriptionFR: {
+        type: String, trim: true,
+    },
+    descriptionDE: {
         type: String, trim: true,
     },
     media: {
@@ -37,7 +55,7 @@ const ProductsBase = {
     status: {
         type: Number, trim: true,
     },
-price: {
+    price: {
         type: Number, trim: true,
     },
     priceSale: {

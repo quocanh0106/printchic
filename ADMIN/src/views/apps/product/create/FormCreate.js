@@ -21,6 +21,8 @@ import { addProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
+import { LANG_OBJECT } from 'src/constant'
+import { useSnackbar } from 'notistack'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -99,30 +101,44 @@ const FormCreate = () => {
   const [column, setColumn] = useState([]);
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
-  const [content, setContent] = useState('');
+  const [contentUK, setContentUK] = useState('');
+  const [contentUS, setContentUS] = useState('');
+  const [contentDE, setContentDE] = useState('');
+  const [contentFR, setContentFR] = useState('');
 
   const router = useRouter()
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleChangeContent = (content, delta, source, editor) => {
-    console.log('content', content)
-    setContent(content);
-    
-    // You can also get the plain text content
-    // const text = editor.getText();
-    // Or get the contents in a different format
-    // const contents = editor.getContents();
+  const handleChangeContentUK = (content, delta, source, editor) => {
+    setContentUK(content);
+  };
+
+  const handleChangeContentUS = (content, delta, source, editor) => {
+    setContentUS(content);
+  };
+
+  const handleChangeContentDE = (content, delta, source, editor) => {
+    setContentDE(content);
+  };
+
+  const handleChangeContentFR = (content, delta, source, editor) => {
+    setContentFR(content);
   };
 
   const callBackSubmit = (data) => {
     if (data.success) {
-      toast.success('New product created successfully', {
+      toast.success('New Product created successfully', {
         duration: 2000
       })
       router.replace('/apps/product/')
     } else {
-      toast.error(data.message, {
-        duration: 2000
-      })
+      if(data.statusCode == 10805) {
+        data.errors.forEach(ele => {
+          enqueueSnackbar(`${ele} of product already exists!`, { variant : 'error' });
+        })
+      } else {
+        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+      }
     }
     setLoading(false)
   }
@@ -138,11 +154,17 @@ const FormCreate = () => {
     })
     console.log('value', value)
     const formData = new FormData();
-    formData.append("title", value.title);
+    formData.append("titleUK", value.titleUK);
+    formData.append("titleUS", value.titleUS);
+    formData.append("titleFR", value.titleFR);
+    formData.append("titleDE", value.titleDE);
     formData.append("handleUrl", value.handleUrl);
     formData.append("metaDescription", value.metaDescription);
     formData.append("status", value.productStatus);
-    formData.append("description", JSON.stringify(content));
+    formData.append("descriptionUK", JSON.stringify(contentUK));
+    formData.append("descriptionUS", JSON.stringify(contentUS));
+    formData.append("descriptionFR", JSON.stringify(contentFR));
+    formData.append("descriptionDE", JSON.stringify(contentDE));
     formData.append("currency", value.currency);
     formData.append("categoryProductId", value.ProductCategory);
     formData.append("type", value.productType);
@@ -514,29 +536,111 @@ const FormCreate = () => {
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
           <Card sx={{ p: 4 }}>
-            <Controller
-              name='title'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Title'
-                  required
-                  onChange={onChange}
-                  placeholder='Title'
-                  error={Boolean(errors.title)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.title && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Typography variant='h5' sx={{textAlign: 'left'}}>
-              Content
-            </Typography>
-            <QuillNoSSRWrapper value={content} onChange={handleChangeContent} modules={modules} formats={formats} theme="snow" />
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.UK}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.UK}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.US}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.US}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.US}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.FR}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.FR}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <Controller
+                name={`title${LANG_OBJECT.DE}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label={`Title ${LANG_OBJECT.DE}`}
+                    required
+                    onChange={onChange}
+                    error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content UK 
+              </Typography>
+              <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content US
+              </Typography>
+              <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content DE
+              </Typography>
+              <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{mb: 7}}>
+              <Typography variant='h5'>
+                Content FR
+              </Typography>
+              <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
+            </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4 }}>
             <Fragment>

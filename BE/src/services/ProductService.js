@@ -15,17 +15,23 @@ const create = async (data) => {
     console.log('data', data)
     try {
         const set = {};
-        set.title = data.title;
+        set.titleUK = data.titleUK;
+        set.titleUS = data.titleUS;
+        set.titleFR = data.titleFR;
+        set.titleDE = data.titleDE;
         set.handleUrl = data.handleUrl;
         set.categoryProductId = convertToObjectId(data.categoryProductId);
         set.metaDescription = data.metaDescription;
         set.type = data.type;
-        set.description = data.description;
+        set.descriptionUK = data.descriptionUK;
+        set.descriptionUS = data.descriptionUS;
+        set.descriptionFR = data.descriptionFR;
+        set.descriptionDE = data.descriptionDE;
         set.variants = JSON.parse(data.variants);
         set.status = data.status;
         set.media = data.media;
         set.currency = data.currency;
-set.price = data.price;
+        set.price = data.price;
         set.priceSale = data.priceSale;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
@@ -58,7 +64,7 @@ const list = async (data) => {
             lean: true,
             // select: REMOVE_FIELDS,
             customLabels: MY_CUSTOM_LABELS,
-            populate : [
+            populate: [
                 populateModel('categoryProductId')
             ]
         };
@@ -98,8 +104,17 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.productId);
         }
         const set = {};
-        if (!isEmpty(data?.title)) {
-            set.title = data.title;
+        if (!isEmpty(data?.titleUK)) {
+            set.titleUK = data.titleUK;
+        }
+        if (!isEmpty(data?.titleUS)) {
+            set.titleUS = data.titleUS;
+        }
+        if (!isEmpty(data?.titleFR)) {
+            set.titleFR = data.titleFR;
+        }
+        if (!isEmpty(data?.titleDE)) {
+            set.titleDE = data.titleDE;
         }
         if (!isEmpty(data?.handleUrl)) {
             set.handleUrl = data.handleUrl;
@@ -113,8 +128,17 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.type)) {
             set.type = data.type;
         }
-        if (!isEmpty(data?.description)) {
-            set.description = data.description;
+        if (!isEmpty(data?.descriptionUK)) {
+            set.descriptionUk = data.descriptionUk;
+        }
+        if (!isEmpty(data?.descriptionUS)) {
+            set.descriptionUS = data.descriptionUS;
+        }
+        if (!isEmpty(data?.descriptionFR)) {
+            set.descriptionFR = data.descriptionFR;
+        }
+        if (!isEmpty(data?.descriptionDE)) {
+            set.descriptionDE = data.descriptionDE;
         }
         if (!isEmpty(data?.variants)) {
             set.variants = JSON.parse(data.variants);
@@ -128,7 +152,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.currency)) {
             set.currency = data.currency;
         }
-if (!isEmpty(data?.price)) {
+        if (!isEmpty(data?.price)) {
             set.price = data.price;
         }
         if (!isEmpty(data?.priceSale)) {
