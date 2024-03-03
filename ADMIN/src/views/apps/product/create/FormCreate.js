@@ -474,7 +474,7 @@ const FormCreate = () => {
                   {...(errors.ProductCategory && { helperText: 'This field is required' })}
                 >
                   {
-                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)
+                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
                   }
                 </CustomTextField>
               )}
