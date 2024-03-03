@@ -47,7 +47,7 @@
     <div class="blog-wrapper mx-3" v-show="mobile">
       <div class="blog-header flex justify-center items-center my-5">
         <h1 class="section-title font-semibold">
-          {{ $t("homePage.ourBlogStory") }}
+          {{ title ? title : $t("homePage.ourBlogStory") }}
         </h1>
       </div>
       <SwiperBlogMobile />
@@ -124,14 +124,6 @@ export default {
 <style lang="scss" scoped>
 .blog-img {
   border-radius: 6px;
-}
-
-.blog-left-wrapper {
-  // width: 50%;
-}
-
-.blog-right-wrapper {
-  // width: 50%;
 }
 
 .small-img-blog {

@@ -332,10 +332,10 @@ const FormCreate = () => {
       setValue('handleUrl', data?.handleUrl)
       setValue('metaDescription', data?.metaDescription)
       setValue('productStatus', data?.status)
-      setContentUK(JSON.parse(data?.descriptionUK))
-      setContentUS(JSON.parse(data?.descriptionUS))
-      setContentFR(JSON.parse(data?.descriptionFR))
-      setContentDE(JSON.parse(data?.descriptionDE))
+      data?.descriptionUK && setContentUK(JSON.parse(data?.descriptionUK))
+      data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
+      data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
+      data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
       setValue('currency', data?.currency)
       setValue('productType', data?.type)
       setValue('productCategory', data?.categoryProductId._id)
@@ -636,7 +636,7 @@ const FormCreate = () => {
                   {...(errors.productCategory && { helperText: 'This field is required' })}
                 >
                   {
-                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.title}</MenuItem>)
+                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
                   }
                 </CustomTextField>
               )}
