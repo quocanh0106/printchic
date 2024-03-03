@@ -12,6 +12,20 @@
           <li v-for="(item, index) in links" :key="index">
             <a class="navigation-menu" :href="item.href">{{ item.label }}</a>
           </li>
+          <li>
+            <v-select
+              class="language-select"
+              variant="solo"
+              prepend-inner-icon="mdi-web"
+              dense
+              :items="listLang"
+              item-text="title"
+              item-value="code"
+              v-model="selectedLanguage"
+              @change="selectLanguage"
+            >
+            </v-select>
+          </li>
           <li class="navigation-menu primary-btn cursor-pointer text-white">
             {{ $t("navBar.signUp") }}
           </li>
@@ -38,12 +52,23 @@
               class="cursor-pointer"
               @click="this.$router.push('/home')"
             />
-            <img :src="closeIcon" class="cursor-pointer" @click="drawer = false" />
+            <img
+              :src="closeIcon"
+              class="cursor-pointer"
+              @click="drawer = false"
+            />
           </div>
-          <customInput class="search-input-mobile"/>
+          <customInput class="search-input-mobile" />
           <v-divider></v-divider>
 
-          <v-list density="compact" class="navigation-menu-mobile" @click="isCurrentUrl(url.href)" v-for="(url, index) in links" :key="index" :class="{ 'bg-light-blue-custom': isActive }">
+          <v-list
+            density="compact"
+            class="navigation-menu-mobile"
+            @click="isCurrentUrl(url.href)"
+            v-for="(url, index) in links"
+            :key="index"
+            :class="{ 'bg-light-blue-custom': isActive }"
+          >
             <a :href="url.href">{{ url.label }}</a>
           </v-list>
         </v-navigation-drawer>
@@ -57,7 +82,9 @@ import Logo from "../assets/svg/Logo.svg";
 import customInput from "./customInput.vue";
 import drawerIcon from "../assets/svg/drawerIcon.svg";
 import searchIcon from "../assets/svg/searchIcon.svg";
-import closeIcon from "../assets/svg/closeIcon.svg"
+import closeIcon from "../assets/svg/closeIcon.svg";
+import languageIcon from "../assets/svg/languageIcon.svg";
+
 export default {
   components: {
     customInput,
@@ -80,8 +107,27 @@ export default {
       drawerIcon,
       searchIcon,
       closeIcon,
+      languageIcon,
       drawer: null,
       isActive: false,
+      listLang: [
+      {
+        code: "US",
+        title: "US"
+      },  
+      {
+        code: "UK",
+        title: "UK"
+      },
+      {
+        code: "DE",
+        title: "DE"
+      }, 
+      {
+        code: "FR",
+        title: "FR"
+      }],
+      selectedLanguage: "US",
     };
   },
   computed: {
@@ -131,16 +177,25 @@ export default {
       }
     },
   },
-  methods: {
-    isCurrentUrl(url) {
-      console.log(this.$route, 'PATH')
-      console.log(url, 'URL')
-      if(this.$route.href  == url ){
-        console.log('TRUE')
-        this.isActive = !this.isActive
-      } // Check if the link's URL is the current URL
+  watch:{
+    selectedLanguage(newVal, oldVal){
+      this.$i18n.locale = newVal
+      console.log(this.$i18n.locale, 'KAKAK')
     }
-  }
+  },
+  methods: {
+    selectLanguage(data) {
+      console.log("KLEKKE",data);
+    },
+    isCurrentUrl(url) {
+      console.log(this.$route, "PATH");
+      console.log(url, "URL");
+      if (this.$route.href == url) {
+        console.log("TRUE");
+        this.isActive = !this.isActive;
+      } // Check if the link's URL is the current URL
+    },
+  },
 };
 </script>
 
@@ -194,15 +249,24 @@ export default {
 .logo-n-closebtn {
   padding: 24px 16px;
 }
-.search-input-mobile{
+.search-input-mobile {
   padding: 24px 16px;
-  :deep(.v-input--horizontal){
+  :deep(.v-input--horizontal) {
     width: 100vw;
     max-width: 100%;
   }
 }
 
-.navigation-menu-mobile{
+.navigation-menu-mobile {
   padding: 24px 16px;
+}
+
+.language-select {
+  :deep(.v-field--variant-solo) {
+    box-shadow: none !important;
+  }
+  :deep(.v-input__details) {
+    display: none;
+  }
 }
 </style>

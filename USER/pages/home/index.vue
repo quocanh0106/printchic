@@ -8,7 +8,7 @@
             {{ $t("homePage.introductionTitle") }}
           </h1>
           <div class="introduction-actions cursor-pointer mt-8">
-            <v-button class="primary-btn text-white">
+            <v-button class="primary-btn text-white" @click="$router.push('/contact-us')">
               {{ $t("ContactUs") }}
             </v-button>
 
@@ -39,17 +39,17 @@
           <h1 class="top-category-title font-semibold">
             {{ $t("homePage.topCategory") }}
           </h1>
-          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row">
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row"  @click="$router.push('/product')">
             <p>{{ $t("viewAll") }}</p>
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" />
+        <swiperComponent :items="listCategory" class="mt-12 mb-8" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
       <div class="home-page-proccess-wrapper w-auto">
-        <div class="home-page-proccess flex flex-row justify-between w-auto mt-20">
+        <div class="home-page-proccess flex justify-between w-auto mt-20">
           <div class="process-intro w-1/2 fullfillment-title">
             <h1 class="font-semibold introduction-title">
               {{ $t("homePage.onDemandFullFilementService") }}
@@ -125,7 +125,7 @@
               </p>
             </div>
           </div>
-          <img :src="distictThumbnails" />
+          <img class="distinct-img" :src="distictThumbnails" />
         </div>
       </div>
 
@@ -316,8 +316,19 @@ export default {
       arrowUpRightWhite,
       cardThumbnail,
       distictThumbnails,
+      listCategory:[]
     };
   },
+  mounted() {
+    this.getListProductCategory()
+  },
+  methods: {
+    async getListProductCategory() {
+      const response = await this.getRequest('categoryProduct/list')
+      this.listCategory = response.data.items
+    },
+  },
+  
 };
 </script>
 
@@ -445,7 +456,7 @@ export default {
 
   .motive-body {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
 
     // Target all child elements except the last one to add vertical spacing
     &>*:not(:last-child) {
@@ -456,8 +467,8 @@ export default {
   .review-wrapper,
   .custom-padding {
     padding: 20px;
-    /* Adjust padding for custom sections */
   }
+  /* Adjust padding for custom sections */
 }
 
 .introduction-banner-mobile {
@@ -467,4 +478,40 @@ export default {
   height: 800px;
 }
 
+.distinct-img{
+  width: 30vw;
+  object-fit: cover;
+}
+
+.home-page-proccess{
+  flex-direction: row;
+  @media screen and (max-width:1300px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
+}
+
+.process-card {
+  @media screen and (max-width:1300px) {
+    width: 100%;
+  }
+}
+
+.introduction-title{
+  @media screen and (max-width:1300px) {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.process-intro{
+  @media screen and (max-width:1300px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>

@@ -175,7 +175,6 @@ export default {
   async mounted(){
     const response = await this.getRequest('product/list')
     this.listProduct = response.data.items
-    console.log(response, '"A"TATAT')
   },
   methods: {
     clearAllFilterBy() {

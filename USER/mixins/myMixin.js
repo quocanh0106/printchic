@@ -2,6 +2,7 @@ export const myMixin = {
     data() {
       return {
         screenWidth: 0,
+        currentLanguage:'US'
       };
     },
     computed: {

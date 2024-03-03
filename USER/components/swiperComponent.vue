@@ -11,7 +11,7 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide v-for="item,index in items" :key="index"><img :src="item" :class="imgWidth100 && 'w-100'" /></swiper-slide>
+          <swiper-slide v-for="item,index in items" :key="index"><img class="rounded" :src="item.bannerImg" :class="imgWidth100 && 'w-100'" /></swiper-slide>
         </swiper>
     </div>
   </div>

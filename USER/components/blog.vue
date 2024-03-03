@@ -5,7 +5,7 @@
         <h1 class="section-title font-semibold">
           {{ title ? title : $t("homePage.ourBlogStory") }}
         </h1>
-        <a class="flex gap-1 txt-primary cursor-pointer mt-10">
+        <a class="flex gap-1 txt-primary cursor-pointer mt-10" @click="$router.push('/blog')">
           <p>{{ $t("button.viewAll") }}</p>
           <img :src="arrowUpRight" />
         </a>
