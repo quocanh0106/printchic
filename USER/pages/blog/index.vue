@@ -99,10 +99,10 @@
 <script>
 import blog from "../../components/blog.vue";
 import help from "../../components/help.vue";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     blog,
     help,

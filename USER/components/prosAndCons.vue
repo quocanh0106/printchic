@@ -70,10 +70,10 @@
 <script>
 import greenTick from "../assets/svg/tickGreen.svg";
 import redX from "../assets/svg/xRed.svg";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   props: {},
   data() {
     return {

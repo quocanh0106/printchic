@@ -183,10 +183,10 @@ import step2 from "../../assets/images/step2.png";
 import step3 from "../../assets/images/step3.png";
 import step4 from "../../assets/images/step4.png";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     help,
     faq,
