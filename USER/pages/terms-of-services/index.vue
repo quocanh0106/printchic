@@ -124,11 +124,11 @@ import {
   privacyPolicyData,
   anchorMenuData,
 } from "./helpers/constants";
-import { screenSizeMixin } from "~/mixins/screenSizeMixin";
+import { myMixin } from "~/mixins/myMixin";
 
 export default {
   components: { Help },
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   data() {
     return {
       mailIcon,

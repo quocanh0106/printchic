@@ -499,10 +499,10 @@ import imgThumb from "../../assets/images/podCover.png"
 import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
 import distictThumbnails from "../../assets/images/distictThumbnail.png";
 
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   component: {
     help,
     swiperComponent,

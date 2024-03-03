@@ -139,14 +139,14 @@ import fbIcon from "../../assets/svg/gray-fb.svg";
 import popupIcon from "../../assets/svg/popup.svg";
 import popupBoxIcon from "../../assets/svg/popup-box.svg";
 import Help from "../../components/help.vue";
-import { screenSizeMixin } from "~/mixins/screenSizeMixin";
+import { myMixin } from "~/mixins/myMixin";
 import Blog from "../../components/blog.vue";
 import MenuExpanse from "../../components/MenuExpanse.vue";
 
 export default {
   name: "BlogDetailVue",
   components: { Help, Blog, MenuExpanse },
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   data() {
     return {
       breadcrumbItems: ["Home", "Blog Posts", "Selling Guide"],

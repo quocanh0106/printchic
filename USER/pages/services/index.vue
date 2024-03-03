@@ -379,10 +379,10 @@ import faq from "../../components/faq.vue";
 import cardCounterVue from "../../components/cardCounter.vue"; //
 import swiperComponent from "../../components/swiperComponent.vue";
 import prosAndConsVue from "../../components/prosAndCons.vue";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     help,
     faq,

@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       menuIcon,
-      isExpanse: true,
+      isExpanse: false,
     };
   },
   methods: {},

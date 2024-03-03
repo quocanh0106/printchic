@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     onSwiper(swiper) {
-      console.log(swiper);
+      // console.log(swiper);
     },
     onSlideChange() {
       console.log("slide change");

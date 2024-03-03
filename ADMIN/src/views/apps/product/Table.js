@@ -79,7 +79,7 @@ const UserList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.categoryProductId?.title}
+              {row.categoryProductId?.titleUS}
             </Typography>
           </Box>
         )
@@ -89,11 +89,11 @@ const UserList = () => {
       flex: 0.3,
       minWidth: 120,
       headerName: 'Product Name',
-      field: 'title',
+      field: 'titleUS',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.title}
+            {row.titleUS}
           </Typography>
         )
       }

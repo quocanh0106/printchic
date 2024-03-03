@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import { screenSizeMixin } from "~/mixins/screenSizeMixin";
+import { myMixin } from "~/mixins/myMixin";
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   props: {
     headerTitle: {
       type: String,

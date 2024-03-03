@@ -295,9 +295,9 @@ import help from "../../components/help.vue";
 import swiperComponent from "../../components/swiperComponent.vue";
 import SwiperDescriptionMobile from "./components/SwiperDescriptionMobile.vue";
 import SwiperBlogMobile from "./components/SwiperBlogMobile.vue";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     carousel,
     cardInfor,

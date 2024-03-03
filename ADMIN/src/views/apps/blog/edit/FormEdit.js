@@ -73,6 +73,7 @@ const formats = [
   'image',
   'video',
 ]
+
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
   right: 0,
@@ -190,10 +191,10 @@ const FormEdit = () => {
       setContentDE(data?.contentDE)
       setValue('blogStatus', data?.status)
       setValue('tags', data?.tags)
-      setValue('titleUK', data?.titleUK)
-      setValue('titleUS', data?.titleUS)
-      setValue('titleFR', data?.titleFR)
-      setValue('titleDE', data?.titleDE)
+      setValue('titleUK', JSON.parse(data?.titleUK))
+      setValue('titleUS', JSON.parse(data?.titleUS))
+      setValue('titleFR', JSON.parse(data?.titleFR))
+      setValue('titleDE', JSON.parse(data?.titleDE))
       setValueRecommend(listRecommend)
       setFiles(data?.img)
     }

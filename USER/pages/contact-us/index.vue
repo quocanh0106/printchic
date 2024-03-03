@@ -221,10 +221,10 @@ import linkedin from "../../assets/svg/LinkedIn.svg";
 import facebook from "../../assets/svg/Facebook.svg";
 import twitter from "../../assets/svg/Twitter.svg";
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
-import { screenSizeMixin } from '~/mixins/screenSizeMixin';
+import { myMixin } from '~/mixins/myMixin';
 
 export default {
-  mixins: [screenSizeMixin],
+  mixins: [myMixin],
   components: {
     help,
   },

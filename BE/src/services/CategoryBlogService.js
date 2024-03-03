@@ -13,8 +13,17 @@ const create = async (data) => {
     console.log('data', data)
     try {
         const set = {};
-        set.title = data.title;
-        set.description = data.description;
+        
+        set.titleUK = data.titleUK;
+        set.titleUS = data.titleUS;
+        set.titleDE = data.titleDE;
+        set.titleFR = data.titleFR;
+
+        set.descriptionUK = data.descriptionUK;
+        set.descriptionUS = data.descriptionUS;
+        set.descriptionDE = data.descriptionDE;
+        set.descriptionFR = data.descriptionFR;
+
         set.handleUrl = data.handleUrl;
         set.metaDescription = data.metaDescription;
         set.bannerImg = data.bannerImg;
@@ -86,11 +95,29 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.categoryBlogId);
         }
         const set = {};
-        if (!isEmpty(data?.title)) {
-            set.title = data.title;
+        if (!isEmpty(data?.titleUK)) {
+            set.titleUK = data.titleUK;
         }
-        if (!isEmpty(data?.description)) {
-            set.description = data.description;
+        if (!isEmpty(data?.titleUS)) {
+            set.titleUS = data.titleUS;
+        }
+        if (!isEmpty(data?.titleDE)) {
+            set.titleDE = data.titleDE;
+        }
+        if (!isEmpty(data?.titleFR)) {
+            set.titleFR = data.titleFR;
+        }
+        if (!isEmpty(data?.descriptionUK)) {
+            set.descriptionUK = data.descriptionUK;
+        }
+        if (!isEmpty(data?.descriptionUS)) {
+            set.descriptionUS = data.descriptionUS;
+        }
+        if (!isEmpty(data?.descriptionDE)) {
+            set.descriptionDE = data.descriptionDE;
+        }
+        if (!isEmpty(data?.descriptionFR)) {
+            set.descriptionFR = data.descriptionFR;
         }
         if (!isEmpty(data?.bannerImg)) {
             set.bannerImg = data.bannerImg;
