@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" :slidePerView="2" />
+        <swiperComponent class="mt-12 mb-8" :items="listCategory" :slidePerView="2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->

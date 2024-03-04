@@ -43,7 +43,7 @@
                 :key="index">
                 <img class="product-thumbnail" :src="item.media[0]?.path" />
                 <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
-                <p class="mt-1 txt-dark-blue font-semibold">{{ item.title }}</p>
+                <p class="mt-1 txt-dark-blue font-semibold">{{ item[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item.price }}</p>
                 <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
@@ -115,9 +115,9 @@
             <div class="product-list-mobile mb-10">
               <div class="product-card cursor-pointer" @click="toProductDetail(item)" v-for="(item, index) in listProduct"
                 :key="index">
-                <img class="product-thumbnail" :src="item.imgUrl" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item.sku }}</p>
-                <p class="mt-1 txt-dark-blue font-semibold">{{ item.title }}</p>
+                <img class="product-thumbnail" :src="item.media[0]?.path" />
+                <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
+                <p class="mt-1 txt-dark-blue font-semibold">{{ item[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item.price }}</p>
                 <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
@@ -142,6 +142,7 @@
 import SwiperCateComponent from "./components/SwiperCateComponent.vue";
 import help from "../../components/help.vue";
 import { myMixin } from '/mixins/myMixin';
+import useLanguage from '~/composables/useLanguage';
 
 export default {
   mixins: [myMixin],
@@ -150,6 +151,8 @@ export default {
     help
   },
   data() {
+    const { currentLanguage, setLanguage } = useLanguage();
+
     return {
       drawer: null,
       items: ['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular'],
@@ -170,6 +173,7 @@ export default {
         },
       ],
       filterBy: [],
+      currentLanguage,
     };
   },
   async mounted(){
