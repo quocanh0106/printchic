@@ -59,7 +59,7 @@
             </p>
           </div>
         </div>
-        <img :src="aboutUsMiddleImg" />
+        <img class="about-us-thumbnail" :src="aboutUsMiddleImg" />
       </div>
     </div>
 
@@ -73,7 +73,7 @@
       <p class="section-content mt-5 mw-768px">
         {{ $t("aboutUs.ourServiceDesc") }}
       </p>
-      <div class="service-tag-wrapper w-100 flex justify-between mt-6">
+      <div class="service-tag-wrapper w-100 flex justify-between mt-6" v-show="pc">
         <span
           class="service-tag"
           v-for="(tag, index) in listServiceTags"
@@ -106,7 +106,7 @@
           <img :src="arrowUpRight" />
         </a>
       </div>
-      <swiperComponent :slidePerView="6" class="mt-12 mb-8" />
+      <swiperComponent v-show="pc" :slidePerView="6" class="mt-12 mb-8" />
     </div>
 
     <!-- Banner About Us -->
@@ -182,7 +182,7 @@
         {{ $t("howItWorks.partnerTitle") }}
       </h1>
       <swiperComponent
-        :slidePerView="6"
+        :slidePerView="pc ? 6 : 2"
         :showNavigation="false"
         :showPagination="false"
         class="mt-12 mb-8"
@@ -265,10 +265,54 @@ export default {
   background-color: #ffffff;
 }
 .card-info-counter-aboutus {
-  width: 100vw !important;
+  width: 100% !important;
   min-height: 0px !important;
 }
 .content-banner {
   max-width: 481px;
+}
+.motive-body{
+  @media screen and (max-width:990px) {
+    flex-direction: column;
+  }
+}
+.about-us-body-left-wrapper{
+  @media screen and (max-width:990px) {
+    width: 100%;
+  }
+}
+
+.about-us-thumbnail{
+  @media screen and (max-width:990px) {
+    width: 100%;
+    margin-left: 0px !important;
+    margin-top: 20px;;
+  }
+}
+
+.service-info-counter{
+  @media screen and (max-width:990px) {
+    flex-direction: column;
+  }
+}
+
+.about-us-banner-wrapper{
+  @media screen and (max-width:990px) {
+    gap: 48px;
+    flex-direction: column;
+  }
+}
+
+.banner-content-header {
+  @media screen and (max-width:990px) {
+    gap: 48px;
+    flex-direction: column;
+  }
+}
+
+.about-us-card-info{
+  @media screen and (max-width:990px) {
+    flex-direction: column;
+  }
 }
 </style>

@@ -57,10 +57,10 @@
         <v-list class="back-color-light-primary" v-model:opened="open">
           <v-list-group v-for="(item, ind) in menuList" :key="ind" :value="item.title"  class="color-primary">
             <template v-slot:activator="{ props }">
-              <v-list-item v-bind="props" :title="item.title"></v-list-item>
+              <v-list-item  v-bind="props" :title="item.title"></v-list-item>
             </template>
 
-            <v-list-item v-for="({ urlName }, i) in item.listUrl" :key="i" :title="urlName"
+            <v-list-item v-for="({ urlName }, i) in item.listUrl" :key="i" @click="navigateToPath(item.listUrl[i].url)" :title="urlName"
               :value="urlName" class="color-black"></v-list-item>
           </v-list-group>
         </v-list>
@@ -195,6 +195,12 @@ export default {
           return false;
         }
       }
+    },
+  },
+  methods: {
+    navigateToPath(url) {
+      console.log(url)
+      this.$router.push(`${url}`);
     },
   },
 };
