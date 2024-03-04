@@ -87,7 +87,6 @@ module.exports.AUTH = {
                 return res.json(responseError(40004, errors));
             }
             const { productId } = req.query;
-            console.log('productId',productId)
             const result = await ProductService.findByConditions({
                 productId,
             })

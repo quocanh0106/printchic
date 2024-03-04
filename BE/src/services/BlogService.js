@@ -41,6 +41,9 @@ const list = async (data) => {
         const conditions = {
             isDeleted: IS_DELETED[200],
         };
+        if (data?.categoryBlogId) {
+            conditions.categoryBlogId = data?.categoryBlogId;
+        }
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
