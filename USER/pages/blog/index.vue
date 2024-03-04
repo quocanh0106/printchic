@@ -150,6 +150,7 @@ export default {
 .tab-btn {
   padding: 8px 16px;
   height: 39px !important;
+  min-width: 150px;
 }
 .blog-post-wrapper {
   flex-wrap: wrap;
