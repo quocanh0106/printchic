@@ -48,7 +48,7 @@
         class="custom-padding"
       />
     </div>
-    <div class="blog-list-wrapper" v-show="mobile">
+    <div class="blog-list-wrapper" v-show="mobile || tablet">
       <!-- featured Post -->
       <blog/>
       <!-- List Blog -->
@@ -57,13 +57,13 @@
       >
         <div class="list-tab flex gap-x-8 list-tab-name mx-3">
           <span
-            :class="currentTab == tab ? 'secondary-btn txt-primary' : 'txt-gray'"
+            :class="currentTab == index ? 'secondary-btn txt-primary' : 'txt-gray'"
             class="cursor-pointer font-semibold tab-btn text-base"
             v-for="(tab, index) in tabList"
             :key="index"
-            @click="currentTab = tab"
+            @click="currentTab = index"
           >
-            {{ tab }}
+          {{ this.$i18n.locale == 'US' ? tab.titleUS : this.$i18n.locale == 'US' ? tab.titleUK : this.$i18n.locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
         </div>
         <div class="list-blog-post mt-12">
@@ -74,17 +74,17 @@
               :key="index"
               @click="toDetailBlog(item.id)"
             >
-              <img class="rounded" :src="item.imgUrl" />
+              <img class="rounded" :src="item.img" />
               <span class="content p-6">
-                <h1 class="font-semibold text-xl">{{ item.title }}</h1>
-                <p class="text-base font-normal mt-2">{{ item.content }}</p>
+                <h1 class="font-semibold text-xl">{{ this.$i18n.locale == 'US' ? item.titleUS : this.$i18n.locale == 'US' ? item.titleUK : this.$i18n.locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
+                <p class="text-base font-normal mt-2" v-html="this.$i18n.locale == 'US' ? item.contentUS : this.$i18n.locale == 'US' ? item.contentUK : this.$i18n.locale == 'FR' ? item.contentFR : item.contentDE"></p>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
           </div>
         </div>
         <v-button
-          class="secondary-btn mt-12 btn-seemore cursor-pointer flex justify-center"
+          class="secondary-btn mt-4 mb-8 btn-seemore cursor-pointer flex justify-center"
           @click="loadMore"
           >{{ $t("button.seeMore") }}</v-button
         >

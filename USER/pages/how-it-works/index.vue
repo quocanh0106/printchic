@@ -24,7 +24,7 @@
       <!-- Logo of Company -->
       <div class="company-collab bg-light-gray1-custom mt-20 custom-padding">
         <h1 class="text-lg font-semibold text-center">{{ $t('howItWorks.partnerTitle') }}</h1>
-        <swiperComponent :slidePerView="6" :showNavigation="false" :showPagination="false" class="mt-12 mb-8" />
+        <swiperComponent :slidePerView="pc ? 6 : mobile ? 2 : 4" :showNavigation="false" :showPagination="false" class="mt-12 mb-8 how-it-work-slider" />
       </div>
 
       <!-- Counter -->
@@ -88,7 +88,7 @@
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
         class="mt-20 custom-padding" />
     </div>
-    <div v-show="mobile">
+    <div v-show="mobile || tablet">
       <!-- header -->
       <div class="how-it-works-header-wrapper">
         <div class="how-it-works-header-mobile">
@@ -250,5 +250,11 @@ export default {
   background-position-x: 50vw;
   height: 600px;
   border-radius: 10px;
+}
+
+.how-it-work-slider{
+  :deep(.swiper-wrapper){
+    padding-bottom: 0px;
+  }
 }
 </style>

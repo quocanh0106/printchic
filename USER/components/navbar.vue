@@ -1,10 +1,10 @@
 <template>
   <div class="nav-bar-outer-wrapper-all-screen">
-    <div class="nav-bar" v-show="pc">
+    <div class="nav-bar" v-if="pc">
       <img
         :src="Logo"
         class="cursor-pointer"
-        @click="this.$router.push('/home')"
+        @click="this.$router.push('/')"
       />
       <customInput />
       <div class="nav-bar-action flex items-center">
@@ -26,17 +26,17 @@
             >
             </v-select>
           </li>
-          <li class="navigation-menu primary-btn cursor-pointer text-white">
+          <li class="navigation-menu signup-btn primary-btn cursor-pointer text-white">
             {{ $t("navBar.signUp") }}
           </li>
         </ul>
       </div>
     </div>
-    <div class="nav-bar-mobile flex justify-between" v-show="mobile || tablet">
+    <div class="nav-bar-mobile flex justify-between" v-if="mobile || tablet">
       <img
         :src="Logo"
         class="cursor-pointer"
-        @click="this.$router.push('/home')"
+        @click="this.$router.push('/')"
       />
       <div class="mobile-nav-action flex items-center gap-x-5">
         <img :src="searchIcon" />
@@ -50,7 +50,7 @@
             <img
               :src="Logo"
               class="cursor-pointer"
-              @click="this.$router.push('/home')"
+              @click="this.$router.push('/')"
             />
             <img
               :src="closeIcon"
@@ -93,7 +93,7 @@ export default {
     links: {
       type: Array,
       default: () => [
-        { label: "Home", href: "/home" },
+        { label: "Home", href: "/" },
         { label: "Products", href: "/product" },
         { label: "How it works", href: "/how-it-works" },
         { label: "Blog", href: "/blog" },
@@ -209,7 +209,11 @@ export default {
   background-color: white;
   width: 100%;
   flex-direction: row;
+  gap: 10px;
   padding: 30px 120px;
+  @media screen and (max-width:1600px){
+    padding: 30px 5vw;
+  }
 }
 
 .nav-bar a {
@@ -230,10 +234,25 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 2vw;
+  @media screen and (max-width:1600px){
+    gap: 1vw;
+  }
+  @media screen and (max-width:1500px){
+    gap: 0px;
+  }
 }
 
 .navigation-menu {
   font-size: 1vw;
+  @media screen and (max-width:1600px){
+    font-size: 12px;
+  }
+  @media screen and (max-width:1500px){
+    font-size: 10px;
+  }
+  @media screen and (max-width:1300px){
+    font-size: 8px;
+  }
 }
 .nav-bar-mobile {
   padding: 16px 20px;
@@ -268,5 +287,8 @@ export default {
   :deep(.v-input__details) {
     display: none;
   }
+}
+.signup-btn{
+  height: auto;
 }
 </style>

@@ -61,7 +61,7 @@
       <!-- help -->
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20" />
     </div>
-    <div class="product-page-wrapper px-3" v-show="mobile">
+    <div class="product-page-wrapper px-3" v-show="mobile || tablet">
       <div class="product-header">
         <div class="product-banner-mobile rounded-lg text-center flex flex-col">
           <h1 class="section-title font-semibold"> {{ $t('productList.mensClothing') }} </h1>
@@ -298,5 +298,11 @@ export default {
 }
 .border-bottom-gray {
   border-bottom: gray 1px solid;
+}
+.product-thumbnail{
+  min-height : 25vh;
+  min-width: 15vw;
+  max-height: 25vh;
+  object-fit: cover;
 }
 </style>

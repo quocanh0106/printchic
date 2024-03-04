@@ -150,7 +150,7 @@
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
         class="custom-padding" />
     </div>
-    <div class="mobile-page-container" v-show="mobile">
+    <div class="mobile-page-container" v-show="mobile || tablet">
       <div class="introduction-banner-mobile text-white flex flex-col">
         <h1 class="font-semibold section-title">
           {{ $t("homePage.introductionTitle") }}
@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" :items="listCategory" :slidePerView="2" />
+        <swiperComponent class="mt-12 mb-8" :items="listCategory" :slidePerView="tablet ? 4 : 2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -239,7 +239,7 @@
 
         <div class="motive-body flex flex-col mt-12 w-100 space-x-64">
           <div class="motive-body-left-wrapper">
-            <img :src="distictThumbnails" class="mb-5" />
+            <img :src="distictThumbnails" class="mb-5 w-100" />
           </div>
         </div>
         <SwiperDescriptionMobile class="mt-12 mb-8" />
@@ -472,7 +472,7 @@ export default {
 }
 
 .introduction-banner-mobile {
-  background: url("../../assets/images/introImage.png");
+  background: url("../assets/images/introImage.png");
   background-size: cover;
   padding: 190px 16px;
   height: 800px;
