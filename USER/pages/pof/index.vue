@@ -286,7 +286,7 @@
               <button
                 @click="prev"
                 :disabled="!(currentIndex > 0)"
-                class="text-blue-500 hover:text-blue-700"
+                class="text-blue-500 hover:text-blue-700 mr-5"
               >
                 prev
               </button>
@@ -618,6 +618,7 @@ export default {
 }
 
 .pod-intro-carousel-mobile {
+  width: 95%;
   position: absolute;
   bottom: 60px;
   height: 149px;
