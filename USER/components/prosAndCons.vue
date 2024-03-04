@@ -1,67 +1,69 @@
 <template>
-  <div class="pros-and-cons-wrapper" v-show="pc">
-    <h1 class="text-center section-title font-semibold">
-      {{ $t("prosAndConsPage.prosAndCons") }}
-    </h1>
-    <div class="pros-and-cons-content-wrapper flex mt-12 gap-x-8">
-      <div class="pros-blog rounded-xl p-10">
-        <span
-          class="flex items-start gap-x-2 mb-3"
-          v-for="(item, index) in pros"
-          :key="index"
-        >
-          <img class="pt-1" :src="greenTick" />
-          <span class="pros-content">
-            <h1 class="font-semibold">{{ item.title }} :</h1>
-            <p>{{ item.content }}</p>
+  <div  class="pros-and-cons-all-screenwrapper">
+    <div class="pros-and-cons-wrapper" v-show="pc">
+      <h1 class="text-center section-title font-semibold">
+        {{ $t("prosAndConsPage.prosAndCons") }}
+      </h1>
+      <div class="pros-and-cons-content-wrapper flex mt-12 gap-x-8">
+        <div class="pros-blog rounded-xl p-10">
+          <span
+            class="flex items-start gap-x-2 mb-3"
+            v-for="(item, index) in pros"
+            :key="index"
+          >
+            <img class="pt-1" :src="greenTick" />
+            <span class="pros-content">
+              <h1 class="font-semibold">{{ item.title }} :</h1>
+              <p>{{ item.content }}</p>
+            </span>
           </span>
-        </span>
-      </div>
-      <div class="cons-blog rounded-xl p-10">
-        <span
-          class="flex items-start gap-x-2 mb-3"
-          v-for="(item, index) in cons"
-          :key="index"
-        >
-          <img class="pt-1" :src="redX" />
-          <span class="pros-content">
-            <h1 class="font-semibold">{{ item.title }} :</h1>
-            <p>{{ item.content }}</p>
+        </div>
+        <div class="cons-blog rounded-xl p-10">
+          <span
+            class="flex items-start gap-x-2 mb-3"
+            v-for="(item, index) in cons"
+            :key="index"
+          >
+            <img class="pt-1" :src="redX" />
+            <span class="pros-content">
+              <h1 class="font-semibold">{{ item.title }} :</h1>
+              <p>{{ item.content }}</p>
+            </span>
           </span>
-        </span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="pros-and-cons-wrapper" v-show="mobile">
-    <h1 class="text-center section-title font-semibold">
-      {{ $t("prosAndConsPage.prosAndCons") }}
-    </h1>
-    <div class="pros-and-cons-content-wrapper flex mt-12 gap-x-8 flex-column mb-8">
-      <div class="pros-blog rounded-xl p-10 mb-5">
-        <span
-          class="flex items-start gap-x-2 mb-10"
-          v-for="(item, index) in pros"
-          :key="index"
-        >
-          <img class="pt-1" :src="greenTick" />
-          <span class="pros-content">
-            <h1 class="font-semibold">{{ item.title }} :</h1>
-            <p>{{ item.content }}</p>
+    <div class="pros-and-cons-wrapper" v-show="mobile || tablet">
+      <h1 class="text-center section-title font-semibold">
+        {{ $t("prosAndConsPage.prosAndCons") }}
+      </h1>
+      <div class="pros-and-cons-content-wrapper flex mt-12 gap-x-8 flex-column mb-8">
+        <div class="pros-blog rounded-xl p-10 mb-5">
+          <span
+            class="flex items-start gap-x-2 mb-10"
+            v-for="(item, index) in pros"
+            :key="index"
+          >
+            <img class="pt-1" :src="greenTick" />
+            <span class="pros-content">
+              <h1 class="font-semibold">{{ item.title }} :</h1>
+              <p>{{ item.content }}</p>
+            </span>
           </span>
-        </span>
-      </div>
-      <div class="cons-blog rounded-xl p-10">
-        <span
-          class="flex items-start gap-x-2 mb-10"
-          v-for="(item, index) in cons"
-          :key="index"
-        >
-          <img class="pt-1" :src="redX" />
-          <span class="pros-content">
-            <h1 class="font-semibold">{{ item.title }} :</h1>
-            <p>{{ item.content }}</p>
+        </div>
+        <div class="cons-blog rounded-xl p-10">
+          <span
+            class="flex items-start gap-x-2 mb-10"
+            v-for="(item, index) in cons"
+            :key="index"
+          >
+            <img class="pt-1" :src="redX" />
+            <span class="pros-content">
+              <h1 class="font-semibold">{{ item.title }} :</h1>
+              <p>{{ item.content }}</p>
+            </span>
           </span>
-        </span>
+        </div>
       </div>
     </div>
   </div>

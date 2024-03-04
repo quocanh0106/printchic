@@ -1,19 +1,21 @@
 <template>
-  <div class="card-infor" v-show="pc">
-    <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
-      <img :src="imgSrc" />
-      <div class="card-des flex flex-col">
-        <h1 class="font-semibold card-title" v-if="showTitle">{{ title }}</h1>
-        <p class="card-description mt-2">{{ description }}</p>
+  <div class="card-info-all-screen-wrapper">
+    <div class="card-infor" v-show="pc">
+      <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
+        <img :src="imgSrc" />
+        <div class="card-des flex flex-col">
+          <h1 class="font-semibold card-title" v-if="showTitle">{{ title }}</h1>
+          <p class="card-description mt-2">{{ description }}</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="card-infor" v-show="mobile">
-    <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
-      <img :src="imgSrc" />
-      <div class="card-des flex flex-col">
-        <h1 class="font-semibold card-title" v-if="showTitle">{{ title }}</h1>
-        <p class="card-description mt-2">{{ description }}</p>
+    <div class="card-infor" v-show="mobile || tablet">
+      <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
+        <img :src="imgSrc" />
+        <div class="card-des flex flex-col">
+          <h1 class="font-semibold card-title" v-if="showTitle">{{ title }}</h1>
+          <p class="card-description mt-2">{{ description }}</p>
+        </div>
       </div>
     </div>
   </div>

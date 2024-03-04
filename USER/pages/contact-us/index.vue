@@ -105,7 +105,7 @@
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
         class="custom-padding" />
     </div>
-    <div class="contact-us-page-wrapper" v-show="mobile">
+    <div class="contact-us-page-wrapper" v-show="mobile || tablet">
       <!-- contact form -->
       <div class="contact-form-wrapper-mobile flex justify-between items-start flex-column mx-3">
         <img class="rounded-lg" :src="contactThumb" />

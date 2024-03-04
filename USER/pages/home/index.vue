@@ -150,7 +150,7 @@
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')"
         class="custom-padding" />
     </div>
-    <div class="mobile-page-container" v-show="mobile">
+    <div class="mobile-page-container" v-show="mobile || tablet">
       <div class="introduction-banner-mobile text-white flex flex-col">
         <h1 class="font-semibold section-title">
           {{ $t("homePage.introductionTitle") }}

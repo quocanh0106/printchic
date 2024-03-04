@@ -179,7 +179,7 @@
           class="custom-padding" />
       </div>
     </div>
-    <div class="service-section-wrapper" v-show="mobile">
+    <div class="service-section-wrapper" v-show="mobile || tablet">
       <div class="service-wrapper">
         <!-- Header of service -->
         <div class="service-header px-3 flex items-center justify-between flex-column">
