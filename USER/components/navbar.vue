@@ -32,7 +32,7 @@
         </ul>
       </div>
     </div>
-    <div class="nav-bar-mobile flex justify-between" v-show="mobile">
+    <div class="nav-bar-mobile flex justify-between" v-show="mobile || tablet">
       <img
         :src="Logo"
         class="cursor-pointer"

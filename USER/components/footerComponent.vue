@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-mobile custom-padding-mobile" v-show="mobile">
+    <div class="footer-mobile custom-padding-mobile" v-show="mobile || tablet">
       <div class="footer-body flex flex-col w-auto">
         <img class="mobile-logo" :src="footerLogo" />
         <div class="flex mt-5">

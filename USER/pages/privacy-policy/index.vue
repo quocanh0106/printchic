@@ -9,8 +9,11 @@
       <p class="text-sm font-thin text-slate-400">
         Effective date: February 23, 2024
       </p>
-      <div class="flex policy-content" :class="mobile ? 'flex-column mt-5' : 'mt-10'">
-        <div class="nav-slide" v-if="mobile">
+      <div
+        class="flex policy-content"
+        :class="mobile || tablet ? 'flex-column mt-5' : 'mt-10'"
+      >
+        <div class="nav-slide" v-if="mobile || tablet">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -35,7 +38,7 @@
             </p>
           </div>
         </div>
-        <div class="nav-slide" v-if="!mobile">
+        <div class="nav-slide" v-if="pc">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -88,7 +91,7 @@
     <help
       :headerTitle="$t('privacyPolicy.helpTitle')"
       :headerDesc="$t('privacyPolicy.helpDes')"
-      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
+      :class="mobile || tablet ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -125,7 +128,7 @@ export default {
 .privacy-policy-container {
   .side-padding {
     padding: 0 120px;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 992px) {
       padding: 0 10px;
     }
     .breadcrumb {
@@ -136,7 +139,7 @@ export default {
       display: flex;
       .content {
         width: 70%;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 992px) {
           width: 100%;
         }
       }
@@ -152,9 +155,12 @@ export default {
       flex-direction: column;
       padding: 10px;
     }
+    @media screen and (min-width: 600px) and (max-width: 992px) {
+      flex-direction: column;
+    }
     .single-info {
       width: 30%;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 992px) {
         width: 100%;
         margin-bottom: 10px;
       }

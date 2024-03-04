@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="blog-wrapper mx-3" v-show="mobile">
+    <div class="blog-wrapper mx-3" v-show="mobile || tablet">
       <div class="blog-header flex justify-center items-center my-5">
         <h1 class="section-title font-semibold">
           {{ title ? title : $t("homePage.ourBlogStory") }}

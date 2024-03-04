@@ -11,7 +11,7 @@
         <div class="search-input-group">
           <p
             class="text-2xl text-white font-medium"
-            :class="mobile ? 'text-xl' : 'text-2xl'"
+            :class="mobile || tablet ? 'text-xl' : 'text-2xl'"
           >
             Welcome to our Help Center
           </p>
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="flex" :class="mobile ? 'flex-col mt-5' : 'mt-10'">
+      <div class="flex" :class="mobile || tablet ? 'flex-col mt-5' : 'mt-10'">
         <div class="nav-slide" v-if="pc">
           <p
             v-for="(item, index) in anchorMenuData"
@@ -48,7 +48,7 @@
           >
         </div>
 
-        <div class="content" :class="mobile ? 'ml-0' : 'ml-10'">
+        <div class="content" :class="mobile || tablet ? 'ml-0' : 'ml-10'">
           <p>
             <span class="font-bold text-cyan-700">16</span> Results found for
             “warehouse”
@@ -120,7 +120,7 @@
     <help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
+      :class="mobile || tablet ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -164,7 +164,7 @@ export default {
 .help-center-container {
   .side-padding {
     padding: 0 120px;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 992px) {
       padding: 0 10px;
     }
     .breadcrumb {
@@ -173,7 +173,7 @@ export default {
     }
     .content {
       width: 70%;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 992px) {
         width: 100%;
       }
     }
@@ -254,9 +254,12 @@ export default {
       flex-direction: column;
       padding: 10px;
     }
+    @media screen and (min-width: 600px) and (max-width: 992px) {
+      flex-direction: column;
+    }
     .single-info {
       width: 30%;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 992px) {
         width: 100%;
         margin-bottom: 10px;
       }

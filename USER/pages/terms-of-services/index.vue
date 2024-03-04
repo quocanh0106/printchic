@@ -28,9 +28,9 @@
         </v-btn>
       </div>
 
-      <div class="flex" :class="mobile ? 'flex-column mt-5' : 'mt-10'">
+      <div class="flex" :class="mobile || tablet ? 'flex-column mt-5' : 'mt-10'">
         <div class="content mr-10">
-          <div class="nav-slide mb-5" v-if="mobile">
+          <div class="nav-slide mb-5" v-if="mobile || tablet">
             <p
               v-for="(item, index) in anchorMenuData"
               class="text-sm mb-3 pointer"
@@ -54,7 +54,7 @@
             </p>
           </div>
         </div>
-        <div class="nav-slide" v-if="!mobile">
+        <div class="nav-slide" v-if="pc">
           <p
             v-for="(item, index) in anchorMenuData"
             class="text-sm mb-3 pointer"
@@ -107,7 +107,7 @@
     <help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
+      :class="mobile || tablet ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -149,7 +149,7 @@ export default {
 .tos-container {
   .side-padding {
     padding: 0 120px;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 992px) {
       padding: 0 10px;
     }
     .breadcrumb {
@@ -158,15 +158,18 @@ export default {
     }
     .content {
       width: 70%;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 992px) {
         width: 100%;
       }
     }
   }
   .nav-group {
     display: flex;
-    @media screen and (max-width: 600px) {
-      overflow-x: scroll;
+    @media screen and (max-width: 992px) {
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     .nav-btn {
       text-transform: capitalize;
@@ -183,9 +186,12 @@ export default {
       flex-direction: column;
       padding: 10px;
     }
+    @media screen and (min-width: 600px) and (max-width: 992px) {
+      flex-direction: column;
+    }
     .single-info {
       width: 30%;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 992px) {
         width: 100%;
         margin-bottom: 10px;
       }

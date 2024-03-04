@@ -11,7 +11,7 @@
       <img :src="heroImg" alt="pic" />
     </div>
 
-    <div class="side-paddings" :class="mobile ? '' : 'flex gap-10 mb-10'">
+    <div class="side-paddings" :class="mobile || tablet ? '' : 'flex gap-10 mb-10'">
       <div class="blog-content">
         <!-- Title --------------------------------------------------------------------------->
         <div class="title text-3xl font-bold mb-5">
@@ -31,12 +31,12 @@
         </div>
 
         <!-- [component] MenuExpanse --------------------------------------------------------------------------->
-        <div class="table-of-content" :class="mobile ? 'mt-5' : 'mt-10'">
+        <div class="table-of-content" :class="mobile || tablet ? 'mt-5' : 'mt-10'">
           <MenuExpanse :menuList="menuList" />
         </div>
 
         <!-- Content --------------------------------------------------------------------------->
-        <div class="content-info mb-10" :class="mobile ? 'mt-5' : 'mt-10'">
+        <div class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'">
           As the days get longer and warmer, it’s prime time to prep your
           designs for those sizzling summer moments. If you want a sales chart
           hotter than the pavement in July, make sure your catalog is bursting
@@ -91,12 +91,12 @@
     </div>
 
     <!-- [component] Block --------------------------------------------------------------------------->
-    <div class="related-post side-paddings" :class="mobile && 'mt-10'">
+    <div class="related-post side-paddings" :class="mobile || tablet && 'mt-10'">
       <Blog title="Related Posts" />
     </div>
 
     <!-- <?Mobile> Summary block --------------------------------------------------------------------------->
-    <div class="summary-block" v-show="mobile">
+    <div class="summary-block" v-show="mobile || tablet">
       <div class="products mb-10">
         <span class="text-xl font-bold">Products</span>
         <div
@@ -125,7 +125,7 @@
     <Help
       :headerTitle="$t('tos.helpTitle')"
       :headerDesc="$t('tos.helpDes')"
-      :class="mobile ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
+      :class="mobile || tablet ? 'ml-5 mr-5 mt-10' : 'custom-padding'"
     />
   </div>
 </template>
@@ -179,7 +179,7 @@ export default {
   }
   .blog-content {
     width: 75%;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 992px) {
       width: 100%;
     }
     .link-bar {
@@ -207,7 +207,7 @@ export default {
     border: 1px solid #eaecf0;
     border-radius: 8px;
     padding: 15px;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 992px) {
       width: 100%;
       border-left: none;
       border-right: none;
