@@ -472,7 +472,7 @@ export default {
 }
 
 .introduction-banner-mobile {
-  background: url("../../assets/images/introImage.png");
+  background: url("../assets/images/introImage.png");
   background-size: cover;
   padding: 190px 16px;
   height: 800px;

@@ -364,7 +364,7 @@
         {{ $t("pod.ourCustomizedClothing") }}
       </h1>
       <span
-        class="service-tag-wrapper w-100 flex items-center gap-x-8 justify-center mt-6"
+        class="service-tag-wrapper w-100 flex items-center gap-x-4 justify-center mt-6"
       >
         <span
           @click="ourCustomizedClothing = index"
@@ -392,7 +392,7 @@
         {{ $t("pod.ourCustomizedHomeDecor") }}
       </h1>
       <span
-        class="service-tag-wrapper w-100 flex items-center gap-x-8 justify-center mt-6"
+        class="service-tag-wrapper w-100 flex items-center gap-x-4 justify-center mt-6"
       >
         <span
           @click="ourCustomizedDecor = index"
