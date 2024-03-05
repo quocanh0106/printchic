@@ -148,9 +148,9 @@ export default {
 </script>
 <style lang="scss">
 .tab-btn {
-  padding: 8px 16px;
-  height: 39px !important;
-  min-width: 150px;
+  min-width: 165px;
+  display:flex;
+  align-items:center;
 }
 .blog-post-wrapper {
   flex-wrap: wrap;

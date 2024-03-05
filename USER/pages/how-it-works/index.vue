@@ -92,28 +92,28 @@
       <!-- header -->
       <div class="how-it-works-header-wrapper">
         <div class="how-it-works-header-mobile">
-
+          <img class="image-header" :src="imgHoldingPhone"/>
         </div>
-        <div class="content-wrapper px-3">
+        <div class="content-wrapper mt-2 px-3">
           <h1 class="section-title font-semibold">{{ $t('howItWorks.headerTitle') }}</h1>
           <p class="mt-5">{{ $t('howItWorks.headerDesc1') }}</p>
           <p>{{ $t('howItWorks.headerDesc2') }}</p>
-          <div class="action flex mt-8 justify-center">
-            <a class="primary-btn text-white flex">
-              {{ $t("button.CTA") }}
+          <div class="action flex mt-8 justify-center w-100">
+            <a class="primary-btn btn-signup-for-free-mobile text-white flex items-center w-100" :class="mobile?'justify-between' : 'justify-center'">
+              <p>{{ $t("button.signUpForFree") }}</p>
               <img :src="arrowUpRightWhite" />
             </a>
 
-            <v-button class="secondary-btn cursor-pointer ml-4">
+            <v-button class="secondary-btn cursor-pointer ml-4 w-100">
               {{ $t("ContactUs") }}
             </v-button>
           </div>
         </div>
       </div>
       <!-- Logo of Company -->
-      <div class="company-collab bg-light-gray1-custom mt-20">
+      <div class="company-collab bg-light-gray1-custom mt-12">
         <h1 class="text-lg font-semibold text-center pt-5">{{ $t('howItWorks.partnerTitle') }}</h1>
-        <swiperComponent :slidePerView="2" :showNavigation="false" :showPagination="false" class="mt-12 mb-8 mx-3" />
+        <swiperComponent :slidePerView="2" :showNavigation="false" :showPagination="true" class="mt-12 mb-8 mx-3" />
       </div>
 
       <!-- Counter -->
@@ -123,10 +123,10 @@
         </div>
       </div>
 
-      <div class="step-hiw flex justify-between items-center bg-light-gray1-custom flex-column px-3 mb-10">
+      <div class="step-hiw flex justify-between items-center py-12 bg-light-gray1-custom flex-column px-3 mb-10">
         <div class="step-content">
           <img :src="step1" />
-          <h1 class="txt-primary text-lg mt-5">{{ $t('howItWorks.step1') }}</h1>
+          <h1 class="txt-primary text-lg mt-5 font-canevat">{{ $t('howItWorks.step1') }}</h1>
           <h1 class="mt-4 font-semibold section-title">{{ $t('howItWorks.step1Title') }}</h1>
           <p class="mt-4 mw-379px">{{ $t('howItWorks.step1Desc') }}</p>
           <a class="txt-primary font-semibold mt-3 flex mb-8">
@@ -135,10 +135,10 @@
         </div>
       </div>
 
-      <div class="step-hiw flex justify-between items-center bg-light-gray1-custom flex-column px-3 mb-10">
+      <div class="step-hiw flex justify-between items-center flex-column py-12 px-3 mb-10">
         <div class="step-content">
           <img :src="step2" />
-          <h1 class="txt-primary text-lg mt-5">{{ $t('howItWorks.step2') }}</h1>
+          <h1 class="txt-primary text-lg mt-5 font-canevat">{{ $t('howItWorks.step2') }}</h1>
           <h1 class="mt-4 font-semibold section-title">{{ $t('howItWorks.step2Title') }}</h1>
           <p class="mt-4 mw-379px">{{ $t('howItWorks.step2Desc') }}</p>
           <a class="txt-primary font-semibold mt-3 flex mb-8">
@@ -147,12 +147,24 @@
         </div>
       </div>
 
-      <div class="step-hiw flex justify-between items-center bg-light-gray1-custom flex-column px-3 mb-10">
+      <div class="step-hiw flex justify-between items-center py-12 bg-light-gray1-custom flex-column px-3 mb-10">
         <div class="step-content">
           <img :src="step3" />
-          <h1 class="txt-primary text-lg mt-5">{{ $t('howItWorks.step3') }}</h1>
+          <h1 class="txt-primary text-lg mt-5 font-canevat">{{ $t('howItWorks.step3') }}</h1>
           <h1 class="mt-4 font-semibold section-title">{{ $t('howItWorks.step3Title') }}</h1>
-          <p class="mt-4 mw-379px">{{ $t('howItWorks.step3Desc') }}</p>
+          <p class="mt-4 mw-379px ">{{ $t('howItWorks.step3Desc') }}</p>
+          <a class="txt-primary font-semibold mt-3 flex mb-8">
+            <p>{{ $t('button.learnMore') }}</p> <img :src="arrowUpRight" />
+          </a>
+        </div>
+      </div>
+
+      <div class="step-hiw flex justify-between items-center py-12 flex-column px-3 mb-10">
+        <div class="step-content">
+          <img :src="step4" />
+          <h1 class="txt-primary text-lg mt-5 font-canevat">{{ $t('howItWorks.step4') }}</h1>
+          <h1 class="mt-4 font-semibold section-title">{{ $t('howItWorks.step4Title') }}</h1>
+          <p class="mt-4 mw-379px ">{{ $t('howItWorks.step4Desc') }}</p>
           <a class="txt-primary font-semibold mt-3 flex mb-8">
             <p>{{ $t('button.learnMore') }}</p> <img :src="arrowUpRight" />
           </a>
@@ -244,17 +256,24 @@ export default {
 
 .how-it-works-header-mobile {
   background-color: #EFF4FF;
-  padding: 144px 10vw;
-  background-image: url('../../assets/svg/holding-phone.svg');
-  background-position: bottom right;
-  background-position-x: 50vw;
-  height: 600px;
+  background-position: center;
+  height: 343px;
+  max-height: 343px;
   border-radius: 10px;
+  display:flex;
+  padding-top:20px;
+  justify-content:center;
 }
 
 .how-it-work-slider{
   :deep(.swiper-wrapper){
     padding-bottom: 0px;
   }
+}
+.image-header{
+  max-height: inherit;
+}
+.btn-signup-for-free-mobile{
+  padding: 12px 11px !important;
 }
 </style>
