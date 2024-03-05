@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swiper{
+  z-index: 0 !important;
+}
 .swiper-wrapper-outside {
   :deep(.swiper-wrapper) {
     padding-bottom: 70px;
