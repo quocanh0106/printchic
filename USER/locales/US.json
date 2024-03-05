@@ -283,7 +283,8 @@
     "CTA" : "CTA Here",
     "learnMore":"Learn More",
     "filter": "Filter",
-    "contactUs" : "Contact Us"
+    "contactUs" : "Contact Us",
+    "seeMoreWithItemCount": "View All {count} Items"
   },
   "footer" : {
     "about" : "About",
