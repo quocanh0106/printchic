@@ -267,7 +267,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <SwiperBlogMobile class="mt-12 mb-8" :slidePerView="1" />
+        <SwiperBlogMobile class="mt-12 mb-8" :items="listBlog" :slidePerView="1" />
       </div>
 
       <!-- Frequently asked question -->
@@ -316,16 +316,22 @@ export default {
       arrowUpRightWhite,
       cardThumbnail,
       distictThumbnails,
-      listCategory:[]
+      listCategory:[],
+      listBlog:[],
     };
   },
   mounted() {
     this.getListProductCategory()
+    this.getListBlog()
   },
   methods: {
     async getListProductCategory() {
       const response = await this.getRequest('categoryProduct/list')
       this.listCategory = response.data.items
+    },
+    async getListBlog() {
+      const response = await this.getRequest('blog/list')
+      this.listBlog = response.data.items
     },
   },
   
