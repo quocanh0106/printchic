@@ -72,7 +72,7 @@
               class="flex blog-post cursor-pointer flex-column"
               v-for="(item, index) in listBlog"
               :key="index"
-              @click="toDetailBlog(item.id)"
+              @click="toDetailBlog(item._id)"
             >
               <img class="rounded" :src="item.img" />
               <span class="content p-6">
@@ -172,5 +172,11 @@ export default {
   overflow-x: scroll;
   padding-left: 5px;
   width: 100vw;
+}
+
+.thumbnail-img {
+  height:183px;
+  width:183px;
+  object-fit: cover;
 }
 </style>

@@ -101,9 +101,10 @@ export default {
 }
 
 .small-img-blog {
-  max-width: 189px;
+  max-width: 183px;
   min-width: 183px;
   height: 183px;
+  min-height: 183px;
   object-fit: cover;
 }
 </style>

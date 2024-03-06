@@ -121,12 +121,12 @@
             <h1 class="pod-product-title font-semibold section-title">
               {{ $t("servicePage.enjoyOurPODProduct") }}
             </h1>
-            <a class="pod-product-view-all txt-primary cursor-pointer flex items-center">
+            <a @click="toProductList" class="pod-product-view-all txt-primary cursor-pointer flex items-center">
               <p class="mw-100px">{{ $t("button.exploreOurCatalog") }}</p>
               <img :src="arrowUpRight" />
             </a>
           </div>
-          <swiperComponent class="mt-12 mb-8" />
+          <swiperComponent :showPagination="true" :items="listPODProduct" class="mt-12 mb-8" />
         </div>
   
         <!-- Top current trending print -->
@@ -300,12 +300,12 @@
             <h1 class="pod-product-title font-semibold section-title">
               {{ $t("servicePage.enjoyOurPODProduct") }}
             </h1>
-            <a class="pod-product-view-all txt-primary cursor-pointer flex items-center justify-center">
+            <a @click="toProductList" class="pod-product-view-all txt-primary cursor-pointer flex items-center justify-center">
               <p class="mw-100px">{{ $t("button.exploreOurCatalog") }}</p>
               <img :src="arrowUpRight" />
             </a>
           </div>
-          <swiperComponent class="mt-12 mb-8" slidePerView="2"/>
+          <swiperComponent :showPagination="true" :items="listPODProduct" class="mt-12 mb-8" slidePerView="2"/>
         </div>
   
         <!-- Top current trending print -->
@@ -360,100 +360,103 @@
   </div>
 </template>
 
-<script>
-// import assets
-import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
-import arrowUpRightWhite from "../../assets/svg/iconUpRightWhite.svg";
-import introImage from "../../assets/images/introImage.png";
-import serviceThumbnail1 from "../../assets/images/servicePageThumbNail1.png";
-import serviceThumbnail2 from "../../assets/images/servicePageThumbNail2.png";
-import serviceThumbnail3 from "../../assets/images/servicePageThumbNail3.png";
-import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
-import fullFillMentCenter from "../../assets/images/fullFillMentCenter.png";
-import tipImg from "../../assets/images/tipsImg.png"
-
-//import componet
-import cardInfor from "../../components/cardInfor.vue";
-import help from "../../components/help.vue";
-import faq from "../../components/faq.vue";
-import cardCounterVue from "../../components/cardCounter.vue"; //
-import swiperComponent from "../../components/swiperComponent.vue";
-import prosAndConsVue from "../../components/prosAndCons.vue";
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useNuxtApp, useRouter } from '#app';
+import arrowUpRight from '~/assets/svg/arrowUpRight.svg';
+import arrowUpRightWhite from '~/assets/svg/iconUpRightWhite.svg';
+import introImage from '~/assets/images/introImage.png';
+import serviceThumbnail1 from '~/assets/images/servicePageThumbNail1.png';
+import serviceThumbnail2 from '~/assets/images/servicePageThumbNail2.png';
+import serviceThumbnail3 from '~/assets/images/servicePageThumbNail3.png';
+import cardThumbnail from '~/assets/svg/cardThumbNail.svg';
+import fullFillMentCenter from '~/assets/images/fullFillMentCenter.png';
+import tipImg from '~/assets/images/tipsImg.png';
+import cardInfor from '~/components/cardInfor.vue';
+import help from '~/components/help.vue';
+import faq from '~/components/faq.vue';
+import cardCounterVue from '~/components/cardCounter.vue';
+import swiperComponent from '~/components/swiperComponent.vue';
+import prosAndConsVue from '~/components/prosAndCons.vue';
 import { myMixin } from '~/mixins/myMixin';
+import { useI18n } from 'vue-i18n'
 
-export default {
-  mixins: [myMixin],
-  components: {
-    help,
-    faq,
-    cardInfor,
-    cardCounterVue,
-    swiperComponent,
-    prosAndConsVue,
+const { t } = useI18n()
+const nuxtApp = useNuxtApp();
+const router = useRouter();
+const listPODProduct = ref([]);
+
+onMounted(async () => {
+  const response = await fetch('product/list');
+  console.log('sdfsdfdss',response)
+  listPODProduct.value = response.data.items.map(item => item.media[0]?.path);
+});
+
+const screenWidth = ref(window.innerWidth);
+
+const mobile = computed(() => screenWidth.value <= 600);
+const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
+const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
+const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
+const extraPc = computed(() => screenWidth.value > 2500);
+
+function toProductList() {
+  router.push('/product');
+}
+
+const thumbNailImgBlog = ref([
+  {
+    img: serviceThumbnail1,
+    title: t("servicePage.howPODImgBlog1Title"),
+    content: t("servicePage.howPODImgBlog1Content"),
   },
-  data() {
-    return {
-      arrowUpRight,
-      arrowUpRightWhite,
-      cardThumbnail,
-      introImage,
-      fullFillMentCenter,
-      serviceThumbnail1,
-      serviceThumbnail2,
-      serviceThumbnail3,
-      tipImg,
-      thumbNailImgBlog: [
-        {
-          img: serviceThumbnail1,
-          title: this.$t("servicePage.howPODImgBlog1Title"),
-          content: this.$t("servicePage.howPODImgBlog1Content"),
-        },
-        {
-          img: serviceThumbnail2,
-          title: this.$t("servicePage.howPODImgBlog2Title"),
-          content: this.$t("servicePage.howPODImgBlog2Content"),
-        },
-        {
-          img: serviceThumbnail2,
-          title: this.$t("servicePage.howPODImgBlog2Title"),
-          content: this.$t("servicePage.howPODImgBlog3Content"),
-        },
-      ],
-      counterInfor: [
-        {
-          amount: "420+",
-          title: this.$t("servicePage.counter1Title"),
-          description: this.$t("servicePage.counter1Des"),
-        },
-        {
-          amount: "90,350+",
-          title: this.$t("servicePage.counter2Title"),
-          description: this.$t("servicePage.counter2Des"),
-        },
-        {
-          amount: "180+",
-          title: this.$t("servicePage.counter3Title"),
-          description: this.$t("servicePage.counter3Des"),
-        },
-        {
-          amount: "2.5M+",
-          title: this.$t("servicePage.counter4Title"),
-          description: this.$t("servicePage.counter4Des"),
-        },
-      ],
-      listTopCurrentPOD: [
-        "trending1",
-        "trending2",
-        "trending3",
-        "trending4",
-        "trending5",
-        "trending6",
-        "trending7",
-      ],
-    };
+  {
+    img: serviceThumbnail2,
+    title: t("servicePage.howPODImgBlog2Title"),
+    content: t("servicePage.howPODImgBlog2Content"),
   },
-};
+  {
+    img: serviceThumbnail3,
+    title: t("servicePage.howPODImgBlog3Title"),
+    content: t("servicePage.howPODImgBlog3Content"),
+  },
+]);
+
+const counterInfor = ref([
+  {
+    amount: "420+",
+    title: t("servicePage.counter1Title"),
+    description: t("servicePage.counter1Des"),
+  },
+  {
+    amount: "90,350+",
+    title: t("servicePage.counter2Title"),
+    description: t("servicePage.counter2Des"),
+  },
+  {
+    amount: "180+",
+    title: t("servicePage.counter3Title"),
+    description: t("servicePage.counter3Des"),
+  },
+  {
+    amount: "2.5M+",
+    title: t("servicePage.counter4Title"),
+    description: t("servicePage.counter4Des"),
+  },
+]);
+
+const listTopCurrentPOD = ref([
+  "trending1",
+  "trending2",
+  "trending3",
+  "trending4",
+  "trending5",
+  "trending6",
+  "trending7",
+]);
+
 </script>
+
 
 <style scoped lang="scss">
 .service-page-trustworthy-wrapper {

@@ -165,7 +165,16 @@ export default {
       popupIcon,
     };
   },
-  methods: {},
+  methods: {
+    async getBlogDetail(){
+      const response = await this.getRequest('blog/list')
+      this.listBlog = response.data.items
+    }
+  },
+  async mounted() {
+    await getBlogDetail();
+  },
+  
 };
 </script>
 

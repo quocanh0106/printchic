@@ -11,7 +11,7 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide v-for="item,index in items" :key="index"><img class="rounded" :src="item.bannerImg? item.bannerImg : item" :class="imgWidth100 && 'w-100'" /></swiper-slide>
+          <swiper-slide v-for="item,index in items" :key="index"><img class="swiper-thumbnail rounded" :src="item.bannerImg? item.bannerImg : item" :class="imgWidth100 && 'w-100'" /></swiper-slide>
         </swiper>
     </div>
   </div>
@@ -83,6 +83,10 @@ export default {
       console.log("slide change");
     },
   },
+  mounted() {
+    console.log("created", this.items);
+  },
+  
 };
 </script>
 
@@ -114,5 +118,13 @@ export default {
     color: #1D2939;
     font-size: 16px;
   }
+}
+
+.swiper-thumbnail{
+  min-width: 378px;
+  max-width: 378px;
+  min-height: 378px;
+  max-height: 378px;
+  object-fit: cover;
 }
 </style>
