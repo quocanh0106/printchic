@@ -51,10 +51,16 @@ const list = async (data) => {
         if (data?.categoryProductId) {
             conditions.categoryProductId = data?.categoryProductId;
         }
+        if (data?.status) {
+            conditions.status = data?.status;
+        }
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
-                { title: search }
+                { titleUS: search },
+                { titleUK: search },
+                { titleFR: search },
+                { titleDE: search },
             ]
         }
         const options = {
