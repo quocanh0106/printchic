@@ -42,7 +42,10 @@ const list = async (data) => {
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
-                { title: search }
+                { titleUS: search },
+                { titleUK: search },
+                { titleFR: search },
+                { titleDE: search },
             ]
         }
         const options = {
