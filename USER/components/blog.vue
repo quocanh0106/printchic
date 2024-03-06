@@ -12,13 +12,14 @@
       </div>
       <div class="blog-body-wrapper gap-x-8 flex mt-10">
         <div
+          v-show="listBlog.length > 0"
           class="blog-left-wrapper flex flex-col cursor-pointer"
           @click="toDetailBlog(listBlog[0]?.id)"
         >
-          <img :src="listBlog[0]?.imgUrl" class="blog-img" />
+          <img :src="listBlog[0]?.img" class="blog-img" />
           <div class="content flex flex-col mt-8">
-            <h1 class="text-2xl font-semibold">{{ listBlog[0]?.title }}</h1>
-            <p class="text-base mt-2">{{ listBlog[0]?.description }}</p>
+            <h1 class="text-2xl font-semibold">{{ listBlog[0]?.[`title${currentLanguage}`] }}</h1>
+            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? JSON.parse(listBlog[0][`content${currentLanguage}`]) : ''" class="text-base mt-2"></div>
             <p class="text-sm mt-4">{{ listBlog[0]?.createdAt }}</p>
           </div>
         </div>
@@ -33,10 +34,10 @@
               class="blog-content mb-8 flex gap-x-6"
               v-if="index != 0 && index <= 3"
             >
-              <img class="small-img-blog blog-img" :src="blog.imgUrl" />
+              <img class="small-img-blog blog-img" :src="blog.img" />
               <div class="">
-                <h1 class="font-semibold">{{ blog.title }}</h1>
-                <p class="mt-2">{{ blog.description }}</p>
+                <h1 class="font-semibold">{{ blog[`title${currentLanguage}`] }}</h1>
+                <p v-html="JSON.parse(blog[`content${currentLanguage}`])" class="mt-2"></p>
                 <p class="mt-3">{{ blog.createdAt }}</p>
               </div>
             </div>
@@ -59,6 +60,7 @@
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
 import { myMixin } from "~/mixins/myMixin";
 import SwiperBlogMobile from "../pages/home/components/SwiperBlogMobile";
+import useLanguage from '~/composables/useLanguage';
 
 export default {
   mixins: [myMixin],
@@ -71,51 +73,23 @@ export default {
     },
   },
   data() {
+    const { currentLanguage, setLanguage } = useLanguage();
     return {
       arrowUpRight,
-      listBlog: [
-        {
-          id: 1,
-          imgUrl:
-            "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_487/stock%2FGettyImages-1166414278",
-          title: "Demi Moore gives update on Bruce Willis",
-          description:
-            "Nowhere are these attacks more evident right now than on college campuses. Many academics who teach about the history of race and racism in America, as I do, are being unjustifiably blamed.",
-          createdAt: "April 11, 2023",
-        },
-        {
-          id: 1,
-          imgUrl:
-            "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_487/stock%2FGettyImages-1166414278",
-          title: "Demi Moore gives update on Bruce Willis",
-          description:
-            "Nowhere are these attacks more evident right now than on college campuses. Many academics who teach about the history of race and racism in America, as I do, are being unjustifiably blamed.",
-          createdAt: "April 11, 2023",
-        },
-        {
-          id: 1,
-          imgUrl:
-            "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_487/stock%2FGettyImages-1166414278",
-          title: "Demi Moore gives update on Bruce Willis",
-          description:
-            "Nowhere are these attacks more evident right now than on college campuses. Many academics who teach about the history of race and racism in America, as I do, are being unjustifiably blamed.",
-          createdAt: "April 11, 2023",
-        },
-        {
-          id: 1,
-          imgUrl:
-            "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_487/stock%2FGettyImages-1166414278",
-          title: "Demi Moore gives update on Bruce Willis",
-          description:
-            "Nowhere are these attacks more evident right now than on college campuses. Many academics who teach about the history of race and racism in America, as I do, are being unjustifiably blamed.",
-          createdAt: "April 11, 2023",
-        },
-      ],
+      listBlog: [],
+      currentLanguage,
     };
+  },
+  mounted() {
+    this.getListBlog()
   },
   methods: {
     toDetailBlog(id) {
       this.$router.push(`/blog/${id}`);
+    },
+    async getListBlog() {
+      const response = await this.getRequest('blog/list')
+      this.listBlog = response.data.items
     },
   },
 };

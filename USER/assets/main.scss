@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Manrope");
-
+@import url("https://fonts.googleapis.com/css?family=Caveat");
 html {
   scroll-behavior: smooth;
 }
@@ -12,6 +12,9 @@ body {
   --base-font-family: "Manrope";
 }
 
+.font-canevat{
+  font-family:"Caveat";
+}
 // css apply for all page
 .custom-padding {
   padding: 80px 120px;
