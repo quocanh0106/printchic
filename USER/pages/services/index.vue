@@ -381,18 +381,24 @@ import prosAndConsVue from '~/components/prosAndCons.vue';
 import { myMixin } from '~/mixins/myMixin';
 import { useI18n } from 'vue-i18n'
 
+import { useFetch } from 'nuxt/app'
+
 const { t } = useI18n()
 const nuxtApp = useNuxtApp();
 const router = useRouter();
 const listPODProduct = ref([]);
 
 onMounted(async () => {
-  const response = await fetch('product/list');
-  console.log('sdfsdfdss',response)
-  listPODProduct.value = response.data.items.map(item => item.media[0]?.path);
+  // const response = await fetch('product/list');
+  const { data, pending, error } = await useFetch(`http://printchic-api.tvo-solution.net/auth/product/list'`)
+  console.log('sdfsdfdss',data)
+
+  listPODProduct.value = data.items.map(item => item.media[0]?.path);
 });
 
-const screenWidth = ref(window.innerWidth);
+const screenWidth = useState('windowWidth', () => {
+  return process.client ? window.innerWidth : null;
+});
 
 const mobile = computed(() => screenWidth.value <= 600);
 const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
