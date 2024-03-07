@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
+        <swiperComponent class="mt-12 mb-8 swiper-mobile-top-category" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -298,17 +298,18 @@ import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
 import { myMixin } from '~/mixins/myMixin';
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const { t } = useI18n()
 
 const { data }  = await useAsyncData(
   'categoryProduct',
-  () => $fetch('http://localhost:8000/auth/categoryProduct/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
 )
 
 
 const listBlog  = await useAsyncData(
   'blog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
-)?.data
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
+)
 </script>
 
 <style scoped lang="scss">
@@ -491,6 +492,14 @@ const listBlog  = await useAsyncData(
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+}
+.swiper-mobile-top-category{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 180px !important;
+      min-height: 0px !important;
+      max-height: none !important;
   }
 }
 </style>

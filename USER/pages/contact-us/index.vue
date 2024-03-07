@@ -108,7 +108,7 @@
     <div class="contact-us-page-wrapper" v-show="mobile || tablet">
       <!-- contact form -->
       <div class="contact-form-wrapper-mobile flex justify-between items-start flex-column mx-3">
-        <img class="rounded-lg" :src="contactThumb" />
+        <img class="rounded-lg w-100" :src="contactThumb" />
         <div class="contact-form w-100">
           <h1 class="font-semibold title-contact">
             {{ $t("contactUs.contactUs") }}
@@ -159,7 +159,7 @@
         </div>
       </div>
       <!-- social -->
-      <div class="social-wrapper bg-light-gray-custom px-3 mt-15">
+      <div class="social-wrapper bg-light-gray-custom px-3 py-12 mt-15">
         <div class="flex gap-x-8 flex-column">
           <div class="motive-body-left flex-1 flex-col justify-start flex-column">
             <h5 class="txt-primary text-xl font-semibold border-bottom-primary pb-3">

@@ -534,7 +534,6 @@
 </template>
 <script>
 // component
-import cardInfor from "../../components/cardInfor.vue";
 import swiperComponent from "../../components/swiperComponent.vue";
 import faq from "../../components/faq.vue";
 import help from "../../components/help.vue";
