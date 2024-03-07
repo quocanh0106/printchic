@@ -232,7 +232,7 @@
             </h1>
             <p class="mt-5 mw-790px">{{ $t("servicePage.howDoPODWorksDes") }}</p>
           </div>
-          <div class="how-pod-works-body mt-12 flex justify-between flex-column">
+          <div class="how-pod-works-body mt-12 flex items-center justify-between flex-column">
             <div class="blog-wrapper mw-379px" v-for="(item, index) in thumbNailImgBlog" :key="index">
               <img :src="item.img" />
               <h1 class="font-semibold txt-primary mt-5 text-2xl">
@@ -361,7 +361,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted  } from 'vue';
 import { useNuxtApp, useRouter } from '#app';
 import arrowUpRight from '~/assets/svg/arrowUpRight.svg';
 import arrowUpRightWhite from '~/assets/svg/iconUpRightWhite.svg';
@@ -381,24 +381,42 @@ import prosAndConsVue from '~/components/prosAndCons.vue';
 import { myMixin } from '~/mixins/myMixin';
 import { useI18n } from 'vue-i18n'
 
-import { useFetch } from 'nuxt/app'
+import { useAsyncData,useFetch  } from 'nuxt/app'
 
 const { t } = useI18n()
 const nuxtApp = useNuxtApp();
 const router = useRouter();
 const listPODProduct = ref([]);
 
+
+const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/product/list`, {
+  headers: {
+    fetchMode: 'headless',
+  },
+  server: true,
+  watch: false,
+});
+
 onMounted(async () => {
-  // const response = await fetch('product/list');
-  const { data, pending, error } = await useFetch(`http://printchic-api.tvo-solution.net/auth/product/list'`)
-  console.log('sdfsdfdss',data)
+  listPODProduct.value = data.value.data.items.map(item => item.media[0]?.path);
 
-  listPODProduct.value = data.items.map(item => item.media[0]?.path);
+  if (process.client) {
+    updateScreenWidth();
+    window.addEventListener('resize', updateScreenWidth);
+  }
 });
 
-const screenWidth = useState('windowWidth', () => {
-  return process.client ? window.innerWidth : null;
+onUnmounted(() => {
+  // Remove event listener when the component is unmounted
+  window.removeEventListener('resize', updateScreenWidth);
 });
+
+const screenWidth = ref(0);
+
+function updateScreenWidth() {
+  screenWidth.value = window.innerWidth;
+
+}
 
 const mobile = computed(() => screenWidth.value <= 600);
 const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);

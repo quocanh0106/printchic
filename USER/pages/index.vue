@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
+        <swiperComponent class="mt-12 mb-8 swiper-mobile-top-category" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -297,15 +297,42 @@ import SwiperDescriptionMobile from "./home/components/SwiperDescriptionMobile.v
 import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
 import { myMixin } from '~/mixins/myMixin';
 
+const { t } = useI18n()
+
+onMounted(async () => {
+  if (process.client) {
+    updateScreenWidth();
+    window.addEventListener('resize', updateScreenWidth);
+  }
+});
+
+onUnmounted(() => {
+  // Remove event listener when the component is unmounted
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const screenWidth = ref(0);
+
+function updateScreenWidth() {
+  screenWidth.value = window.innerWidth;
+
+}
+
+const mobile = computed(() => screenWidth.value <= 600);
+const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
+const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
+const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
+const extraPc = computed(() => screenWidth.value > 2500);
+
 const { data }  = await useAsyncData(
   'categoryProduct',
-  () => $fetch('http://localhost:8000/auth/categoryProduct/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
 )
 
 
 const listBlog  = await useAsyncData(
   'blog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )
 </script>
 
@@ -489,6 +516,14 @@ const listBlog  = await useAsyncData(
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+}
+.swiper-mobile-top-category{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 180px !important;
+      min-height: 0px !important;
+      max-height: none !important;
   }
 }
 </style>

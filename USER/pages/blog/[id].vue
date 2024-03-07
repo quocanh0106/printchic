@@ -130,52 +130,83 @@
   </div>
 </template>
 
-<script>
-import heroImg from "../../assets/images/blog-img.png";
-import linkIcon from "../../assets/svg/gray-hyper.svg";
-import linkedinIcon from "../../assets/svg/gray-linkedin.svg";
-import twIcon from "../../assets/svg/gray-tw.svg";
-import fbIcon from "../../assets/svg/gray-fb.svg";
-import popupIcon from "../../assets/svg/popup.svg";
-import popupBoxIcon from "../../assets/svg/popup-box.svg";
-import Help from "../../components/help.vue";
-import { myMixin } from "~/mixins/myMixin";
-import Blog from "../../components/blog.vue";
-import MenuExpanse from "../../components/MenuExpanse.vue";
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useNuxtApp } from '#app'
+import { useRoute } from 'vue-router';
 
+import heroImg from '~/assets/images/blog-img.png'
+import linkIcon from '~/assets/svg/gray-hyper.svg'
+import linkedinIcon from '~/assets/svg/gray-linkedin.svg'
+import twIcon from '~/assets/svg/gray-tw.svg'
+import fbIcon from '~/assets/svg/gray-fb.svg'
+import popupIcon from '~/assets/svg/popup.svg'
+import popupBoxIcon from '~/assets/svg/popup-box.svg'
+import Help from '~/components/help.vue'
+import Blog from '~/components/blog.vue'
+import MenuExpanse from '~/components/MenuExpanse.vue'
+
+import { useAsyncData,useFetch } from 'nuxt/app'
+
+// If myMixin is compatible with Composition API, consider converting it to a composable
+// Otherwise, you need to adapt its functionality within the setup
+
+// Reactive data properties
+const breadcrumbItems = ref(["Home", "Blog Posts", "Selling Guide"])
+const menuList = ref([
+  "Yard signs",
+  "What are best-selling Christmas print on demand ornament?",
+  "Doormats +10 Best Free Print on Demand Design Software and Tools An Ultimate Guide On How To Make And Sell Merch For Creators",
+  "Ornaments",
+])
+const listBlog = ref([])
+const route = useRoute();
+const { t } = useI18n()
+const nuxtApp = useNuxtApp()
+const blogId = computed(() => route.params.id);
+
+const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/blog/info/${blogId.value}`, {
+  headers: {
+    fetchMode: 'headless',
+  },
+  server: true,
+  watch: false,
+});
+
+onMounted(async () => {
+  if (process.client) {
+    updateScreenWidth();
+    window.addEventListener('resize', updateScreenWidth);
+  }
+});
+
+onUnmounted(() => {
+  // Remove event listener when the component is unmounted
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const screenWidth = ref(0);
+
+function updateScreenWidth() {
+  screenWidth.value = window.innerWidth;
+
+}
+
+const mobile = computed(() => screenWidth.value <= 600);
+const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
+const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
+const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
+const extraPc = computed(() => screenWidth.value > 2500);
+</script>
+
+<script>
 export default {
-  name: "BlogDetailVue",
-  components: { Help, Blog, MenuExpanse },
-  mixins: [myMixin],
-  data() {
-    return {
-      breadcrumbItems: ["Home", "Blog Posts", "Selling Guide"],
-      menuList: [
-        "Yard signs",
-        "What are best-selling Christmas print on demand ornament?",
-        "Doormats +10 Best Free Print on Demand Design Software and Tools An Ultimate Guide On How To Make And Sell Merch For Creators",
-        "Ornaments",
-      ],
-      heroImg,
-      linkIcon,
-      linkedinIcon,
-      popupBoxIcon,
-      twIcon,
-      fbIcon,
-      popupIcon,
-    };
+  components: {
+    Help,
+    Blog,
+    MenuExpanse,
   },
-  methods: {
-    async getBlogDetail(){
-      const response = await this.getRequest('blog/list')
-      this.listBlog = response.data.items
-    }
-  },
-  async mounted() {
-    await getBlogDetail();
-  },
-  
-};
+}
 </script>
 
 <style lang="scss" scoped>

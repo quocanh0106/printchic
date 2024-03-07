@@ -24,7 +24,7 @@
       <!-- Logo of Company -->
       <div class="company-collab bg-light-gray1-custom mt-20 custom-padding">
         <h1 class="text-lg font-semibold text-center">{{ $t('howItWorks.partnerTitle') }}</h1>
-        <swiperComponent :slidePerView="pc ? 6 : mobile ? 2 : 4" :showNavigation="false" :showPagination="false" class="mt-12 mb-8 how-it-work-slider" />
+        <swiperComponent :slidePerView="6" :showNavigation="false" :showPagination="false" :items="listLogoRef" class="mt-12 mb-8 how-it-work-slider-logo" />
       </div>
 
       <!-- Counter -->
@@ -73,7 +73,7 @@
       <div class="step-hiw custom-padding flex justify-between items-center">
         <img :src="step4" />
         <div class="step-content">
-          <h1 class="txt-primary text-lg">{{ $t('howItWorks.step1') }}</h1>
+          <h1 class="txt-primary text-lg">{{ $t('howItWorks.step4') }}</h1>
           <h1 class="mt-4 font-semibold section-title">{{ $t('howItWorks.step4Title') }}</h1>
           <p class="mt-4 mw-379px">{{ $t('howItWorks.step4Desc') }}</p>
           <a class="txt-primary font-semibold mt-8 flex">
@@ -113,7 +113,7 @@
       <!-- Logo of Company -->
       <div class="company-collab bg-light-gray1-custom mt-12">
         <h1 class="text-lg font-semibold text-center pt-5">{{ $t('howItWorks.partnerTitle') }}</h1>
-        <swiperComponent :slidePerView="2" :showNavigation="false" :showPagination="true" class="mt-12 mb-8 mx-3" />
+        <swiperComponent :slidePerView="mobile ? 2 : 4" :showNavigation="false" :items="listLogoRef" :showPagination="true" class="mt-12 mb-8 mx-3 how-it-work-slider-logo" />
       </div>
 
       <!-- Counter -->
@@ -180,67 +180,94 @@
   </div>
 </template>
 
-<script>
-import help from "../../components/help.vue";
-import faq from "../../components/faq.vue";
-import swiperComponent from "../../components/swiperComponent.vue";
-import cardCounterVue from "../../components/cardCounter.vue"; //
+<script setup>
+import { ref } from 'vue';
+import help from '~/components/help.vue';
+import faq from '~/components/faq.vue';
+import swiperComponent from '~/components/swiperComponent.vue';
+import cardCounterVue from '~/components/cardCounter.vue';
+import imgHoldingPhone from '~/assets/svg/holding-phone.svg';
+import Default from '~/layouts/default.vue';
+import arrowUpRightWhite from '~/assets/svg/iconUpRightWhite.svg';
+import step1 from '~/assets/images/step1.png';
+import step2 from '~/assets/images/step2.png';
+import step3 from '~/assets/images/step3.png';
+import step4 from '~/assets/images/step4.png';
+import arrowUpRight from '~/assets/svg/arrowUpRight.svg';
+import logo1 from '~/assets/svg/logoTemplate/logoTemplate1.svg'
+import logo2 from '~/assets/svg/logoTemplate/logoTemplate2.svg'
+import logo3 from '~/assets/svg/logoTemplate/logoTemplate3.svg'
+import logo4 from '~/assets/svg/logoTemplate/logoTemplate4.svg'
+import logo5 from '~/assets/svg/logoTemplate/logoTemplate5.svg'
+import logo6 from '~/assets/svg/logoTemplate/logoTemplate6.svg'
 
-// import assets 
-import imgHoldingPhone from "../../assets/svg/holding-phone.svg"
-import Default from '../../layouts/default.vue';
-import arrowUpRightWhite from "../../assets/svg/iconUpRightWhite.svg";
-import step1 from "../../assets/images/step1.png";
-import step2 from "../../assets/images/step2.png";
-import step3 from "../../assets/images/step3.png";
-import step4 from "../../assets/images/step4.png";
-import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
-import { myMixin } from '~/mixins/myMixin';
+// Convert mixins to composables if possible. If myMixin contains global properties or methods, 
+// you might need to create a composable or find another way to integrate the logic.
 
-export default {
-  mixins: [myMixin],
-  components: {
-    help,
-    faq,
-    Default,
-    swiperComponent,
-    cardCounterVue,
+// Data properties converted to ref
+const imgHoldingPhoneRef = ref(imgHoldingPhone);
+const arrowUpRightWhiteRef = ref(arrowUpRightWhite);
+const arrowUpRightRef = ref(arrowUpRight);
+const step1Ref = ref(step1);
+const step2Ref = ref(step2);
+const step3Ref = ref(step3);
+const step4Ref = ref(step4);
+const listLogoRef = ref([logo1,logo2,logo3,logo4,logo5,logo6]);
+
+const counterInfor = ref([
+  {
+    amount: "420+",
+    title: "servicePage.counter1Title", // Use t function for translations
+    description: "servicePage.counter1Des",
   },
-  data() {
-    return {
-      imgHoldingPhone,
-      arrowUpRightWhite,
-      arrowUpRight,
-      step1,
-      step2,
-      step3,
-      step4,
-      listLogo: [],
-      counterInfor: [
-        {
-          amount: "420+",
-          title: this.$t("servicePage.counter1Title"),
-          description: this.$t("servicePage.counter1Des"),
-        },
-        {
-          amount: "90,350+",
-          title: this.$t("servicePage.counter2Title"),
-          description: this.$t("servicePage.counter2Des"),
-        },
-        {
-          amount: "180+",
-          title: this.$t("servicePage.counter3Title"),
-          description: this.$t("servicePage.counter3Des"),
-        },
-        {
-          amount: "2.5M+",
-          title: this.$t("servicePage.counter4Title"),
-          description: this.$t("servicePage.counter4Des"),
-        },
-      ],
-    };
+  {
+    amount: "90,350+",
+    title: "servicePage.counter2Title",
+    description: "servicePage.counter2Des",
   },
-};
+  {
+    amount: "180+",
+    title: "servicePage.counter3Title",
+    description: "servicePage.counter3Des",
+  },
+  {
+    amount: "2.5M+",
+    title: "servicePage.counter4Title",
+    description: "servicePage.counter4Des",
+  },
+]);
+
+// Use useI18n from vue-i18n if you need to translate strings
+const { t } = useI18n();
+
+// If there are any methods or lifecycle hooks from the original component, 
+// they should be converted to the Composition API style.
+
+onMounted(async () => {
+  if (process.client) {
+    updateScreenWidth();
+    window.addEventListener('resize', updateScreenWidth);
+  }
+});
+
+onUnmounted(() => {
+  // Remove event listener when the component is unmounted
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const screenWidth = ref(0);
+
+function updateScreenWidth() {
+  screenWidth.value = window.innerWidth;
+
+}
+
+const mobile = computed(() => screenWidth.value <= 600);
+const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
+const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
+const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
+const extraPc = computed(() => screenWidth.value > 2500);
+
 </script>
 
 <style lang="scss" scoped>
@@ -275,5 +302,40 @@ export default {
 }
 .btn-signup-for-free-mobile{
   padding: 12px 11px !important;
+}
+
+.how-it-work-slider-logo{
+  :deep(.swiper-thumbnail){
+    min-width:0px !important;
+    max-width: 12vw !important;
+    min-height: 0px !important;
+    max-height: none !important;
+  }
+  :deep(.swiper-wrapper){
+    padding-bottom: 0px !important;
+  }
+  @media screen and (max-width: 992px){
+    :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 160px !important;
+      min-height: 0px !important;
+      max-height: none !important;
+    }
+    :deep(.swiper-wrapper){
+      padding-bottom: 50px !important;
+    }
+  }
+
+  @media screen and (max-width: 700px){
+    :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 160px !important;
+      min-height: 0px !important;
+      max-height: none !important;
+    }
+    :deep(.swiper-wrapper){
+      padding-bottom: 50px !important;
+    }
+  }
 }
 </style>
