@@ -44,7 +44,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent :items="listCategory" class="mt-12 mb-8" />
+        <swiperComponent :items="data?.data?.items" class="mt-12 mb-8" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -296,6 +296,8 @@ import swiperComponent from "../components/swiperComponent.vue";
 import SwiperDescriptionMobile from "./home/components/SwiperDescriptionMobile.vue";
 import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
 import { myMixin } from '~/mixins/myMixin';
+
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
 const { data }  = await useAsyncData(
   'categoryProduct',
