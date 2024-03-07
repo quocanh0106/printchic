@@ -110,7 +110,7 @@ export default {
             },
             {
               urlName: this.$t("footer.service"),
-              url: "service",
+              url: "services",
             },
             {
               urlName: this.$t("footer.ourFactory"),
