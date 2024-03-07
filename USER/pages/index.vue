@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8" :items="listCategory" :slidePerView="tablet ? 4 : 2" />
+        <swiperComponent class="mt-12 mb-8" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -267,7 +267,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <SwiperBlogMobile class="mt-12 mb-8" :items="listBlog" :slidePerView="1" />
+        <SwiperBlogMobile class="mt-12 mb-8" :items="listBlog.data.items" :slidePerView="1" />
       </div>
 
       <!-- Frequently asked question -->
@@ -279,7 +279,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="js">
 // import  img
 import introImage from "../assets/images/introImage.png";
 import distictThumbnails from "../assets/images/distictThumbnail.png";
@@ -296,46 +296,17 @@ import swiperComponent from "../components/swiperComponent.vue";
 import SwiperDescriptionMobile from "./home/components/SwiperDescriptionMobile.vue";
 import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
 import { myMixin } from '~/mixins/myMixin';
-export default {
-  mixins: [myMixin],
-  components: {
-    carousel,
-    cardInfor,
-    blog,
-    faq,
-    help,
-    swiperComponent,
-    SwiperDescriptionMobile,
-    SwiperBlogMobile,
-  },
 
-  data() {
-    return {
-      introImage,
-      arrowUpRight,
-      arrowUpRightWhite,
-      cardThumbnail,
-      distictThumbnails,
-      listCategory:[],
-      listBlog:[],
-    };
-  },
-  mounted() {
-    this.getListProductCategory()
-    this.getListBlog()
-  },
-  methods: {
-    async getListProductCategory() {
-      const response = await this.getRequest('categoryProduct/list')
-      this.listCategory = response.data.items
-    },
-    async getListBlog() {
-      const response = await this.getRequest('blog/list')
-      this.listBlog = response.data.items
-    },
-  },
-  
-};
+const { data }  = await useAsyncData(
+  'categoryProduct',
+  () => $fetch('http://localhost:8000/auth/categoryProduct/list')
+)
+
+
+const listBlog  = await useAsyncData(
+  'blog',
+  () => $fetch('http://localhost:8000/auth/blog/list')
+)?.useAsyncData
 </script>
 
 <style scoped lang="scss">

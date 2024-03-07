@@ -8,7 +8,7 @@
             <img class="small-img-blog blog-img" :src="blog.img" @click="toDetailBlog(blog._id)"/>
             <div class="">
               <h1 class="font-semibold mt-3">{{ blog[`title${currentLanguage}`] }}</h1>
-              <div v-html="JSON.parse(blog[`content${currentLanguage}`])" class="mt-2"></div>
+              <div v-html="blog[`content${currentLanguage}`] ? JSON.parse(blog[`content${currentLanguage}`]) : ''" class="mt-2"></div>
               <p class="mt-3">{{ blog.createdAt }}</p>
             </div>
           </div>
@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="js">
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import Swiper core and required modules
 import { Pagination, Navigation } from "swiper/modules";
@@ -33,13 +33,11 @@ import "swiper/css/scrollbar";
 import introImage from "../assets/images/introImage.png"
 import useLanguage from '~/composables/useLanguage';
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  props: {
-    slidePerView: {
+
+const { currentLanguage, setLanguage } = useLanguage();
+
+defineProps({
+  slidePerView: {
       type: Number,
       default: 1
     },
@@ -55,28 +53,22 @@ export default {
       type: Array,
       default: [],
     }
-  },
-  data() {
-    const { currentLanguage, setLanguage } = useLanguage();
-    return {
-      Pagination,
-      Navigation,
-      introImage,
-      currentLanguage
-    };
-  },
-  methods: {
-    onSwiper(swiper) {
+});
+
+const { data }  = await useAsyncData(
+  'blog',
+  () => $fetch('http://localhost:8000/auth/blog/list')
+)
+
+const onSwiper = (swiper) => {
       // console.log(swiper);
-    },
-    toDetailBlog(id) {
+    };
+    const toDetailBlog = (id) => {
       this.$router.push(`/blog/${id}`);
-    },
-    onSlideChange() {
+    };
+    const onSlideChange = () => {
       console.log("slide change");
-    },
-  },
-};
+    };
 </script>
 
 <style lang="scss" scoped>
