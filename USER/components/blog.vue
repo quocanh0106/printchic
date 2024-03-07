@@ -55,42 +55,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="js">
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
 import { myMixin } from "~/mixins/myMixin";
 import SwiperBlogMobile from "../pages/home/components/SwiperBlogMobile";
 import useLanguage from '~/composables/useLanguage';
+import useWidthScreen from '~/composables/useWidthScreen';
 
-export default {
-  mixins: [myMixin],
-  components: {
-    SwiperBlogMobile,
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const { currentLanguage, setLanguage } = useLanguage();
+
+defineProps({
+  title: {
+    type: String,
   },
-  props: {
-    title: {
-      type: String,
-    },
+  listBlog: {
+    type: Array,
   },
-  data() {
-    const { currentLanguage, setLanguage } = useLanguage();
-    return {
-      arrowUpRight,
-      listBlog: [],
-      currentLanguage,
-    };
-  },
-  mounted() {
-    this.getListBlog()
-  },
-  methods: {
-    toDetailBlog(id) {
-      this.$router.push(`/blog/${id}`);
-    },
-    async getListBlog() {
-      const response = await this.getRequest('blog/list')
-      this.listBlog = response.data.items
-    },
-  },
+});
+
+
+const toDetailBlog = (id) => {
+  this.$router.push(`/blog/${id}`);
 };
 </script>
 
