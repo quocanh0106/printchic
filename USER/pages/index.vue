@@ -306,7 +306,7 @@ const { data }  = await useAsyncData(
 const listBlog  = await useAsyncData(
   'blog',
   () => $fetch('http://localhost:8000/auth/blog/list')
-)?.useAsyncData
+)
 </script>
 
 <style scoped lang="scss">
