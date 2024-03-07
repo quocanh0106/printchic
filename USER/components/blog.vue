@@ -51,7 +51,6 @@
           {{ title ? title : $t("homePage.ourBlogStory") }}
         </h1>
       </div>
-      <SwiperBlogMobile />
     </div>
   </div>
 </template>

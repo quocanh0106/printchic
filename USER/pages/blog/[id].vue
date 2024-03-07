@@ -8,14 +8,14 @@
     </div>
 
     <div class="hero-image mb-10">
-      <img :src="heroImg" alt="pic" />
+      <img  :src="blogDetail.img" alt="pic" />
     </div>
 
     <div class="side-paddings" :class="mobile || tablet ? '' : 'flex gap-10 mb-10'">
       <div class="blog-content">
         <!-- Title --------------------------------------------------------------------------->
         <div class="title text-3xl font-bold mb-5">
-          Summer Products to Sell: 15 POD Ideas for This Season
+          {{ locale == 'US' ? blogDetail.titleUS : locale == 'UK' ? blogDetail.titleUK : locale == 'FR' ? blogDetail.titleFR : blogDetail.titleDE}}
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
@@ -36,22 +36,16 @@
         </div>
 
         <!-- Content --------------------------------------------------------------------------->
-        <div class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'">
-          As the days get longer and warmer, it’s prime time to prep your
-          designs for those sizzling summer moments. If you want a sales chart
-          hotter than the pavement in July, make sure your catalog is bursting
-          with the coolest summer essentials. In 2024, we’ve got your back with
-          the top 15 summer products to sell. So, gear up for your best season
-          ever by snagging some (or all) of these trendsetters! 
-        </div>
+        <p class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'" v-html="locale == 'US' ? blogDetail.contentUS : locale == 'UK' ? blogDetail.contentUK : locale == 'FR' ? blogDetail.contentFR : blogDetail.contentDE">
+        </p>
 
         <!-- Avatar and link bar --------------------------------------------------------------------------->
-        <div class="link-bar">
+        <div class="link-bar py-4">
           <div class="avatar flex gap-2">
             <v-avatar :image="heroImg" size="50"></v-avatar>
             <div class="flex flex-column justify-between">
               <span class="font-bold">Chloe Nguyen</span>
-              <span class="text-sm text-slate-400">11 Jan 2022</span>
+              <span class="text-sm text-slate-400">{{ blogDetail.createdAt }}</span>
             </div>
           </div>
           <div class="hyper-link-group flex gap-2">
@@ -80,11 +74,13 @@
           <span class="text-xl font-bold">Trending Topics</span>
           <div
             class="info pt-3 pb-3 flex justify-between font-bold text-slate-500 align-start"
-            v-for="item in 3"
-            :key="item"
+            v-for="item,index in listTrendingTopic.value"
+            :key="index"
           >
-            What are best-selling Christmas print on demand ornament?
-            <img :src="popupBoxIcon" alt="icon" />
+          <span class="flex flex-col gap-y-2" v-if="index < 3">
+            {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE }}
+              <img class="cursor-pointer" @click="this.$router.push(`/blog/${item.id}`)" :src="popupBoxIcon" alt="icon" />
+          </span>
           </div>
         </div>
       </div>
@@ -93,6 +89,7 @@
     <!-- [component] Block --------------------------------------------------------------------------->
     <div class="related-post side-paddings" :class="mobile || tablet && 'mt-10'">
       <Blog title="Related Posts" />
+      <SwiperBlogMobile class="related-post-swipper-mobile" :items="listTrendingTopic" :slidePerView="1" />
     </div>
 
     <!-- <?Mobile> Summary block --------------------------------------------------------------------------->
@@ -112,15 +109,16 @@
         <span class="text-xl font-bold">Trending Topics</span>
         <div
           class="info pt-3 pb-3 flex justify-between font-bold text-slate-500 align-start"
-          v-for="item in 3"
-          :key="item"
+          v-for="news,index in listTrendingTopic"
+          :key="index"
         >
-          What are best-selling Christmas print on demand ornament?
-          <img :src="popupBoxIcon" alt="icon" />
+        <span class="flex gap-x-2" v-if="index < 3">
+            {{ locale == 'US' ? news.titleUS : locale == 'UK' ? news.titleUK : locale == 'FR' ? news.titleFR : news.titleDE }}
+              <img class="cursor-pointer" @click="this.$router.push(`/blog/${news.id}`)" :src="popupBoxIcon" alt="icon" />
+          </span>
         </div>
       </div>
     </div>
-
     <!-- [Component] Help --------------------------------------------------------------------------->
     <Help
       :headerTitle="$t('tos.helpTitle')"
@@ -131,9 +129,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useNuxtApp } from '#app'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router';
+import SwiperBlogMobile from "../pages/home/components/SwiperBlogMobile";
 
 import heroImg from '~/assets/images/blog-img.png'
 import linkIcon from '~/assets/svg/gray-hyper.svg'
@@ -159,25 +157,33 @@ const menuList = ref([
   "Doormats +10 Best Free Print on Demand Design Software and Tools An Ultimate Guide On How To Make And Sell Merch For Creators",
   "Ornaments",
 ])
-const listBlog = ref([])
 const route = useRoute();
-const { t } = useI18n()
-const nuxtApp = useNuxtApp()
+const { t , locale, d } = useI18n()
 const blogId = computed(() => route.params.id);
 
-const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/blog/info/${blogId.value}`, {
-  headers: {
-    fetchMode: 'headless',
-  },
-  server: true,
-  watch: false,
-});
+const blogDetail = computed(() => {
+  return data.value.data
+})
 
-onMounted(async () => {
+const { data }  = await useAsyncData(
+  'blogDetail',
+  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/info?blogId=${blogId.value}`)
+)
+
+const listTrendingTopic = computed(() => {
+  return listTrending.value.data.items
+})
+const { data : listTrending }  = await useAsyncData(
+  'listTrending',
+  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list`)
+)
+
+onMounted(() => {
   if (process.client) {
     updateScreenWidth();
     window.addEventListener('resize', updateScreenWidth);
   }
+  console.log(blogDetail, 'AHAHHA')
 });
 
 onUnmounted(() => {
@@ -205,6 +211,7 @@ export default {
     Help,
     Blog,
     MenuExpanse,
+    SwiperBlogMobile
   },
 }
 </script>
@@ -215,6 +222,8 @@ export default {
     width: 100%;
     img {
       width: 100%;
+      max-height: 431px;
+      object-fit: cover;
     }
   }
   .blog-content {
@@ -227,7 +236,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid #eaecf0;
-      padding-top: 15px;
+      padding: 16px;
     }
   }
   .related-post {
@@ -257,6 +266,16 @@ export default {
     .info {
       border-bottom: 1px solid #eaecf0;
     }
+  }
+}
+.related-post-swipper-mobile{
+  :deep(img){
+    max-height: 241px;
+    min-height: 241px;
+    object-fit: cover;
+  }
+  :deep(.swiper-wrapper){
+    padding-bottom: 0px;
   }
 }
 </style>

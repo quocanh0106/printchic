@@ -9,7 +9,7 @@
       </div>
       <div
         class="help-actions cursor-pointer mt-8"
-        v-if="!hideBtn"
+        v-show="!hideBtn"
         :class="mobile && 'flex flex-column'"
       >
         <v-button class="primary-btn text-white">

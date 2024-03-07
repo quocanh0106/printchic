@@ -22,6 +22,7 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import Swiper core and required modules
 import { Pagination, Navigation } from "swiper/modules";
+import { useRoute } from 'vue-router';
 
 // Import Swiper styles
 import "swiper/css";
@@ -33,7 +34,7 @@ import "swiper/css/scrollbar";
 import introImage from "../assets/images/introImage.png"
 import useLanguage from '~/composables/useLanguage';
 
-
+const router = useRouter(); // Use useRouter here
 const { currentLanguage, setLanguage } = useLanguage();
 
 defineProps({
@@ -57,18 +58,18 @@ defineProps({
 
 const { data }  = await useAsyncData(
   'blog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )
 
 const onSwiper = (swiper) => {
       // console.log(swiper);
     };
-    const toDetailBlog = (id) => {
-      this.$router.push(`/blog/${id}`);
-    };
-    const onSlideChange = () => {
-      console.log("slide change");
-    };
+const toDetailBlog = (id) => {
+  router.push(`/blog/${id}`);
+};
+const onSlideChange = () => {
+  console.log("slide change");
+};
 </script>
 
 <style lang="scss" scoped>

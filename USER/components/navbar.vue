@@ -180,7 +180,6 @@ export default {
   watch:{
     selectedLanguage(newVal, oldVal){
       this.$i18n.locale = newVal
-      console.log(this.$i18n.locale, 'KAKAK')
     }
   },
   methods: {
@@ -188,8 +187,6 @@ export default {
       console.log("KLEKKE",data);
     },
     isCurrentUrl(url) {
-      console.log(this.$route, "PATH");
-      console.log(url, "URL");
       if (this.$route.href == url) {
         console.log("TRUE");
         this.isActive = !this.isActive;

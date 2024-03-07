@@ -148,7 +148,6 @@ export default {
 </script>
 <style lang="scss">
 .tab-btn {
-  min-width: 165px;
   display:flex;
   align-items:center;
 }
