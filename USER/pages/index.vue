@@ -141,7 +141,7 @@
       </div>
 
       <!-- blog story -->
-      <blog class="custom-padding" />
+      <blog :listBlog="listBlog?.data?.items" class="custom-padding" />
 
       <!-- Frequently asked question -->
       <faq class="custom-padding" />
@@ -296,6 +296,7 @@ import swiperComponent from "../components/swiperComponent.vue";
 import SwiperDescriptionMobile from "./home/components/SwiperDescriptionMobile.vue";
 import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
 import { myMixin } from '~/mixins/myMixin';
+import useWidthScreen from '~/composables/useWidthScreen';
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { t } = useI18n()
@@ -309,7 +310,7 @@ const { data }  = await useAsyncData(
 const listBlog  = await useAsyncData(
   'blog',
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
-)
+)?.data
 </script>
 
 <style scoped lang="scss">
