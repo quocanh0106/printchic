@@ -5,8 +5,10 @@
         :navigation="showNavigation" :modules="[Pagination, Navigation]" @swiper="onSwiper" @slideChange="onSlideChange">
         <swiper-slide v-for="item, index in items" :key="index">
           <div>
-            <img :src="item.img" />
+            <img :src="item.bannerImg ? item.bannerImg : item.img" />
             <p class="text-center mt-2">{{ item.name }}</p>
+            <h1 class=" text-center text-swiper font-semibold mt-2.5" v-if="hasDescription">{{ locale.value == 'US' ? item.titleUS : locale.value == 'US' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</h1>
+            <p class="text-center text-swiper mt-1" v-if="hasDescription">{{ locale.value == 'US' ? item.descriptionUS : locale.value == 'US' ? item.descriptionUK : locale.value == 'FR' ? item.descriptionFR : item.descriptionDE }}</p>
           </div>
         </swiper-slide>
       </swiper>
@@ -14,9 +16,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import Swiper core and required modules
 import { Pagination, Navigation } from "swiper/modules";
 
 // Import Swiper styles
@@ -25,79 +27,58 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-// import asset
-import introImage from "../assets/images/introImage.png"
+// Import asset
+import introImage from "~/assets/images/introImage.png";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
+// Define props
+const props = defineProps({
+  slidePerView: {
+    type: Number,
+    default: 4
   },
-  props: {
-    slidePerView: {
-      type: Number,
-      default: 4
-    },
-    showNavigation: {
-      type: Boolean,
-      default: false
-    },
-    showPagination: {
-      type: Boolean,
-      default: true
-    },
-    items: {
-      type: Array,
-      default: [{
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }, {
-        img: introImage,
-        name: `Men's T-shirts`
-      }],
-    }
+  showNavigation: {
+    type: Boolean,
+    default: false
   },
-  data() {
-    return {
-      Pagination,
-      Navigation,
-      introImage,
-    };
+  showPagination: {
+    type: Boolean,
+    default: true
   },
-  methods: {
-    onSwiper(swiper) {
-      console.log(swiper);
-    },
-    onSlideChange() {
-      console.log("slide change");
-    },
+  items: {
+    type: Array,
+    default: () => ([
+      { img: introImage, name: "Men's T-shirts" },
+      { img: introImage, name: "Men's T-shirts" },
+      { img: introImage, name: "Men's T-shirts" },
+      // Add other items...
+    ]),
   },
+  hasDescription: {
+    type: Boolean,
+    default: false
+  },
+});
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n();
+// Reactive state
+const introImageRef = ref(introImage);
+
+// Methods
+const onSwiper = (swiper) => {
+  console.log(swiper);
 };
+
+const onSlideChange = () => {
+  console.log("slide change");
+};
+
+// Mounted lifecycle hook
+onMounted(() => {
+  console.log("created", props.items);
+});
 </script>
+
 
 <style lang="scss" scoped>
 .swiper{

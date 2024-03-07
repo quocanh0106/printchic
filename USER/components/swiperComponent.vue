@@ -11,16 +11,19 @@
           @swiper="onSwiper"
           @slideChange="onSlideChange"
         >
-          <swiper-slide v-for="item,index in items" :key="index"><img class="swiper-thumbnail rounded" :src="item.bannerImg? item.bannerImg : item" :class="imgWidth100 && 'w-100'" /></swiper-slide>
+          <swiper-slide v-for="item,index in items" :key="index">
+            <img class="swiper-thumbnail rounded" :src="item.bannerImg? item.bannerImg : item" :class="imgWidth100 && 'w-100'" />
+            <h1 class=" text-center text-swiper font-semibold mt-2.5" v-if="hasDescription">{{ locale.value == 'US' ? item.titleUS : locale.value == 'US' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</h1>
+            <p class="text-center text-swiper mt-1" v-if="hasDescription">{{ locale.value == 'US' ? item.descriptionUS : locale.value == 'US' ? item.descriptionUK : locale.value == 'FR' ? item.descriptionFR : item.descriptionDE }}</p>
+          </swiper-slide>
         </swiper>
     </div>
   </div>
 </template>
-
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import Swiper core and required modules
-import { Pagination, Navigation, FreeMode  } from "swiper/modules";
+import { Pagination, Navigation, FreeMode } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -29,65 +32,61 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import 'swiper/css/free-mode';
 
-// import asset
-import introImage from "../assets/images/introImage.png"
+import introImage from "~/assets/images/introImage.png";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
+// Props
+const props = defineProps({
+  slidePerView: {
+    type: Number,
+    default: 4
   },
-  props: {
-    slidePerView: {
-      type: Number,
-      default: 4
-    },
-    showNavigation: {
-      type: Boolean,
-      default: false
-    },
-    showPagination: {
-      type: Boolean,
-      default: true
-    },
-    isFreeMode: {
-      type: Boolean,
-      default : true
-    },
-    isFreeMode: {
-      type: Boolean,
-      default : true
-    },
-    items: {
-      type: Array,
-      default: [introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage],
-    },
-    imgWidth100: {
-      type: Boolean,
-      default: false
-    }
+  showNavigation: {
+    type: Boolean,
+    default: false
   },
-  data() {
-    return {
-      Pagination,
-      Navigation,
-      FreeMode,
-      introImage,
-    };
+  showPagination: {
+    type: Boolean,
+    default: true
   },
-  methods: {
-    onSwiper(swiper) {
-      // console.log(swiper);
-    },
-    onSlideChange() {
-      console.log("slide change");
-    },
+  isFreeMode: {
+    type: Boolean,
+    default: true
   },
-  mounted() {
-    console.log("created", this.items);
+  items: {
+    type: Array,
+    default: () => [introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage, introImage],
   },
-  
+  imgWidth100: {
+    type: Boolean,
+    default: false
+  },
+  hasDescription: {
+    type: Boolean,
+    default: false
+  }
+});
+
+// Reactive data
+const pagination = Pagination;
+const navigation = Navigation;
+const freeMode = FreeMode;
+const introImageRef = ref(introImage);
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n();
+// Methods
+const onSwiper = (swiper) => {
+  // console.log(swiper);
 };
+
+const onSlideChange = () => {
+  console.log("slide change");
+};
+
+// Mounted lifecycle hook
+onMounted(() => {
+  console.log("created", props.items);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -120,11 +119,7 @@ export default {
   }
 }
 
-.swiper-thumbnail{
-  min-width: 378px;
-  max-width: 378px;
-  min-height: 378px;
-  max-height: 378px;
-  object-fit: cover;
+.text-swiper{
+  margin-right: 5vw;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div  class="pros-and-cons-all-screenwrapper">
-    <div class="pros-and-cons-wrapper" v-show="pc">
+    <div class="pros-and-cons-wrapper" v-show="pc || lgPc || extraPc">
       <h1 class="text-center section-title font-semibold">
         {{ $t("prosAndConsPage.prosAndCons") }}
       </h1>

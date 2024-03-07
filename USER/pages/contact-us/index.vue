@@ -1,6 +1,6 @@
 <template>
   <div class="contact-us-all-page-wrapper">
-    <div class="contact-us-page-wrapper" v-show="pc">
+    <div class="contact-us-page-wrapper" v-show="pc || lgPc || extraPc">
       <!-- contact form -->
       <div class="contact-form-wrapper flex justify-between items-start custom-padding">
         <div class="contact-form w-1/2">

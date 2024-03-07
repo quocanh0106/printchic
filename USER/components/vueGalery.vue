@@ -1,6 +1,6 @@
 <template>
   <div class="gallery-wrapper">
-    <div class="vueGallery" v-show="pc">
+    <div class="vueGallery" v-show="pc || lgPc || extraPc">
       <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
         <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
           <i class="fas fa-chevron-circle-left"></i>

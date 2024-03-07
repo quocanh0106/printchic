@@ -1,6 +1,6 @@
 <template>
   <div class="card-info-all-screen-wrapper">
-    <div class="card-infor" v-show="pc">
+    <div class="card-infor" v-show="pc || lgPc || extraPc">
       <div class="card-info-wrapper flex m-4" :class="changeToFlexCol ? 'flex-col bg-light-gray-custom' : ''">
         <img :src="imgSrc" />
         <div class="card-des flex flex-col">

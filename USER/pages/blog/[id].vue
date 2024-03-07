@@ -64,7 +64,7 @@
       </div>
 
       <!-- <?PC> Summary block --------------------------------------------------------------------------->
-      <div class="summary-block" v-show="pc">
+      <div class="summary-block" v-show="pc || lgPc || extraPc">
         <div class="products mb-10">
           <span class="text-xl font-bold">Products</span>
           <div

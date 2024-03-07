@@ -1,6 +1,6 @@
 <template>
   <div class="product-detail-all-screen-wrapper">
-    <div class="product-detail-wrapper" v-show="pc">
+    <div class="product-detail-wrapper" v-show="pc || lgPc || extraPc">
       <div class="product-detail-head-block flex justify-between gap-x-16 custom-padding">
         <div class="display-image flex flex-col gap-y-10">
           <VueGallery :photos="photos" />

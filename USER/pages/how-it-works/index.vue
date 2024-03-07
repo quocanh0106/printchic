@@ -1,6 +1,6 @@
 <template>
   <div class="how-it-works-wrapper">
-    <div v-show="pc">
+    <div v-show="pc || lgPc || extraPc">
       <!-- header -->
       <div class="how-it-works-header-wrapper custom-padding">
         <div class="how-it-works-header">
@@ -308,7 +308,7 @@ const extraPc = computed(() => screenWidth.value > 2500);
   :deep(.swiper-thumbnail){
     min-width:0px !important;
     max-width: 12vw !important;
-    min-height: 0px !important;
+    min-height: 12vw !important;
     max-height: none !important;
   }
   :deep(.swiper-wrapper){
@@ -318,7 +318,7 @@ const extraPc = computed(() => screenWidth.value > 2500);
     :deep(.swiper-thumbnail){
       min-width:0px !important;
       max-width: 160px !important;
-      min-height: 0px !important;
+      min-height: 160px !important;
       max-height: none !important;
     }
     :deep(.swiper-wrapper){
@@ -330,7 +330,7 @@ const extraPc = computed(() => screenWidth.value > 2500);
     :deep(.swiper-thumbnail){
       min-width:0px !important;
       max-width: 160px !important;
-      min-height: 0px !important;
+      min-height: 160px !important;
       max-height: none !important;
     }
     :deep(.swiper-wrapper){

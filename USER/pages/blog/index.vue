@@ -1,6 +1,6 @@
 <template>
   <div class="blog-list-all-page-wrapper">
-    <div class="blog-list-wrapper" v-show="pc">
+    <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
       <blog class="custom-padding" />
       <!-- List Blog -->

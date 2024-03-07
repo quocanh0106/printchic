@@ -1,6 +1,6 @@
 <template>
   <div class="print-on-demand-page-wrapper-all-screen">
-    <div class="print-on-demand-page-wrapper" v-show="pc">
+    <div class="print-on-demand-page-wrapper" v-show="pc || lgPc || extraPc">
       <!-- Header  -->
       <div
         class="pod-header-wrapper flex justify-between gap-x-36 items-center custom-padding"
@@ -79,7 +79,7 @@
           <h1 class="section-title font-semibold">
             {{ $t("pod.enjoyPOPProduct") }}
           </h1>
-          <a class="flex items-center justify-center gap-x-2 txt-primary">
+          <a @click="this.$router.push('/product')" class="flex items-center justify-center gap-x-2 txt-primary">
             <p>{{ $t("pod.exploreOurCatalog") }}</p>
             <img :src="arrowUpRight" />
           </a>
@@ -89,6 +89,7 @@
           :showPagination="true"
           :showNavigation="true"
           :slidePerView="4"
+          :items="listPod"
         />
       </div>
   
@@ -117,6 +118,7 @@
           :showPagination="true"
           :showNavigation="true"
           :slidePerView="4"
+          :items="listPod"
         />
       </div>
   
@@ -145,6 +147,7 @@
           :showPagination="true"
           :showNavigation="true"
           :slidePerView="4"
+          :items="listPod"
         />
       </div>
   
@@ -270,8 +273,8 @@
       <div
         class="pod-header-wrapper flex justify-between flex-column gap-x-36 items-center px-3"
       >
-        <img :src="podThumb" />
-        <div class="header-pod-content">
+        <img class="w-100" :src="podThumb" />
+        <div class="header-pod-content py-8">
           <h1 class="section-title font-semibold my-2">{{ $t("pod.podProduct") }}</h1>
           <p class="section-content mt-8">{{ $t("pod.podProductDes") }}</p>
           <span
@@ -316,7 +319,7 @@
   
       <!-- card infor -->
       <div
-        class="card-info-wrapper flex bg-light-gray-custom justify-between flex-column"
+        class="card-info-wrapper flex bg-light-gray-custom justify-between flex-column  py-8"
       >
         <cardInfor
           class="card-info-pod"
@@ -339,9 +342,9 @@
       </div>
   
       <!-- pod product -->
-      <div class="pod-product-wrapper px-3">
-        <span class="pod-product-header flex justify-between">
-          <h4 class="">
+      <div class="pod-product-wrapper px-3 py-8">
+        <span class="pod-product-header flex flex-col justify-center items-center gap-y-6">
+          <h4 class="section-title">
             {{ $t("pod.enjoyPOPProduct") }}
           </h4>
           <a class="flex items-center justify-center gap-x-2 txt-primary">
@@ -353,13 +356,14 @@
           class="pod-product-galery mt-12 mb-8"
           :showPagination="true"
           :showNavigation="true"
-          :slidePerView="4"
+          :items="listPod"
+          :slidePerView="2"
         />
       </div>
   
       <!-- our customized clothing -->
       <div
-        class="our-customized-clothing justify-center items-center bg-light-gray-custom my-15"
+        class="our-customized-clothing justify-center items-center bg-light-gray-custom py-8"
       >
         <h1 class="section-title text-center ">
           {{ $t("pod.ourCustomizedClothing") }}
@@ -378,16 +382,17 @@
           </span>
         </span>
         <swiperComponent
-          class="mt-12"
+          class="mt-12 pod-product-galery"
           :showPagination="true"
           :showNavigation="true"
-          :slidePerView="4"
+          :items="listPod"
+          :slidePerView="2"
         />
       </div>
   
       <!-- our customized home decor -->
       <div
-        class="our-customized-home-decor px-3 justify-center items-center"
+        class="our-customized-home-decor px-3 justify-center items-center py-8"
       >
         <h1 class="section-title text-center">
           {{ $t("pod.ourCustomizedHomeDecor") }}
@@ -406,14 +411,15 @@
           </span>
         </span>
         <swiperComponent
-          class="mt-12"
+          class="mt-12 pod-product-galery"
           :showPagination="true"
           :showNavigation="true"
-          :slidePerView="4"
+          :items="listPod"
+          :slidePerView="2"
         />
       </div>
   
-      <div class="bg-light-blue-custom banner-try-pod-mobile">
+      <div class="bg-light-blue-custom banner-try-pod-mobile text-center flex flex-col items-center justify-start py-8">
           <div class="discount-tag">
               50% OFF
           </div>
@@ -429,7 +435,7 @@
         class="home-page-proccess-wrapper px-3 bg-light-gray1-custom w-auto"
       >
         <div
-          class="home-page-proccess flex flex-column justify-between w-auto mt-20"
+          class="home-page-proccess flex flex-column justify-between w-auto mt-20  py-8"
         >
           <div class="process-intro fullfillment-title">
             <h1 class="font-semibold section-title">
@@ -521,7 +527,7 @@
         </div>
       </div>
       <!-- Frequently asked question -->
-      <faq class="mb-7"/>
+      <faq class="mb-7 mt-8"/>
   
       <!-- help -->
       <help
@@ -532,47 +538,51 @@
     </div>
   </div>
 </template>
-<script>
-// component
-import swiperComponent from "../../components/swiperComponent.vue";
-import faq from "../../components/faq.vue";
-import help from "../../components/help.vue";
+<script setup>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import swiperComponent from '~/components/swiperComponent.vue';
+import faq from '~/components/faq.vue';
+import help from '~/components/help.vue';
+import podThumb from '~/assets/images/printOnDemandThumb.png';
+import check from '~/assets/svg/tickGreen.svg';
+import arrowUpRight from '~/assets/svg/arrowUpRight.svg'; // Corrected the path
+import cardThumbnail from '~/assets/svg/cardThumbNail.svg';
 
-// asset
-import podThumb from "../../assets/images/printOnDemandThumb.png";
-import check from "../../assets/svg/tickGreen.svg";
-import arrowUpRight from "../assets/svg/arrowUpRight.svg";
-import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
-import { myMixin } from '~/mixins/myMixin';
+// Replace the mixin with composable if possible. Here's a placeholder for your mixin logic.
+// const { someReactiveProperty, someMethod } = useMyMixin();
 
-export default {
-  mixins: [myMixin],
-  components: {
-    swiperComponent,
-    faq,
-    help,
-  },
-  props: {},
-  data() {
-    return {
-      podThumb,
-      check,
-      arrowUpRight,
-      cardThumbnail,
-      checkList: [
-        this.$t("pod.checkList1"),
-        this.$t("pod.checkList2"),
-        this.$t("pod.checkList3"),
-        this.$t("pod.checkList4"),
-      ],
-      listServiceTags: ["T-Shirt", "Hoodie", "Sweater", "Long Sleeves"],
-      ourCustomizedClothing: "",
-      ourCustomizedDecor: "",
-    };
-  },
-  methods: {},
-};
+const { t } = useI18n();
+
+const podThumbRef = ref(podThumb);
+const checkRef = ref(check);
+const arrowUpRightRef = ref(arrowUpRight);
+const cardThumbnailRef = ref(cardThumbnail);
+const checkList = ref([
+  t("pod.checkList1"),
+  t("pod.checkList2"),
+  t("pod.checkList3"),
+  t("pod.checkList4"),
+]);
+const listServiceTags = ref(["T-Shirt", "Hoodie", "Sweater", "Long Sleeves"]);
+const ourCustomizedClothing = ref("");
+const ourCustomizedDecor = ref("");
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+
+// Convert methods to simple functions if there are any in the methods block.
+
+const { data }  = await useAsyncData(
+  'listProduct',
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
+)
+
+const listPod = ref([])
+
+onMounted(() => {
+  listPod.value = data.value.data.items.map(item => item.media[0]?.path);
+})
 </script>
+
 <style scoped lang="scss">
 .header-pod-content {
   h1 {
@@ -610,8 +620,9 @@ export default {
 .banner-try-pod-mobile{
     height: 600px;
     background-image: url('../../assets/images/tryPODImag.png');
-    background-position: bottom right;
-    padding: 20px 20px 0 55%;
+    background-position: bottom center;
+    padding: 20px 20px 16px 20px;
+    background-size: 100vw auto;
 }
 .overlay-img{
     z-index: 1;
@@ -624,5 +635,19 @@ export default {
     text-align: center;
     width: 113px;
     font-weight: 500;
+}
+.pod-product-galery{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 180px !important;
+      min-height: 180px !important;
+      max-height: none !important;
+  }
+}
+.service-tag-wrapper{
+  overflow-x: scroll;
+}
+.service-tag{
+  min-width: 150px;
 }
 </style>

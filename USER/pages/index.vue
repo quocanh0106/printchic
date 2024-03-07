@@ -1,6 +1,6 @@
 <template>
   <div class="all-screen-home-wrapper">
-    <div class="page-container" v-show="pc">
+    <div class="page-container" v-show="pc || lgPc || extraPc">
       <carousel />
       <div class="home-page-introduction-wrapper mt-20">
         <div class="introduction-description">
@@ -44,7 +44,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent :items="data?.data?.items" class="mt-12 mb-8" />
+        <swiperComponent :hasDescription="true" :items="data?.data?.items" class="mt-12 mb-8 swiper-cate-pc" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
@@ -497,9 +497,14 @@ const listBlog  = await useAsyncData(
 .swiper-mobile-top-category{
   :deep(.swiper-thumbnail){
       min-width:0px !important;
-      max-width: 180px !important;
-      min-height: 0px !important;
+      max-width: 160px !important;
+      min-height: 160px !important;
       max-height: none !important;
+  }
+}
+.swiper-cate-pc{
+  :deep(.swiper-slide){
+    
   }
 }
 </style>

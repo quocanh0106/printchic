@@ -1,6 +1,6 @@
 <template>
   <div class="service-page-wrapper">
-    <div class="service-section-wrapper" v-show="pc">
+    <div class="service-section-wrapper" v-show="pc || lgPc || extraPc">
       <div class="service-wrapper">
         <!-- Header of service -->
         <div class="service-header custom-padding flex items-center justify-between">

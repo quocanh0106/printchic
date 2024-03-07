@@ -73,7 +73,7 @@
       <p class="section-content mt-5 mw-768px">
         {{ $t("aboutUs.ourServiceDesc") }}
       </p>
-      <div class="service-tag-wrapper w-100 flex justify-between mt-6" v-show="pc">
+      <div class="service-tag-wrapper w-100 flex justify-between mt-6" v-show="pc || lgPc || extraPc">
         <span
           class="service-tag"
           v-for="(tag, index) in listServiceTags"
@@ -106,7 +106,7 @@
           <img :src="arrowUpRight" />
         </a>
       </div>
-      <swiperComponent v-show="pc" :slidePerView="6" class="mt-12 mb-8" />
+      <swiperComponent v-show="pc || lgPc || extraPc" :slidePerView="6" class="mt-12 mb-8" />
     </div>
 
     <!-- Banner About Us -->

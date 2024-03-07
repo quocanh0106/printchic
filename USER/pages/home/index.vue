@@ -1,6 +1,6 @@
 <template>
   <div class="all-screen-home-wrapper">
-    <div class="page-container" v-show="pc">
+    <div class="page-container" v-show="pc || lgPc || extraPc">
       <carousel />
       <div class="home-page-introduction-wrapper mt-20">
         <div class="introduction-description">

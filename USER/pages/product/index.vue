@@ -1,14 +1,14 @@
 
 <template>
   <div class="product-page-all-screen-wrapper">
-    <div class="product-page-wrapper custom-padding" v-show="pc">
+    <div class="product-page-wrapper custom-padding" v-show="pc || lgPc || extraPc">
       <div class="product-header">
         <div class="product-banner rounded-lg text-center flex flex-col">
           <h1 class="section-title font-semibold"> {{ $t('productList.mensClothing') }} </h1>
           <span> Home / Men</span>
         </div>
         <div class="cloth-category">
-          <swiperComponent :slidePerView="6" :showNavigation="true" :showPagination="false" class="mt-12" />
+          <swiperComponent :hasDescription="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
         </div>
       </div>
       <div class="product-grid-wrapper flex justify-between">
@@ -68,7 +68,7 @@
           <span> Home / Men</span>
         </div>
         <div class="cloth-category">
-          <SwiperCateComponent :slidePerView="2" :showNavigation="true" :showPagination="false" class="mt-12" />
+          <SwiperCateComponent :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="mt-12" />
         </div>
       </div>
   
@@ -138,61 +138,77 @@
   </div>
 </template>
 
-<script>
-import SwiperCateComponent from "./components/SwiperCateComponent.vue";
-import help from "../../components/help.vue";
-import { myMixin } from '/mixins/myMixin';
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useFetch } from 'nuxt/app';
+import SwiperCateComponent from './components/SwiperCateComponent.vue';
+import help from '~/components/help.vue';
 import useLanguage from '~/composables/useLanguage';
 
-export default {
-  mixins: [myMixin],
-  components: {
-    SwiperCateComponent,
-    help
-  },
-  data() {
-    const { currentLanguage, setLanguage } = useLanguage();
+// Replace the mixin with composable if necessary. 
+// const { mixinMethod } = useMyMixin(); // Example usage if you need to replace myMixin with a composable.
 
-    return {
-      drawer: null,
-      items: ['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular'],
-      listProduct: [],
-      currentPage: 1,
-      listFilter: [
-        {
-          filterBy: 'Categories',
-          listFilter: ['Apparel', 'Gift & Accessories', 'Home & Decorations', 'All Over Print', 'Canvas & Poster', 'Shoes', 'US 2D Printing']
-        },
-        {
-          filterBy: 'Print Area',
-          listFilter: ['Back side', 'All-over Print', 'Front side', 'Sleeve left', 'Sleeve right']
-        },
-        {
-          filterBy: 'Techniques',
-          listFilter: ['UV Digital Printing', 'Vinyl Heat Transfer', 'Digital Cylinder Printing', 'Laser Cut', 'Embroidery', 'Digital Printing (DTG)', 'Dye Sublimation']
-        },
-      ],
-      filterBy: [],
-      currentLanguage,
-    };
-  },
-  async mounted(){
-    const response = await this.getRequest('product/list')
-    this.listProduct = response.data.items
-  },
-  methods: {
-    clearAllFilterBy() {
-      this.filterBy = [];
-    },
-    toProductDetail(item) {
-      let id = 1
-      this.$router.push(`/product/${id}`);
-    },
-    loadMoreItem(){
+const { currentLanguage, setLanguage } = useLanguage();
+const router = useRouter();
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
-    }
+const drawer = ref(null);
+const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
+const listProduct = ref([]);
+const currentPage = ref(1);
+const listFilter = ref([
+  {
+    filterBy: 'Categories',
+    listFilter: ['Apparel', 'Gift & Accessories', 'Home & Decorations', 'All Over Print', 'Canvas & Poster', 'Shoes', 'US 2D Printing']
+  },
+  {
+    filterBy: 'Print Area',
+    listFilter: ['Back side', 'All-over Print', 'Front side', 'Sleeve left', 'Sleeve right']
+  },
+  {
+    filterBy: 'Techniques',
+    listFilter: ['UV Digital Printing', 'Vinyl Heat Transfer', 'Digital Cylinder Printing', 'Laser Cut', 'Embroidery', 'Digital Printing (DTG)', 'Dye Sublimation']
+  },
+]);
+
+const { data : dataProduct }  = await useAsyncData(
+  'listProduct',
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
+)
+const { data : dataCategory }  = await useAsyncData(
+  'listCategory',
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
+)
+const filterBy = ref([]);
+
+// Data fetching with useFetch or useAsyncData
+// Watch the data response to update listProduct
+watch(dataProduct, (newData) => {
+  listProduct.value = newData.data.items;
+});
+
+function clearAllFilterBy() {
+  filterBy.value = [];
 }
+
+function toProductDetail(item) {
+  let id = 1; // This should be dynamic based on the item
+  router.push(`/product/${id}`);
 }
+
+function loadMoreItem() {
+  // Implement load more functionality
+}
+
+const listCate = ref([])
+
+onMounted(() => {
+  listCate.value = dataCategory.value.data.items;
+  console.log(listCate.value, 'HAHAH')
+  listProduct.value = dataProduct.value.data.items;
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -227,7 +243,7 @@ export default {
     img {
       border-radius: 4px;
       height: 20vw;
-      width: 20vw;
+      width: 40vh;
     }
   }
 
@@ -289,6 +305,9 @@ export default {
 
 .button-seemore-mobile {
   margin-left: 35%;
+  @media screen and (min-width:700px){
+    margin-left: 40%;
+  }
 }
 
 .tag-filter {
@@ -302,7 +321,16 @@ export default {
 .product-thumbnail{
   min-height : 25vh;
   min-width: 15vw;
-  max-height: 25vh;
+  max-height: 40vw;
   object-fit: cover;
+}
+
+.product-category{
+  :deep(h1){
+    margin-right:0px;
+  }
+  :deep(p){
+    margin-right:0px;
+  }
 }
 </style>

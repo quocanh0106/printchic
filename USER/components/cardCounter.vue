@@ -1,6 +1,6 @@
 <template>
   <div class="card-counter mh-183px" :class="pc ? 'mw-276px' : ''">
-    <div class="card-infor" v-show="pc">
+    <div class="card-infor" v-show="pc || lgPc || extraPc">
       <div class="card-info-wrapper m-5 flex items-start flex-col p-2.5">
         <h1 class="card-amount txt-primary font-medium">{{ amount }}</h1>
         <h1 class="font-semibold card-title mt-3">{{ title }}</h1>

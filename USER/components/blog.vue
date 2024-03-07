@@ -1,6 +1,6 @@
 <template>
   <div class="all-screen-blog-wrapper">
-    <div class="blog-wrapper" v-show="pc">
+    <div class="blog-wrapper" v-show="pc || lgPc || extraPc">
       <div class="blog-header flex justify-between items-center">
         <h1 class="section-title font-semibold">
           {{ title ? title : $t("homePage.ourBlogStory") }}

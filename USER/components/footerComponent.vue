@@ -1,6 +1,6 @@
 <template>
   <div class="footer-wrapper bg-light-gray-custom">
-    <div class="footer custom-padding" v-show="pc">
+    <div class="footer custom-padding" v-show="pc || lgPc || extraPc">
       <div class="menu-section-wrapper flex justify-between w-auto">
         <div class="footer-left w-auto">
           <img :src="footerLogo" />

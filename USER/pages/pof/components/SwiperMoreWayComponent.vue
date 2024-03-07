@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper">
+  <div class="swiper w-100">
     <div class="swiper-wrapper-outside">
       <swiper :slides-per-view="slidePerView" :space-between="50" :pagination="showPagination"
         :navigation="showNavigation" :modules="[Pagination, Navigation]" @swiper="onSwiper" @slideChange="onSlideChange">
