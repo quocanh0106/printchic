@@ -26,8 +26,7 @@ export default {
   },
   methods:{
     searchProduct() {
-      console.log(this.querySearch, 'sadasd');
-      const url = `/search-result?querySearch=${this.querySearch}`;
+      const url = `/search-result?search=${this.querySearch}`;
       // this.$router.push({path:'/search-result',query: this.querySearch})
       window.location.href = url;
     }

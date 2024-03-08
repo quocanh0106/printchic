@@ -23,7 +23,7 @@ export default {
   mixins: [myMixin],
   props: {
     amount: {
-      type: Number,
+      type: String,
       default: "100+",
     },
     title: {
