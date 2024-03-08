@@ -497,6 +497,9 @@ const FormCreate = () => {
               label={`Tag UK`}
               required
               onChange={(e) => {
+                if(e.target.value && errorsTag.titleUK) {
+                  setErrorsTag({...errorsTag, titleUK: false})
+                }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUK: e.target.value })
               }}
@@ -511,6 +514,9 @@ const FormCreate = () => {
               label={`Tag US`}
               required
               onChange={(e) => {
+                if(e.target.value && errorsTag.titleUS) {
+                  setErrorsTag({...errorsTag, titleUS: false})
+                }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUS: e.target.value })
               }}
@@ -525,6 +531,9 @@ const FormCreate = () => {
               label={`Tag FR`}
               required
               onChange={(e) => {
+                if(e.target.value && errorsTag.titleFR) {
+                  setErrorsTag({...errorsTag, titleFR: false})
+                }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleFR: e.target.value })
               }}
@@ -539,6 +548,9 @@ const FormCreate = () => {
               label={`Tag DE`}
               required
               onChange={(e) => {
+                if(e.target.value && errorsTag.titleDE) {
+                  setErrorsTag({...errorsTag, titleDE: false})
+                }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleDE: e.target.value })
               }}
