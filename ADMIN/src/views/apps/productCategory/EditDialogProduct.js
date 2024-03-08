@@ -353,7 +353,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                     aria-describedby='validation-basic-select'
                   >
                     {
-                      store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.title}</MenuItem>)
+                      store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.titleUS}</MenuItem>)
                     }
                   </CustomTextField>
                 )}

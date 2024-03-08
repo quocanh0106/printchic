@@ -107,7 +107,7 @@ const UserList = () => {
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {store?.data?.find(ele => ele._id == row.parentCategory)?.title}
+            {store?.data?.find(ele => ele._id == row.parentCategory)?.titleUS}
           </Typography>
         )
       }
