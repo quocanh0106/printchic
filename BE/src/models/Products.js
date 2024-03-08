@@ -4,7 +4,40 @@ const ObjectId = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 const { common } = require('./Common');
 const ProductsBase = {
-    handleUrl: {
+    metaDescriptionUK: {
+        type: String, trim: true,
+    },
+    metaDescriptionUS: {
+        type: String, trim: true,
+    },
+    metaDescriptionFR: {
+        type: String, trim: true,
+    },
+    metaDescriptionDE: {
+        type: String, trim: true,
+    },
+    handleUrlUK: {
+        type: String, trim: true,
+    },
+    handleUrlUS: {
+        type: String, trim: true,
+    },
+    handleUrlFR: {
+        type: String, trim: true,
+    },
+    handleUrlDE: {
+        type: String, trim: true,
+    },
+    typeUK: {
+        type: String, trim: true,
+    },
+    typeUS: {
+        type: String, trim: true,
+    },
+    typeFR: {
+        type: String, trim: true,
+    },
+    typeDE: {
         type: String, trim: true,
     },
     titleUS: {
@@ -24,12 +57,6 @@ const ProductsBase = {
     },
     languageId: {
         type: ObjectId, trim: true, ref: 'languages',
-    },
-    metaDescription: {
-        type: String, trim: true,
-    },
-    type: {
-        type: String, trim: true,
     },
     descriptionUK: {
         type: String, trim: true,

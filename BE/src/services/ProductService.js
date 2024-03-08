@@ -19,10 +19,23 @@ const create = async (data) => {
         set.titleUS = data.titleUS;
         set.titleFR = data.titleFR;
         set.titleDE = data.titleDE;
-        set.handleUrl = data.handleUrl;
+
+        set.handleUrlUK = data.handleUrlUK;
+        set.handleUrlUS = data.handleUrlUS;
+        set.handleUrlFR = data.handleUrlFR;
+        set.handleUrlDE = data.handleUrlDE;
+
+        set.metaDescriptionUK = data.metaDescriptionUK;
+        set.metaDescriptionUS = data.metaDescriptionUS;
+        set.metaDescriptionFR = data.metaDescriptionFR;
+        set.metaDescriptionDE = data.metaDescriptionDE;
+
+        set.typeUK = data.typeUK;
+        set.typeUS = data.typeUS;
+        set.typeFR = data.typeFR;
+        set.typeDE = data.typeDE;
+
         set.categoryProduct = JSON.parse(data.categoryProduct)
-        set.metaDescription = data.metaDescription;
-        set.type = data.type;
         set.descriptionUK = data.descriptionUK;
         set.descriptionUS = data.descriptionUS;
         set.descriptionFR = data.descriptionFR;
