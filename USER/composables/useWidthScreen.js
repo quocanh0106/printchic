@@ -17,7 +17,7 @@ export default function useWidthScreen() {
     window.removeEventListener('resize', updateScreenWidth);
   });
 
-  const mobile = computed(() => screenWidth.value <= 600);
+  const mobile = computed(() => screenWidth.value <= 600 && screenWidth.value > 0);
   const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
   const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
   const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
