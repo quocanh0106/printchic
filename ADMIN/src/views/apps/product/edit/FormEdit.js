@@ -170,8 +170,22 @@ const FormCreate = () => {
     formData.append("titleUS", value.titleUS);
     formData.append("titleFR", value.titleFR);
     formData.append("titleDE", value.titleDE);
-    formData.append("handleUrl", value.handleUrl);
-    formData.append("metaDescription", value.metaDescription);
+    
+    formData.append("handleUrlUK", value.handleUrlUK);
+    formData.append("handleUrlUS", value.handleUrlUS);
+    formData.append("handleUrlFR", value.handleUrlFR);
+    formData.append("handleUrlDE", value.handleUrlDE);
+
+    formData.append("metaDescriptionUK", value.metaDescriptionUK);
+    formData.append("metaDescriptionUS", value.metaDescriptionUS);
+    formData.append("metaDescriptionFR", value.metaDescriptionFR);
+    formData.append("metaDescriptionDE", value.metaDescriptionDE);
+
+    formData.append("typeUK", value.typeUK);
+    formData.append("typeUS", value.typeUS);
+    formData.append("typeFR", value.typeFR);
+    formData.append("typeDE", value.typeDE);
+
     formData.append("status", value.productStatus);
     formData.append("descriptionUK", JSON.stringify(contentUK));
     formData.append("descriptionUS", JSON.stringify(contentUS));
@@ -179,7 +193,6 @@ const FormCreate = () => {
     formData.append("descriptionDE", JSON.stringify(contentDE));
     formData.append("currency", value.currency);
     formData.append("categoryProduct", JSON.stringify(arrayCatPro));
-    formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
     formData.append("price", value.price);
     value.priceSale && formData.append("priceSale", value.priceSale);
@@ -345,15 +358,28 @@ const FormCreate = () => {
       setValue('titleUS', data?.titleUS)
       setValue('titleFR', data?.titleFR)
       setValue('titleDE', data?.titleDE)
-      setValue('handleUrl', data?.handleUrl)
-      setValue('metaDescription', data?.metaDescription)
+
+      setValue('handleUrlUK', data?.handleUrlUK)
+      setValue('handleUrlUS', data?.handleUrlUS)
+      setValue('handleUrlFR', data?.handleUrlFR)
+      setValue('handleUrlDE', data?.handleUrlDE)
+
+      setValue('metaDescriptionUK', data?.metaDescriptionUK)
+      setValue('metaDescriptionUS', data?.metaDescriptionUS)
+      setValue('metaDescriptionFR', data?.metaDescriptionFR)
+      setValue('metaDescriptionDE', data?.metaDescriptionDE)
+
+      setValue('typeUK', data?.typeUK)
+      setValue('typeUS', data?.typeUS)
+      setValue('typeFR', data?.typeFR)
+      setValue('typeDE', data?.typeDE)
+      
       setValue('productStatus', data?.status)
       data?.descriptionUK && setContentUK(JSON.parse(data?.descriptionUK))
       data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
       data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
       data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
       setValue('currency', data?.currency)
-      setValue('productType', data?.type)
       setValueRecommend(listCatPro)
       setValue('price', data?.price)
       setValue('priceSale', data?.priceSale)
@@ -606,9 +632,50 @@ const FormCreate = () => {
     <>
       <Grid container xs={12}>
         <Grid item xs={4}>
-          <Card sx={{ p: 4 }}>
+        <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Handle URL
+            </Typography>
             <Controller
-              name='handleUrl'
+              name='handleUrlUK'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url UK'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url UK'
+                  error={Boolean(errors.handleUrlUK)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlUK && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='handleUrlUS'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url US'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url US'
+                  error={Boolean(errors.handleUrlUS)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlUS && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='handleUrlFR'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
@@ -619,13 +686,196 @@ const FormCreate = () => {
                   label='Handle Url'
                   required
                   onChange={onChange}
-                  placeholder='Enter Handle Url'
-                  error={Boolean(errors.handleUrl)}
+                  placeholder='Enter Handle Url FR'
+                  error={Boolean(errors.handleUrlFR)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrl && { helperText: 'This field is required' })}
+                  {...(errors.handleUrlFR && { helperText: 'This field is required' })}
                 />
               )}
             />
+            <Controller
+              name='handleUrlDE'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url DE'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url DE'
+                  error={Boolean(errors.handleUrlDE)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Meta description
+            </Typography>
+            <Controller
+              name='metaDescriptionUK'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description UK'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description UK'
+                  error={Boolean(errors.metaDescriptionUK)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionUS'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description US'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description US'
+                  error={Boolean(errors.metaDescriptionUS)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionFR'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description FR'
+                  error={Boolean(errors.metaDescriptionFR)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionDE'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description DE'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description DE'
+                  error={Boolean(errors.metaDescriptionDE)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Product Type
+            </Typography>
+            <Controller
+              name='typeUK'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Product Type UK'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Product Type UK'
+                  error={Boolean(errors.typeUK)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.typeUK && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='typeUS'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Product Type US'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Product Type US'
+                  error={Boolean(errors.typeUS)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.typeUS && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='typeFR'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Product Type'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Product Type FR'
+                  error={Boolean(errors.typeFR)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.typeFR && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='typeDE'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Product Type DE'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Product Type DE'
+                  error={Boolean(errors.typeDE)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.typeDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
+          <Card sx={{ p: 4 }}>
             <Controller
               name='productStatus'
               control={control}
@@ -660,25 +910,6 @@ const FormCreate = () => {
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.titleUS || ''}
               renderInput={params => <CustomTextField {...params} label='Product Category' placeholder='Products' />}
-            />
-            <Controller
-              name='productType'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mt: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Enter Product Type'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Product Type'
-                  error={Boolean(errors.productType)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.productType && { helperText: 'This field is required' })}
-                />
-              )}
             />
             <Controller
               name='price'
