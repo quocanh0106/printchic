@@ -501,7 +501,7 @@ const FormCreate = () => {
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
-                  label='Handle Url'
+                  label='Handle Url FR'
                   required
                   onChange={onChange}
                   placeholder='Enter Handle Url FR'
@@ -582,7 +582,7 @@ const FormCreate = () => {
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
-                  label='Meta Description'
+                  label='Meta Description FR'
                   required
                   onChange={onChange}
                   placeholder='Enter Meta Description FR'
@@ -663,7 +663,7 @@ const FormCreate = () => {
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
-                  label='Product Type'
+                  label='Product Type FR'
                   required
                   onChange={onChange}
                   placeholder='Enter Product Type FR'
@@ -852,25 +852,25 @@ const FormCreate = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content UK
+                Description UK
               </Typography>
               <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content US
+                Description US
               </Typography>
               <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content DE
+                Description DE
               </Typography>
               <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content FR
+                Description FR
               </Typography>
               <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
             </Box>

@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
@@ -12,7 +12,7 @@ import styled from '@emotion/styled'
 import { Box } from '@mui/system'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,6 +27,10 @@ import { useSnackbar } from 'notistack'
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
+})
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Fade ref={ref} {...props} />
 })
 
 const modules = {
@@ -93,7 +97,23 @@ const FormCreate = () => {
   const [contentUK, setContentUK] = useState('');
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
+  const [openDialogCreateTag, setOpenDialogCreateTag] = useState(false);
   const [contentFR, setContentFR] = useState('');
+
+  // handle tag
+  const [newTags, setNewTags] = useState({
+    titleUK: '',
+    titleUS: '',
+    titleFR: '',
+    titleDE: '',
+  });
+  const [errorsTag, setErrorsTag] = useState({
+    titleUK: false,
+    titleUS: false,
+    titleFR: false,
+    titleDE: false,
+  });
+
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
 
@@ -120,12 +140,12 @@ const FormCreate = () => {
       })
       router.replace('/apps/blog/')
     } else {
-      if(data.statusCode == 10705) {
+      if (data.statusCode == 10705) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of blog already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of blog already exists!`, { variant: 'error' });
         })
       } else {
-        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+        enqueueSnackbar(`${data.message}`, { variant: 'error' });
       }
     }
     setLoading(false)
@@ -151,7 +171,6 @@ const FormCreate = () => {
     formData.append('file', files[0]);
 
     dispatch(addBlog({ formData, callBackSubmit }))
-
   }
 
   const {
@@ -200,6 +219,24 @@ const FormCreate = () => {
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
+  }
+
+  const handleSubmitNewTag = () => {
+    let tempErrorTag = {}
+    if (!newTags.titleUK) {
+      tempErrorTag.titleUK = true
+    }
+    if (!newTags.titleUS) {
+      tempErrorTag.titleUS = true
+    }
+    if (!newTags.titleFR) {
+      tempErrorTag.titleFR = true
+    }
+    if (!newTags.titleDE) {
+      tempErrorTag.titleDE = true
+    }
+
+    setErrorsTag(tempErrorTag)
   }
 
   return (
@@ -266,7 +303,7 @@ const FormCreate = () => {
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.title || ''}
-              renderInput={params => <CustomTextField {...params} label='filterSelectedOptions' placeholder='Products' />}
+              renderInput={params => <CustomTextField {...params} label='Recommend Product' placeholder='Products' />}
             />
             <Controller
               name='tags'
@@ -287,6 +324,9 @@ const FormCreate = () => {
                 />
               )}
             />
+            <Button variant='outlined' sx={{ mt: 3 }} onClick={() => setOpenDialogCreateTag(true)}>
+              Create Tag
+            </Button>
           </Card>
           <Card sx={{ p: 4, mt: 4 }}>
             <Box>
@@ -386,25 +426,25 @@ const FormCreate = () => {
             </Grid>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content UK 
+                Content UK
               </Typography>
               <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content US
               </Typography>
               <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content DE
               </Typography>
               <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content FR
               </Typography>
@@ -431,6 +471,92 @@ const FormCreate = () => {
           </Button>
         </Box>
       </Grid>
+      <Dialog
+        fullWidth
+        open={openDialogCreateTag}
+        scroll='body'
+        maxWidth='sm'
+        onClose={() => setOpenDialogCreateTag(false)}
+        TransitionComponent={Transition}
+        onBackdropClick={() => setOpenDialogCreateTag(false)}
+        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
+      >
+        <DialogContent
+        >
+          <CustomCloseButton onClick={() => setOpenDialogCreateTag(false)}>
+            <Icon icon='tabler:x' fontSize='1.25rem' />
+          </CustomCloseButton>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant='h2' sx={{ mb: 3 }}>
+              Create New Tags
+            </Typography>
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              value={newTags.titleUK}
+              label={`Tag UK`}
+              required
+              onChange={(e) => {
+                let tempNewTags = { ...newTags }
+                setNewTags({ ...tempNewTags, titleUK: e.target.value })
+              }}
+              error={Boolean(errorsTag.titleUK)}
+              aria-describedby='validation-basic-first-name'
+              {...(errorsTag.titleUK && { helperText: 'This field is required' })}
+            />
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              value={newTags.titleUS}
+              label={`Tag US`}
+              required
+              onChange={(e) => {
+                let tempNewTags = { ...newTags }
+                setNewTags({ ...tempNewTags, titleUS: e.target.value })
+              }}
+              error={Boolean(errorsTag.titleUS)}
+              aria-describedby='validation-basic-first-name'
+              {...(errorsTag.titleUS && { helperText: 'This field is required' })}
+            />
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              value={newTags.titleFR}
+              label={`Tag FR`}
+              required
+              onChange={(e) => {
+                let tempNewTags = { ...newTags }
+                setNewTags({ ...tempNewTags, titleFR: e.target.value })
+              }}
+              error={Boolean(errorsTag.titleFR)}
+              aria-describedby='validation-basic-first-name'
+              {...(errorsTag.titleFR && { helperText: 'This field is required' })}
+            />
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              value={newTags.titleDE}
+              label={`Tag DE`}
+              required
+              onChange={(e) => {
+                let tempNewTags = { ...newTags }
+                setNewTags({ ...tempNewTags, titleDE: e.target.value })
+              }}
+              error={Boolean(errorsTag.titleDE)}
+              aria-describedby='validation-basic-first-name'
+              {...(errorsTag.titleDE && { helperText: 'This field is required' })}
+            />
+          </Box>
+        </DialogContent>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', mb: 3, py: 3 }}>
+          <Button variant='tonal' color='secondary' onClick={() => setOpenDialogCreateTag(false)}>
+            Cancel
+          </Button>
+          <Button sx={{ ml: 20 }} variant='contained' onClick={handleSubmitNewTag}>
+            Create Tag
+          </Button>
+        </Box>
+      </Dialog>
     </>
   )
 }

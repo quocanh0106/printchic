@@ -85,7 +85,7 @@ const UserList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row?.categoryProduct?.map(ele => categoryProduct?.data.find(catPro => catPro._id == ele).titleUS)?.toString()}
+              {row?.categoryProduct?.map(ele => categoryProduct?.data.find(catPro => catPro._id == ele)?.titleUS)?.toString()}
             </Typography>
           </Box>
         )

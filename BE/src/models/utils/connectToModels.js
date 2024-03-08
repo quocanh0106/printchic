@@ -9,6 +9,7 @@ const BlogsModels = require('../Blogs');
 const CategoryBlogsModels = require('../CategoryBlog');
 const CategoryProductModels = require('../CategoryProduct');
 const FaqsModels = require('../Faqs');
+const TagModels = require('../Tag');
 const LanguagesModels = require('../Languages');
 
 const models = {};
@@ -21,6 +22,7 @@ module.exports = {
     category_blog: CategoryBlogsModels,
     category_product: CategoryProductModels,
     faqs: FaqsModels,
+    tags: TagModels,
     languages: LanguagesModels,
     connectToModels: ({ databaseName, currentModels = [], otherModels = [] }) => {
         const conn = connectDatabase(databaseName);

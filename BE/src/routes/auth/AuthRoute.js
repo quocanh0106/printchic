@@ -15,6 +15,6 @@ require('./Product')(authRouter);
 require('./CategoryBlogRoute')(authRouter);
 require('./SettingRoute')(authRouter);
 require('./blogRoute.js')(authRouter);
-
+require('./tagRoute.js')(authRouter);
 
 module.exports = authRouter;

@@ -42,7 +42,7 @@ const blogBase = {
     type: String, trim: true,
   },
   tags: {
-    type: String,
+    type: Array,
   },
   recommendProduct: {
     type: Array,

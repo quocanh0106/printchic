@@ -112,6 +112,13 @@ exports.CODES_SUCCESS = {
     10804: "Get detail product successfully!",
     10805: "Product already exists!",
 
+    /* 10900 -> 11100 Tag */
+    10900: "Create new Tag successfully!",
+    10901: "Get list Tag successfully!",
+    10902: "Delete Tag successfully!",
+    10903: "Update Tag successfully!",
+    10904: "Get detail Tag successfully!",
+    10905: "Tag already exists!",
 }
 exports.CODES_ERROR = {
     40000: 'Username or password is wrong. Please try again!',
