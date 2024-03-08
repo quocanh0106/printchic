@@ -14,14 +14,19 @@
 </template>
 
 <script>
-import searchIcon from '../assets/svg/searchIcon.svg'
 
 export default {
  components: {
   },
+  props:{
+    rules:{
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      querySearch:''
+      querySearch:'',
     };
   },
   methods:{

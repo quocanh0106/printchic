@@ -2,7 +2,7 @@
   <div class="blog-list-all-page-wrapper">
     <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
-      <blog class="custom-padding" />
+      <blog :listBlog="listBlog.data.items" class="custom-padding" />
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center custom-padding"
@@ -15,21 +15,21 @@
             :key="index"
             @click="currentTab = index"
           >
-            {{ this.$i18n.locale == 'US' ? tab.titleUS : this.$i18n.locale == 'US' ? tab.titleUK : this.$i18n.locale == 'FR' ? tab.titleFR : tab.titleDE}}
+            {{ locale == 'US' ? tab.titleUS : locale == 'US' ? tab.titleUK : locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
         </div>
         <div class="list-blog-post mt-12">
           <div class="blog-post-wrapper flex">
             <div
               class="flex blog-post cursor-pointer"
-              v-for="(item, index) in listBlog"
+              v-for="(item, index) in listBlog.data.items"
               :key="index"
               @click="toDetailBlog(item.id)"
             >
               <img class="thumbnail-img rounded" :src="item.img" />
               <span class="content p-6">
-                <h1 class="font-semibold text-xl">{{ this.$i18n.locale == 'US' ? item.titleUS : this.$i18n.locale == 'US' ? item.titleUK : this.$i18n.locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html="this.$i18n.locale == 'US' ? item.contentUS : this.$i18n.locale == 'US' ? item.contentUK : this.$i18n.locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
+                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -38,19 +38,19 @@
         <v-button
           class="secondary-btn mt-12 btn-seemore cursor-pointer"
           @click="loadMore"
-          >{{ $t("button.seeMore") }}</v-button
+          >{{ t("button.seeMore") }}</v-button
         >
       </div>
       <!-- help -->
       <help
-        :headerTitle="$t('homePage.howCanWeHelp')"
-        :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        :headerTitle="t('homePage.howCanWeHelp')"
+        :headerDesc="t('homePage.howCanWeHelpDesc')"
         class="custom-padding"
       />
     </div>
     <div class="blog-list-wrapper" v-show="mobile || tablet">
       <!-- featured Post -->
-      <blog/>
+      <blog :listBlog="listBlog.data.items"/>
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center w-100"
@@ -63,21 +63,21 @@
             :key="index"
             @click="currentTab = index"
           >
-          {{ this.$i18n.locale == 'US' ? tab.titleUS : this.$i18n.locale == 'US' ? tab.titleUK : this.$i18n.locale == 'FR' ? tab.titleFR : tab.titleDE}}
+          {{  locale == 'US' ? tab.titleUS :  locale == 'US' ? tab.titleUK :  locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
         </div>
         <div class="list-blog-post mt-12">
           <div class="blog-post-wrapper flex flex-column">
             <div
               class="flex blog-post cursor-pointer flex-column"
-              v-for="(item, index) in listBlog"
+              v-for="(item, index) in listBlog.data.items"
               :key="index"
               @click="toDetailBlog(item._id)"
             >
               <img class="rounded" :src="item.img" />
               <span class="content p-6">
-                <h1 class="font-semibold text-xl">{{ this.$i18n.locale == 'US' ? item.titleUS : this.$i18n.locale == 'US' ? item.titleUK : this.$i18n.locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html="this.$i18n.locale == 'US' ? item.contentUS : this.$i18n.locale == 'US' ? item.contentUK : this.$i18n.locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
+                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -86,64 +86,44 @@
         <v-button
           class="secondary-btn mt-4 mb-8 btn-seemore cursor-pointer flex justify-center"
           @click="loadMore"
-          >{{ $t("button.seeMore") }}</v-button
+          >{{ t("button.seeMore") }}</v-button
         >
       </div>
       <!-- help -->
       <help
-        :headerTitle="$t('homePage.howCanWeHelp')"
-        :headerDesc="$t('homePage.howCanWeHelpDesc')"
+        :headerTitle="t('homePage.howCanWeHelp')"
+        :headerDesc="t('homePage.howCanWeHelpDesc')"
         class="mt-5"
       />
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref, onMounted, watch } from 'vue';
 import blog from "../../components/blog.vue";
 import help from "../../components/help.vue";
-import { myMixin } from '~/mixins/myMixin';
 
-export default {
-  mixins: [myMixin],
-  components: {
-    blog,
-    help,
-  },
-  data() {
-    return {
-      listBlog: [],
-      currentPage: 1,
-      currentTab: 0,
-      tabList: [],
-    };
-  },
-  mounted() {
-    // this.currentTab = this.tabList[0];
-    this.getListBlog();
-    this.getListBlogTag();
-  },
-  watch: {
-    currentPage() {
-      this.getListBlog();
-    },
-  },
-  methods: {
-    loadMore() {
-      this.currentPage++;
-    },
-    async getListBlog() {
-      const response = await this.getRequest('blog/list')
-      this.listBlog = response.data.items
-      console.log( this.listBlog, 'HAHA')
-    },
-    async getListBlogTag(){
-      const response = await this.getRequest('categoryBlog/list')
-      this.tabList = response.data.items
-    },
-    toDetailBlog(id){
-        this.$router.push(`/blog/${id}`)
-    }
-  },
+const currentPage = ref(1);
+const currentTab = ref(0);
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const { t , locale } = useI18n()
+
+const { data:listBlog }  = await useAsyncData(
+  'listBlog',
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
+)
+const { data:tabList }  = await useAsyncData(
+  'tabList',
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
+)
+
+
+const loadMore = () => {
+  currentPage.value++;
+};
+
+const toDetailBlog = (id) => {
+  this.$router.push(`/blog/${id}`);
 };
 </script>
 <style lang="scss">

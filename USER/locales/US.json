@@ -4,7 +4,12 @@
   "viewAll": "View All",
   "navBar":{
     "signUp" : "Sign Up",
-    "search" : "Search for anything you need"
+    "search" : "Search for anything you need",
+    "Home" : "Home",
+    "Products" : "Products",
+    "HIW" : "How it works",
+    "Blog" : "Blog",
+    "aboutUs" : "About us"
   },
   "prosAndConsPage": {
     "prosAndCons" : "Pros and Cons of POD",
