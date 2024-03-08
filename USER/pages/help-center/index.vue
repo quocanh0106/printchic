@@ -58,7 +58,7 @@
             <span class="font-bold text-cyan-700">{{ helpList.length }}</span>
             Results found for "{{ searchData }}"
           </p>
-          <div class="single-block mb-5">
+          <div v-if="isSearch" class="single-block mb-5">
             <v-expansion-panels class="expansions" variant="accordion">
               <v-expansion-panel v-for="(item, index) in helpList" :key="index">
                 <v-expansion-panel-title
@@ -72,6 +72,51 @@
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
+          </div>
+          <div v-if="currentTab == 0" class="single-block mb-5">
+            <v-expansion-panels class="expansions" variant="accordion">
+              <v-expansion-panel v-for="(item, index) in helpList" :key="index">
+                <v-expansion-panel-title
+                  collapse-icon="mdi-minus"
+                  expand-icon="mdi-plus"
+                >
+                  <span class="text-lg font-bold"> {{ item.title }} </span>
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
+                  {{ item.description }}
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </div>
+          <div v-if="currentTab == 1" class="single-block mb-5">
+            Getting Started
+          </div>
+          <div v-if="currentTab == 2" class="single-block mb-5">
+            Product And Pricing
+          </div>
+          <div v-if="currentTab == 3" class="single-block mb-5">
+            Place Order
+          </div>
+          <div v-if="currentTab == 4" class="single-block mb-5">
+            Shipping and fullfilment
+          </div>
+          <div v-if="currentTab == 5" class="single-block mb-5">
+            Returns
+          </div>
+          <div v-if="currentTab == 6" class="single-block mb-5">
+            Design And Mockup
+          </div>
+          <div v-if="currentTab == 7" class="single-block mb-5">
+            Intergration
+          </div>
+          <div v-if="currentTab == 8" class="single-block mb-5">
+            Billing and Taxes
+          </div>
+          <div v-if="currentTab == 9" class="single-block mb-5">
+            Resources
+          </div>
+          <div v-if="currentTab == 10" class="single-block mb-5">
+            Account
           </div>
           <v-pagination
             v-if="isSearch && helpList.length > 0"
@@ -87,13 +132,13 @@
             <p class="text-sm text-slate-400">Our Suggestions</p>
             <div class="chip-list">
               <v-chip
-                v-for="item in 10"
+                v-for="item in listSuggestion"
                 :key="item"
                 class="ma-2"
                 label
                 size="small"
               >
-                Label
+                {{ item }}
               </v-chip>
             </div>
           </div>
@@ -175,6 +220,7 @@ export default {
       bgPic,
       breadcrumbItems: ["Home", "Help Center"],
       searchData: "",
+      originalList: helpListMock,
       helpList: helpListMock,
       navMenuData,
       privacyPolicyData,
@@ -182,23 +228,39 @@ export default {
       isSearch: false,
       pagination: 1,
       paginationLength: 1,
+      currentTab: 0,
+      listSuggestion: [
+        'Label',
+        'Label',
+        'Label',
+        'Label',
+        'Label',
+        'Label',
+        'Label',
+        'Label',
+      ]
     };
   },
   methods: {
     searchHelpList() {
+      this.helpList = this.originalList
       this.isSearch = true;
+      this.currentTab = null;
       this.helpList = this.helpList.filter((item) =>
         item.title.toLowerCase().includes(this.searchData.toLowerCase())
       );
       this.paginationLength = Math.ceil(this.helpList.length / 8);
     },
     changeTab(index) {
+      this.isSearch = false;
       this.anchorMenuData = this.anchorMenuData.map((item) => {
         return {
           label: item.label,
           isActive: false,
         };
       });
+      this.currentTab = index
+      this.helpList = this.originalList
       this.anchorMenuData[index].isActive = true;
     },
   },

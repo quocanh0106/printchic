@@ -21,6 +21,7 @@
           :variant="item.isActive ? 'outlined' : 'text'"
           :color="item.isActive && 'blue'"
           class="nav-btn"
+          @click="changeActive(item,index)"
           v-for="(item, index) in navMenuData"
           :key="index"
         >
@@ -142,6 +143,16 @@ export default {
       anchorMenuData,
     };
   },
+  methods:{
+    changeActive(item, index){
+      item.isActive = true;
+      navMenuData.forEach((navItem,_ind)=>{
+        if(_ind != index){
+          navItem.isActive = false;
+        }
+      })
+    }
+  }
 };
 </script>
 
