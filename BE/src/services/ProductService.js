@@ -150,17 +150,48 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.titleDE)) {
             set.titleDE = data.titleDE;
         }
-        if (!isEmpty(data?.handleUrl)) {
-            set.handleUrl = data.handleUrl;
+
+        if (!isEmpty(data?.handleUrlUK)) {
+            set.handleUrlUK = data.handleUrlUK;
         }
+        if (!isEmpty(data?.handleUrlUS)) {
+            set.handleUrlUS = data.handleUrlUS;
+        }
+        if (!isEmpty(data?.handleUrlFR)) {
+            set.handleUrlFR = data.handleUrlFR;
+        }
+        if (!isEmpty(data?.handleUrlDE)) {
+            set.handleUrlDE = data.handleUrlDE;
+        }
+
+        if (!isEmpty(data?.metaDescriptionUK)) {
+            set.metaDescriptionUK = data.metaDescriptionUK;
+        }
+        if (!isEmpty(data?.metaDescriptionUS)) {
+            set.metaDescriptionUS = data.metaDescriptionUS;
+        }
+        if (!isEmpty(data?.metaDescriptionFR)) {
+            set.metaDescriptionFR = data.metaDescriptionFR;
+        }
+        if (!isEmpty(data?.metaDescriptionDE)) {
+            set.metaDescriptionDE = data.metaDescriptionDE;
+        }
+
+        if (!isEmpty(data?.typeUK)) {
+            set.typeUK = data.typeUK;
+        }
+        if (!isEmpty(data?.typeUS)) {
+            set.typeUS = data.typeUS;
+        }
+        if (!isEmpty(data?.typeFR)) {
+            set.typeFR = data.typeFR;
+        }
+        if (!isEmpty(data?.typeDE)) {
+            set.typeDE = data.typeDE;
+        }
+
         if (!isEmpty(data?.categoryProductId)) {
             set.categoryProductId = convertToObjectId(data?.categoryProductId || '');
-        }
-        if (!isEmpty(data?.metaDescription)) {
-            set.metaDescription = data.metaDescription;
-        }
-        if (!isEmpty(data?.type)) {
-            set.type = data.type;
         }
         if (!isEmpty(data?.descriptionUK)) {
             set.descriptionUk = data.descriptionUk;
