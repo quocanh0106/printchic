@@ -1,21 +1,21 @@
-export const navMenuData= [
+export const navMenuData = [
   {
-    label: 'General Terms',
+    label: "General Terms",
   },
   {
-    label: 'Fulfillment Conditions'
+    label: "Fulfillment Conditions",
   },
   {
-    label: 'Return & Refund',
-    isActive: true
+    label: "Return & Refund",
+    isActive: true,
   },
   {
-    label: 'Limitation of Liability'
+    label: "Limitation of Liability",
   },
   {
-    label: 'Intellectual Property and Trademark'
+    label: "Intellectual Property and Trademark",
   },
-]
+];
 
 export const privacyPolicyData = [
   {
@@ -87,7 +87,6 @@ export const privacyPolicyData = [
 export const anchorMenuData = [
   {
     label: "FAQS",
-    isActive: true
   },
   {
     label: "Getting Started",
@@ -118,5 +117,48 @@ export const anchorMenuData = [
   },
   {
     label: "Account",
+  },
+];
+
+export const helpListMock = [
+  {
+    title: "What is Bulk Discount?",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "How to deal with pre-archive products?",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "How Yoycol calculates shipping rates?",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "Yoycol Shipping Zone Explanation.",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "What is Mockup Generator and How does it work?",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "Mockup Generator Guideline.",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "What is Mockup Generator and How does it work?",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
+  },
+  {
+    title: "Mockup Generator Guideline.",
+    description:
+      "PrintChic is a trustworthy print-on-demand (POD) company. Our goal is making sure to help merchants make more money in a simple and painless way through our services.",
   },
 ];

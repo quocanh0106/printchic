@@ -21,8 +21,11 @@
               variant="solo"
               prepend-inner-icon="mdi-magnify"
               dense
+              v-model="searchData"
             ></v-text-field>
-            <v-btn class="seach-btn" color="primary"> Search </v-btn>
+            <v-btn class="seach-btn" color="primary" @click="searchHelpList">
+              Search
+            </v-btn>
           </div>
         </div>
       </div>
@@ -34,6 +37,7 @@
             class="text-sm mb-3 pointer"
             :class="item.isActive && 'blue'"
             :key="index"
+            @click="changeTab(index)"
           >
             {{ item.label }}
           </p>
@@ -44,38 +48,55 @@
             class="text-sm mb-3 pointer mr-5"
             :class="item.isActive && 'blue'"
             :key="index"
+            @click="changeTab(index)"
             >{{ item.label }}</span
           >
         </div>
 
         <div class="content" :class="mobile || tablet ? 'ml-0' : 'ml-10'">
-          <p>
-            <span class="font-bold text-cyan-700">16</span> Results found for
-            “warehouse”
+          <p v-if="isSearch">
+            <span class="font-bold text-cyan-700">{{ helpList.length }}</span>
+            Results found for "{{ searchData }}"
           </p>
-          <div class="single-block mb-5 mt-5">
+          <div class="single-block mb-5">
             <v-expansion-panels class="expansions" variant="accordion">
-              <v-expansion-panel v-for="item in 6" :key="item">
+              <v-expansion-panel v-for="(item, index) in helpList" :key="index">
                 <v-expansion-panel-title
                   collapse-icon="mdi-minus"
                   expand-icon="mdi-plus"
                 >
-                  <span class="text-lg font-bold"> Item </span>
+                  <span class="text-lg font-bold"> {{ item.title }} </span>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                  {{ item.description }}
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
           </div>
           <v-pagination
-            :length="4"
+            v-if="isSearch && helpList.length > 0"
+            v-model="pagination"
+            :length="paginationLength"
             color="primary"
             variant="outlined"
           ></v-pagination>
+          <div
+            class="no-data-searching"
+            v-if="isSearch && helpList.length === 0"
+          >
+            <p class="text-sm text-slate-400">Our Suggestions</p>
+            <div class="chip-list">
+              <v-chip
+                v-for="item in 10"
+                :key="item"
+                class="ma-2"
+                label
+                size="small"
+              >
+                Label
+              </v-chip>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -137,6 +158,7 @@ import {
   navMenuData,
   privacyPolicyData,
   anchorMenuData,
+  helpListMock,
 } from "./helpers/constants";
 import { myMixin } from "~/mixins/myMixin";
 
@@ -152,11 +174,37 @@ export default {
       fbIcon,
       bgPic,
       breadcrumbItems: ["Home", "Help Center"],
+      searchData: "",
+      helpList: helpListMock,
       navMenuData,
       privacyPolicyData,
       anchorMenuData,
+      isSearch: false,
+      pagination: 1,
+      paginationLength: 1,
     };
   },
+  methods: {
+    searchHelpList() {
+      this.isSearch = true;
+      this.helpList = this.helpList.filter((item) =>
+        item.title.toLowerCase().includes(this.searchData.toLowerCase())
+      );
+      this.paginationLength = Math.ceil(this.helpList.length / 8);
+    },
+    changeTab(index) {
+      this.anchorMenuData = this.anchorMenuData.map((item) => {
+        return {
+          label: item.label,
+          isActive: false,
+        };
+      });
+      this.anchorMenuData[index].isActive = true;
+    },
+  },
+  mounted() {
+    this.changeTab(0)
+  }
 };
 </script>
 
@@ -172,7 +220,13 @@ export default {
       padding-right: 0 !important;
     }
     .content {
-      width: 70%;
+      width: 80%;
+      @media screen and (max-width: 992px) {
+        width: 100%;
+      }
+    }
+    .nav-slide {
+      width: 20%;
       @media screen and (max-width: 992px) {
         width: 100%;
       }
