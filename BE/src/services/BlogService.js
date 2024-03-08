@@ -44,6 +44,18 @@ const list = async (data) => {
         if (data?.categoryBlogId) {
             conditions.categoryBlogId = data?.categoryBlogId;
         }
+        if (data?.titleUS) {
+            conditions.titleUS = data?.titleUS;
+        }
+        if (data?.titleUK) {
+            conditions.titleUK = data?.titleUK;
+        }
+        if (data?.titleFR) {
+            conditions.titleFR = data?.titleFR;
+        }
+        if (data?.titleDE) {
+            conditions.titleDE = data?.titleDE;
+        }
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
