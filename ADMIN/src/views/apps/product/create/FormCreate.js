@@ -23,6 +23,7 @@ import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
 import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -105,6 +106,7 @@ const FormCreate = () => {
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
   const [contentFR, setContentFR] = useState('');
+  const [valueRecommend, setValueRecommend] = useState([])
 
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
@@ -125,6 +127,10 @@ const FormCreate = () => {
     setContentFR(content);
   };
 
+  const handleChange = (event, newValue) => {
+    setValueRecommend(newValue)
+  }
+
   const callBackSubmit = (data) => {
     if (data.success) {
       toast.success('New Product created successfully', {
@@ -132,12 +138,12 @@ const FormCreate = () => {
       })
       router.replace('/apps/product/')
     } else {
-      if(data.statusCode == 10805) {
+      if (data.statusCode == 10805) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of product already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of product already exists!`, { variant: 'error' });
         })
       } else {
-        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+        enqueueSnackbar(`${data.message}`, { variant: 'error' });
       }
     }
     setLoading(false)
@@ -152,7 +158,9 @@ const FormCreate = () => {
 
       return ele
     })
-    console.log('value', value)
+
+    const arrayCatPro = valueRecommend.map(ele => ele._id)
+
     const formData = new FormData();
     formData.append("titleUK", value.titleUK);
     formData.append("titleUS", value.titleUS);
@@ -166,7 +174,7 @@ const FormCreate = () => {
     formData.append("descriptionFR", JSON.stringify(contentFR));
     formData.append("descriptionDE", JSON.stringify(contentDE));
     formData.append("currency", value.currency);
-    formData.append("categoryProductId", value.ProductCategory);
+    formData.append("categoryProduct", JSON.stringify(arrayCatPro));
     formData.append("type", value.productType);
     formData.append("price", value.price);
     value.priceSale && formData.append("priceSale", value.priceSale);
@@ -201,6 +209,7 @@ const FormCreate = () => {
   const store = useSelector(state => state.categoryProduct)
 
   useEffect(() => {
+    setValue('currency', 'USD')
     dispatch(fetchEvents())
   }, [])
 
@@ -404,7 +413,7 @@ const FormCreate = () => {
       setFiles(acceptedFiles.map(file => Object.assign(file)))
     }
   })
-
+  console.log('valueRecommend', valueRecommend)
   const handleRemoveFile = file => {
     const uploadedFiles = files
     const filtered = uploadedFiles.filter(i => i.name !== file.name)
@@ -430,6 +439,25 @@ const FormCreate = () => {
         <Grid item xs={4}>
           <Card sx={{ p: 4 }}>
             <Controller
+              name='handleUrl'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url'
+                  error={Boolean(errors.handleUrl)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrl && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
               name='productStatus'
               control={control}
               rules={{ required: true }}
@@ -453,31 +481,16 @@ const FormCreate = () => {
                 </CustomTextField>
               )}
             />
-            <Controller
-              name='ProductCategory'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mt: 4 }}
-                  select
-                  fullWidth
-                  defaultValue=''
-                  label='Product Category'
-                  SelectProps={{
-                    value: value,
-                    onChange: e => onChange(e)
-                  }}
-                  id='validation-basic-select'
-                  error={Boolean(errors.ProductCategory)}
-                  aria-describedby='validation-basic-select'
-                  {...(errors.ProductCategory && { helperText: 'This field is required' })}
-                >
-                  {
-                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
-                  }
-                </CustomTextField>
-              )}
+            <CustomAutocomplete
+              multiple
+              value={valueRecommend}
+              onChange={handleChange}
+              sx={{ width: '100%', mt: 4 }}
+              options={store.data}
+              filterSelectedOptions
+              id='autocomplete-multiple-outlined'
+              getOptionLabel={option => option.titleUS || ''}
+              renderInput={params => <CustomTextField {...params} label='Product Category' placeholder='Products' />}
             />
             <Controller
               name='productType'
@@ -488,7 +501,7 @@ const FormCreate = () => {
                   sx={{ mt: 4 }}
                   fullWidth
                   value={value}
-                  label='Enter Product Type'
+                  label='Product Type'
                   required
                   onChange={onChange}
                   placeholder='Enter Product Type'
@@ -504,6 +517,7 @@ const FormCreate = () => {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
+                  type="number"
                   sx={{ mt: 4 }}
                   fullWidth
                   value={value}
@@ -522,6 +536,7 @@ const FormCreate = () => {
               control={control}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
+                  type="number"
                   sx={{ mt: 4 }}
                   fullWidth
                   value={value}
@@ -617,25 +632,25 @@ const FormCreate = () => {
             </Grid>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content UK 
+                Content UK
               </Typography>
               <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content US
               </Typography>
               <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content DE
               </Typography>
               <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content FR
               </Typography>
@@ -690,6 +705,7 @@ const FormCreate = () => {
                     <CustomTextField
                       fullWidth
                       select
+                      sx={{ textAlign: 'left' }}
                       defaultValue='USD'
                       label='Currency'
                       SelectProps={{

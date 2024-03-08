@@ -26,7 +26,7 @@
         <div class="product-list-wrapper">
           <div class="sortbar flex justify-between">
             <span class="total-product-amount mt-2 txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
-              listProduct.length }}</p> </span>
+              listProduct?.length }}</p> </span>
             <span class="sort-by-select flex gap-x-2">
               <p class="mt-2 txt-gray">{{ $t('productList.sortBy') }}:</p>
               <v-select :items="items" density="compact" :label="$t('productList.select')" class="sorter"></v-select>
@@ -41,11 +41,11 @@
             <div class="product-list mb-10">
               <div class="product-card cursor-pointer" @click="toProductDetail(item)" v-for="(item, index) in listProduct"
                 :key="index">
-                <img class="product-thumbnail" :src="item.media[0]?.path" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
-                <p class="mt-1 txt-dark-blue font-semibold">{{ item[`title${currentLanguage}`] }}</p>
-                <p class="mt-2 txt-primary font-medium">$ {{ item.price }}</p>
-                <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
+                <img class="product-thumbnail" :src="item?.media[0]?.path" />
+                <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants[0]?.sku }}</p>
+                <p class="mt-1 txt-dark-blue font-semibold">{{ item?.[`title${currentLanguage}`] }}</p>
+                <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
+                <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
             </div>
             <div>
@@ -105,7 +105,7 @@
             </span>
           </div>
             <span class="total-product-amount txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
-              listProduct.length }}</p> </span>
+              listProduct?.length }}</p> </span>
           <div class="query-filter-tag flex flex-row items-center gap-x-2.5 justify-center flex-wrap">
             <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item }}</span>
             <h1 class="txt-primary font-semibold cursor-pointer" v-if="filterBy.length > 0" @click="clearAllFilterBy()">{{
@@ -155,7 +155,6 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
 const drawer = ref(null);
 const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
-const listProduct = ref([]);
 const currentPage = ref(1);
 const listFilter = ref([
   {
@@ -172,21 +171,22 @@ const listFilter = ref([
   },
 ]);
 
-const { data : dataProduct }  = await useAsyncData(
+const listProduct  = await useAsyncData(
   'listProduct',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
-)
-const { data : dataCategory }  = await useAsyncData(
+  async () => {
+    const response = await $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
+    return response.data.items
+  }
+)?.data
+console.log('listProduct',listProduct.value)
+const listCate  = await useAsyncData(
   'listCategory',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
-)
+  async () => {
+    const response = await $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
+    return response.data.items
+  }
+)?.data
 const filterBy = ref([]);
-
-// Data fetching with useFetch or useAsyncData
-// Watch the data response to update listProduct
-watch(dataProduct, (newData) => {
-  listProduct.value = newData.data.items;
-});
 
 function clearAllFilterBy() {
   filterBy.value = [];
@@ -200,14 +200,6 @@ function toProductDetail(item) {
 function loadMoreItem() {
   // Implement load more functionality
 }
-
-const listCate = ref([])
-
-onMounted(() => {
-  listCate.value = dataCategory.value.data.items;
-  console.log(listCate.value, 'HAHAH')
-  listProduct.value = dataProduct.value.data.items;
-})
 
 </script>
 

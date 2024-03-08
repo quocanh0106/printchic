@@ -20,7 +20,7 @@ const create = async (data) => {
         set.titleFR = data.titleFR;
         set.titleDE = data.titleDE;
         set.handleUrl = data.handleUrl;
-        set.categoryProductId = convertToObjectId(data.categoryProductId);
+        set.categoryProduct = JSON.parse(data.categoryProduct)
         set.metaDescription = data.metaDescription;
         set.type = data.type;
         set.descriptionUK = data.descriptionUK;
@@ -54,6 +54,18 @@ const list = async (data) => {
         if (data?.status) {
             conditions.status = data?.status;
         }
+        if (data?.titleUS) {
+            conditions.titleUS = data?.titleUS;
+        }
+        if (data?.titleUK) {
+            conditions.titleUK = data?.titleUK;
+        }
+        if (data?.titleFR) {
+            conditions.titleFR = data?.titleFR;
+        }
+        if (data?.titleDE) {
+            conditions.titleDE = data?.titleDE;
+        }
         if (data?.search) {
             const search = regExpSearch(data.search);
             conditions.$or = [
@@ -73,9 +85,9 @@ const list = async (data) => {
             lean: true,
             // select: REMOVE_FIELDS,
             customLabels: MY_CUSTOM_LABELS,
-            populate: [
-                populateModel('categoryProductId')
-            ]
+            // populate: [
+            //     populateModel('categoryProductId')
+            // ]
         };
         const result = await ProductsModels.paginate(conditions, options);
         return promiseResolve(result);

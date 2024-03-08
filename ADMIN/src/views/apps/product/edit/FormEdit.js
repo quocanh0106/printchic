@@ -23,6 +23,7 @@ import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
 import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 
@@ -106,6 +107,7 @@ const FormCreate = () => {
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
   const [contentFR, setContentFR] = useState('');
+  const [valueRecommend, setValueRecommend] = useState([])
 
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
@@ -133,15 +135,19 @@ const FormCreate = () => {
       })
       router.replace('/apps/product/')
     } else {
-      if(data.statusCode == 10805) {
+      if (data.statusCode == 10805) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of product already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of product already exists!`, { variant: 'error' });
         })
       } else {
-        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+        enqueueSnackbar(`${data.message}`, { variant: 'error' });
       }
     }
     setLoading(false)
+  }
+
+  const handleChange = (event, newValue) => {
+    setValueRecommend(newValue)
   }
 
   const onSubmit = (value) => {
@@ -154,7 +160,10 @@ const FormCreate = () => {
 
       return ele
     })
-    console.log('value', value)
+
+
+    const arrayCatPro = valueRecommend.map(ele => ele._id)
+
     const formData = new FormData();
     formData.append("productId", router.query.id);
     formData.append("titleUK", value.titleUK);
@@ -169,7 +178,7 @@ const FormCreate = () => {
     formData.append("descriptionFR", JSON.stringify(contentFR));
     formData.append("descriptionDE", JSON.stringify(contentDE));
     formData.append("currency", value.currency);
-    formData.append("categoryProductId", value.productCategory);
+    formData.append("categoryProduct", JSON.stringify(arrayCatPro));
     formData.append("type", value.productType);
     formData.append("variants", JSON.stringify(variant));
     formData.append("price", value.price);
@@ -324,6 +333,13 @@ const FormCreate = () => {
         listFile.push(URLtoFile(ele.path))
       })
 
+      const listCatPro = [];
+      store.data.forEach(ele => {
+        if (data?.categoryProduct?.includes(ele._id)) {
+          listCatPro.push(ele)
+        }
+      })
+
       data?.variants && handleListVariant(data?.variants)
       setValue('titleUK', data?.titleUK)
       setValue('titleUS', data?.titleUS)
@@ -338,7 +354,7 @@ const FormCreate = () => {
       data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
       setValue('currency', data?.currency)
       setValue('productType', data?.type)
-      setValue('productCategory', data?.categoryProductId._id)
+      setValueRecommend(listCatPro)
       setValue('price', data?.price)
       setValue('priceSale', data?.priceSale)
       setFiles(data?.media)
@@ -592,6 +608,25 @@ const FormCreate = () => {
         <Grid item xs={4}>
           <Card sx={{ p: 4 }}>
             <Controller
+              name='handleUrl'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url'
+                  error={Boolean(errors.handleUrl)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrl && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
               name='productStatus'
               control={control}
               rules={{ required: true }}
@@ -615,31 +650,16 @@ const FormCreate = () => {
                 </CustomTextField>
               )}
             />
-            <Controller
-              name='productCategory'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mt: 4 }}
-                  select
-                  fullWidth
-                  defaultValue=''
-                  label='Product Category'
-                  SelectProps={{
-                    value: value || "",
-                    onChange: e => onChange(e)
-                  }}
-                  id='validation-basic-select'
-                  error={Boolean(errors.productCategory)}
-                  aria-describedby='validation-basic-select'
-                  {...(errors.productCategory && { helperText: 'This field is required' })}
-                >
-                  {
-                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
-                  }
-                </CustomTextField>
-              )}
+            <CustomAutocomplete
+              multiple
+              value={valueRecommend}
+              onChange={handleChange}
+              sx={{ width: '100%', mt: 4 }}
+              options={store.data}
+              filterSelectedOptions
+              id='autocomplete-multiple-outlined'
+              getOptionLabel={option => option.titleUS || ''}
+              renderInput={params => <CustomTextField {...params} label='Product Category' placeholder='Products' />}
             />
             <Controller
               name='productType'
@@ -666,6 +686,7 @@ const FormCreate = () => {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
+                  type="number"
                   sx={{ mt: 4 }}
                   fullWidth
                   value={value}
@@ -684,6 +705,7 @@ const FormCreate = () => {
               control={control}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
+                  type="number"
                   sx={{ mt: 4 }}
                   fullWidth
                   value={value}
@@ -697,7 +719,7 @@ const FormCreate = () => {
           </Card>
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
-        <Card sx={{ p: 4 }}>
+          <Card sx={{ p: 4 }}>
             <Grid item xs={12} sm={12}>
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
@@ -779,25 +801,25 @@ const FormCreate = () => {
             </Grid>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content UK 
+                Content UK
               </Typography>
               <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content US
               </Typography>
               <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content DE
               </Typography>
               <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
             </Box>
-            <Box sx={{mb: 7}}>
+            <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content FR
               </Typography>
@@ -863,7 +885,6 @@ const FormCreate = () => {
                       {...(errors.currency && { helperText: 'This field is required' })}
                     >
                       <MenuItem value='USD'>USD</MenuItem>
-                      <MenuItem value='VND'>VND</MenuItem>
                       <MenuItem value='EUR'>EUR</MenuItem>
                     </CustomTextField>
                   )}

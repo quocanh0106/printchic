@@ -51,6 +51,18 @@ const list = async (data) => {
                 { titleDE: search },
             ]
         }
+        if (data?.titleUS) {
+            conditions.titleUS = data?.titleUS;
+        }
+        if (data?.titleUK) {
+            conditions.titleUK = data?.titleUK;
+        }
+        if (data?.titleFR) {
+            conditions.titleFR = data?.titleFR;
+        }
+        if (data?.titleDE) {
+            conditions.titleDE = data?.titleDE;
+        }
         const options = {
             sort: {
                 createdAt: -1,
