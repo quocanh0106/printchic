@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar-outer-wrapper-all-screen">
-    <div class="nav-bar" v-if="pc">
+    <div class="nav-bar" v-show="pc">
       <img
         :src="Logo"
         class="cursor-pointer"
@@ -10,7 +10,7 @@
       <div class="nav-bar-action flex items-center">
         <ul class="nav-bar-wrapper">
           <li v-for="(item, index) in links" :key="index">
-            <a class="navigation-menu" :href="item.href">{{ item.label }}</a>
+            <a class="navigation-menu" :href="item.href">{{ $t(item.label) }}</a>
           </li>
           <li>
             <v-select
@@ -32,7 +32,7 @@
         </ul>
       </div>
     </div>
-    <div class="nav-bar-mobile flex justify-between" v-if="mobile || tablet">
+    <div class="nav-bar-mobile flex justify-between" v-show="mobile || tablet">
       <img
         :src="Logo"
         class="cursor-pointer"
@@ -89,18 +89,6 @@ export default {
   components: {
     customInput,
   }, // Apply the mixin
-  props: {
-    links: {
-      type: Array,
-      default: () => [
-        { label: "Home", href: "/" },
-        { label: "Products", href: "/product" },
-        { label: "How it works", href: "/how-it-works" },
-        { label: "Blog", href: "/blog" },
-        { label: "About us", href: "/about-us" },
-      ],
-    },
-  },
   data() {
     return {
       Logo,
@@ -110,6 +98,13 @@ export default {
       languageIcon,
       drawer: null,
       isActive: false,
+      links:  [
+        { label: "navBar.Home", href: "/" },
+        { label: "navBar.Products", href: "/product" },
+        { label: "navBar.HIW", href: "/how-it-works" },
+        { label: "navBar.Blog", href: "/blog" },
+        { label: "navBar.aboutUs", href: "/about-us" },
+      ],
       listLang: [
       {
         code: "US",

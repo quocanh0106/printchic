@@ -135,17 +135,10 @@ const UserList = () => {
                   }
                 }
               },
-              {
-                text: 'Preview',
-                icon: <Icon icon='icon-park-outline:preview-open' fontSize={20} />,
-                menuItemProps: {
-                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_USER_API}/${row?._id}`)
-                }
-              },
-              {
-                text: 'Product list',
-                icon: <Icon icon='eos-icons:product-classes' fontSize={20} />
-              },
+              // {
+              //   text: 'Product list',
+              //   icon: <Icon icon='eos-icons:product-classes' fontSize={20} />
+              // },
               {
                 text: 'Delete',
                 icon: <Icon icon='tabler:trash' fontSize={20} />,

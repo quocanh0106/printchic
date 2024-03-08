@@ -28,6 +28,7 @@ import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/product/TableHeader'
 import { deleteProduct, fetchProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
+import { openInNewTab } from 'src/utils'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
 
 // ** Components Imports
@@ -153,13 +154,13 @@ const UserList = () => {
                 text: 'Preview',
                 icon: <Icon icon='icon-park-outline:preview-open' fontSize={20} />,
                 menuItemProps: {
-                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_USER_API}/${row?.handleUrl}`)
+                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_URL_USER}/product/${row?.id}`)
                 }
               },
-              {
-                text: row.isPublic ? 'Set to Private' : 'Set to Public',
-                icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
-              },
+              // {
+              //   text: row.isPublic ? 'Set to Private' : 'Set to Public',
+              //   icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
+              // },
               {
                 text: 'Delete',
                 icon: <Icon icon='tabler:trash' fontSize={20} />,

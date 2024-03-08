@@ -14,13 +14,13 @@
         <div
           v-show="listBlog.length > 0"
           class="blog-left-wrapper flex flex-col cursor-pointer"
-          @click="toDetailBlog(listBlog[0]?.id)"
+          @click="toDetailBlog(listBlog?.[0]?.id)"
         >
-          <img :src="listBlog[0]?.img" class="blog-img" />
+          <img :src="listBlog?.[0]?.img" class="blog-img" />
           <div class="content flex flex-col mt-8">
-            <h1 class="text-2xl font-semibold">{{ listBlog[0]?.[`title${currentLanguage}`] }}</h1>
-            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? JSON.parse(listBlog[0][`content${currentLanguage}`]) : ''" class="text-base mt-2"></div>
-            <p class="text-sm mt-4">{{ listBlog[0]?.createdAt }}</p>
+            <h1 class="text-2xl font-semibold">{{ listBlog?.[0]?.[`title${currentLanguage}`] }}</h1>
+            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? JSON.parse(listBlog?.[0][`content${currentLanguage}`]) : ''" class="text-base mt-2"></div>
+            <p class="text-sm mt-4">{{ listBlog?.[0]?.createdAt }}</p>
           </div>
         </div>
         <div class="blog-right-wrapper flex flex-col items-start justify-start">
@@ -71,6 +71,7 @@ defineProps({
   },
   listBlog: {
     type: Array,
+    default: () => []
   },
 });
 
