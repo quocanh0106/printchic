@@ -19,8 +19,8 @@ const ProductsBase = {
     titleDE: {
         type: String, trim: true,
     },
-    categoryProductId: {
-        type: ObjectId, trim: true, ref: 'category_product',
+    categoryProduct: {
+        type: Array,
     },
     languageId: {
         type: ObjectId, trim: true, ref: 'languages',

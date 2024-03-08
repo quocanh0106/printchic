@@ -106,7 +106,7 @@ const UserList = () => {
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {row.parentCategory}
+            {row.createdAt}
           </Typography>
         )
       }
