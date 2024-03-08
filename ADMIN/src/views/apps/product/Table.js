@@ -28,6 +28,7 @@ import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/product/TableHeader'
 import { deleteProduct, fetchProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
+import { fetchEvents } from 'src/store/apps/categoryProduct'
 
 // ** Components Imports
 
@@ -46,11 +47,16 @@ const UserList = () => {
     search: ''
   })
 
+  useEffect(() => {
+    dispatch(fetchEvents())
+  }, [])
+
   // ** Hooks
   const router = useRouter()
   const dispatch = useDispatch()
   const store = useSelector(state => state.product)
-
+  const categoryProduct = useSelector(state => state.categoryProduct)
+  console.log('categoryProduct',categoryProduct)
   useEffect(() => {
     dispatch(fetchProduct())
   }, [])
@@ -79,7 +85,7 @@ const UserList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-              {row.categoryProductId?.titleUS}
+              {row?.categoryProduct?.map(ele => categoryProduct?.data.find(catPro => catPro._id == ele).titleUS)?.toString()}
             </Typography>
           </Box>
         )
