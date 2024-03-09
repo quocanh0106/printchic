@@ -142,7 +142,7 @@ module.exports.AUTH = {
                 return res.json(responseError(40004, errors));
             }
             console.log('req.files',req.files)
-            if (req.files) {
+            if (req.files && req.files.length > 0) {
                 req.body.img = req.files[0].path;
                 req.body.imgBanner = req.files[1].path;
             }
