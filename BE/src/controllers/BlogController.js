@@ -144,8 +144,6 @@ module.exports.AUTH = {
             if (req.files) {
                 req.body.img = req.files[0].path;
                 req.body.imgBanner = req.files[1].path;
-            } else {
-                return res.json(responseError("banner and thumbnail must be required!"))
             }
 
             let fieldExistTitle = []
