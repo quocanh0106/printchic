@@ -352,7 +352,7 @@ const FormEdit = () => {
     } else {
       let formData = newTags
 
-      dispatch(updateTag({ formData, callBackSubmit: callBackSubmitNewTag }))
+      dispatch(addTag({ formData, callBackSubmit: callBackSubmitNewTag }))
     }
 
   }
