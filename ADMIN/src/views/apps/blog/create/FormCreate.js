@@ -23,6 +23,7 @@ import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
 import { fetchProduct } from 'src/store/apps/product'
 import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
+import { addTag, fetchTag } from 'src/store/apps/tag'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -92,8 +93,10 @@ const CustomCloseButton = styled(IconButton)(({ theme }) => ({
 
 const FormCreate = () => {
   const [files, setFiles] = useState([])
+  const [filesBanner, setFilesBanner] = useState([])
   const [loading, setLoading] = useState(false)
   const [valueRecommend, setValueRecommend] = useState([])
+  const [tagValue, setTagValue] = useState([])
   const [contentUK, setContentUK] = useState('');
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
@@ -154,22 +157,37 @@ const FormCreate = () => {
   const onSubmit = async (value) => {
     setLoading(true)
     const arrayRecommendPro = valueRecommend.map(ele => ele._id)
+    const arrayTagValue = tagValue.map(ele => ele._id)
 
     const formData = new FormData();
+
     formData.append("titleUK", value.titleUK);
     formData.append("titleUS", value.titleUS);
     formData.append("titleDE", value.titleDE);
     formData.append("titleFR", value.titleFR);
+
+    formData.append("handleUrlUK", value.handleUrlUK);
+    formData.append("handleUrlUS", value.handleUrlUS);
+    formData.append("handleUrlDE", value.handleUrlDE);
+    formData.append("handleUrlFR", value.handleUrlFR);
+
+    formData.append("metaDescriptionUK", value.metaDescriptionUK);
+    formData.append("metaDescriptionUS", value.metaDescriptionUS);
+    formData.append("metaDescriptionDE", value.metaDescriptionDE);
+    formData.append("metaDescriptionFR", value.metaDescriptionFR);
+
     formData.append("contentUK", JSON.stringify(contentUK));
     formData.append("contentUS", JSON.stringify(contentUS));
     formData.append("contentDE", JSON.stringify(contentDE));
     formData.append("contentFR", JSON.stringify(contentFR));
+
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
-    formData.append("tags", value.tags);
-    formData.append('file', files[0]);
-
+    formData.append("tags", JSON.stringify(arrayTagValue));
+    formData.append('files', files[0]);
+    formData.append('files', filesBanner[0]);
+    
     dispatch(addBlog({ formData, callBackSubmit }))
   }
 
@@ -192,10 +210,12 @@ const FormCreate = () => {
 
   const store = useSelector(state => state.categoryBlog)
   const storeProduct = useSelector(state => state.product)
+  const storeTag = useSelector(state => state.tag)
 
   useEffect(() => {
     dispatch(fetchCategoryBlog())
     dispatch(fetchProduct())
+    dispatch(fetchTag())
   }, [])
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -208,7 +228,26 @@ const FormCreate = () => {
     }
   })
 
+  const handleBannerImg = useDropzone({
+    multiple: false,
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
+    },
+    onDrop: acceptedFiles => {
+      setFilesBanner(acceptedFiles.map(file => Object.assign(file)))
+    }
+  })
+
   const img = files.map(file => (
+    <Box key={file.name} sx={{ position: 'relative' }}>
+      <CustomCloseButton onClick={() => setFiles([])}>
+        <Icon icon='tabler:x' fontSize='1.25rem' />
+      </CustomCloseButton>
+      <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
+    </Box>
+  ))
+
+  const imgBanner = filesBanner.map(file => (
     <Box key={file.name} sx={{ position: 'relative' }}>
       <CustomCloseButton onClick={() => setFiles([])}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
@@ -219,6 +258,35 @@ const FormCreate = () => {
 
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
+  }
+
+  const handleChangeTag = (event, newValue) => {
+    setTagValue(newValue)
+  }
+
+  const callBackSubmitNewTag = (data) => {
+    if (data.success) {
+      toast.success('New Tag created successfully', {
+        duration: 2000
+      })
+      setOpenDialogCreateTag(false)
+      setTagValue([])
+      setNewTags({
+        titleUK: '',
+        titleUS: '',
+        titleFR: '',
+        titleDE: '',
+      })
+    } else {
+      if (data.statusCode == 10905) {
+        data.errors.forEach(ele => {
+          enqueueSnackbar(`${ele} of tag already exists!`, { variant: 'error' });
+        })
+      } else {
+        enqueueSnackbar(`${data.message}`, { variant: 'error' });
+      }
+    }
+    setLoading(false)
   }
 
   const handleSubmitNewTag = () => {
@@ -236,13 +304,182 @@ const FormCreate = () => {
       tempErrorTag.titleDE = true
     }
 
-    setErrorsTag(tempErrorTag)
+    if (tempErrorTag.titleUK || tempErrorTag.titleUS || tempErrorTag.titleFR || tempErrorTag.titleDE) {
+      setErrorsTag(tempErrorTag)
+    } else {
+      let formData = newTags
+
+      dispatch(addTag({ formData, callBackSubmit: callBackSubmitNewTag }))
+    }
+
   }
 
   return (
     <>
       <Grid container xs={12}>
         <Grid item xs={4}>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Handle URL
+            </Typography>
+            <Controller
+              name='handleUrlUK'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url UK'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url UK'
+                  error={Boolean(errors.handleUrlUK)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlUK && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='handleUrlUS'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url US'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url US'
+                  error={Boolean(errors.handleUrlUS)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlUS && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='handleUrlFR'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url FR'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url FR'
+                  error={Boolean(errors.handleUrlFR)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlFR && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='handleUrlDE'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Handle Url DE'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Handle Url DE'
+                  error={Boolean(errors.handleUrlDE)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.handleUrlDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Meta description
+            </Typography>
+            <Controller
+              name='metaDescriptionUK'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description UK'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description UK'
+                  error={Boolean(errors.metaDescriptionUK)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionUS'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description US'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description US'
+                  error={Boolean(errors.metaDescriptionUS)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionFR'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description FR'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description FR'
+                  error={Boolean(errors.metaDescriptionFR)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='metaDescriptionDE'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Meta Description DE'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Meta Description DE'
+                  error={Boolean(errors.metaDescriptionDE)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
           <Card sx={{ p: 4 }}>
             <Controller
               name='blogStatus'
@@ -302,27 +539,19 @@ const FormCreate = () => {
               options={storeProduct.data}
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
-              getOptionLabel={option => option.title || ''}
+              getOptionLabel={option => option.titleUS || ''}
               renderInput={params => <CustomTextField {...params} label='Recommend Product' placeholder='Products' />}
             />
-            <Controller
-              name='tags'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  sx={{ mt: 4 }}
-                  value={value}
-                  label='tags'
-                  required
-                  onChange={onChange}
-                  placeholder='tags'
-                  error={Boolean(errors.tags)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.tags && { helperText: 'This field is required' })}
-                />
-              )}
+            <CustomAutocomplete
+              multiple
+              value={tagValue}
+              onChange={handleChangeTag}
+              sx={{ width: '100%', mt: 4 }}
+              options={storeTag.data}
+              filterSelectedOptions
+              id='autocomplete-multiple-outlined'
+              getOptionLabel={option => option.titleUS || ''}
+              renderInput={params => <CustomTextField {...params} label='Tags' placeholder='Tags' />}
             />
             <Button variant='outlined' sx={{ mt: 3 }} onClick={() => setOpenDialogCreateTag(true)}>
               Create Tag
@@ -331,13 +560,27 @@ const FormCreate = () => {
           <Card sx={{ p: 4, mt: 4 }}>
             <Box>
               <Typography>
-                Thumnail Image
+                Thumbnail Image
               </Typography>
               {
                 files.length ? img :
                   <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
                     <input {...getInputProps()} />
-                    Upload
+                    Upload Thumbnail
+                  </Button>
+              }
+            </Box>
+          </Card>
+          <Card sx={{ p: 4, mt: 4 }}>
+            <Box>
+              <Typography>
+                Banner  Image
+              </Typography>
+              {
+                filesBanner.length ? imgBanner :
+                  <Button  {...handleBannerImg.getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
+                    <input {...handleBannerImg.getInputProps()} />
+                    Upload Banner
                   </Button>
               }
             </Box>
@@ -428,25 +671,25 @@ const FormCreate = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content UK
+                Description UK
               </Typography>
               <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content US
+                Description US
               </Typography>
               <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content DE
+                Description DE
               </Typography>
               <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Content FR
+                Description FR
               </Typography>
               <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
             </Box>
@@ -497,8 +740,8 @@ const FormCreate = () => {
               label={`Tag UK`}
               required
               onChange={(e) => {
-                if(e.target.value && errorsTag.titleUK) {
-                  setErrorsTag({...errorsTag, titleUK: false})
+                if (e.target.value && errorsTag.titleUK) {
+                  setErrorsTag({ ...errorsTag, titleUK: false })
                 }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUK: e.target.value })
@@ -514,8 +757,8 @@ const FormCreate = () => {
               label={`Tag US`}
               required
               onChange={(e) => {
-                if(e.target.value && errorsTag.titleUS) {
-                  setErrorsTag({...errorsTag, titleUS: false})
+                if (e.target.value && errorsTag.titleUS) {
+                  setErrorsTag({ ...errorsTag, titleUS: false })
                 }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUS: e.target.value })
@@ -531,8 +774,8 @@ const FormCreate = () => {
               label={`Tag FR`}
               required
               onChange={(e) => {
-                if(e.target.value && errorsTag.titleFR) {
-                  setErrorsTag({...errorsTag, titleFR: false})
+                if (e.target.value && errorsTag.titleFR) {
+                  setErrorsTag({ ...errorsTag, titleFR: false })
                 }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleFR: e.target.value })
@@ -548,8 +791,8 @@ const FormCreate = () => {
               label={`Tag DE`}
               required
               onChange={(e) => {
-                if(e.target.value && errorsTag.titleDE) {
-                  setErrorsTag({...errorsTag, titleDE: false})
+                if (e.target.value && errorsTag.titleDE) {
+                  setErrorsTag({ ...errorsTag, titleDE: false })
                 }
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleDE: e.target.value })

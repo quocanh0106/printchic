@@ -42,14 +42,16 @@ module.exports.AUTH = {
         // beforeUploadMulti(req, res, async () => {
 
         try {
+            console.log('req',req.body, req.files)
             const errors = await validateResult(createValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            if (req.file) {
-                req.body.img = req.file.path;
+            if (req.files) {
+                req.body.img = req.files[0].path;
+                req.body.imgBanner = req.files[1].path;
             } else {
-                return res.json(responseError("bannerImg must be required!"))
+                return res.json(responseError("banner and thumbnail must be required!"))
             }
 
             let fieldExistTitle = []
@@ -139,8 +141,11 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            if (req.file) {
-                req.body.img = req.file.path;
+            if (req.files) {
+                req.body.img = req.files[0].path;
+                req.body.imgBanner = req.files[1].path;
+            } else {
+                return res.json(responseError("banner and thumbnail must be required!"))
             }
 
             let fieldExistTitle = []

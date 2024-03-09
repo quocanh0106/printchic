@@ -17,11 +17,24 @@ const create = async (data) => {
         set.categoryBlogId = data.categoryBlogId;
         set.status = data.status;
         set.img = data.img;
-        set.tags = data.tags;
+        set.imgBanner = data.imgBanner;
+        set.tags = JSON.parse(data.tags);
+
         set.titleUK = data.titleUK;
         set.titleUS = data.titleUS;
         set.titleDE = data.titleDE;
         set.titleFR = data.titleFR;
+
+        set.handleUrlUK = data.handleUrlUK;
+        set.handleUrlUS = data.handleUrlUS;
+        set.handleUrlFR = data.handleUrlFR;
+        set.handleUrlDE = data.handleUrlDE;
+
+        set.metaDescriptionUK = data.metaDescriptionUK;
+        set.metaDescriptionUS = data.metaDescriptionUS;
+        set.metaDescriptionFR = data.metaDescriptionFR;
+        set.metaDescriptionDE = data.metaDescriptionDE;
+
         set.recommendProduct = JSON.parse(data.recommendProduct);
         set.contentUK = data.contentUK;
         set.contentUS = data.contentUS;
@@ -111,6 +124,7 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.blogId);
         }
         const set = {};
+        
         if (!isEmpty(data?.titleUK)) {
             set.titleUK = data.titleUK;
         }
@@ -123,6 +137,33 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.titleDE)) {
             set.titleDE = data.titleDE;
         }
+        
+        if (!isEmpty(data?.handleUrlUK)) {
+            set.handleUrlUK = data.handleUrlUK;
+        }
+        if (!isEmpty(data?.handleUrlUS)) {
+            set.handleUrlUS = data.handleUrlUS;
+        }
+        if (!isEmpty(data?.handleUrlFR)) {
+            set.handleUrlFR = data.handleUrlFR;
+        }
+        if (!isEmpty(data?.handleUrlDE)) {
+            set.handleUrlDE = data.handleUrlDE;
+        }
+        
+        if (!isEmpty(data?.metaDescriptionUK)) {
+            set.metaDescriptionUK = data.metaDescriptionUK;
+        }
+        if (!isEmpty(data?.metaDescriptionUS)) {
+            set.metaDescriptionUS = data.metaDescriptionUS;
+        }
+        if (!isEmpty(data?.metaDescriptionFR)) {
+            set.metaDescriptionFR = data.metaDescriptionFR;
+        }
+        if (!isEmpty(data?.metaDescriptionDE)) {
+            set.metaDescriptionDE = data.metaDescriptionDE;
+        }
+
         if (!isEmpty(data?.contentUK)) {
             set.contentUK = JSON.parse(data.contentUK);
         }
@@ -138,6 +179,9 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.img)) {
             set.img = data.img;
         }
+        if (!isEmpty(data?.imgBanner)) {
+            set.imgBanner = data.imgBanner;
+        }
         if (!isEmpty(data?.status)) {
             set.status = data.status;
         }
@@ -148,7 +192,10 @@ const updateConditions = async (data) => {
             set.recommendProduct = JSON.parse(data.recommendProduct);
         }
         if (!isEmpty(data?.tags)) {
-            set.tags = data.tags;
+            set.tags = JSON.parse(data.tags);
+        }
+        if (!isEmpty(data?.imgBanner)) {
+            set.imgBanner = data.imgBanner;
         }
         const result = await BlogsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);

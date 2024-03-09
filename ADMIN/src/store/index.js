@@ -12,6 +12,7 @@ import permissions from 'src/store/apps/permissions'
 import setting from 'src/store/apps/setting'
 import product from 'src/store/apps/product'
 import blog from 'src/store/apps/blog'
+import tag from 'src/store/apps/tag'
 
 export const store = configureStore({
   reducer: {
@@ -24,7 +25,8 @@ export const store = configureStore({
     permissions,
     product,
     blog,
-    setting
+    setting,
+    tag
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

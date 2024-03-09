@@ -23,10 +23,39 @@ const blogBase = {
   titleFR: {
     type: String, trim: true,
   },
+  metaDescriptionUK: {
+    type: String, trim: true,
+  },
+  metaDescriptionUS: {
+    type: String, trim: true,
+  },
+  metaDescriptionFR: {
+    type: String, trim: true,
+  },
+  metaDescriptionDE: {
+    type: String, trim: true,
+  },
+
+  handleUrlUK: {
+    type: String, trim: true,
+  },
+  handleUrlUS: {
+    type: String, trim: true,
+  },
+  handleUrlFR: {
+    type: String, trim: true,
+  },
+  handleUrlDE: {
+    type: String, trim: true,
+  },
+
   status: {
     type: String, trim: true,
   },
   img: {
+    type: String, trim: true,
+  },
+  imgBanner: {
     type: String, trim: true,
   },
   contentUK: {
