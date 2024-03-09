@@ -82,11 +82,6 @@ const onSwiper = (swiper) => {
 const onSlideChange = () => {
   console.log("slide change");
 };
-
-// Mounted lifecycle hook
-onMounted(() => {
-  console.log("created", props.items);
-});
 </script>
 
 <style lang="scss" scoped>

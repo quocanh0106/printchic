@@ -23,7 +23,13 @@ export default defineNuxtConfig({
     },
   ],
   i18n: {
-    vueI18n: './configs/i18n.config.ts' // if you are using custom path, default 
+    locales: ['US', 'UK', 'DE', 'FR'], // Define your language codes here
+    defaultLocale: 'US', // Set the default language
+    strategy:'prefix',
+    vueI18n: {
+      fallbackLocale: 'US',    
+    },
+    vueI18n:'./configs/i18n.config.ts'
   },
   vite: {
     vue: {

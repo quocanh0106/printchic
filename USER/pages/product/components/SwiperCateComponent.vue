@@ -73,10 +73,6 @@ const onSlideChange = () => {
   console.log("slide change");
 };
 
-// Mounted lifecycle hook
-onMounted(() => {
-  console.log("created", props.items);
-});
 </script>
 
 

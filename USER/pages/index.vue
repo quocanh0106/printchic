@@ -8,7 +8,7 @@
             {{ $t("homePage.introductionTitle") }}
           </h1>
           <div class="introduction-actions cursor-pointer mt-8">
-            <v-button class="primary-btn text-white" @click="$router.push('/contact-us')">
+            <v-button class="primary-btn text-white" @click="$router.push(localePath('/contact-us'))">
               {{ $t("ContactUs") }}
             </v-button>
 
@@ -39,7 +39,7 @@
           <h1 class="top-category-title font-semibold">
             {{ $t("homePage.topCategory") }}
           </h1>
-          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row"  @click="$router.push('/product')">
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row"  @click="$router.push(localePath('/product'))">
             <p>{{ $t("viewAll") }}</p>
             <img :src="arrowUpRight" />
           </a>
@@ -295,12 +295,12 @@ import help from "../components/help.vue";
 import swiperComponent from "../components/swiperComponent.vue";
 import SwiperDescriptionMobile from "./home/components/SwiperDescriptionMobile.vue";
 import SwiperBlogMobile from "./home/components/SwiperBlogMobile.vue";
-import { myMixin } from '~/mixins/myMixin';
 import useWidthScreen from '~/composables/useWidthScreen';
-
+import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { t } = useI18n()
-
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
 const { data }  = await useAsyncData(
   'categoryProduct',
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')

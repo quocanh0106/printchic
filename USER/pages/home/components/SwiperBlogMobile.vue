@@ -8,7 +8,7 @@
             <img class="small-img-blog blog-img" :src="blog.img" @click="toDetailBlog(blog._id)"/>
             <div class="">
               <h1 class="font-semibold mt-3">{{ blog[`title${currentLanguage}`] }}</h1>
-              <div v-html="blog[`content${currentLanguage}`] ? JSON.parse(blog[`content${currentLanguage}`]) : ''" class="mt-2"></div>
+              <div v-html="blog[`content${currentLanguage}`] ? blog[`content${currentLanguage}`] : ''" class="mt-2"></div>
               <p class="mt-3">{{ blog.createdAt }}</p>
             </div>
           </div>
