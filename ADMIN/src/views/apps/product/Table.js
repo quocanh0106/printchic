@@ -57,7 +57,7 @@ const UserList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.product)
   const categoryProduct = useSelector(state => state.categoryProduct)
-  console.log('categoryProduct',categoryProduct)
+  console.log('categoryProduct', categoryProduct)
   useEffect(() => {
     dispatch(fetchProduct())
   }, [])
@@ -157,10 +157,6 @@ const UserList = () => {
                   onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_URL_USER}/product/${row?.id}`)
                 }
               },
-              // {
-              //   text: row.isPublic ? 'Set to Private' : 'Set to Public',
-              //   icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
-              // },
               {
                 text: 'Delete',
                 icon: <Icon icon='tabler:trash' fontSize={20} />,

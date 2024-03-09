@@ -426,7 +426,7 @@ const FormCreate = () => {
       setFiles(acceptedFiles.map(file => Object.assign(file)))
     }
   })
-  console.log('valueRecommend', valueRecommend)
+
   const handleRemoveFile = file => {
     const uploadedFiles = files
     const filtered = uploadedFiles.filter(i => i.name !== file.name)

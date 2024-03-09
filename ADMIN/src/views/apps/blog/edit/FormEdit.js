@@ -114,6 +114,7 @@ const FormEdit = () => {
     titleFR: '',
     titleDE: '',
   });
+
   const [errorsTag, setErrorsTag] = useState({
     titleUK: false,
     titleUS: false,
@@ -354,8 +355,8 @@ const FormEdit = () => {
 
       dispatch(addTag({ formData, callBackSubmit: callBackSubmitNewTag }))
     }
-
   }
+
   const handleChange = (event, newValue) => {
     setValueRecommend(newValue)
   }

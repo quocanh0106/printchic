@@ -135,10 +135,6 @@ const UserList = () => {
                   }
                 }
               },
-              // {
-              //   text: 'Product list',
-              //   icon: <Icon icon='eos-icons:product-classes' fontSize={20} />
-              // },
               {
                 text: 'Delete',
                 icon: <Icon icon='tabler:trash' fontSize={20} />,

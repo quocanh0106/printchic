@@ -112,6 +112,7 @@ const FormCreate = () => {
     titleFR: '',
     titleDE: '',
   });
+  
   const [errorsTag, setErrorsTag] = useState({
     titleUK: false,
     titleUS: false,
