@@ -92,8 +92,8 @@ const findByConditions = async (data) => {
 const updateConditions = async (data) => {
     try {
         const conditions = {};
-        if (data?.blogId) {
-            conditions._id = convertToObjectId(data.blogId);
+        if (data?.tagId) {
+            conditions._id = convertToObjectId(data.tagId);
         }
         const set = {};
         if (!isEmpty(data?.titleUK)) {
@@ -108,33 +108,6 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.titleDE)) {
             set.titleDE = data.titleDE;
         }
-        if (!isEmpty(data?.contentUK)) {
-            set.contentUK = JSON.parse(data.contentUK);
-        }
-        if (!isEmpty(data?.contentUS)) {
-            set.contentUS = JSON.parse(data.contentUS);
-        }
-        if (!isEmpty(data?.contentFR)) {
-            set.contentFR = JSON.parse(data.contentFR);
-        }
-        if (!isEmpty(data?.contentDE)) {
-            set.contentDE = JSON.parse(data.contentDE);
-        }
-        if (!isEmpty(data?.img)) {
-            set.img = data.img;
-        }
-        if (!isEmpty(data?.status)) {
-            set.status = data.status;
-        }
-        if (!isEmpty(data?.categoryBlogId)) {
-            set.categoryBlogId = data.categoryBlogId;
-        }
-        if (!isEmpty(data?.recommendProduct)) {
-            set.recommendProduct = JSON.parse(data.recommendProduct);
-        }
-        if (!isEmpty(data?.tags)) {
-            set.tags = data.tags;
-        }
         const result = await TagModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
@@ -145,7 +118,7 @@ const updateDelete = async (data) => {
     try {
         const conditions = {
             isDeleted: IS_DELETED[200],
-            _id: data.blogId,
+            _id: data.tagId,
         };
         const set = {
             isDeleted: IS_DELETED[300],

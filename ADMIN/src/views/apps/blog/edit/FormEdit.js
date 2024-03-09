@@ -39,7 +39,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const modules = {
   toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
     [{ size: [] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [

@@ -14,9 +14,9 @@ const updateValidator = [
     validateObjectId('tagId', true),
 ]
 
-const validateCatBlogIdValidator = validateObjectId('tagId', true);
+const validateCatTagIdValidator = validateObjectId('tagId', true);
 module.exports = {
     createValidator,
     updateValidator,
-    validateCatBlogIdValidator,
+    validateCatTagIdValidator,
 };

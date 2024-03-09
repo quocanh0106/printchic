@@ -24,6 +24,7 @@ import { fetchProduct } from 'src/store/apps/product'
 import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
 import { addTag, fetchTag } from 'src/store/apps/tag'
+import TableTabs from '../components/TableTabs'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -36,7 +37,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const modules = {
   toolbar: [
-    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
     [{ size: [] }],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [
@@ -101,6 +102,7 @@ const FormCreate = () => {
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
   const [openDialogCreateTag, setOpenDialogCreateTag] = useState(false);
+  const [openDialogTableTag, setOpenDialogTableTag] = useState(false);
   const [contentFR, setContentFR] = useState('');
 
   // handle tag
@@ -187,7 +189,7 @@ const FormCreate = () => {
     formData.append("tags", JSON.stringify(arrayTagValue));
     formData.append('files', files[0]);
     formData.append('files', filesBanner[0]);
-    
+
     dispatch(addBlog({ formData, callBackSubmit }))
   }
 
@@ -311,7 +313,6 @@ const FormCreate = () => {
 
       dispatch(addTag({ formData, callBackSubmit: callBackSubmitNewTag }))
     }
-
   }
 
   return (
@@ -556,6 +557,10 @@ const FormCreate = () => {
             <Button variant='outlined' sx={{ mt: 3 }} onClick={() => setOpenDialogCreateTag(true)}>
               Create Tag
             </Button>
+
+            <Button sx={{ mt: 3, ml: 8 }} variant='contained' onClick={() => setOpenDialogTableTag(true)}>
+              view list
+            </Button>
           </Card>
           <Card sx={{ p: 4, mt: 4 }}>
             <Box>
@@ -574,7 +579,7 @@ const FormCreate = () => {
           <Card sx={{ p: 4, mt: 4 }}>
             <Box>
               <Typography>
-                Banner  Image
+                Banner Image
               </Typography>
               {
                 filesBanner.length ? imgBanner :
@@ -714,6 +719,29 @@ const FormCreate = () => {
           </Button>
         </Box>
       </Grid>
+      <Dialog
+        fullWidth
+        open={openDialogTableTag}
+        scroll='body'
+        maxWidth='lg'
+        onClose={() => setOpenDialogTableTag(false)}
+        TransitionComponent={Transition}
+        onBackdropClick={() => setOpenDialogTableTag(false)}
+        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
+      >
+        <DialogContent
+        >
+          <CustomCloseButton onClick={() => setOpenDialogTableTag(false)}>
+            <Icon icon='tabler:x' fontSize='1.25rem' />
+          </CustomCloseButton>
+          <Box sx={{ textAlign: 'center' }}>
+            <TableTabs />
+          </Box>
+          <Button sx={{ mt: 5 }} variant='contained' onClick={() => setOpenDialogTableTag(false)}>
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
       <Dialog
         fullWidth
         open={openDialogCreateTag}

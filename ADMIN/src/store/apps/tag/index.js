@@ -25,11 +25,7 @@ export const addTag = createAsyncThunk('appTag/addTag', async (event, { dispatch
 
 // ** Update Event
 export const updateTag = createAsyncThunk('appTag/updateEvent', async (event, { dispatch }) => {
-  const response = await axios.put(`${process.env.NEXT_PUBLIC_URL_API}/auth/tag/update`, event.formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    }
-  })
+  const response = await axios.put(`${process.env.NEXT_PUBLIC_URL_API}/auth/tag/update`, event.formData)
   event.callBackSubmit(response.data)
   await dispatch(fetchTag())
 
@@ -37,19 +33,13 @@ export const updateTag = createAsyncThunk('appTag/updateEvent', async (event, { 
 })
 
 // ** Delete Event
-export const deleteTag = createAsyncThunk('appTag/deleteEvent', async (tagId, { dispatch }) => {
+export const deleteTag = createAsyncThunk('appTag/deleteEvent', async (event, { dispatch }) => {
   const response = await axios.delete(`${process.env.NEXT_PUBLIC_URL_API}/auth/tag/delete`, {
-    params: { tagId }
+    params: { tagId: event.tagId }
   })
-  if (response.data.success) {
-    toast.success(' Tag deleted successfully', {
-      duration: 2000
-    })
-  } else {
-    toast.error(response.data.message, {
-      duration: 2000
-    })
-  }
+
+  event.callBackSubmit(response.data)
+
   await dispatch(fetchTag())
 
   return response.data.event
