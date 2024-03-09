@@ -19,7 +19,7 @@
           <img :src="listBlog?.[0]?.img" class="blog-img" />
           <div class="content flex flex-col mt-8">
             <h1 class="text-2xl font-semibold">{{ listBlog?.[0]?.[`title${currentLanguage}`] }}</h1>
-            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? JSON.parse(listBlog?.[0][`content${currentLanguage}`]) : ''" class="text-base mt-2"></div>
+            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? listBlog?.[0][`content${currentLanguage}`] : ''" class="text-base mt-2"></div>
             <p class="text-sm mt-4">{{ listBlog?.[0]?.createdAt }}</p>
           </div>
         </div>
@@ -37,7 +37,7 @@
               <img class="small-img-blog blog-img" :src="blog.img" />
               <div class="">
                 <h1 class="font-semibold">{{ blog[`title${currentLanguage}`] }}</h1>
-                <p v-html="JSON.parse(blog[`content${currentLanguage}`])" class="mt-2"></p>
+                <p v-html="blog[`content${currentLanguage}`]" class="mt-2"></p>
                 <p class="mt-3">{{ blog.createdAt }}</p>
               </div>
             </div>

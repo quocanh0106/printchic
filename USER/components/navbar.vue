@@ -4,13 +4,15 @@
       <img
         :src="Logo"
         class="cursor-pointer"
-        @click="this.$router.push('/')"
+        @click="this.$router.push(localePath('/'))"
       />
       <customInput />
       <div class="nav-bar-action flex items-center">
         <ul class="nav-bar-wrapper">
+
           <li v-for="(item, index) in links" :key="index">
-            <a class="navigation-menu" :href="item.href">{{ $t(item.label) }}</a>
+            <nuxt-link :to="localePath(item.href)">{{$t(item.label)}}</nuxt-link>
+            <!-- <a class="navigation-menu" :href="item.href">{{ $t(item.label) }}</a> -->
           </li>
           <li>
             <v-select
@@ -22,9 +24,8 @@
               item-text="title"
               item-value="code"
               v-model="selectedLanguage"
-              @change="selectLanguage"
-            >
-            </v-select>
+              @update:modelValue="selectLanguage"
+            />
           </li>
           <li class="navigation-menu signup-btn primary-btn cursor-pointer text-white">
             {{ $t("navBar.signUp") }}
@@ -36,7 +37,7 @@
       <img
         :src="Logo"
         class="cursor-pointer"
-        @click="this.$router.push('/')"
+        @click="this.$router.push(localePath('/'))"
       />
       <div class="mobile-nav-action flex items-center gap-x-5">
         <img :src="searchIcon" />
@@ -50,7 +51,7 @@
             <img
               :src="Logo"
               class="cursor-pointer"
-              @click="this.$router.push('/')"
+              @click="this.$router.push(localePath('/'))"
             />
             <img
               :src="closeIcon"
@@ -77,118 +78,64 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
 import Logo from "../assets/svg/Logo.svg";
 import customInput from "./customInput.vue";
 import drawerIcon from "../assets/svg/drawerIcon.svg";
 import searchIcon from "../assets/svg/searchIcon.svg";
 import closeIcon from "../assets/svg/closeIcon.svg";
 import languageIcon from "../assets/svg/languageIcon.svg";
+import { useRoute, useRouter } from 'vue-router';
+import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 
-export default {
-  components: {
-    customInput,
-  }, // Apply the mixin
-  data() {
-    return {
-      Logo,
-      drawerIcon,
-      searchIcon,
-      closeIcon,
-      languageIcon,
-      drawer: null,
-      isActive: false,
-      links:  [
-        { label: "navBar.Home", href: "/" },
-        { label: "navBar.Products", href: "/product" },
-        { label: "navBar.HIW", href: "/how-it-works" },
-        { label: "navBar.Blog", href: "/blog" },
-        { label: "navBar.aboutUs", href: "/about-us" },
-      ],
-      listLang: [
-      {
-        code: "US",
-        title: "US"
-      },  
-      {
-        code: "UK",
-        title: "UK"
-      },
-      {
-        code: "DE",
-        title: "DE"
-      }, 
-      {
-        code: "FR",
-        title: "FR"
-      }],
-      selectedLanguage: "US",
-    };
-  },
-  computed: {
-    mobile() {
-      if (process.client) {
-        if (window.screen.width <= 600) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    tablet() {
-      if (process.client) {
-        if (window.screen.width > 600 && window.screen.width <= 992) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    pc() {
-      if (process.client) {
-        if (window.screen.width > 992) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    lgPc() {
-      if (process.client) {
-        if (window.screen.width > 2000) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-    extraPc() {
-      if (process.client) {
-        if (window.screen.width > 2500) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    },
-  },
-  watch:{
-    selectedLanguage(newVal, oldVal){
-      this.$i18n.locale = newVal
-    }
-  },
-  methods: {
-    selectLanguage(data) {
-      console.log("KLEKKE",data);
-    },
-    isCurrentUrl(url) {
-      if (this.$route.href == url) {
-        console.log("TRUE");
-        this.isActive = !this.isActive;
-      } // Check if the link's URL is the current URL
-    },
-  },
-};
+import useWidthScreen from '~/composables/useWidthScreen';
+import { useNuxtApp } from '#app';
+
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const route = useRoute();
+const router = useRouter();
+const { locale } = useI18n();
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
+
+const drawer = ref(null);
+const isActive = ref(false);
+const selectedLanguage = ref(locale.value);
+
+const links = computed(() => [
+  { label: "navBar.Home", href: '/' },
+  { label: "navBar.Products", href: '/product' },
+  { label: "navBar.HIW", href: '/how-it-works' },
+  { label: "navBar.Blog", href: '/blog'},
+  { label: "navBar.aboutUs", href:'/about-us' },
+])
+
+const listLang = ref([
+  { code: "US", title: "US" },
+  { code: "UK", title: "UK" },
+  { code: "DE", title: "DE" },
+  { code: "FR", title: "FR" },
+])
+
+// watch(selectedLanguage, (newVal) => {
+//   locale.value = newVal;
+// });
+
+function selectLanguage() {
+  const newPath = switchLocalePath(selectedLanguage.value);
+  if (newPath !== location.pathname) {
+    locale.value = selectedLanguage.value
+    window.location.pathname = newPath; // Redirect to the new localized path
+  }
+}
+
+function isCurrentUrl(url) {
+  if (route.path === url) {
+    console.log("TRUE");
+    isActive.value = !isActive.value;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
