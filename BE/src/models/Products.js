@@ -88,6 +88,21 @@ const ProductsBase = {
     priceSale: {
         type: Number, trim: true,
     },
+    customizationOptions: {
+        type: String, trim: true,
+    },
+    detailProduct: {
+        type: String, trim: true,
+    },
+    fabricThickness: {
+        type: Number, trim: true,
+    },
+    fabricStretchiness: {
+        type: Number, trim: true,
+    },
+    featureProduct: {
+        type: String, trim: true,
+    },
 }
 const Products = { ...ProductsBase, ...common };
 const ProductsSchema = new Schema(Products, { versionKey: false });
