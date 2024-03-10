@@ -153,71 +153,68 @@ const FormCreate = () => {
 
 
   const onSubmit = (value) => {
-    if (stretchiness == 0) {
-      toast.error('Fabric thickness field cannot be empty', {
-        duration: 2000
-      })
-    } else if (thickness == 0) {
-      toast.error('Fabric stretchiness field cannot be empty', {
-        duration: 2000
-      })
-    } else {
-      setLoading(true)
-      
-      const variant = listOPtionVariant.map((ele) => {
-        ele.price = value[`price-${ele.id}`]
-        ele.sku = value[`sku-${ele.id}`]
+    setLoading(true)
 
-        return ele
-      })
+    const variant = listOPtionVariant.map((ele) => {
+      ele.price = value[`price-${ele.id}`]
+      ele.sku = value[`sku-${ele.id}`]
 
-      const arrayCatPro = valueRecommend.map(ele => ele._id)
+      return ele
+    })
 
-      const formData = new FormData();
-      formData.append("titleUK", value.titleUK);
-      formData.append("titleUS", value.titleUS);
-      formData.append("titleFR", value.titleFR);
-      formData.append("titleDE", value.titleDE);
+    const arrayCatPro = valueRecommend.map(ele => ele._id)
 
-      formData.append("handleUrlUK", value.handleUrlUK);
-      formData.append("handleUrlUS", value.handleUrlUS);
-      formData.append("handleUrlFR", value.handleUrlFR);
-      formData.append("handleUrlDE", value.handleUrlDE);
+    const formData = new FormData();
+    formData.append("titleUK", value.titleUK);
+    formData.append("titleUS", value.titleUS);
+    formData.append("titleFR", value.titleFR);
+    formData.append("titleDE", value.titleDE);
 
-      formData.append("metaDescriptionUK", value.metaDescriptionUK);
-      formData.append("metaDescriptionUS", value.metaDescriptionUS);
-      formData.append("metaDescriptionFR", value.metaDescriptionFR);
-      formData.append("metaDescriptionDE", value.metaDescriptionDE);
+    formData.append("handleUrlUK", value.handleUrlUK);
+    formData.append("handleUrlUS", value.handleUrlUS);
+    formData.append("handleUrlFR", value.handleUrlFR);
+    formData.append("handleUrlDE", value.handleUrlDE);
 
-      formData.append("typeUK", value.typeUK);
-      formData.append("typeUS", value.typeUS);
-      formData.append("typeFR", value.typeFR);
-      formData.append("typeDE", value.typeDE);
+    formData.append("metaDescriptionUK", value.metaDescriptionUK);
+    formData.append("metaDescriptionUS", value.metaDescriptionUS);
+    formData.append("metaDescriptionFR", value.metaDescriptionFR);
+    formData.append("metaDescriptionDE", value.metaDescriptionDE);
 
-      formData.append("customizationOptions", value.customizationOptions);
-      formData.append("detailProduct", value.detailProduct);
-      formData.append("fabricThickness", thickness);
-      formData.append("fabricStretchiness", stretchiness);
-      formData.append("featureProduct", value.featureProduct);
+    formData.append("typeUK", value.typeUK);
+    formData.append("typeUS", value.typeUS);
+    formData.append("typeFR", value.typeFR);
+    formData.append("typeDE", value.typeDE);
 
-      formData.append("status", value.productStatus);
-      formData.append("descriptionUK", JSON.stringify(contentUK));
-      formData.append("descriptionUS", JSON.stringify(contentUS));
-      formData.append("descriptionFR", JSON.stringify(contentFR));
-      formData.append("descriptionDE", JSON.stringify(contentDE));
+    formData.append("customizationOptions", value.customizationOptions);
+    formData.append("detailProduct", value.detailProduct);
 
-      formData.append("currency", value.currency);
-      formData.append("categoryProduct", JSON.stringify(arrayCatPro));
-      formData.append("price", value.price);
-      value.priceSale && formData.append("priceSale", value.priceSale);
-      formData.append("variants", JSON.stringify(variant));
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i]);
-      }
+    formData.append("optionMaterial_1", value.optionMaterial_1);
+    formData.append("minName_1", value.minName_1);
+    formData.append("maxName_1", value.maxName_1);
+    formData.append("optionMaterial_2", value.optionMaterial_2);
+    formData.append("minName_2", value.minName_2);
+    formData.append("maxName_2", value.maxName_2);
 
-      dispatch(addProduct({ formData, callBackSubmit }))
+    formData.append("valueMaterial_1", thickness);
+    formData.append("valueMaterial_2", stretchiness);
+    formData.append("featureProduct", value.featureProduct);
+
+    formData.append("status", value.productStatus);
+    formData.append("descriptionUK", JSON.stringify(contentUK));
+    formData.append("descriptionUS", JSON.stringify(contentUS));
+    formData.append("descriptionFR", JSON.stringify(contentFR));
+    formData.append("descriptionDE", JSON.stringify(contentDE));
+
+    formData.append("currency", value.currency);
+    formData.append("categoryProduct", JSON.stringify(arrayCatPro));
+    formData.append("price", value.price);
+    value.priceSale && formData.append("priceSale", value.priceSale);
+    formData.append("variants", JSON.stringify(variant));
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
     }
 
+    dispatch(addProduct({ formData, callBackSubmit }))
   }
 
   const {
@@ -766,20 +763,102 @@ const FormCreate = () => {
             <Typography variant='h5' sx={{ mb: 2 }}>
               Material
             </Typography>
-            <Typography variant='h6' sx={{ mb: 2 }}>
-              Fabric thickness
-            </Typography>
+            <Controller
+              name='optionMaterial_1'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Option Material 1'
+                  onChange={onChange}
+                  placeholder='Enter Option Material 1'
+                  aria-describedby='validation-basic-first-name'
+                />
+              )}
+            />
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ fontSize: 13 }}>LIGHTWEIGHT</Box>
-              <Box sx={{ fontSize: 13 }}>HEAVYWEIGHT</Box>
+              <Box sx={{ fontSize: 13 }}>
+                <Controller
+                  name='minName_1'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ width: '140px' }}
+                      value={value}
+                      label='Min Name'
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Box>
+              <Box sx={{ fontSize: 13 }}>
+                <Controller
+                  name='maxName_1'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ width: '140px' }}
+                      fullWidth
+                      value={value}
+                      label='Max Name'
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Box>
             </Box>
             <Slider onChange={onChangeThickness} />
-            <Typography variant='h6' sx={{ mb: 2, mt: 6 }}>
-              Fabric stretchiness
-            </Typography>
+            <Controller
+              name='optionMaterial_2'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4, mt: 8 }}
+                  fullWidth
+                  value={value}
+                  label='Option Material 2'
+                  onChange={onChange}
+                  placeholder='Enter Option Material 2'
+                  aria-describedby='validation-basic-first-name'
+                />
+              )}
+            />
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ fontSize: 13 }}>LOW</Box>
-              <Box sx={{ fontSize: 13 }}>HIGH</Box>
+              <Box sx={{ fontSize: 13 }}>
+                <Controller
+                  name='minName_2'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ width: '140px' }}
+                      value={value}
+                      label='Min Name 2'
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Box>
+              <Box sx={{ fontSize: 13 }}>
+                <Controller
+                  name='maxName_2'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ width: '140px' }}
+                      fullWidth
+                      value={value}
+                      label='Max Name 2'
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Box>
             </Box>
             <Slider onChange={onChangeStretchiness} />
             <Controller

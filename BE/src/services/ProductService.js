@@ -46,11 +46,20 @@ const create = async (data) => {
         set.currency = data.currency;
         set.price = data.price;
         set.priceSale = data.priceSale;
+
         set.customizationOptions = data.customizationOptions;
         set.detailProduct = data.detailProduct;
-        set.fabricStretchiness = data.fabricStretchiness;
-        set.fabricThickness = data.fabricThickness;
+        set.valueMaterial_1 = data.valueMaterial_1;
+        set.valueMaterial_2 = data.valueMaterial_2;
         set.featureProduct = data.featureProduct;
+
+        set.optionMaterial_1 = data.optionMaterial_1;
+        set.minName_1 = data.minName_1;
+        set.maxName_1 = data.maxName_1;
+        set.optionMaterial_2 = data.optionMaterial_2;
+        set.minName_2 = data.minName_2;
+        set.maxName_2 = data.maxName_2;
+
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -201,14 +210,34 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.detailProduct)) {
             set.detailProduct = data.detailProduct;
         }
-        if (!isEmpty(data?.fabricThickness)) {
-            set.fabricThickness = data.fabricThickness;
+        if (!isEmpty(data?.valueMaterial_1)) {
+            set.valueMaterial_1 = data.valueMaterial_1;
         }
-        if (!isEmpty(data?.fabricStretchiness)) {
-            set.fabricStretchiness = data.fabricStretchiness;
+        if (!isEmpty(data?.valueMaterial_2)) {
+            set.valueMaterial_2 = data.valueMaterial_2;
         }
         if (!isEmpty(data?.featureProduct)) {
             set.featureProduct = data.featureProduct;
+        }
+
+        if (!isEmpty(data?.optionMaterial_1)) {
+            set.optionMaterial_1 = data.optionMaterial_1;
+        }
+        if (!isEmpty(data?.minName_1)) {
+            set.minName_1 = data.minName_1;
+        }
+        if (!isEmpty(data?.maxName_1)) {
+            set.maxName_1 = data.maxName_1;
+        }
+
+        if (!isEmpty(data?.optionMaterial_2)) {
+            set.optionMaterial_2 = data.optionMaterial_2;
+        }
+        if (!isEmpty(data?.minName_2)) {
+            set.minName_2 = data.minName_2;
+        }
+        if (!isEmpty(data?.maxName_2)) {
+            set.maxName_2 = data.maxName_2;
         }
 
         if (!isEmpty(data?.categoryProductId)) {

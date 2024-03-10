@@ -94,13 +94,31 @@ const ProductsBase = {
     detailProduct: {
         type: String, trim: true,
     },
-    fabricThickness: {
-        type: Number, trim: true,
+    valueMaterial_1: {
+        type: String, trim: true,
     },
-    fabricStretchiness: {
-        type: Number, trim: true,
+    valueMaterial_2: {
+        type: String, trim: true,
     },
     featureProduct: {
+        type: String, trim: true,
+    },
+    optionMaterial_1: {
+        type: String, trim: true,
+    },
+    minName_1: {
+        type: String, trim: true,
+    },
+    maxName_1: {
+        type: String, trim: true,
+    },
+    optionMaterial_2: {
+        type: String, trim: true,
+    },
+    minName_2: {
+        type: String, trim: true,
+    },
+    maxName_2: {
         type: String, trim: true,
     },
 }
