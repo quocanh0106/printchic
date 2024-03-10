@@ -6,8 +6,7 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import IconButton from '@mui/material/IconButton'
 
 // ** Custom Components Imports
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// import { CKEditor } from '@ckeditor/ckeditor5-react'
+import { Slider } from 'antd';
 import { Fragment, forwardRef, useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
@@ -108,6 +107,9 @@ const FormCreate = () => {
   const [contentFR, setContentFR] = useState('');
   const [valueRecommend, setValueRecommend] = useState([])
 
+  const [thickness, setThickness] = useState(0);
+  const [stretchiness, setStretchiness] = useState(0);
+
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
 
@@ -151,52 +153,70 @@ const FormCreate = () => {
 
 
   const onSubmit = (value) => {
-    // setLoading(true)
-    const variant = listOPtionVariant.map((ele) => {
-      ele.price = value[`price-${ele.id}`]
-      ele.sku = value[`sku-${ele.id}`]
+    if (stretchiness == 0) {
+      toast.error('Fabric thickness field cannot be empty', {
+        duration: 2000
+      })
+    } else if (thickness == 0) {
+      toast.error('Fabric stretchiness field cannot be empty', {
+        duration: 2000
+      })
+    } else {
+      setLoading(true)
+      
+      const variant = listOPtionVariant.map((ele) => {
+        ele.price = value[`price-${ele.id}`]
+        ele.sku = value[`sku-${ele.id}`]
 
-      return ele
-    })
+        return ele
+      })
 
-    const arrayCatPro = valueRecommend.map(ele => ele._id)
+      const arrayCatPro = valueRecommend.map(ele => ele._id)
 
-    const formData = new FormData();
-    formData.append("titleUK", value.titleUK);
-    formData.append("titleUS", value.titleUS);
-    formData.append("titleFR", value.titleFR);
-    formData.append("titleDE", value.titleDE);
+      const formData = new FormData();
+      formData.append("titleUK", value.titleUK);
+      formData.append("titleUS", value.titleUS);
+      formData.append("titleFR", value.titleFR);
+      formData.append("titleDE", value.titleDE);
 
-    formData.append("handleUrlUK", value.handleUrlUK);
-    formData.append("handleUrlUS", value.handleUrlUS);
-    formData.append("handleUrlFR", value.handleUrlFR);
-    formData.append("handleUrlDE", value.handleUrlDE);
+      formData.append("handleUrlUK", value.handleUrlUK);
+      formData.append("handleUrlUS", value.handleUrlUS);
+      formData.append("handleUrlFR", value.handleUrlFR);
+      formData.append("handleUrlDE", value.handleUrlDE);
 
-    formData.append("metaDescriptionUK", value.metaDescriptionUK);
-    formData.append("metaDescriptionUS", value.metaDescriptionUS);
-    formData.append("metaDescriptionFR", value.metaDescriptionFR);
-    formData.append("metaDescriptionDE", value.metaDescriptionDE);
+      formData.append("metaDescriptionUK", value.metaDescriptionUK);
+      formData.append("metaDescriptionUS", value.metaDescriptionUS);
+      formData.append("metaDescriptionFR", value.metaDescriptionFR);
+      formData.append("metaDescriptionDE", value.metaDescriptionDE);
 
-    formData.append("typeUK", value.typeUK);
-    formData.append("typeUS", value.typeUS);
-    formData.append("typeFR", value.typeFR);
-    formData.append("typeDE", value.typeDE);
+      formData.append("typeUK", value.typeUK);
+      formData.append("typeUS", value.typeUS);
+      formData.append("typeFR", value.typeFR);
+      formData.append("typeDE", value.typeDE);
 
-    formData.append("status", value.productStatus);
-    formData.append("descriptionUK", JSON.stringify(contentUK));
-    formData.append("descriptionUS", JSON.stringify(contentUS));
-    formData.append("descriptionFR", JSON.stringify(contentFR));
-    formData.append("descriptionDE", JSON.stringify(contentDE));
-    formData.append("currency", value.currency);
-    formData.append("categoryProduct", JSON.stringify(arrayCatPro));
-    formData.append("price", value.price);
-    value.priceSale && formData.append("priceSale", value.priceSale);
-    formData.append("variants", JSON.stringify(variant));
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
+      formData.append("customizationOptions", value.customizationOptions);
+      formData.append("detailProduct", value.detailProduct);
+      formData.append("fabricThickness", thickness);
+      formData.append("fabricStretchiness", stretchiness);
+      formData.append("featureProduct", value.featureProduct);
+
+      formData.append("status", value.productStatus);
+      formData.append("descriptionUK", JSON.stringify(contentUK));
+      formData.append("descriptionUS", JSON.stringify(contentUS));
+      formData.append("descriptionFR", JSON.stringify(contentFR));
+      formData.append("descriptionDE", JSON.stringify(contentDE));
+
+      formData.append("currency", value.currency);
+      formData.append("categoryProduct", JSON.stringify(arrayCatPro));
+      formData.append("price", value.price);
+      value.priceSale && formData.append("priceSale", value.priceSale);
+      formData.append("variants", JSON.stringify(variant));
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+      }
+
+      dispatch(addProduct({ formData, callBackSubmit }))
     }
-
-    dispatch(addProduct({ formData, callBackSubmit }))
 
   }
 
@@ -446,6 +466,14 @@ const FormCreate = () => {
     setFiles([])
   }
 
+  const onChangeThickness = (value) => {
+    setThickness(value)
+  }
+
+  const onChangeStretchiness = (value) => {
+    setStretchiness(value)
+  }
+
   return (
     <>
       <Grid container xs={12}>
@@ -689,6 +717,86 @@ const FormCreate = () => {
                   error={Boolean(errors.typeDE)}
                   aria-describedby='validation-basic-first-name'
                   {...(errors.typeDE && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              More detail
+            </Typography>
+            <Controller
+              name='customizationOptions'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Customization Options'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Customization Options'
+                  error={Boolean(errors.customizationOptions)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.customizationOptions && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Controller
+              name='detailProduct'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mb: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Details Product'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter Details Product'
+                  error={Boolean(errors.detailProduct)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.detailProduct && { helperText: 'This field is required' })}
+                />
+              )}
+            />
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Material
+            </Typography>
+            <Typography variant='h6' sx={{ mb: 2 }}>
+              Fabric thickness
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Box sx={{ fontSize: 13 }}>LIGHTWEIGHT</Box>
+              <Box sx={{ fontSize: 13 }}>HEAVYWEIGHT</Box>
+            </Box>
+            <Slider onChange={onChangeThickness} />
+            <Typography variant='h6' sx={{ mb: 2, mt: 6 }}>
+              Fabric stretchiness
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Box sx={{ fontSize: 13 }}>LOW</Box>
+              <Box sx={{ fontSize: 13 }}>HIGH</Box>
+            </Box>
+            <Slider onChange={onChangeStretchiness} />
+            <Controller
+              name='featureProduct'
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomTextField
+                  rows={4}
+                  sx={{ mt: 3 }}
+                  fullWidth
+                  multiline
+                  {...field}
+                  label='Feature'
+                  error={Boolean(errors.featureProduct)}
+                  aria-describedby='validation-basic-featureProduct'
+                  {...(errors.featureProduct && { helperText: 'This field is required' })}
                 />
               )}
             />

@@ -46,6 +46,11 @@ const create = async (data) => {
         set.currency = data.currency;
         set.price = data.price;
         set.priceSale = data.priceSale;
+        set.customizationOptions = data.customizationOptions;
+        set.detailProduct = data.detailProduct;
+        set.fabricStretchiness = data.fabricStretchiness;
+        set.fabricThickness = data.fabricThickness;
+        set.featureProduct = data.featureProduct;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -188,6 +193,22 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.typeDE)) {
             set.typeDE = data.typeDE;
+        }
+
+        if (!isEmpty(data?.customizationOptions)) {
+            set.customizationOptions = data.customizationOptions;
+        }
+        if (!isEmpty(data?.detailProduct)) {
+            set.detailProduct = data.detailProduct;
+        }
+        if (!isEmpty(data?.fabricThickness)) {
+            set.fabricThickness = data.fabricThickness;
+        }
+        if (!isEmpty(data?.fabricStretchiness)) {
+            set.fabricStretchiness = data.fabricStretchiness;
+        }
+        if (!isEmpty(data?.featureProduct)) {
+            set.featureProduct = data.featureProduct;
         }
 
         if (!isEmpty(data?.categoryProductId)) {
