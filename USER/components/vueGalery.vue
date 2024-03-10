@@ -1,7 +1,7 @@
 <template>
   <div class="gallery-wrapper">
     <div class="vueGallery" v-show="pc || lgPc || extraPc">
-      <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+      <div class="activePhoto" :style="'background-image: url(' + photos?.media?.[activePhoto]?.path + ');'">
         <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
           <i class="fas fa-chevron-circle-left"></i>
         </button>
@@ -10,14 +10,14 @@
         </button>
       </div>
       <div class="thumbnails">
-        <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
-          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+        <div v-for="(photo, index) in photos.media" :src="photo" :key="index" @click="activePhoto = index"
+          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>
       </div>
     </div>
     <!-- mobile -->
     <div class="vueGallery-mobile" v-show="mobile || tablet">
-      <div class="activePhoto" :style="'background-image: url(' + photos[activePhoto] + ');'">
+      <div class="activePhoto" :style="'background-image: url(' + photos?.media?.[activePhoto]?.path + ');'">
         <button type="button" aria-label="Previous Photo" class="previous" @click="previousPhoto()">
           <i class="fas fa-chevron-circle-left"></i>
         </button>
@@ -27,7 +27,7 @@
       </div>
       <div class="thumbnails">
         <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
-          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo + ')'">
+          :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>
       </div>
     </div>
@@ -159,6 +159,8 @@ body {
 
     div {
       width: 100%;
+      max-width: 100px;
+      max-height: 100px;
       border: 2px solid #fff;
       outline: 2px solid #fff;
       cursor: pointer;

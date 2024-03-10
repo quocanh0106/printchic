@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar-outer-wrapper-all-screen">
-    <div class="nav-bar" v-show="pc">
+    <div class="nav-bar" v-show="pc || lgPc || extraPc">
       <img
         :src="Logo"
         class="cursor-pointer"

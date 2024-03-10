@@ -2,6 +2,7 @@
   "welcome": "hello eng",
   "ContactUs": "Contact Us",
   "viewAll": "View All",
+  "notFound": "We did not find any {keyWord} products. Displaying results for the keyword '{keyWord}'.",
   "navBar":{
     "signUp" : "Sign Up",
     "search" : "Search for anything you need",
@@ -183,7 +184,11 @@
     "relatedProduct" : "Related Products",
     "includeShipping" : "Include shipping",
     "downloadMockup" : "Download Mockup & Template",
-    "contactSupport" : "Contact Support"
+    "contactSupport" : "Contact Support",
+    "customizeOption" : "Customization Options",
+    "details" : "Details",
+    "materials" : "Material",
+    "features" : "Features"
   },
   "contactUs" : {
     "chatToUs" : "Chat to us",

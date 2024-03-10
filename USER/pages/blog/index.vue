@@ -102,10 +102,13 @@
 import { ref, onMounted, watch } from 'vue';
 import blog from "../../components/blog.vue";
 import help from "../../components/help.vue";
+import { useI18n, useLocalePath } from '#imports'
 
 const currentPage = ref(1);
 const currentTab = ref(0);
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+
+const localePath = useLocalePath()
 const { t , locale } = useI18n()
 
 const { data:listBlog }  = await useAsyncData(
@@ -123,7 +126,7 @@ const loadMore = () => {
 };
 
 const toDetailBlog = (id) => {
-  this.$router.push(`/blog/${id}`);
+  this.$router.push(localePath(`/blog/${id}`));
 };
 </script>
 <style lang="scss">

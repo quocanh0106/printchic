@@ -2,6 +2,7 @@
   "welcome": "Welkom",
   "ContactUs": "Contact",
   "viewAll": "Toon alles",
+  "notFound": "We hebben geen {keyWord} producten gevonden. Resultaten weergegeven voor het trefwoord '{keyWord}'.",
   "navBar": {
     "signUp": "Registreren",
     "search": "Zoek alles wat u nodig hebt",

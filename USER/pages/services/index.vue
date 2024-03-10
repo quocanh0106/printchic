@@ -379,7 +379,7 @@ import cardCounterVue from '~/components/cardCounter.vue';
 import swiperComponent from '~/components/swiperComponent.vue';
 import prosAndConsVue from '~/components/prosAndCons.vue';
 import { myMixin } from '~/mixins/myMixin';
-import { useI18n } from 'vue-i18n'
+import { useI18n, useLocalePath } from '#imports'
 
 import { useAsyncData,useFetch  } from 'nuxt/app'
 
@@ -387,7 +387,7 @@ const { t } = useI18n()
 const nuxtApp = useNuxtApp();
 const router = useRouter();
 const listPODProduct = ref([]);
-
+const localePath = useLocalePath()
 
 const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/product/list`, {
   headers: {
@@ -425,7 +425,7 @@ const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 250
 const extraPc = computed(() => screenWidth.value > 2500);
 
 function toProductList() {
-  router.push('/product');
+  router.push(localePath('/product'));
 }
 
 const thumbNailImgBlog = ref([

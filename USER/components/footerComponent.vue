@@ -23,7 +23,7 @@
               {{ menu.title }}
             </h1>
             <div class="section-content cursor-pointer" v-for="(menuItem, ind) in menu.listUrl" :key="ind"
-              @click="$router.push(`${menuItem.url}`)">
+              @click="$router.push(localePath(`${menuItem.url}`))">
               <p>{{ menuItem.urlName }}</p>
             </div>
           </div>
@@ -32,8 +32,8 @@
       <div class="flex justify-between mt-4">
         <h1>© 2023 PrintChic. All rights reserved.</h1>
         <div class="flex">
-          <h1 @click="$router.push('/privacy-policy')" class="mr-4 cursor-pointer">{{ $t("footer.privacyPolicy") }}</h1>
-          <h1 @click="$router.push('/terms-of-services')" class="cursor-pointer">{{ $t("footer.termOfService") }}</h1>
+          <h1 @click="$router.push(localePath('/privacy-policy'))" class="mr-4 cursor-pointer">{{ $t("footer.privacyPolicy") }}</h1>
+          <h1 @click="$router.push(localePath('/terms-of-services'))" class="cursor-pointer">{{ $t("footer.termOfService") }}</h1>
         </div>
       </div>
     </div>
@@ -200,7 +200,7 @@ export default {
   methods: {
     navigateToPath(url) {
       console.log(url)
-      this.$router.push(`${url}`);
+      this.$router.push(localePath(`${url}`));
     },
   },
 };
