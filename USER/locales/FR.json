@@ -2,6 +2,7 @@
   "welcome": "bienvenue",
   "ContactUs": "Contactez-Nous",
   "viewAll": "Voir Tout",
+  "notFound": "Nous n'avons trouvé aucun produit {keyWord}. Affichage des résultats pour le mot-clé '{keyWord}'.",
   "navBar": {
     "signUp": "Inscription",
     "search": "Recherchez tout ce dont vous avez besoin",

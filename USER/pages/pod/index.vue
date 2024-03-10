@@ -79,7 +79,7 @@
           <h1 class="section-title font-semibold">
             {{ $t("pod.enjoyPOPProduct") }}
           </h1>
-          <a @click="this.$router.push('/product')" class="flex items-center justify-center gap-x-2 txt-primary">
+          <a @click="this.$router.push(localePath('/product'))" class="flex items-center justify-center gap-x-2 txt-primary">
             <p>{{ $t("pod.exploreOurCatalog") }}</p>
             <img :src="arrowUpRight" />
           </a>
@@ -540,7 +540,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import swiperComponent from '~/components/swiperComponent.vue';
 import faq from '~/components/faq.vue';
 import help from '~/components/help.vue';
@@ -548,6 +547,7 @@ import podThumb from '~/assets/images/printOnDemandThumb.png';
 import check from '~/assets/svg/tickGreen.svg';
 import arrowUpRight from '~/assets/svg/arrowUpRight.svg'; // Corrected the path
 import cardThumbnail from '~/assets/svg/cardThumbNail.svg';
+import { useI18n, useLocalePath } from '#imports'
 
 // Replace the mixin with composable if possible. Here's a placeholder for your mixin logic.
 // const { someReactiveProperty, someMethod } = useMyMixin();
@@ -571,6 +571,7 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
 // Convert methods to simple functions if there are any in the methods block.
 
+const localePath = useLocalePath()
 const { data }  = await useAsyncData(
   'listProduct',
   () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')

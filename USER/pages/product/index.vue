@@ -39,7 +39,7 @@
           </div>
           <div class="right-block-wrapper mt-12">
             <div class="product-list mb-10">
-              <div class="product-card cursor-pointer" @click="toProductDetail(item)" v-for="(item, index) in listProduct"
+              <div class="product-card cursor-pointer" @click="toProductDetail(item._id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item?.media[0]?.path" />
                 <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants[0]?.sku }}</p>
@@ -113,7 +113,7 @@
           </div>
           <div class="right-block-wrapper mt-5">
             <div class="product-list-mobile mb-10">
-              <div class="product-card cursor-pointer" @click="toProductDetail(item)" v-for="(item, index) in listProduct"
+              <div class="product-card cursor-pointer" @click="toProductDetail(item._id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item.media[0]?.path" />
                 <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
@@ -145,6 +145,7 @@ import { useFetch } from 'nuxt/app';
 import SwiperCateComponent from './components/SwiperCateComponent.vue';
 import help from '~/components/help.vue';
 import useLanguage from '~/composables/useLanguage';
+import { useI18n, useLocalePath } from '#imports'
 
 // Replace the mixin with composable if necessary. 
 // const { mixinMethod } = useMyMixin(); // Example usage if you need to replace myMixin with a composable.
@@ -153,6 +154,7 @@ const { currentLanguage, setLanguage } = useLanguage();
 const router = useRouter();
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
+const localePath = useLocalePath()
 const drawer = ref(null);
 const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
 const currentPage = ref(1);
@@ -192,9 +194,8 @@ function clearAllFilterBy() {
   filterBy.value = [];
 }
 
-function toProductDetail(item) {
-  let id = 1; // This should be dynamic based on the item
-  router.push(`/product/${id}`);
+function toProductDetail(id) {
+  router.push(localePath(`/product/${id}`));
 }
 
 function loadMoreItem() {

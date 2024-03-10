@@ -13,7 +13,10 @@
             <p class="mt-2 txt-primary font-semibold ">$ {{ item.price }}</p>
             <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
           </div>
-        </div>
+      </div>
+      <div class="w-max" v-if="data?.length == 0 && !loading">
+        {{ $t('notFound',{keyWord:route.query.search}) }}
+      </div>
       </div>
       <v-btn class="w-100 mt-8 button-see-more" v-if="filterResult.length > 9">{{ $t('button.seeMoreWithItemCount', {count: filterResult.length}) }}</v-btn>
   </div>
@@ -23,14 +26,17 @@
 import { useRouter, useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useFetch } from '#app'
+import { useI18n, useLocalePath } from '#imports'
 
 const router = useRouter()
 const route = useRoute()
 const filterResult = ref([])
 const { locale } = useI18n();
+const localePath = useLocalePath()
+
 function toProductDetail(item) {
   let id = 1
-  router.push(`/product/${id}`)
+  router.push(localePath(`/product/${id}`))
 }
 
 const loading = ref(true)

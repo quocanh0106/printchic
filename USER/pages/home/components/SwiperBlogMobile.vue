@@ -33,6 +33,7 @@ import "swiper/css/scrollbar";
 // import asset
 import introImage from "../assets/images/introImage.png"
 import useLanguage from '~/composables/useLanguage';
+import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 
 const router = useRouter(); // Use useRouter here
 const { currentLanguage, setLanguage } = useLanguage();
@@ -56,6 +57,7 @@ defineProps({
     }
 });
 
+const localePath = useLocalePath()
 const { data }  = await useAsyncData(
   'blog',
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
@@ -65,7 +67,7 @@ const onSwiper = (swiper) => {
       // console.log(swiper);
     };
 const toDetailBlog = (id) => {
-  router.push(`/blog/${id}`);
+  router.push(localePath(`/blog/${id}`));
 };
 const onSlideChange = () => {
   console.log("slide change");

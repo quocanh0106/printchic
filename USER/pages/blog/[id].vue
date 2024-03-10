@@ -79,7 +79,7 @@
           >
           <span class="flex flex-col gap-y-2" v-if="index < 3">
             {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE }}
-              <img class="cursor-pointer" @click="this.$router.push(`/blog/${item.id}`)" :src="popupBoxIcon" alt="icon" />
+              <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${item.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
           </div>
         </div>
@@ -114,7 +114,7 @@
         >
         <span class="flex gap-x-2" v-if="index < 3">
             {{ locale == 'US' ? news.titleUS : locale == 'UK' ? news.titleUK : locale == 'FR' ? news.titleFR : news.titleDE }}
-              <img class="cursor-pointer" @click="this.$router.push(`/blog/${news.id}`)" :src="popupBoxIcon" alt="icon" />
+              <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${news.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
         </div>
       </div>

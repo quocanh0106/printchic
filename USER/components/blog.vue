@@ -5,7 +5,7 @@
         <h1 class="section-title font-semibold">
           {{ title ? title : $t("homePage.ourBlogStory") }}
         </h1>
-        <a class="flex gap-1 txt-primary cursor-pointer mt-10" @click="$router.push('/blog')">
+        <a class="flex gap-1 txt-primary cursor-pointer mt-10" @click="$router.push(localePath('/blog'))">
           <p>{{ $t("button.viewAll") }}</p>
           <img :src="arrowUpRight" />
         </a>
@@ -61,6 +61,7 @@ import { myMixin } from "~/mixins/myMixin";
 import SwiperBlogMobile from "../pages/home/components/SwiperBlogMobile";
 import useLanguage from '~/composables/useLanguage';
 import useWidthScreen from '~/composables/useWidthScreen';
+import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { currentLanguage, setLanguage } = useLanguage();
@@ -75,9 +76,11 @@ defineProps({
   },
 });
 
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
 
 const toDetailBlog = (id) => {
-  this.$router.push(`/blog/${id}`);
+  this.$router.push(localePath(`/blog/${id}`));
 };
 </script>
 
