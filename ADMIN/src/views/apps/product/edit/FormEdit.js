@@ -26,6 +26,12 @@ import { useSnackbar } from 'notistack'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { Slider } from 'antd';
 
+// import Tabs
+import Tab from '@mui/material/Tab'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import TabContext from '@mui/lab/TabContext'
+
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 
   ssr: false,
@@ -111,7 +117,11 @@ const FormCreate = () => {
   const [valueRecommend, setValueRecommend] = useState([])
   const [thickness, setThickness] = useState(0);
   const [stretchiness, setStretchiness] = useState(0);
+  const [valueTabs, setValueTabs] = useState('1')
 
+  const handleChangeTabs = (event, newValue) => {
+    setValueTabs(newValue)
+  }
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
 
@@ -188,6 +198,25 @@ const FormCreate = () => {
     formData.append("typeUS", value.typeUS);
     formData.append("typeFR", value.typeFR);
     formData.append("typeDE", value.typeDE);
+    formData.append("tabProductDetailUK", value.tabProductDetailUK);
+    formData.append("tabProductDetailUS", value.tabProductDetailUS);
+    formData.append("tabProductDetailFR", value.tabProductDetailFR);
+    formData.append("tabProductDetailDE", value.tabProductDetailDE);
+
+    formData.append("tabSizeGuideUK", value.tabSizeGuideUK);
+    formData.append("tabSizeGuideUS", value.tabSizeGuideUS);
+    formData.append("tabSizeGuideFR", value.tabSizeGuideFR);
+    formData.append("tabSizeGuideDE", value.tabSizeGuideDE);
+
+    formData.append("tabMockupTemplateUK", value.tabMockupTemplateUK);
+    formData.append("tabMockupTemplateUS", value.tabMockupTemplateUS);
+    formData.append("tabMockupTemplateFR", value.tabMockupTemplateFR);
+    formData.append("tabMockupTemplateDE", value.tabMockupTemplateDE);
+
+    formData.append("tabCareInstructionUK", value.tabCareInstructionUK);
+    formData.append("tabCareInstructionUS", value.tabCareInstructionUS);
+    formData.append("tabCareInstructionFR", value.tabCareInstructionFR);
+    formData.append("tabCareInstructionDE", value.tabCareInstructionDE);
 
     formData.append("customizationOptions", value.customizationOptions);
     formData.append("detailProduct", value.detailProduct);
@@ -390,6 +419,26 @@ const FormCreate = () => {
       setValue('typeUS', data?.typeUS)
       setValue('typeFR', data?.typeFR)
       setValue('typeDE', data?.typeDE)
+
+      setValue('tabProductDetailUK', data?.tabProductDetailUK)
+      setValue('tabProductDetailUS', data?.tabProductDetailUS)
+      setValue('tabProductDetailFR', data?.tabProductDetailFR)
+      setValue('tabProductDetailDE', data?.tabProductDetailDE)
+
+      setValue('tabSizeGuideUK', data?.tabSizeGuideUK)
+      setValue('tabSizeGuideUS', data?.tabSizeGuideUS)
+      setValue('tabSizeGuideFR', data?.tabSizeGuideFR)
+      setValue('tabSizeGuideDE', data?.tabSizeGuideDE)
+
+      setValue('tabMockupTemplateUK', data?.tabMockupTemplateUK)
+      setValue('tabMockupTemplateUS', data?.tabMockupTemplateUS)
+      setValue('tabMockupTemplateFR', data?.tabMockupTemplateFR)
+      setValue('tabMockupTemplateDE', data?.tabMockupTemplateDE)
+
+      setValue('tabCareInstructionUK', data?.tabCareInstructionUK)
+      setValue('tabCareInstructionUS', data?.tabCareInstructionUS)
+      setValue('tabCareInstructionFR', data?.tabCareInstructionFR)
+      setValue('tabCareInstructionDE', data?.tabCareInstructionDE)
 
       setValue('customizationOptions', data?.customizationOptions)
       setValue('detailProduct', data?.detailProduct)
@@ -1231,6 +1280,280 @@ const FormCreate = () => {
                 )}
               />
             </Grid>
+          </Card>
+          <Card sx={{ p: 4, mt: 4 }}>
+            <TabContext value={valueTabs}>
+              <TabList onChange={handleChangeTabs} aria-label='nav tabs example'>
+                <Tab value='1' component='a' label='Product Details' onClick={e => e.preventDefault()} />
+                <Tab value='2' component='a' label='Size Guide' onClick={e => e.preventDefault()} />
+                <Tab value='3' component='a' label='Mockup & Template' onClick={e => e.preventDefault()} />
+                <Tab value='4' component='a' label='Care Instruction' onClick={e => e.preventDefault()} />
+              </TabList>
+              <TabPanel value='1'>
+                <Controller
+                  name='tabProductDetailUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Product Details UK"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabProductDetailUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Product Details US"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabProductDetailFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Product Details FR"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabProductDetailDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Product Details DE"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              </TabPanel>
+              <TabPanel value='2'>
+                <Controller
+                  name='tabSizeGuideUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Size Guide UK"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabSizeGuideUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Size Guide US"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabSizeGuideFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Size Guide FR"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                  name='tabSizeGuideDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Size Guide DE"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              </TabPanel>
+              <TabPanel value='3'>
+              <Controller
+                  name='tabMockupTemplateUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Mockup Template UK"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              <Controller
+                  name='tabMockupTemplateUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Mockup Template US"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              <Controller
+                  name='tabMockupTemplateFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Mockup Template FR"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              <Controller
+                  name='tabMockupTemplateDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Mockup Template DE"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              </TabPanel>
+              <TabPanel value='4'>
+              <Controller
+                  name='tabCareInstructionUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Care Instruction UK"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              <Controller
+                  name='tabCareInstructionUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Care Instruction US"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+              <Controller
+                  name='tabCareInstructionFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      label="Care Instruction FR"
+                      fullWidth
+                      {...field}
+                      aria-describedby='validation-basic-featureProduct'
+                    />
+                  )}
+                />
+                <Controller
+                    name='tabCareInstructionDE'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <CustomTextField
+                        rows={4}
+                        multiline
+                        sx={{ mt: 3 }}
+                        label="Care Instruction DE"
+                        fullWidth
+                        {...field}
+                        aria-describedby='validation-basic-featureProduct'
+                      />
+                    )}
+                  />
+              </TabPanel>
+            </TabContext>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>

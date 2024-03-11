@@ -38,6 +38,21 @@ import { useSnackbar } from 'notistack'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
+  right: '40%',
+  color: 'grey.500',
+  position: 'absolute',
+  boxShadow: theme.shadows[2],
+  transform: 'translate(10px, -10px)',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: `${theme.palette.background.paper} !important`,
+  transition: 'transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out',
+  '&:hover': {
+    transform: 'translate(7px, -5px)'
+  }
+}))
+
+const CustomCloseButtonEdit = styled(IconButton)(({ theme }) => ({
+  top: 0,
   right: 0,
   color: 'grey.500',
   position: 'absolute',
@@ -113,9 +128,9 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       reset()
       setFiles([])
     } else {
-      if(data.statusCode == 10505) {
+      if (data.statusCode == 10505) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of product category already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of product category already exists!`, { variant: 'error' });
         })
       } else {
         toast.error(data.message, {
@@ -124,7 +139,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
       }
     }
   }
-  
+
   const onSubmit = (value) => {
     setLoading(true)
     const formData = new FormData();
@@ -144,9 +159,9 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'100%'} className='single-file-image' src={files} />
+        <img width={'60%'} className='single-file-image' src={files} />
         :
-        <img width={'100%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
+        <img width={'60%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }
   </Box>
 
@@ -154,7 +169,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     <Dialog
       fullWidth
       open={visible}
-      maxWidth='sm'
+      maxWidth='lg'
       scroll='body'
       onClose={handleClose}
       TransitionComponent={Transition}
@@ -167,9 +182,9 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
           pt: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
         }}
       >
-        <CustomCloseButton onClick={handleClose}>
+        <CustomCloseButtonEdit onClick={handleClose}>
           <Icon icon='tabler:x' fontSize='1.25rem' />
-        </CustomCloseButton>
+        </CustomCloseButtonEdit>
         <Box sx={{ mb: 4, textAlign: 'center' }}>
           <Typography variant='h3' sx={{ mb: 3 }}>
             Edit Product Category
@@ -177,8 +192,11 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
         </Box>
 
         <form>
+        <Typography variant='h5' sx={{ mb: 3 }}>
+            Title
+          </Typography>
           <Grid container spacing={5}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
                 control={control}
@@ -197,7 +215,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.US}`}
                 control={control}
@@ -216,7 +234,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.FR}`}
                 control={control}
@@ -235,7 +253,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.DE}`}
                 control={control}
@@ -254,7 +272,14 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* description */}
+
+          </Grid>
+          <Typography variant='h5' sx={{ mb: 2, mt: 7 }}>
+            Description
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.UK}`}
                 control={control}
@@ -274,7 +299,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.US}`}
                 control={control}
@@ -294,7 +319,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.FR}`}
                 control={control}
@@ -314,7 +339,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.DE}`}
                 control={control}
@@ -334,48 +359,50 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <Controller
-                name='parentCategory'
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue=''
-                    label='Parent Category'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.parentCategory)}
-                    aria-describedby='validation-basic-select'
-                  >
-                    {
-                      store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.titleUS}</MenuItem>)
-                    }
-                  </CustomTextField>
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Box>
-                <Box>
-                  <Typography>
-                    Banner image
-                  </Typography>
-                  {
-                    files ? img :
-                      <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
-                        <input {...getInputProps()} />
-                        Upload
-                      </Button>
-                  }
-                </Box>
-              </Box>
-            </Grid>
           </Grid>
+            <Grid container spacing={5} sx={{ mt: 3 }}>
+              <Grid item xs={12} sm={12}>
+                <Controller
+                  name='parentCategory'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      select
+                      fullWidth
+                      defaultValue=''
+                      label='Parent Category'
+                      SelectProps={{
+                        value: value,
+                        onChange: e => onChange(e)
+                      }}
+                      id='validation-basic-select'
+                      error={Boolean(errors.parentCategory)}
+                      aria-describedby='validation-basic-select'
+                    >
+                      {
+                        store.data.map(ele => <MenuItem key={ele?._id} value={ele?._id}>{ele?.titleUS}</MenuItem>)
+                      }
+                    </CustomTextField>
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Box>
+                  <Box>
+                    <Typography>
+                      Banner image
+                    </Typography>
+                    {
+                      files ? img :
+                        <Button  {...getRootProps({ className: 'dropzone' })} variant='contained' sx={{ mr: 1 }}>
+                          <input {...getInputProps()} />
+                          Upload
+                        </Button>
+                    }
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
         </form>
       </DialogContent>
       <DialogActions

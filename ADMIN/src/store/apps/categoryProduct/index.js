@@ -34,8 +34,8 @@ export const updateCategoryProduct = createAsyncThunk('appCalendar/updateEvent',
       'Content-Type': 'multipart/form-data',
     }
   })
-  event.callBackSubmit(response.data)
   await dispatch(fetchEvents())
+  event.callBackSubmit(response.data)
 
   return response.data.event
 })
