@@ -30,6 +30,7 @@ import { deleteProduct, fetchProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import { openInNewTab } from 'src/utils'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
+import EditDialogSettingProduct from './EditDialogSettingProduct'
 
 // ** Components Imports
 
@@ -42,6 +43,7 @@ const UserList = () => {
   const [createDialog, setOpenCreateDialog] = useState(false)
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
+  const [openEditSettingProDialog, setOpenEditSettingProDialog] = useState(false)
 
   const [query, setQuery] = useState({
     page: 1,
@@ -185,7 +187,7 @@ const UserList = () => {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <TableHeader query={query} plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog} />
+          <TableHeader query={query} plan={plan} value={value} handleFilter={handleFilter} handlePlanChange={handlePlanChange} setVisible={setOpenCreateDialog}  setOpenEditSettingProDialog={setOpenEditSettingProDialog}/>
           <DataGrid
             autoHeight
             rowHeight={62}
@@ -198,6 +200,7 @@ const UserList = () => {
           />
         </Card>
       </Grid>
+      <EditDialogSettingProduct visible={openEditSettingProDialog} setVisible={setOpenEditSettingProDialog}/>
     </Grid>
   )
 }

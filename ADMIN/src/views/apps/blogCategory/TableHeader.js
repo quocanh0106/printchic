@@ -21,7 +21,7 @@ const TableHeader = props => {
   })
 
   // ** Props
-  const { plan, handlePlanChange, handleFilter, value, setVisible, query } = props
+  const { plan, handlePlanChange, handleFilter, value, setVisible, query,setOpenEditSettingProDialog } = props
   const dispatch = useDispatch()
 
   const searchProductCategory = () => {

@@ -868,9 +868,9 @@ const FormCreate = () => {
               render={({ field }) => (
                 <CustomTextField
                   rows={4}
+                  multiline
                   sx={{ mt: 3 }}
                   fullWidth
-                  multiline
                   {...field}
                   label='Feature'
                   error={Boolean(errors.featureProduct)}
