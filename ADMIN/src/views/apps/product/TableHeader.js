@@ -58,7 +58,7 @@ const TableHeader = props => {
       <DatePickerWrapper>
         <form>
           <Grid container spacing={5}>
-            <Grid item xs={9} sm={9}>
+            <Grid item xs={6} sm={6}>
               <CustomTextField
                 value={value}
                 fullWidth
@@ -66,7 +66,7 @@ const TableHeader = props => {
                 onChange={e => handleFilter(e.target.value)}
               />
             </Grid>
-            <Grid item xs={3} sm={3}>
+            <Grid item xs={6} sm={6}>
               <div style={{ height: '100%', display: 'flex', alignItems: 'self-end' }}>
                 <Button
                   sx={{ mr: 2 }}
@@ -76,11 +76,11 @@ const TableHeader = props => {
                   Search
                 </Button>
                 <Button
-                  sx={{ mr: 2 }}
+                  sx={{ mr: 2, }}
                   variant='contained'
                   onClick={() => setOpenEditSettingProDialog(true)}
                 >
-                  Setting
+                  Setting Shipping Info
                 </Button>
                 <Box
                   component={Link}

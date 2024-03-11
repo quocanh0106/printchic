@@ -17,6 +17,16 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
+            // if(req.query.categoryObjId){
+            //     const result = await ProductService.list({
+            //         ...req.query.categoryObjId
+            //     })
+            //     console.log(result, 'KKAKKA')
+            //     if (!isEmpty(result)) {
+            //         return res.json(responseSuccess(10501, result));
+            //     }
+            //     return res.json(responseSuccess(10501, []));
+            // }
             const result = await ProductService.list({
                 ...req.query,
             })
