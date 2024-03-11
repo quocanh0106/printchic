@@ -1,5 +1,5 @@
 // ** React Imports
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -31,10 +31,11 @@ import { useDropzone } from 'react-dropzone'
 import { Controller, useForm } from 'react-hook-form'
 import Icon from 'src/@core/components/icon'
 import { addCategoryBlog } from 'src/store/apps/categoryBlog'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
+import { fetchEventsSetting, updateSetting } from 'src/store/apps/setting'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -62,11 +63,19 @@ const EditDialogSettingProduct = ({ visible, setVisible }) => {
   // ** States
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
+  const store = useSelector(state => state.setting)
+
+  useEffect(() => {
+    dispatch(
+      fetchEventsSetting()
+    )
+  }, [dispatch])
 
   const {
     control,
     handleSubmit,
     clearErrors,
+    setValue,
     setError,
     reset,
     formState: { errors }
@@ -78,27 +87,26 @@ const EditDialogSettingProduct = ({ visible, setVisible }) => {
     status: '',
   })
 
+  useEffect(() => {
+    LANG.forEach(ele => {
+      setValue(`processingTime${ele.value}`, store.data[`processingTime${ele.value}`])
+      setValue(`shippingTime${ele.value}`, store.data[`shippingTime${ele.value}`])
+      setValue(`templateProduct${ele.value}`, store.data[`templateProduct${ele.value}`])
+    })
+  },[store])
+
   const handleClose = () => {
     setVisible(false)
   }
 
   const callBackSubmit = (data) => {
-    console.log('data', data)
     if (data.success) {
-      reset()
-      setFiles([])
-      setVisible(false)
-      toast.success('New category blog created successfully', {
-        duration: 3000
-      })
+      enqueueSnackbar('Update setting successfully', { variant: 'success' });
+      handleClose()
     } else {
-      if(data.statusCode == 10605) {
-        data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of blog category already exists!`, { variant : 'error' });
-        })
-      } else {
-        enqueueSnackbar(data?.message, { variant : 'error' });
-      }
+      toast.error(data.message, {
+        duration: 2000
+      })
     }
     setLoading(false)
   }
@@ -111,7 +119,7 @@ const EditDialogSettingProduct = ({ visible, setVisible }) => {
         formData.append(`shippingTime${ele.value}`, value[`shippingTime${ele.value}`]);
         formData.append(`templateProduct${ele.value}`, value[`templateProduct${ele.value}`]);
       })
-      dispatch(addCategoryBlog({ formData, callBackSubmit }))
+      dispatch(updateSetting({ formData, callBackSubmit }))
   }
 
   const img = files.map(file => (

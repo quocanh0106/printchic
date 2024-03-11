@@ -41,6 +41,46 @@ const settingBase = {
   language: {
     type: String, trim: true,
   },
+
+  processingTimeUK: {
+    type: String, trim: true,
+  },
+  processingTimeUS: {
+    type: String, trim: true,
+  },
+  processingTimeFR: {
+    type: String, trim: true,
+  },
+  processingTimeDE: {
+    type: String, trim: true,
+  },
+
+  shippingTimeUK: {
+    type: String, trim: true,
+  },
+  shippingTimeUS: {
+    type: String, trim: true,
+  },
+  shippingTimeFR: {
+    type: String, trim: true,
+  },
+  shippingTimeDE: {
+    type: String, trim: true,
+  },
+
+  templateProductUK: {
+    type: String, trim: true,
+  },
+  templateProductUS: {
+    type: String, trim: true,
+  },
+  templateProductFR: {
+    type: String, trim: true,
+  },
+  templateProductDE: {
+    type: String, trim: true,
+  },
+
 }
 const setting = { ...settingBase, ...common };
 const SettingSchema = new Schema(setting, { versionKey: false });
