@@ -75,6 +75,10 @@ const list = async (data) => {
         const conditions = {
             isDeleted: IS_DELETED[200],
         };
+        console.log(data, 'DADADADA')
+        if (data?.categoryObjId) {
+            conditions.categoryProductId = data?.categoryObjId;
+        }
         if (data?.categoryProductId) {
             conditions.categoryProductId = data?.categoryProductId;
         }
