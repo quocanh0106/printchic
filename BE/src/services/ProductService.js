@@ -349,6 +349,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.priceSale)) {
             set.priceSale = data.priceSale;
         }
+        
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
