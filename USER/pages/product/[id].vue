@@ -8,11 +8,21 @@
           <VueGallery class="w-1/2" :photos="detail.data" />
           <div class="product-variant-and-infor w-1/2">
             <h1 class="section-title font-semibold product-name">
-              {{ product.name }}
+              {{
+                locale == "US"
+                  ? detail?.data.titleUS
+                  : locale == "UK"
+                  ? detail?.data.titleUK
+                  : locale == "FR"
+                  ? detail?.data.titleFR
+                  : detail?.data.titleDE
+              }}
             </h1>
-            <p class="product-sku mt-2">SKU: {{ product.sku }}</p>
+            <p class="product-sku mt-2">
+              SKU: {{ detail.data.variants?.[0].sku }}
+            </p>
             <div class="price-n-ship mt-6 flex items-center gap-x-2">
-              <span class="price">${{ product.price }}</span>
+              <span class="price">${{ detail.data.price }}</span>
               <span
                 class="include-ship-tag bg-light-blue-custom"
                 v-show="product.includeShipping"
@@ -56,47 +66,58 @@
               <h1 class="font-semibold text-lg">
                 {{ $t("productDetail.customizeOption") }}
               </h1>
-              <p>test</p>
+              <p>{{ detail.data.customizationOptions }}</p>
             </span>
-            <span class="custimize-option flex items-center gap-x-4 justify-between w-100">
+            <span
+              class="custimize-option flex items-center gap-x-4 justify-between w-100"
+            >
               <h1 class="font-semibold text-lg w-30">
-                {{ $t("productDetail.customizeOption") }}
+                {{ $t("productDetail.details") }}
               </h1>
-              <span class="flex flex-col w-70">
-                <v-layout class="flex justify-between">
-                  <v-flex>Start Title</v-flex>
-                  <v-flex class="text-right">End Title</v-flex>
-                </v-layout>
-
-                <!-- Slider component -->
-                <v-slider    
-                  class="slider-detail"  
-                  v-model="slider1"
-                ></v-slider>
-              </span>
+              <p>{{ detail.data.featureProduct }}</p>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg w-30">
-                {{ $t("productDetail.customizeOption") }}
+                {{ $t("productDetail.materials") }}
               </h1>
-              <span class="flex flex-col w-70">
-                <v-layout class="flex justify-between">
-                  <v-flex>Start Title</v-flex>
-                  <v-flex class="text-right">End Title</v-flex>
-                </v-layout>
-
-                <!-- Slider component -->
-                <v-slider    
-                  class="slider-detail"  
-                  v-model="slider2"  
-                ></v-slider>
-              </span>
+              <div class="flex flex-col w-100">
+                <span class="flex flex-col">
+                  <v-layout class="flex justify-between">
+                    <v-flex>{{ detail.data.minName_2 }}</v-flex>
+                    <v-flex class="text-right">{{
+                      detail.data.maxName_2
+                    }}</v-flex>
+                  </v-layout>
+  
+                  <!-- Slider component -->
+                  <v-slider
+                    class="slider-detail"
+                    v-model="detail.data.valueMaterial_2"
+                    disabled
+                  ></v-slider>
+                </span>
+                <span class="flex flex-col">
+                  <v-layout class="flex justify-between">
+                    <v-flex>{{ detail.data.minName_1 }}</v-flex>
+                    <v-flex class="text-right">{{
+                      detail.data.maxName_1
+                    }}</v-flex>
+                  </v-layout>
+  
+                  <!-- Slider component -->
+                  <v-slider
+                    class="slider-detail"
+                    v-model="detail.data.valueMaterial_1"
+                    disabled
+                  ></v-slider>
+                </span>
+              </div>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg">
-                {{ $t("productDetail.customizeOption") }}
+                {{ $t("productDetail.features") }}
               </h1>
-              <p>test</p>
+              <p v-html="detail.data.featureProduct"></p>
             </span>
           </div>
           <div class="shipping-handle-info w-1/2">
@@ -132,6 +153,7 @@
               <v-tab value="one">Item One</v-tab>
               <v-tab value="two">Item Two</v-tab>
               <v-tab value="three">Item Three</v-tab>
+              <v-tab value="four">Item Four</v-tab>
             </v-tabs>
 
             <v-card-text>
@@ -141,11 +163,17 @@
                 <v-window-item value="two"> Two </v-window-item>
 
                 <v-window-item value="three"> Three </v-window-item>
+                <v-window-item value="four"> Four </v-window-item>
               </v-window>
             </v-card-text>
           </v-card>
         </div>
       </div>
+      <!-- Description -->
+      <div
+        class="description-wrapper custom-padding"
+        v-html="localizedDescription"
+      ></div>
       <!-- Related Product -->
       <div class="related-product-wrapper bg-light-gray1-custom custom-padding">
         <div class="related-product-header flex justify-between">
@@ -174,24 +202,35 @@
         class="product-detail-head-block flex justify-between gap-x-16 flex-column"
       >
         <div class="display-image flex flex-col gap-y-10">
-          <VueGallery :photos="photos" />
+          <VueGallery :photos="detail.data" />
         </div>
         <div class="product-variant-and-infor p-5">
           <h1 class="section-title font-semibold product-name">
-            {{ product.name }}
+            {{
+              locale == "US"
+                ? detail?.data.titleUS
+                : locale == "UK"
+                ? detail?.data.titleUK
+                : locale == "FR"
+                ? detail?.data.titleFR
+                : detail?.data.titleDE
+            }}
           </h1>
-          <p class="product-sku mt-2">SKU: {{ product.sku }}</p>
+          <p class="product-sku mt-2">
+            SKU: {{ detail.data.variants?.[0].sku }}
+          </p>
           <div class="price-n-ship mt-6 flex items-center gap-x-2">
-            <span class="price">${{ product.price }}</span>
+            <span class="price">${{ detail.data.price }}</span>
             <span
               class="include-ship-tag bg-light-blue-custom"
               v-show="product.includeShipping"
               >{{ $t("productDetail.includeShipping") }}</span
             >
           </div>
-          <p class="product-description mt-6">
-            {{ product.description }}
-          </p>
+          <div
+            class="product-description mt-6"
+            v-html="localizedDescription"
+          ></div>
           <div class="product-option mt-8 flex flex-col gap-y-5">
             <span v-for="(item, index) in product.option" :key="index">
               <h1 class="text-black font-semibold leading-3">
@@ -218,7 +257,90 @@
               >{{ $t("productDetail.contactSupport") }}</v-button
             >
           </div>
-          <img :src="productInfo" />
+          <!--  detail slider -->
+          <div class="info-of-product flex flex-col gap-y-10 w-100">
+            <div class="shipping-handle-info w-100">
+              <v-expansion-panels
+                v-model="panel"
+                v-for="(item, index) in listShippingInfo"
+                :key="index"
+              >
+                <v-expansion-panel>
+                  <v-expansion-panel-title
+                    class="accordition-title font-semibold text-lg"
+                    expand-icon="mdi-plus"
+                    collapse-icon="mdi-minus"
+                  >
+                    {{ item.title }}
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text
+                    class="text-lg font-normal section-content"
+                  >
+                    {{ item.contentUS }}
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </div>
+            <div class="fabric-detail flex flex-col gap-y-5 w-100">
+              <span class="custimize-option flex flex-col justify-between">
+                <h1 class="font-semibold text-lg">
+                  {{ $t("productDetail.customizeOption") }}
+                </h1>
+                <p>{{ detail.data.customizationOptions }}</p>
+              </span>
+              <span
+                class="custimize-option flex flex-col w-100"
+              >
+                <h1 class="font-semibold text-lg w-30">
+                  {{ $t("productDetail.details") }}
+                </h1>
+                <p>{{ detail.data.detailProduct }}</p>
+              </span>
+              <span class="custimize-option flex flex-col">
+                <h1 class="font-semibold text-lg">
+                  {{ $t("productDetail.materials") }}
+                </h1>
+                <div class="flex flex-col">
+                  <span class="flex flex-col">
+                    <v-layout class="flex justify-between">
+                      <v-flex>{{ detail.data.minName_2 }}</v-flex>
+                      <v-flex class="text-right">{{
+                        detail.data.maxName_2
+                      }}</v-flex>
+                    </v-layout>
+  
+                    <!-- Slider component -->
+                    <v-slider
+                      class="slider-detail"
+                      v-model="detail.data.valueMaterial_2"
+                      disabled
+                    ></v-slider>
+                  </span>
+                  <span class="flex flex-col">
+                    <v-layout class="flex justify-between">
+                      <v-flex>{{ detail.data.minName_1 }}</v-flex>
+                      <v-flex class="text-right">{{
+                        detail.data.maxName_1
+                      }}</v-flex>
+                    </v-layout>
+  
+                    <!-- Slider component -->
+                    <v-slider
+                      class="slider-detail"
+                      v-model="detail.data.valueMaterial_1"
+                      disabled
+                    ></v-slider>
+                  </span>
+                </div>
+              </span>
+              <span class="custimize-option flex flex-col">
+                <h1 class="font-semibold text-lg">
+                  {{ $t("productDetail.features") }}
+                </h1>
+                <p v-html="detail.data.featureProduct"></p>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -276,8 +398,8 @@ import VueGallery from "../../components/vueGalery.vue";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
 import { myMixin } from "~/mixins/myMixin";
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 // Define your reactive data
@@ -288,48 +410,75 @@ const photos = ref([
   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-01-min.jpg",
   // Add all other photos...
 ]);
+const { t, locale } = useI18n();
 const product = ref({
   name: "Colorblast Heavyweight T-Shirt Comfort Colors 1745 (Made in US)",
   // Add other product details...
 });
-const listShippingInfo = ref( [
-        {
-          title: "Average Est. Processing Time",
-          contentUS: "2-4 business days",
-          contentUK: "2-4 business days",
-          contentFR: "2-4 business days",
-          contentDE: "2-4 business days",
-        },
-        {
-          title: "Average Est. Shipping Time",
-          contentUS: "US: 4-7 business days",
-          contentUK: "US: 4-7 business days",
-          contentFR: "US: 4-7 business days",
-          contentDE: "US: 4-7 business days",
-        },
-        {
-          title: "Template",
-          contentUS: "12000 x 7300px",
-          contentUK: "12000 x 7300px",
-          contentFR: "12000 x 7300px",
-          contentDE: "12000 x 7300px",
-        },
-      ],);
+const listShippingInfo = ref([
+  {
+    title: "Average Est. Processing Time",
+    contentUS: "2-4 business days",
+    contentUK: "2-4 business days",
+    contentFR: "2-4 business days",
+    contentDE: "2-4 business days",
+  },
+  {
+    title: "Average Est. Shipping Time",
+    contentUS: "US: 4-7 business days",
+    contentUK: "US: 4-7 business days",
+    contentFR: "US: 4-7 business days",
+    contentDE: "US: 4-7 business days",
+  },
+  {
+    title: "Template",
+    contentUS: "12000 x 7300px",
+    contentUK: "12000 x 7300px",
+    contentFR: "12000 x 7300px",
+    contentDE: "12000 x 7300px",
+  },
+]);
 const panel = ref([0, 3]);
 const slider1 = ref(0);
 const slider2 = ref(0);
 const router = useRoute();
 // If you have methods, they can be defined as regular functions within setup
-function someMethod() {
-  // Your method logic...
-}
 
-const { data : detail }  = await useAsyncData(
-  'productDetail',
-  () => $fetch(`http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`)
-)
+const localizedDescription = computed(() => {
+  let description = "";
+  switch (locale.value) {
+    case "US":
+      description = detail?.value.data.descriptionUS;
+      break;
+    case "UK":
+      description = detail?.value.data.descriptionUK;
+      break;
+    case "FR":
+      description = detail?.value.data.descriptionFR;
+      break;
+    case "DE":
+      description = detail?.value.data.descriptionDE;
+      break;
+  }
 
-console.log(detail.value.data,'hasd')
+  // Strip the quotation marks if present
+  if (description.startsWith('"') && description.endsWith('"')) {
+    console.log(description, "DDD");
+    console.log(description.substring(1, description.length - 1), "sdsdsd");
+    return description.substring(1, description.length - 1);
+  }
+  return description;
+});
+
+console.log(localizedDescription, "localizedDescription");
+
+const { data: detail } = await useAsyncData("productDetail", () =>
+  $fetch(
+    `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
+  )
+);
+
+console.log(detail.value.data, "hasd");
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
@@ -378,15 +527,15 @@ console.log(detail.value.data,'hasd')
   background-color: #f9fafb;
   padding: 32px;
 }
-.slider-detail{
-  :deep(.v-slider-track__background){
-    background-color: #D1E0FF;
+.slider-detail {
+  :deep(.v-slider-track__background) {
+    background-color: #d1e0ff;
   }
-  :deep(.v-slider-thumb__surface){
-    background-color: #709CE6;
+  :deep(.v-slider-thumb__surface) {
+    background-color: #709ce6;
   }
-  :deep(.v-slider-track__fill){
-    background-color: #D1E0FF;
+  :deep(.v-slider-track__fill) {
+    background-color: #d1e0ff;
   }
 }
 </style>
