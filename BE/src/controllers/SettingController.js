@@ -35,10 +35,6 @@ module.exports.AUTH = {
                "apiKeyAuth": [],
         }] */
         try {
-            const errors = await validateResult(updateValidator, req);
-            if (!isEmpty(errors)) {
-                return res.json(responseError(40004, errors));
-            }
             if (req.file) {
                 req.body.imageFeature = req.file.path;
             }
