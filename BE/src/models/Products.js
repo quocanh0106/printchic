@@ -121,6 +121,59 @@ const ProductsBase = {
     maxName_2: {
         type: String, trim: true,
     },
+    
+    tabProductDetailUS: {
+        type: String, trim: true,
+    },
+    tabProductDetailUK: {
+        type: String, trim: true,
+    },
+    tabProductDetailFR: {
+        type: String, trim: true,
+    },
+    tabProductDetailDE: {
+        type: String, trim: true,
+    },
+    
+    tabSizeGuideUS: {
+        type: String, trim: true,
+    },
+    tabSizeGuideUK: {
+        type: String, trim: true,
+    },
+    tabSizeGuideFR: {
+        type: String, trim: true,
+    },
+    tabSizeGuideDE: {
+        type: String, trim: true,
+    },
+    
+    tabMockupTemplateUS: {
+        type: String, trim: true,
+    },
+    tabMockupTemplateUK: {
+        type: String, trim: true,
+    },
+    tabMockupTemplateFR: {
+        type: String, trim: true,
+    },
+    tabMockupTemplateDE: {
+        type: String, trim: true,
+    },
+    
+    tabCareInstructionUS: {
+        type: String, trim: true,
+    },
+    tabCareInstructionUK: {
+        type: String, trim: true,
+    },
+    tabCareInstructionFR: {
+        type: String, trim: true,
+    },
+    tabCareInstructionDE: {
+        type: String, trim: true,
+    },
+
 }
 const Products = { ...ProductsBase, ...common };
 const ProductsSchema = new Schema(Products, { versionKey: false });

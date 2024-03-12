@@ -38,7 +38,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack';
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
-  right: 0,
+  right: '40%',
   color: 'grey.500',
   position: 'absolute',
   boxShadow: theme.shadows[2],
@@ -59,7 +59,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar();
   const store = useSelector(state => state.categoryProduct)
-  
+
   // ** States
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
@@ -79,7 +79,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
   const handleClose = () => {
     setVisible(false)
   }
-  
+
   const {
     control,
     reset,
@@ -90,7 +90,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
   } = useForm()
 
   const callBackSubmit = (data) => {
-    console.log('data',data)
+    console.log('data', data)
     if (data.success) {
       setVisible(false)
       reset()
@@ -99,12 +99,12 @@ const DialogAddCard = ({ visible, setVisible }) => {
         duration: 3000
       })
     } else {
-      if(data.statusCode == 10505) {
+      if (data.statusCode == 10505) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of product category already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of product category already exists!`, { variant: 'error' });
         })
       } else {
-        enqueueSnackbar(`${data.message}`, { variant : 'error' });
+        enqueueSnackbar(`${data.message}`, { variant: 'error' });
       }
     }
 
@@ -112,8 +112,8 @@ const DialogAddCard = ({ visible, setVisible }) => {
   }
 
   const onSubmit = (value) => {
-    console.log('value',value)
-    if(files[0]) {
+    console.log('value', value)
+    if (files[0]) {
       setLoading(true)
       const formData = new FormData();
       LANG.forEach(ele => {
@@ -133,7 +133,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
       <CustomCloseButton onClick={() => setFiles([])}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
-      <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
+      <img width={'60%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
     </Box>
   ))
 
@@ -141,7 +141,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
     <Dialog
       fullWidth
       open={visible}
-      maxWidth='sm'
+      maxWidth='lg'
       scroll='body'
       onClose={handleClose}
       TransitionComponent={Transition}
@@ -164,8 +164,11 @@ const DialogAddCard = ({ visible, setVisible }) => {
         </Box>
 
         <form>
+          <Typography variant='h5' sx={{ mb: 3 }}>
+            Title
+          </Typography>
           <Grid container spacing={5}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
                 control={control}
@@ -184,7 +187,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.US}`}
                 control={control}
@@ -203,7 +206,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.FR}`}
                 control={control}
@@ -222,7 +225,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.DE}`}
                 control={control}
@@ -242,7 +245,13 @@ const DialogAddCard = ({ visible, setVisible }) => {
               />
             </Grid>
             {/* description */}
-            <Grid item xs={12}>
+
+          </Grid>
+          <Typography variant='h5' sx={{ mb: 2, mt: 7 }}>
+            Description
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.UK}`}
                 control={control}
@@ -262,7 +271,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.US}`}
                 control={control}
@@ -282,7 +291,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.FR}`}
                 control={control}
@@ -302,7 +311,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.DE}`}
                 control={control}
@@ -322,6 +331,8 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
+          </Grid>
+          <Grid container spacing={5} sx={{mt: 3}}>
             <Grid item xs={12} sm={12}>
               <Controller
                 name='parentCategory'
@@ -361,7 +372,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                   }
                 </Box>
                 {
-                  errors.file ? <Typography sx={{color: 'red'}}>This field is required</Typography> : <></>
+                  errors.file ? <Typography sx={{ color: 'red' }}>This field is required</Typography> : <></>
                 }
               </Box>
             </Grid>

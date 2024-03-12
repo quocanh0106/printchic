@@ -60,6 +60,26 @@ const create = async (data) => {
         set.minName_2 = data.minName_2;
         set.maxName_2 = data.maxName_2;
 
+        set.tabProductDetailUK = data.tabProductDetailUK;
+        set.tabProductDetailUS = data.tabProductDetailUS;
+        set.tabProductDetailFR = data.tabProductDetailFR;
+        set.tabProductDetailDE = data.tabProductDetailDE;
+
+        set.tabSizeGuideUK = data.tabSizeGuideUK;
+        set.tabSizeGuideUS = data.tabSizeGuideUS;
+        set.tabSizeGuideFR = data.tabSizeGuideFR;
+        set.tabSizeGuideDE = data.tabSizeGuideDE;
+
+        set.tabMockupTemplateUK = data.tabMockupTemplateUK;
+        set.tabMockupTemplateUS = data.tabMockupTemplateUS;
+        set.tabMockupTemplateFR = data.tabMockupTemplateFR;
+        set.tabMockupTemplateDE = data.tabMockupTemplateDE;
+
+        set.tabCareInstructionUK = data.tabCareInstructionUK;
+        set.tabCareInstructionUS = data.tabCareInstructionUS;
+        set.tabCareInstructionFR = data.tabCareInstructionFR;
+        set.tabCareInstructionDE = data.tabCareInstructionDE;
+
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -208,6 +228,58 @@ const updateConditions = async (data) => {
             set.typeDE = data.typeDE;
         }
 
+        if (!isEmpty(data?.tabProductDetailUK)) {
+            set.tabProductDetailUK = data.tabProductDetailUK;
+        }
+        if (!isEmpty(data?.tabProductDetailUS)) {
+            set.tabProductDetailUS = data.tabProductDetailUS;
+        }
+        if (!isEmpty(data?.tabProductDetailFR)) {
+            set.tabProductDetailFR = data.tabProductDetailFR;
+        }
+        if (!isEmpty(data?.tabProductDetailDE)) {
+            set.tabProductDetailDE = data.tabProductDetailDE;
+        }
+
+        if (!isEmpty(data?.tabSizeGuideUK)) {
+            set.tabSizeGuideUK = data.tabSizeGuideUK;
+        }
+        if (!isEmpty(data?.tabSizeGuideUS)) {
+            set.tabSizeGuideUS = data.tabSizeGuideUS;
+        }
+        if (!isEmpty(data?.tabSizeGuideFR)) {
+            set.tabSizeGuideFR = data.tabSizeGuideFR;
+        }
+        if (!isEmpty(data?.tabSizeGuideDE)) {
+            set.tabSizeGuideDE = data.tabSizeGuideDE;
+        }
+
+        if (!isEmpty(data?.tabMockupTemplateUK)) {
+            set.tabMockupTemplateUK = data.tabMockupTemplateUK;
+        }
+        if (!isEmpty(data?.tabMockupTemplateUS)) {
+            set.tabMockupTemplateUS = data.tabMockupTemplateUS;
+        }
+        if (!isEmpty(data?.tabMockupTemplateFR)) {
+            set.tabMockupTemplateFR = data.tabMockupTemplateFR;
+        }
+        if (!isEmpty(data?.tabMockupTemplateDE)) {
+            set.tabMockupTemplateDE = data.tabMockupTemplateDE;
+        }
+
+        if (!isEmpty(data?.tabCareInstructionUK)) {
+            set.tabCareInstructionUK = data.tabCareInstructionUK;
+        }
+        if (!isEmpty(data?.tabCareInstructionUS)) {
+            set.tabCareInstructionUS = data.tabCareInstructionUS;
+        }
+        if (!isEmpty(data?.tabCareInstructionFR)) {
+            set.tabCareInstructionFR = data.tabCareInstructionFR;
+        }
+        if (!isEmpty(data?.tabCareInstructionDE)) {
+            set.tabCareInstructionDE = data.tabCareInstructionDE;
+        }
+
         if (!isEmpty(data?.customizationOptions)) {
             set.customizationOptions = data.customizationOptions;
         }
@@ -277,6 +349,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.priceSale)) {
             set.priceSale = data.priceSale;
         }
+        
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
