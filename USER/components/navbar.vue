@@ -105,7 +105,7 @@ const selectedLanguage = ref(locale.value);
 
 const links = computed(() => [
   { label: "navBar.Home", href: '/' },
-  { label: "navBar.Products", href: '/product' },
+  { label: "navBar.Products", href: '/print-on-demand' },
   { label: "navBar.HIW", href: '/how-it-works' },
   { label: "navBar.Blog", href: '/blog'},
   { label: "navBar.aboutUs", href:'/about-us' },

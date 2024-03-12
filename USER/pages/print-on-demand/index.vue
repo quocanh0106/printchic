@@ -195,7 +195,7 @@ function clearAllFilterBy() {
 }
 
 function toProductDetail(id) {
-  router.push(localePath(`/product/${id}`));
+  router.push(localePath(`/print-on-demand/${id}`));
 }
 
 function loadMoreItem() {
@@ -325,5 +325,13 @@ function loadMoreItem() {
   :deep(p){
     margin-right:0px;
   }
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
 }
+
 </style>

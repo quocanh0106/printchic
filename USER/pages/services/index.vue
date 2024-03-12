@@ -425,7 +425,7 @@ const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 250
 const extraPc = computed(() => screenWidth.value > 2500);
 
 function toProductList() {
-  router.push(localePath('/product'));
+  router.push(localePath('/print-on-demand'));
 }
 
 const thumbNailImgBlog = ref([

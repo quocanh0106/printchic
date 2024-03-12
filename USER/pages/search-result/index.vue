@@ -36,7 +36,7 @@ const localePath = useLocalePath()
 
 function toProductDetail(item) {
   let id = 1
-  router.push(localePath(`/product/${id}`))
+  router.push(localePath(`/print-on-demand/${id}`))
 }
 
 const loading = ref(true)

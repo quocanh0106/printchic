@@ -79,7 +79,7 @@
           <h1 class="section-title font-semibold">
             {{ $t("pod.enjoyPOPProduct") }}
           </h1>
-          <a @click="this.$router.push(localePath('/product'))" class="flex items-center justify-center gap-x-2 txt-primary">
+          <a @click="this.$router.push(localePath('/print-on-demand'))" class="flex items-center justify-center gap-x-2 txt-primary">
             <p>{{ $t("pod.exploreOurCatalog") }}</p>
             <img :src="arrowUpRight" />
           </a>
@@ -114,7 +114,7 @@
           </span>
         </span>
         <swiperComponent
-          class="mt-12"
+          class="mt-12 customized-clothing"
           :showPagination="true"
           :showNavigation="true"
           :slidePerView="4"
@@ -143,7 +143,7 @@
           </span>
         </span>
         <swiperComponent
-          class="mt-12"
+          class="mt-12 customized-home-decor"
           :showPagination="true"
           :showNavigation="true"
           :slidePerView="4"
@@ -640,13 +640,41 @@ onMounted(() => {
 .pod-product-galery{
   :deep(.swiper-thumbnail){
       min-width:0px !important;
-      max-width: 180px !important;
-      min-height: 180px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
+  @media screen and (max-width: 992px){
+    :deep(.swiper-thumbnail){
+      width: 35vw !important;
+      height: 35vw !important;
+  }
+  }
+}
+
+.customized-clothing{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
       max-height: none !important;
   }
 }
-.service-tag-wrapper{
-  overflow-x: scroll;
+.customized-home-decor{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
+}
+@media screen and (max-width:600px){
+  .service-tag-wrapper{
+    overflow-x: scroll;
+  }
 }
 .service-tag{
   min-width: 150px;

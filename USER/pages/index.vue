@@ -39,7 +39,7 @@
           <h1 class="top-category-title font-semibold">
             {{ $t("homePage.topCategory") }}
           </h1>
-          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row"  @click="$router.push(localePath('/product'))">
+          <a class="top-category-view-all txt-primary cursor-pointer flex flex-row"  @click="$router.push(localePath('/print-on-demand'))">
             <p>{{ $t("viewAll") }}</p>
             <img :src="arrowUpRight" />
           </a>

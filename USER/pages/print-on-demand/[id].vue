@@ -470,7 +470,6 @@ const localizedDescription = computed(() => {
   return description;
 });
 
-console.log(localizedDescription, "localizedDescription");
 
 const { data: detail } = await useAsyncData("productDetail", () =>
   $fetch(
@@ -478,7 +477,6 @@ const { data: detail } = await useAsyncData("productDetail", () =>
   )
 );
 
-console.log(detail.value.data, "hasd");
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
