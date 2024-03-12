@@ -8,10 +8,28 @@ const UserPostsBase = {
   languageId: {
     type: ObjectId, default: null, require: true, ref: 'languages',
   },
-  handleUrl: {
+  handleUrlUK: {
     type: String, trim: true,
   },
-  metaDescription: {
+  handleUrlUS: {
+    type: String, trim: true,
+  },
+  handleUrlFR: {
+    type: String, trim: true,
+  },
+  handleUrlDE: {
+    type: String, trim: true,
+  },
+  metaDescriptionUK: {
+    type: String, trim: true,
+  },
+  metaDescriptionUS: {
+    type: String, trim: true,
+  },
+  metaDescriptionFR: {
+    type: String, trim: true,
+  },
+  metaDescriptionDE: {
     type: String, trim: true,
   },
   titleUK: {

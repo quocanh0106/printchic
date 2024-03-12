@@ -106,12 +106,12 @@ const DialogAddCard = ({ visible, setVisible }) => {
         duration: 3000
       })
     } else {
-      if(data.statusCode == 10605) {
+      if (data.statusCode == 10605) {
         data.errors.forEach(ele => {
-          enqueueSnackbar(`${ele} of blog category already exists!`, { variant : 'error' });
+          enqueueSnackbar(`${ele} of blog category already exists!`, { variant: 'error' });
         })
       } else {
-        enqueueSnackbar(data?.message, { variant : 'error' });
+        enqueueSnackbar(data?.message, { variant: 'error' });
       }
     }
     setLoading(false)
@@ -124,10 +124,10 @@ const DialogAddCard = ({ visible, setVisible }) => {
       LANG.forEach(ele => {
         formData.append(`title${ele.value}`, value[`title${ele.value}`]);
         formData.append(`description${ele.value}`, value[`description${ele.value}`]);
+        formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`]);
+        formData.append(`metaDescription${ele.value}`, value[`metaDescription${ele.value}`]);
       })
-
-      formData.append("handleUrl", value.handleUrl);
-      formData.append("metaDescription", value.metaDescription);
+      
       formData.append("file", files[0]);
       dispatch(addCategoryBlog({ formData, callBackSubmit }))
     } else {
@@ -148,7 +148,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
     <Dialog
       fullWidth
       open={visible}
-      maxWidth='sm'
+      maxWidth='lg'
       scroll='body'
       onClose={handleClose}
       TransitionComponent={Transition}
@@ -171,48 +171,181 @@ const DialogAddCard = ({ visible, setVisible }) => {
         </Box>
 
         <form>
+          <Typography variant='h5' sx={{ mb: 3 }}>
+            Handle URL
+          </Typography>
           <Grid container spacing={5}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
-                name='handleUrl'
+                name='handleUrlUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
                     value={value}
-                    label='Handle URL'
+                    label='Handle URL UK'
                     required
                     onChange={onChange}
-                    placeholder='Enter Handle URL'
-                    error={Boolean(errors.handleUrl)}
+                    placeholder='Enter Handle URL UK'
+                    error={Boolean(errors.handleUrlUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.handleUrl && { helperText: 'This field is required' })}
+                    {...(errors.handleUrlUK && { helperText: 'This field is required' })}
                   />
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
-                name='metaDescription'
+                name='handleUrlUS'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
                     value={value}
-                    label='Meta Description'
+                    label='Handle URL US'
                     required
                     onChange={onChange}
-                    placeholder='Enter Meta Description'
-                    error={Boolean(errors.metaDescription)}
+                    placeholder='Enter Handle URL US'
+                    error={Boolean(errors.handleUrlUS)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescription && { helperText: 'This field is required' })}
+                    {...(errors.handleUrlUS && { helperText: 'This field is required' })}
                   />
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='handleUrlFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Handle URL FR'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Handle URL FR'
+                    error={Boolean(errors.handleUrlFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.handleUrlFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='handleUrlDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Handle URL DE'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Handle URL DE'
+                    error={Boolean(errors.handleUrlDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.handleUrlDE && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Typography variant='h5' sx={{ mb: 2, mt: 5 }}>
+            Meta description
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='metaDescriptionUK'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Meta Description UK'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Meta Description UK'
+                    error={Boolean(errors.metaDescriptionUK)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='metaDescriptionUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Meta DescriptionUS'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Meta DescriptionUS'
+                    error={Boolean(errors.metaDescriptionUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='metaDescriptionFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Meta Description FR'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Meta Description FR'
+                    error={Boolean(errors.metaDescriptionFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <Controller
+                name='metaDescriptionDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value}
+                    label='Meta Description DE'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Meta Description DE'
+                    error={Boolean(errors.metaDescriptionDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <Typography variant='h5' sx={{ mb: 2, mt: 5 }}>
+            Title
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
                 control={control}
@@ -231,7 +364,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.US}`}
                 control={control}
@@ -250,7 +383,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.FR}`}
                 control={control}
@@ -269,7 +402,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <Controller
                 name={`title${LANG_OBJECT.DE}`}
                 control={control}
@@ -288,7 +421,12 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+          </Grid>
+          <Typography variant='h5' sx={{ mb: 2, mt: 5 }}>
+            Description
+          </Typography>
+          <Grid container spacing={5}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.UK}`}
                 control={control}
@@ -308,7 +446,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.US}`}
                 control={control}
@@ -328,7 +466,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.FR}`}
                 control={control}
@@ -348,7 +486,7 @@ const DialogAddCard = ({ visible, setVisible }) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Controller
                 name={`description${LANG_OBJECT.DE}`}
                 control={control}
