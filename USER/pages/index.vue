@@ -267,7 +267,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <SwiperBlogMobile class="mt-12 mb-8" :items="listBlog.data.items" :slidePerView="1" />
+        <SwiperBlogMobile class="blog-mobile-swiper mt-12 mb-8" :items="listBlog.data.items" :slidePerView="1" />
       </div>
 
       <!-- Frequently asked question -->
@@ -504,8 +504,29 @@ const listBlog  = await useAsyncData(
   }
 }
 .swiper-cate-pc{
-  :deep(.swiper-slide){
-    
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
+}
+
+.swiper-mobile-top-category{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 25vw !important;
+      height: 25vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
+}
+
+.blog-mobile-swiper{
+  :deep(.small-img-blog){
+    height: 40vh !important;
+    object-fit:cover;
   }
 }
 </style>
