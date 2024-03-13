@@ -451,6 +451,8 @@ const FormCreate = () => {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
+                  defaultValue={row.value}
+                  type={'number'}
                   fullWidth
                   value={value}
                   onChange={onChange}
@@ -537,6 +539,8 @@ const FormCreate = () => {
       }
 
       getListColumn()
+
+
 
       setListOptionVariant(listVariantOptions)
       setTempListVariant(listVariant)
