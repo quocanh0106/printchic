@@ -65,7 +65,7 @@ import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { currentLanguage, setLanguage } = useLanguage();
-
+const router = useRouter();
 defineProps({
   title: {
     type: String,
@@ -80,7 +80,7 @@ const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
 const toDetailBlog = (id) => {
-  this.$router.push(localePath(`/blog/${id}`));
+  router.push(localePath(`/blog/${id}`));
 };
 </script>
 

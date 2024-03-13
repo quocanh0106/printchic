@@ -463,7 +463,6 @@ const localizedDescription = computed(() => {
 
   // Strip the quotation marks if present
   if (description.startsWith('"') && description.endsWith('"')) {
-    console.log(description, "DDD");
     console.log(description.substring(1, description.length - 1), "sdsdsd");
     return description.substring(1, description.length - 1);
   }
@@ -476,7 +475,7 @@ const { data: detail } = await useAsyncData("productDetail", () =>
     `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
 );
-
+console.log(detail, 'HEHEHE')
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
