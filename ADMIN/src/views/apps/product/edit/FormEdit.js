@@ -315,8 +315,9 @@ const FormCreate = () => {
 
     formData.append("valueMaterial_2", stretchiness);
     formData.append("valueMaterial_1", thickness);
-    
+
     formData.append("featureProduct", value.featureProduct);
+    formData.append("btnLink", value.btnLink);
 
     formData.append("status", value.productStatus);
     formData.append("descriptionUK", JSON.stringify(contentUK));
@@ -536,6 +537,8 @@ const FormCreate = () => {
       setValue('minName_2', data?.minName_2)
       setValue('maxName_2', data?.maxName_2)
 
+      setValue('btnLink', data?.btnLink)
+
       setStretchiness(data?.valueMaterial_2)
       setThickness(data?.valueMaterial_1)
 
@@ -544,7 +547,7 @@ const FormCreate = () => {
       data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
       data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
       data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
-      
+
       data?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(data?.tabProductDetailUK))
       data?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(data?.tabProductDetailUS))
       data?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(data?.tabProductDetailFR))
@@ -1303,6 +1306,25 @@ const FormCreate = () => {
                 />
               )}
             />
+            <Controller
+              name='btnLink'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Button Link Product'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter button Link'
+                  error={Boolean(errors.btnLink)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.btnLink && { helperText: 'This field is required' })}
+                />
+              )}
+            />
           </Card>
         </Grid>
         <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
@@ -1387,7 +1409,7 @@ const FormCreate = () => {
               />
             </Grid>
           </Card>
-          <Card sx={{ p: 4, mt: 4 , textAlign: 'left' }}>
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <TabContext value={valueTabs}>
               <TabList onChange={handleChangeTabs} aria-label='nav tabs example'>
                 <Tab value='1' component='a' label='Product Details' onClick={e => e.preventDefault()} />

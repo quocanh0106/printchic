@@ -316,6 +316,7 @@ const FormCreate = () => {
     formData.append("featureProduct", value.featureProduct);
 
     formData.append("status", value.productStatus);
+    formData.append("btnLink", value.btnLink);
 
     formData.append("descriptionUK", JSON.stringify(contentUK));
     formData.append("descriptionUS", JSON.stringify(contentUS));
@@ -1064,6 +1065,25 @@ const FormCreate = () => {
                   onChange={onChange}
                   placeholder='Enter Price Sale'
                   aria-describedby='validation-basic-first-name'
+                />
+              )}
+            />
+            <Controller
+              name='btnLink'
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  sx={{ mt: 4 }}
+                  fullWidth
+                  value={value}
+                  label='Button Link Product'
+                  required
+                  onChange={onChange}
+                  placeholder='Enter button Link'
+                  error={Boolean(errors.btnLink)}
+                  aria-describedby='validation-basic-first-name'
+                  {...(errors.btnLink && { helperText: 'This field is required' })}
                 />
               )}
             />
