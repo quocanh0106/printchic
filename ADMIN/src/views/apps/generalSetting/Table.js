@@ -159,24 +159,95 @@ const UserList = () => {
                 Site name
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
-              <Controller
-                name='siteName'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    onChange={onChange}
-                    placeholder='Site name'
-                    error={Boolean(errors.siteName)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.siteName && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
+            <Grid container xs={12} sm={12} spacing={6}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='siteNameUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Site name US'
+                      onChange={onChange}
+                      placeholder='Site name US'
+                      error={Boolean(errors.siteNameUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.siteNameUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='siteNameFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Site name FR'
+                      onChange={onChange}
+                      placeholder='Site name FR'
+                      error={Boolean(errors.siteNameFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.siteNameFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='siteNameDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Site name DE'
+                      onChange={onChange}
+                      placeholder='Site name DE'
+                      error={Boolean(errors.siteNameDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.siteNameDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='siteNameUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Site name UK'
+                      onChange={onChange}
+                      placeholder='Site name UK'
+                      error={Boolean(errors.siteNameUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.siteNameUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+
+
+
+
             </Grid>
           </Grid>
           <Divider sx={{ mb: 2 }} />
@@ -188,7 +259,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='metaTitle'
+                name='metaTitleUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -196,11 +267,66 @@ const UserList = () => {
                     fullWidth
                     value={value || ""}
                     required
+                    label='Meta Title UK'
                     onChange={onChange}
-                    placeholder='Meta Title'
-                    error={Boolean(errors.metaTitle)}
+                    placeholder='Meta Title UK'
+                    error={Boolean(errors.metaTitleUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.metaTitle && { helperText: 'This field is required' })}
+                    {...(errors.metaTitleUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaTitleUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    label='Meta Title US'
+                    onChange={onChange}
+                    placeholder='Meta Title US'
+                    error={Boolean(errors.metaTitleUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaTitleUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaTitleFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    label='Meta Title FR'
+                    onChange={onChange}
+                    placeholder='Meta Title FR'
+                    error={Boolean(errors.metaTitleFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaTitleFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaTitleDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    label='Meta Title DE'
+                    onChange={onChange}
+                    placeholder='Meta Title DE'
+                    error={Boolean(errors.metaTitleDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaTitleDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -215,7 +341,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='metaDescription'
+                name='metaDescriptionUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -224,10 +350,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Meta Description'
-                    error={Boolean(errors.metaDescription)}
+                    label='Meta Description UK'
+                    placeholder='Meta Description UK'
+                    error={Boolean(errors.metaDescriptionUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescription && { helperText: 'This field is required' })}
+                    {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaDescriptionUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Meta Description US'
+                    placeholder='Meta Description US'
+                    error={Boolean(errors.metaDescriptionUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaDescriptionFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Meta Description FR'
+                    placeholder='Meta Description FR'
+                    error={Boolean(errors.metaDescriptionFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='metaDescriptionDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Meta Description DE'
+                    placeholder='Meta Description DE'
+                    error={Boolean(errors.metaDescriptionDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -242,7 +423,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='headTag'
+                name='headTagUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -251,10 +432,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Head Tag'
-                    error={Boolean(errors.headTag)}
+                    label='Head Tag UK'
+                    placeholder='Head Tag UK'
+                    error={Boolean(errors.headTagUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.headTag && { helperText: 'This field is required' })}
+                    {...(errors.headTagUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag US'
+                    placeholder='Head Tag US'
+                    error={Boolean(errors.headTagUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag FR'
+                    placeholder='Head Tag FR'
+                    error={Boolean(errors.headTagFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag DE'
+                    placeholder='Head Tag DE'
+                    error={Boolean(errors.headTagDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -269,7 +505,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='footerTag'
+                name='footerTagUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -278,10 +514,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Footer Tag'
-                    error={Boolean(errors.footerTag)}
+                    label='Footer Tag UK'
+                    placeholder='Footer Tag UK'
+                    error={Boolean(errors.footerTagUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.footerTag && { helperText: 'This field is required' })}
+                    {...(errors.footerTagUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag US'
+                    placeholder='Footer Tag US'
+                    error={Boolean(errors.footerTagUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag FR'
+                    placeholder='Footer Tag FR'
+                    error={Boolean(errors.footerTagFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag DE'
+                    placeholder='Footer Tag DE'
+                    error={Boolean(errors.footerTagDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -296,7 +587,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='headEmbedAll'
+                name='headEmbedAllUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -305,10 +596,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Head Embed All'
-                    error={Boolean(errors.headEmbedAll)}
+                    label='Head Embed All UK'
+                    placeholder='Head Embed All UK'
+                    error={Boolean(errors.headEmbedAllUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.headEmbedAll && { helperText: 'This field is required' })}
+                    {...(errors.headEmbedAllUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headEmbedAllUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Embed All US'
+                    placeholder='Head Embed All US'
+                    error={Boolean(errors.headEmbedAllUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headEmbedAllUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headEmbedAllFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Embed All FR'
+                    placeholder='Head Embed All FR'
+                    error={Boolean(errors.headEmbedAllFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headEmbedAllFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headEmbedAllDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Embed All DE'
+                    placeholder='Head Embed All DE'
+                    error={Boolean(errors.headEmbedAllDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headEmbedAllDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -323,7 +669,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='headTagAll'
+                name='headTagAllUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -332,10 +678,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Head Tag All'
-                    error={Boolean(errors.headTagAll)}
+                    label='Head Tag All UK'
+                    placeholder='Head Tag All UK'
+                    error={Boolean(errors.headTagAllUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.headTagAll && { helperText: 'This field is required' })}
+                    {...(errors.headTagAllUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagAllUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag All US'
+                    placeholder='Head Tag All US'
+                    error={Boolean(errors.headTagAllUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagAllUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagAllFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag All FR'
+                    placeholder='Head Tag All FR'
+                    error={Boolean(errors.headTagAllFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagAllFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='headTagAllDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Head Tag All DE'
+                    placeholder='Head Tag All DE'
+                    error={Boolean(errors.headTagAllDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.headTagAllDE && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -350,7 +751,7 @@ const UserList = () => {
             </Grid>
             <Grid item xs={8} sm={8}>
               <Controller
-                name='footerTagAll'
+                name='footerTagAllUK'
                 control={control}
                 rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
@@ -359,10 +760,65 @@ const UserList = () => {
                     value={value || ""}
                     required
                     onChange={onChange}
-                    placeholder='Footer Tag All'
-                    error={Boolean(errors.footerTagAll)}
+                    label='Footer Tag All UK'
+                    placeholder='Footer Tag All UK'
+                    error={Boolean(errors.footerTagAllUK)}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors.footerTagAll && { helperText: 'This field is required' })}
+                    {...(errors.footerTagAllUK && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagAllUS'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag All US'
+                    placeholder='Footer Tag All US'
+                    error={Boolean(errors.footerTagAllUS)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagAllUS && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagAllFR'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag All FR'
+                    placeholder='Footer Tag All FR'
+                    error={Boolean(errors.footerTagAllFR)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagAllFR && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name='footerTagAllDE'
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    fullWidth
+                    value={value || ""}
+                    required
+                    onChange={onChange}
+                    label='Footer Tag All DE'
+                    placeholder='Footer Tag All DE'
+                    error={Boolean(errors.footerTagAllDE)}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors.footerTagAllDE && { helperText: 'This field is required' })}
                   />
                 )}
               />

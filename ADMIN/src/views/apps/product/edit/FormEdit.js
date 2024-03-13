@@ -119,6 +119,26 @@ const FormCreate = () => {
   const [stretchiness, setStretchiness] = useState(0);
   const [valueTabs, setValueTabs] = useState('1')
 
+  const [tabProductDetailUK, setTabProductDetailUK] = useState('');
+  const [tabProductDetailUS, setTabProductDetailUS] = useState('');
+  const [tabProductDetailDE, setTabProductDetailDE] = useState('');
+  const [tabProductDetailFR, setTabProductDetailFR] = useState('');
+
+  const [tabSizeGuideUK, setTabSizeGuideUK] = useState('');
+  const [tabSizeGuideUS, setTabSizeGuideUS] = useState('');
+  const [tabSizeGuideDE, setTabSizeGuideDE] = useState('');
+  const [tabSizeGuideFR, setTabSizeGuideFR] = useState('');
+
+  const [tabMockupTemplateUK, setTabMockupTemplateUK] = useState('');
+  const [tabMockupTemplateUS, setTabMockupTemplateUS] = useState('');
+  const [tabMockupTemplateDE, setTabMockupTemplateDE] = useState('');
+  const [tabMockupTemplateFR, setTabMockupTemplateFR] = useState('');
+
+  const [tabCareInstructionUK, setTabCareInstructionUK] = useState('');
+  const [tabCareInstructionUS, setTabCareInstructionUS] = useState('');
+  const [tabCareInstructionDE, setTabCareInstructionDE] = useState('');
+  const [tabCareInstructionFR, setTabCareInstructionFR] = useState('');
+
   const handleChangeTabs = (event, newValue) => {
     setValueTabs(newValue)
   }
@@ -139,6 +159,70 @@ const FormCreate = () => {
 
   const handleChangeContentFR = (content, delta, source, editor) => {
     setContentFR(content);
+  };
+
+  const handleChangeTabProductDetailUK = (content, delta, source, editor) => {
+    setTabProductDetailUK(content);
+  };
+
+  const handleChangeTabProductDetailUS = (content, delta, source, editor) => {
+    setTabProductDetailUS(content);
+  };
+
+  const handleChangeTabProductDetailDE = (content, delta, source, editor) => {
+    setTabProductDetailDE(content);
+  };
+
+  const handleChangeTabProductDetailFR = (content, delta, source, editor) => {
+    setTabProductDetailFR(content);
+  };
+
+  const handleChangeTabSizeGuideUK = (content, delta, source, editor) => {
+    setTabSizeGuideUK(content);
+  };
+
+  const handleChangeTabSizeGuideUS = (content, delta, source, editor) => {
+    setTabSizeGuideUS(content);
+  };
+
+  const handleChangeTabSizeGuideDE = (content, delta, source, editor) => {
+    setTabSizeGuideDE(content);
+  };
+
+  const handleChangeTabSizeGuideFR = (content, delta, source, editor) => {
+    setTabSizeGuideFR(content);
+  };
+
+  const handleChangeTabMockupTemplateUK = (content, delta, source, editor) => {
+    setTabMockupTemplateUK(content);
+  };
+
+  const handleChangeTabMockupTemplateUS = (content, delta, source, editor) => {
+    setTabMockupTemplateUS(content);
+  };
+
+  const handleChangeTabMockupTemplateDE = (content, delta, source, editor) => {
+    setTabMockupTemplateDE(content);
+  };
+
+  const handleChangeTabMockupTemplateFR = (content, delta, source, editor) => {
+    setTabMockupTemplateFR(content);
+  };
+
+  const handleChangeTabCareInstructionUK = (content, delta, source, editor) => {
+    setTabCareInstructionUK(content);
+  };
+
+  const handleChangeTabCareInstructionUS = (content, delta, source, editor) => {
+    setTabCareInstructionUS(content);
+  };
+
+  const handleChangeTabCareInstructionDE = (content, delta, source, editor) => {
+    setTabCareInstructionDE(content);
+  };
+
+  const handleChangeTabCareInstructionFR = (content, delta, source, editor) => {
+    setTabCareInstructionFR(content);
   };
 
   const callBackSubmit = (data) => {
@@ -198,25 +282,26 @@ const FormCreate = () => {
     formData.append("typeUS", value.typeUS);
     formData.append("typeFR", value.typeFR);
     formData.append("typeDE", value.typeDE);
-    formData.append("tabProductDetailUK", value.tabProductDetailUK);
-    formData.append("tabProductDetailUS", value.tabProductDetailUS);
-    formData.append("tabProductDetailFR", value.tabProductDetailFR);
-    formData.append("tabProductDetailDE", value.tabProductDetailDE);
 
-    formData.append("tabSizeGuideUK", value.tabSizeGuideUK);
-    formData.append("tabSizeGuideUS", value.tabSizeGuideUS);
-    formData.append("tabSizeGuideFR", value.tabSizeGuideFR);
-    formData.append("tabSizeGuideDE", value.tabSizeGuideDE);
+    formData.append("tabProductDetailUK", JSON.stringify(tabProductDetailUK));
+    formData.append("tabProductDetailUS", JSON.stringify(tabProductDetailUS));
+    formData.append("tabProductDetailFR", JSON.stringify(tabProductDetailFR));
+    formData.append("tabProductDetailDE", JSON.stringify(tabProductDetailDE));
 
-    formData.append("tabMockupTemplateUK", value.tabMockupTemplateUK);
-    formData.append("tabMockupTemplateUS", value.tabMockupTemplateUS);
-    formData.append("tabMockupTemplateFR", value.tabMockupTemplateFR);
-    formData.append("tabMockupTemplateDE", value.tabMockupTemplateDE);
+    formData.append("tabSizeGuideUK", JSON.stringify(tabSizeGuideUK));
+    formData.append("tabSizeGuideUS", JSON.stringify(tabSizeGuideUS));
+    formData.append("tabSizeGuideFR", JSON.stringify(tabSizeGuideFR));
+    formData.append("tabSizeGuideDE", JSON.stringify(tabSizeGuideDE));
 
-    formData.append("tabCareInstructionUK", value.tabCareInstructionUK);
-    formData.append("tabCareInstructionUS", value.tabCareInstructionUS);
-    formData.append("tabCareInstructionFR", value.tabCareInstructionFR);
-    formData.append("tabCareInstructionDE", value.tabCareInstructionDE);
+    formData.append("tabMockupTemplateUK", JSON.stringify(tabMockupTemplateUK));
+    formData.append("tabMockupTemplateUS", JSON.stringify(tabMockupTemplateUS));
+    formData.append("tabMockupTemplateFR", JSON.stringify(tabMockupTemplateFR));
+    formData.append("tabMockupTemplateDE", JSON.stringify(tabMockupTemplateDE));
+
+    formData.append("tabCareInstructionUK", JSON.stringify(tabCareInstructionUK));
+    formData.append("tabCareInstructionUS", JSON.stringify(tabCareInstructionUS));
+    formData.append("tabCareInstructionFR", JSON.stringify(tabCareInstructionFR));
+    formData.append("tabCareInstructionDE", JSON.stringify(tabCareInstructionDE));
 
     formData.append("customizationOptions", value.customizationOptions);
     formData.append("detailProduct", value.detailProduct);
@@ -459,6 +544,27 @@ const FormCreate = () => {
       data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
       data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
       data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
+      
+      data?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(data?.tabProductDetailUK))
+      data?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(data?.tabProductDetailUS))
+      data?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(data?.tabProductDetailFR))
+      data?.tabProductDetailDE && setTabProductDetailDE(JSON.parse(data?.tabProductDetailDE))
+
+      data?.tabSizeGuideUK && setTabSizeGuideUK(JSON.parse(data?.tabSizeGuideUK))
+      data?.tabSizeGuideUS && setTabSizeGuideUS(JSON.parse(data?.tabSizeGuideUS))
+      data?.tabSizeGuideFR && setTabSizeGuideFR(JSON.parse(data?.tabSizeGuideFR))
+      data?.tabSizeGuideDE && setTabSizeGuideDE(JSON.parse(data?.tabSizeGuideDE))
+
+      data?.tabMockupTemplateUK && setTabMockupTemplateUK(JSON.parse(data?.tabMockupTemplateUK))
+      data?.tabMockupTemplateUS && setTabMockupTemplateUS(JSON.parse(data?.tabMockupTemplateUS))
+      data?.tabMockupTemplateFR && setTabMockupTemplateFR(JSON.parse(data?.tabMockupTemplateFR))
+      data?.tabMockupTemplateDE && setTabMockupTemplateDE(JSON.parse(data?.tabMockupTemplateDE))
+
+      data?.tabCareInstructionUK && setTabCareInstructionUK(JSON.parse(data?.tabCareInstructionUK))
+      data?.tabCareInstructionUS && setTabCareInstructionUS(JSON.parse(data?.tabCareInstructionUS))
+      data?.tabCareInstructionFR && setTabCareInstructionFR(JSON.parse(data?.tabCareInstructionFR))
+      data?.tabCareInstructionDE && setTabCareInstructionDE(JSON.parse(data?.tabCareInstructionDE))
+
       setValue('currency', data?.currency)
       setValueRecommend(listCatPro)
       setValue('price', data?.price)
@@ -1281,7 +1387,7 @@ const FormCreate = () => {
               />
             </Grid>
           </Card>
-          <Card sx={{ p: 4, mt: 4 }}>
+          <Card sx={{ p: 4, mt: 4 , textAlign: 'left' }}>
             <TabContext value={valueTabs}>
               <TabList onChange={handleChangeTabs} aria-label='nav tabs example'>
                 <Tab value='1' component='a' label='Product Details' onClick={e => e.preventDefault()} />
@@ -1290,268 +1396,108 @@ const FormCreate = () => {
                 <Tab value='4' component='a' label='Care Instruction' onClick={e => e.preventDefault()} />
               </TabList>
               <TabPanel value='1'>
-                <Controller
-                  name='tabProductDetailUK'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Product Details UK"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabProductDetailUS'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Product Details US"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabProductDetailFR'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Product Details FR"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabProductDetailDE'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Product Details DE"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Product Details UK
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabProductDetailUK} onChange={handleChangeTabProductDetailUK} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Product Details US
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabProductDetailUS} onChange={handleChangeTabProductDetailUS} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Product Details FR
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabProductDetailFR} onChange={handleChangeTabProductDetailFR} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Product Details DE
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabProductDetailDE} onChange={handleChangeTabProductDetailDE} modules={modules} formats={formats} theme="snow" />
+                </Box>
               </TabPanel>
               <TabPanel value='2'>
-                <Controller
-                  name='tabSizeGuideUK'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Size Guide UK"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabSizeGuideUS'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Size Guide US"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabSizeGuideFR'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Size Guide FR"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                  name='tabSizeGuideDE'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Size Guide DE"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Size Guide UK
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabSizeGuideUK} onChange={handleChangeTabSizeGuideUK} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Size Guide US
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabSizeGuideUS} onChange={handleChangeTabSizeGuideUS} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Size Guide FR
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabSizeGuideFR} onChange={handleChangeTabSizeGuideFR} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Size Guide DE
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabSizeGuideDE} onChange={handleChangeTabSizeGuideDE} modules={modules} formats={formats} theme="snow" />
+                </Box>
               </TabPanel>
               <TabPanel value='3'>
-              <Controller
-                  name='tabMockupTemplateUK'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Mockup Template UK"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-              <Controller
-                  name='tabMockupTemplateUS'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Mockup Template US"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-              <Controller
-                  name='tabMockupTemplateFR'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Mockup Template FR"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-              <Controller
-                  name='tabMockupTemplateDE'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Mockup Template DE"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Mockup Template UK
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabMockupTemplateUK} onChange={handleChangeTabMockupTemplateUK} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Mockup Template US
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabMockupTemplateUS} onChange={handleChangeTabMockupTemplateUS} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Mockup Template FR
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabMockupTemplateFR} onChange={handleChangeTabMockupTemplateFR} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Mockup Template DE
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabMockupTemplateDE} onChange={handleChangeTabMockupTemplateDE} modules={modules} formats={formats} theme="snow" />
+                </Box>
               </TabPanel>
               <TabPanel value='4'>
-              <Controller
-                  name='tabCareInstructionUK'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Care Instruction UK"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-              <Controller
-                  name='tabCareInstructionUS'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Care Instruction US"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-              <Controller
-                  name='tabCareInstructionFR'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      rows={4}
-                      multiline
-                      sx={{ mt: 3 }}
-                      label="Care Instruction FR"
-                      fullWidth
-                      {...field}
-                      aria-describedby='validation-basic-featureProduct'
-                    />
-                  )}
-                />
-                <Controller
-                    name='tabCareInstructionDE'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <CustomTextField
-                        rows={4}
-                        multiline
-                        sx={{ mt: 3 }}
-                        label="Care Instruction DE"
-                        fullWidth
-                        {...field}
-                        aria-describedby='validation-basic-featureProduct'
-                      />
-                    )}
-                  />
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Care Instruction UK
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabCareInstructionUK} onChange={handleChangeTabCareInstructionUK} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Care Instruction US
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabCareInstructionUS} onChange={handleChangeTabCareInstructionUS} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Care Instruction FR
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabCareInstructionFR} onChange={handleChangeTabCareInstructionFR} modules={modules} formats={formats} theme="snow" />
+                </Box>
+                <Box sx={{ mb: 5 }}>
+                  <Typography variant='h6'>
+                    Care Instruction DE
+                  </Typography>
+                  <QuillNoSSRWrapper value={tabCareInstructionDE} onChange={handleChangeTabCareInstructionDE} modules={modules} formats={formats} theme="snow" />
+                </Box>
               </TabPanel>
             </TabContext>
           </Card>
