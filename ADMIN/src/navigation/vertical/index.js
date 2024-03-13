@@ -1,11 +1,6 @@
 const navigation = () => {
   return [
     {
-      title: 'Dashboard',
-      icon: 'material-symbols:dashboard-outline-rounded',
-      path: '/apps/dashboard'
-    },
-    {
       title: 'Product Category',
       icon: 'iconamoon:store-light',
       path: '/apps/product-category'
