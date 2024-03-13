@@ -173,6 +173,9 @@ const ProductsBase = {
     tabCareInstructionDE: {
         type: String, trim: true,
     },
+    btnLink: {
+        type: String, trim: true,
+    }
 
 }
 const Products = { ...ProductsBase, ...common };

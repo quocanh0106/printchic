@@ -80,6 +80,8 @@ const create = async (data) => {
         set.tabCareInstructionFR = data.tabCareInstructionFR;
         set.tabCareInstructionDE = data.tabCareInstructionDE;
 
+        set.btnLink = data.btnLink;
+
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
@@ -348,6 +350,10 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.priceSale)) {
             set.priceSale = data.priceSale;
+        }
+
+        if (!isEmpty(data?.btnLink)) {
+            set.btnLink = data.btnLink;
         }
         
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
