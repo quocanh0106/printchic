@@ -14,28 +14,100 @@ const settingBase = {
   imageFeature: {
     type: String, trim: true,
   },
-  siteName: {
+  siteNameUK: {
     type: String, trim: true,
   },
-  metaTitle: {
+  siteNameUS: {
     type: String, trim: true,
   },
-  metaDescription: {
+  siteNameFR: {
     type: String, trim: true,
   },
-  headTag: {
+  siteNameDE: {
     type: String, trim: true,
   },
-  footerTag: {
+  metaTitleUK: {
     type: String, trim: true,
   },
-  headEmbedAll: {
+  metaTitleUS: {
     type: String, trim: true,
   },
-  headTagAll: {
+  metaTitleFR: {
     type: String, trim: true,
   },
-  footerTagAll: {
+  metaTitleDE: {
+    type: String, trim: true,
+  },
+  metaDescriptionUK: {
+    type: String, trim: true,
+  },
+  metaDescriptionUS: {
+    type: String, trim: true,
+  },
+  metaDescriptionFR: {
+    type: String, trim: true,
+  },
+  metaDescriptionDE: {
+    type: String, trim: true,
+  },
+  headTagUK: {
+    type: String, trim: true,
+  },
+  headTagUS: {
+    type: String, trim: true,
+  },
+  headTagFR: {
+    type: String, trim: true,
+  },
+  headTagDE: {
+    type: String, trim: true,
+  },
+  footerTagUK: {
+    type: String, trim: true,
+  },
+  footerTagUS: {
+    type: String, trim: true,
+  },
+  footerTagFR: {
+    type: String, trim: true,
+  },
+  footerTagDE: {
+    type: String, trim: true,
+  },
+  headEmbedAllUK: {
+    type: String, trim: true,
+  },
+  headEmbedAllUS: {
+    type: String, trim: true,
+  },
+  headEmbedAllFR: {
+    type: String, trim: true,
+  },
+  headEmbedAllDE: {
+    type: String, trim: true,
+  },
+  headTagAllUK: {
+    type: String, trim: true,
+  },
+  headTagAllUS: {
+    type: String, trim: true,
+  },
+  headTagAllFR: {
+    type: String, trim: true,
+  },
+  headTagAllDE: {
+    type: String, trim: true,
+  },
+  footerTagAllUK: {
+    type: String, trim: true,
+  },
+  footerTagAllUS: {
+    type: String, trim: true,
+  },
+  footerTagAllFR: {
+    type: String, trim: true,
+  },
+  footerTagAllDE: {
     type: String, trim: true,
   },
   language: {
