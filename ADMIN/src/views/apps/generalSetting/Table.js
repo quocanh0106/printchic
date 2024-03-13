@@ -58,14 +58,18 @@ const UserList = () => {
 
   useEffect(() => {
     setValue('language', store.data.language)
-    setValue('siteName', store.data.siteName)
-    setValue('metaTitle', store.data.metaTitle)
-    setValue('metaDescription', store.data.metaDescription)
-    setValue('headTag', store.data.headTag)
-    setValue('footerTag', store.data.footerTag)
-    setValue('headEmbedAll', store.data.headEmbedAll)
-    setValue('headTagAll', store.data.headTagAll)
-    setValue('footerTagAll', store.data.footerTagAll)
+
+    LANG.forEach(ele => {
+      setValue(`siteName${ele.value}`, store.data[`siteName${ele.value}`]);
+      setValue(`metaTitle${ele.value}`, store.data[`metaTitle${ele.value}`]);
+      setValue(`metaDescription${ele.value}`, store.data[`metaDescription${ele.value}`]);
+      setValue(`headTag${ele.value}`, store.data[`headTag${ele.value}`]);
+      setValue(`footerTag${ele.value}`, store.data[`footerTag${ele.value}`]);
+      setValue(`headEmbedAll${ele.value}`, store.data[`headEmbedAll${ele.value}`]);
+      setValue(`headTagAll${ele.value}`, store.data[`headTagAll${ele.value}`]);
+      setValue(`footerTagAll${ele.value}`, store.data[`footerTagAll${ele.value}`]);
+    })
+
     setFiles(store.data.imageFeature)
   }, [store])
 
@@ -134,15 +138,18 @@ const UserList = () => {
     setLoading(true)
     const formData = new FormData();
     formData.append("settingId", store.data._id);
-    formData.append("siteName", values.siteName);
-    formData.append("metaTitle", values.metaTitle);
-    formData.append("metaDescription", values.metaDescription);
 
-    formData.append("headTag", values.headTag);
-    formData.append("footerTag", values.footerTag);
-    formData.append("headEmbedAll", values.headEmbedAll);
-    formData.append("headTagAll", values.headTagAll);
-    formData.append("footerTagAll", values.footerTagAll);
+    LANG.forEach(ele => {
+      formData.append(`siteName${ele.value}`, values[`siteName${ele.value}`]);
+      formData.append(`metaTitle${ele.value}`, values[`metaTitle${ele.value}`]);
+      formData.append(`metaDescription${ele.value}`, values[`metaDescription${ele.value}`]);
+      formData.append(`headTag${ele.value}`, values[`headTag${ele.value}`]);
+      formData.append(`footerTag${ele.value}`, values[`footerTag${ele.value}`]);
+      formData.append(`headEmbedAll${ele.value}`, values[`headEmbedAll${ele.value}`]);
+      formData.append(`headTagAll${ele.value}`, values[`headTagAll${ele.value}`]);
+      formData.append(`footerTagAll${ele.value}`, values[`footerTagAll${ele.value}`]);
+    })
+
     formData.append("language", values.language);
 
     typeof files === "string" || formData.append("file", files);
@@ -162,12 +169,31 @@ const UserList = () => {
             <Grid container xs={12} sm={12} spacing={6}>
               <Grid item xs={6} sm={6}>
                 <Controller
+                  name='siteNameUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Site name UK'
+                      onChange={onChange}
+                      placeholder='Site name UK'
+                      error={Boolean(errors.siteNameUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.siteNameUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
                   name='siteNameUS'
                   control={control}
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
-                      sx={{ mb: 4 }}
                       fullWidth
                       value={value || ""}
                       required
@@ -188,7 +214,6 @@ const UserList = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
-                      sx={{ mb: 4 }}
                       fullWidth
                       value={value || ""}
                       required
@@ -209,7 +234,6 @@ const UserList = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
-                      sx={{ mb: 4 }}
                       fullWidth
                       value={value || ""}
                       required
@@ -223,205 +247,201 @@ const UserList = () => {
                   )}
                 />
               </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name='siteNameUK'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      sx={{ mb: 4 }}
-                      fullWidth
-                      value={value || ""}
-                      required
-                      label='Site name UK'
-                      onChange={onChange}
-                      placeholder='Site name UK'
-                      error={Boolean(errors.siteNameUK)}
-                      aria-describedby='validation-basic-first-name'
-                      {...(errors.siteNameUK && { helperText: 'This field is required' })}
-                    />
-                  )}
-                />
-              </Grid>
-
-
-
-
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Meta Title
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
-              <Controller
-                name='metaTitleUK'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    label='Meta Title UK'
-                    onChange={onChange}
-                    placeholder='Meta Title UK'
-                    error={Boolean(errors.metaTitleUK)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaTitleUK && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaTitleUS'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    label='Meta Title US'
-                    onChange={onChange}
-                    placeholder='Meta Title US'
-                    error={Boolean(errors.metaTitleUS)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaTitleUS && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaTitleFR'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    label='Meta Title FR'
-                    onChange={onChange}
-                    placeholder='Meta Title FR'
-                    error={Boolean(errors.metaTitleFR)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaTitleFR && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaTitleDE'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    label='Meta Title DE'
-                    onChange={onChange}
-                    placeholder='Meta Title DE'
-                    error={Boolean(errors.metaTitleDE)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaTitleDE && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
+            <Grid container xs={12} sm={12} spacing={6}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaTitleUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Meta Title UK'
+                      onChange={onChange}
+                      placeholder='Meta Title UK'
+                      error={Boolean(errors.metaTitleUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaTitleUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+
+                <Controller
+                  name='metaTitleUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Meta Title US'
+                      onChange={onChange}
+                      placeholder='Meta Title US'
+                      error={Boolean(errors.metaTitleUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaTitleUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+
+                <Controller
+                  name='metaTitleFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Meta Title FR'
+                      onChange={onChange}
+                      placeholder='Meta Title FR'
+                      error={Boolean(errors.metaTitleFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaTitleFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+
+                <Controller
+                  name='metaTitleDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      label='Meta Title DE'
+                      onChange={onChange}
+                      placeholder='Meta Title DE'
+                      error={Boolean(errors.metaTitleDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaTitleDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Meta Description
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
-              <Controller
-                name='metaDescriptionUK'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    onChange={onChange}
-                    label='Meta Description UK'
-                    placeholder='Meta Description UK'
-                    error={Boolean(errors.metaDescriptionUK)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaDescriptionUS'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    onChange={onChange}
-                    label='Meta Description US'
-                    placeholder='Meta Description US'
-                    error={Boolean(errors.metaDescriptionUS)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaDescriptionFR'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    onChange={onChange}
-                    label='Meta Description FR'
-                    placeholder='Meta Description FR'
-                    error={Boolean(errors.metaDescriptionFR)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
-              <Controller
-                name='metaDescriptionDE'
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    value={value || ""}
-                    required
-                    onChange={onChange}
-                    label='Meta Description DE'
-                    placeholder='Meta Description DE'
-                    error={Boolean(errors.metaDescriptionDE)}
-                    aria-describedby='validation-basic-first-name'
-                    {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
-                  />
-                )}
-              />
+            <Grid container xs={12} sm={12} spacing={6}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      onChange={onChange}
+                      label='Meta Description UK'
+                      placeholder='Meta Description UK'
+                      error={Boolean(errors.metaDescriptionUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      onChange={onChange}
+                      label='Meta Description US'
+                      placeholder='Meta Description US'
+                      error={Boolean(errors.metaDescriptionUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      onChange={onChange}
+                      label='Meta Description FR'
+                      placeholder='Meta Description FR'
+                      error={Boolean(errors.metaDescriptionFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value || ""}
+                      required
+                      onChange={onChange}
+                      label='Meta Description DE'
+                      placeholder='Meta Description DE'
+                      error={Boolean(errors.metaDescriptionDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Head Tag
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid container xs={12} sm={12} spacing={6}>              
+            <Grid item xs={6} sm={6}>
+              
               <Controller
                 name='headTagUK'
                 control={control}
@@ -439,7 +459,10 @@ const UserList = () => {
                     {...(errors.headTagUK && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagUS'
                 control={control}
@@ -457,7 +480,10 @@ const UserList = () => {
                     {...(errors.headTagUS && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagFR'
                 control={control}
@@ -475,7 +501,10 @@ const UserList = () => {
                     {...(errors.headTagFR && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagDE'
                 control={control}
@@ -494,16 +523,19 @@ const UserList = () => {
                   />
                 )}
               />
+                </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Footer Tag
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid container xs={12} sm={12} spacing={6}>              
+            <Grid item xs={6} sm={6}>
+              
               <Controller
                 name='footerTagUK'
                 control={control}
@@ -521,7 +553,10 @@ const UserList = () => {
                     {...(errors.footerTagUK && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagUS'
                 control={control}
@@ -539,7 +574,10 @@ const UserList = () => {
                     {...(errors.footerTagUS && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagFR'
                 control={control}
@@ -557,7 +595,10 @@ const UserList = () => {
                     {...(errors.footerTagFR && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagDE'
                 control={control}
@@ -576,16 +617,19 @@ const UserList = () => {
                   />
                 )}
               />
+                </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Head Embed All
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid container xs={12} sm={12} spacing={6}>              
+            <Grid item xs={6} sm={6}>
+              
               <Controller
                 name='headEmbedAllUK'
                 control={control}
@@ -603,7 +647,10 @@ const UserList = () => {
                     {...(errors.headEmbedAllUK && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headEmbedAllUS'
                 control={control}
@@ -621,7 +668,10 @@ const UserList = () => {
                     {...(errors.headEmbedAllUS && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headEmbedAllFR'
                 control={control}
@@ -639,7 +689,10 @@ const UserList = () => {
                     {...(errors.headEmbedAllFR && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headEmbedAllDE'
                 control={control}
@@ -658,16 +711,19 @@ const UserList = () => {
                   />
                 )}
               />
+                </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Head Tag All
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid container xs={12} sm={12} spacing={6}>              
+            <Grid item xs={6} sm={6}>
+              
               <Controller
                 name='headTagAllUK'
                 control={control}
@@ -685,7 +741,10 @@ const UserList = () => {
                     {...(errors.headTagAllUK && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagAllUS'
                 control={control}
@@ -703,7 +762,10 @@ const UserList = () => {
                     {...(errors.headTagAllUS && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagAllFR'
                 control={control}
@@ -721,7 +783,10 @@ const UserList = () => {
                     {...(errors.headTagAllFR && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='headTagAllDE'
                 control={control}
@@ -740,16 +805,19 @@ const UserList = () => {
                   />
                 )}
               />
+                </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 4 }} />
           <Grid container xs={12}>
             <Grid item xs={4} sm={4}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Footer Tag All
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid container xs={12} sm={12} spacing={6}>              
+            <Grid item xs={6} sm={6}>
+              
               <Controller
                 name='footerTagAllUK'
                 control={control}
@@ -767,7 +835,10 @@ const UserList = () => {
                     {...(errors.footerTagAllUK && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagAllUS'
                 control={control}
@@ -785,7 +856,10 @@ const UserList = () => {
                     {...(errors.footerTagAllUS && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagAllFR'
                 control={control}
@@ -803,7 +877,10 @@ const UserList = () => {
                     {...(errors.footerTagAllFR && { helperText: 'This field is required' })}
                   />
                 )}
-              />
+              />              
+                </Grid>
+              <Grid item xs={6} sm={6}>
+                
               <Controller
                 name='footerTagAllDE'
                 control={control}
@@ -822,16 +899,17 @@ const UserList = () => {
                   />
                 )}
               />
+                </Grid>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 2 }} />
+          <Divider sx={{ my: 5 }} />
           <Grid container xs={12}>
-            <Grid item xs={4} sm={4}>
+            <Grid item xs={1} sm={1}>
               <Typography variant='h5' noWrap sx={{ mb: 5 }}>
                 Language
               </Typography>
             </Grid>
-            <Grid item xs={8} sm={8}>
+            <Grid item xs={11} sm={11}>
               <Controller
                 name='language'
                 control={control}
