@@ -47,13 +47,17 @@
               </span>
             </div>
             <div class="action-button w-100 mt-8 flex flex-col">
-              <v-button
+              <a
+                :href="detail.data.btnLink"
+                target="_blank"
                 class="primary-btn w-100 text-center text-white cursor-pointer"
-                >{{ $t("productDetail.downloadMockup") }}</v-button
+                >{{ $t("productDetail.downloadMockup") }}</a
               >
-              <v-button
+              <a
+                href="/contact-us"
+                target="_blank"
                 class="secondary-btn w-100 text-center cursor-pointer mt-3"
-                >{{ $t("productDetail.contactSupport") }}</v-button
+                >{{ $t("productDetail.contactSupport") }}</a
               >
             </div>
           </div>
@@ -185,7 +189,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent :slidePerView="6" class="mt-12 mb-8" />
+        <swiperComponent :items="listProductRelatedMedia" :slidePerView="6" class="mt-12 related-product mb-8" />
       </div>
 
       <!-- help -->
@@ -396,7 +400,7 @@ import VueGallery from "../../components/vueGalery.vue";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
 import { myMixin } from "~/mixins/myMixin";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
@@ -461,7 +465,6 @@ const localizedDescription = computed(() => {
 
   // Strip the quotation marks if present
   if (description.startsWith('"') && description.endsWith('"')) {
-    console.log(description.substring(1, description.length - 1), "sdsdsd");
     return description.substring(1, description.length - 1);
   }
   return description;
@@ -495,24 +498,42 @@ const listNameOption = computed(()=>{
 
 
 const { data: detail } = await useAsyncData("productDetail", () =>
-  $fetch(
-    `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
+$fetch(
+  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
-);
+  );
+  
+  
+  const listProduct  = await useAsyncData(
+    'listProduct',
+    async () => {
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value.data.categoryProduct?.[0]}`)
+      return response.data.items
+    }
+)?.data
 
+
+const listProductRelatedMedia = ref([])
+const listProductRelated = () => {
+  listProduct.value.forEach(item => listProductRelatedMedia.value.push(item.media[0]?.path))
+}
+onMounted(() => {
+  listProductRelated()
+})
 const combinedVariants = ref([]);
 const variantProperties = detail?.value.data.variants.map(product => {
-    const variantProps = {};
-    for (const key in product) {
-        if (key.includes('nameVariant_')) {
-          combinedVariants.value.push(product[key]);
-        }
+  const variantProps = {};
+  for (const key in product) {
+    if (key.includes('nameVariant_')) {
+      combinedVariants.value.push(product[key]);
     }
-    return variantProps;
+  }
+  return variantProps;
 });
 
 const uniqueCombinedVariants = ref(Array.from(new Set(combinedVariants.value)));
 
+console.log(listProductRelatedMedia.value, "sdsd");
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
@@ -587,5 +608,15 @@ const uniqueCombinedVariants = ref(Array.from(new Set(combinedVariants.value)));
     color: white;
   }
   background-color: #709CE6;
+}
+
+.related-product{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 276px !important;
+      height: 276px !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
 }
 </style>

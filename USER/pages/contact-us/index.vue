@@ -213,7 +213,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import help from "../../components/help.vue";
 import mailIcon from "../assets/svg/mail.svg";
 import contactThumb from "../../assets/images/contactUsFormThumb.png";
@@ -221,32 +222,18 @@ import linkedin from "../../assets/svg/LinkedIn.svg";
 import facebook from "../../assets/svg/Facebook.svg";
 import twitter from "../../assets/svg/Twitter.svg";
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
-import { myMixin } from '~/mixins/myMixin';
 
-export default {
-  mixins: [myMixin],
-  components: {
-    help,
-  },
-  data() {
-    return {
-      mailIcon,
-      contactThumb,
-      linkedin,
-      facebook,
-      twitter,
-      arrowUpRight,
-      form: {},
-    };
-  },
-  methods: {
-    submitForm() {
-      // Process form data here or send data to server
-      console.log(this.form);
-      alert("Form submitted! Check console for details.");
-    },
-  },
+
+// Define your reactive data
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const form = ref({});
+
+// Define a method
+const submitForm = () => {
+  console.log(form.value);
 };
+
+
 </script>
 
 <style scoped lang="scss">
