@@ -233,31 +233,33 @@
             class="product-description mt-6"
             v-html="localizedDescription"
           ></div>
-          <div class="product-option mt-8 flex flex-col gap-y-5">
-            <span v-for="(item, index) in product.option" :key="index">
-              <h1 class="text-black font-semibold leading-3">
-                {{ item.optionName }}
-              </h1>
-              <span class="option-variant flex gap-x-3">
-                <v-button
-                  class="secondary-btn mt-4 txt-primary variant-button cursor-pointer"
-                  v-for="(variant, ind) in item.optionVariant"
-                  :key="ind"
-                >
-                  {{ variant }}
-                </v-button>
+          <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
               </span>
-            </span>
-          </div>
+            </div>
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
+              </span>
+            </div>
           <div class="action-button w-100 mt-8 flex flex-col mb-5">
-            <v-button
-              class="primary-btn w-100 text-center text-white cursor-pointer"
-              >{{ $t("productDetail.downloadMockup") }}</v-button
-            >
-            <v-button
-              class="secondary-btn w-100 text-center cursor-pointer mt-3"
-              >{{ $t("productDetail.contactSupport") }}</v-button
-            >
+            <a
+                :href="detail.data.btnLink"
+                target="_blank"
+                class="primary-btn w-100 text-center text-white cursor-pointer"
+                >{{ $t("productDetail.downloadMockup") }}</a
+              >
+              <a
+                href="/contact-us"
+                target="_blank"
+                class="secondary-btn w-100 text-center cursor-pointer mt-3"
+                >{{ $t("productDetail.contactSupport") }}</a
+              >
           </div>
           <!--  detail slider -->
           <div class="info-of-product flex flex-col gap-y-10 w-100">
