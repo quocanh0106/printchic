@@ -11,8 +11,7 @@
         <ul class="nav-bar-wrapper">
 
           <li v-for="(item, index) in links" :key="index">
-            <nuxt-link :to="localePath(item.href)">{{$t(item.label)}}</nuxt-link>
-            <!-- <a class="navigation-menu" :href="item.href">{{ $t(item.label) }}</a> -->
+            <a class="navigation-menu" :href="localePath(item.href)">{{ $t(item.label) }}</a>
           </li>
           <li>
             <v-select
@@ -135,6 +134,10 @@ function isCurrentUrl(url) {
     console.log("TRUE");
     isActive.value = !isActive.value;
   }
+}
+
+const navigate = (url) =>{
+  router.push(localePath(url));
 }
 </script>
 

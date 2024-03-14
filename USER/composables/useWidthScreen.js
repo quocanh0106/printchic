@@ -36,6 +36,8 @@ export default function useWidthScreen() {
     return response;
   };
 
+  const isLoading = ref(false)
+
   return {
     screenWidth,
     mobile,
@@ -45,5 +47,6 @@ export default function useWidthScreen() {
     extraPc,
     getRequest,
     postRequest,
+    isLoading
   };
 }

@@ -32,20 +32,18 @@
             <p class="product-description mt-6">
               {{ product.description }}
             </p>
-            <div class="product-option mt-8 flex flex-col gap-y-5">
-              <span v-for="(item, index) in product.option" :key="index">
-                <h1 class="text-black font-semibold leading-3">
-                  {{ item.optionName }}
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
                 </h1>
-                <span class="option-variant flex gap-x-3">
-                  <v-button
-                    class="secondary-btn mt-4 txt-primary variant-button cursor-pointer"
-                    v-for="(variant, ind) in item.optionVariant"
-                    :key="ind"
-                  >
-                    {{ variant }}
-                  </v-button>
-                </span>
+              </span>
+            </div>
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
               </span>
             </div>
             <div class="action-button w-100 mt-8 flex flex-col">
@@ -398,7 +396,7 @@ import VueGallery from "../../components/vueGalery.vue";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
 import { myMixin } from "~/mixins/myMixin";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
@@ -469,13 +467,52 @@ const localizedDescription = computed(() => {
   return description;
 });
 
+const currentActiveNameOption = ref(0)
+const changeActiveNameOption = (ind) => {
+  currentActiveNameOption.value = ind
+}
+
+const currentActiveVariant= ref(0)
+const changeActiveVariant = (ind) => {
+  currentActiveVariant.value = ind
+}
+
+const listNameOption = computed(()=>{
+  let listNameOption = []
+  if(detail?.value.data.variants?.[0].nameOption_1){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_1)
+  }
+
+  if(detail?.value.data.variants?.[0].nameOption_2){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_2)
+  }
+
+  if(detail?.value.data.variants?.[0].nameOption_3){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_3)
+  }
+  return listNameOption
+})
+
 
 const { data: detail } = await useAsyncData("productDetail", () =>
   $fetch(
     `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
 );
-console.log(detail, 'HEHEHE')
+
+const combinedVariants = ref([]);
+const variantProperties = detail?.value.data.variants.map(product => {
+    const variantProps = {};
+    for (const key in product) {
+        if (key.includes('nameVariant_')) {
+          combinedVariants.value.push(product[key]);
+        }
+    }
+    return variantProps;
+});
+
+const uniqueCombinedVariants = ref(Array.from(new Set(combinedVariants.value)));
+
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
@@ -534,5 +571,21 @@ console.log(detail, 'HEHEHE')
   :deep(.v-slider-track__fill) {
     background-color: #d1e0ff;
   }
+}
+
+.name-option{
+  border: 1px solid #709CE6;
+  border-radius: 3px;
+  padding: 12px 24px;
+  h1{
+    color: #709CE6;
+  }
+}
+
+.active-name-option{
+  h1{
+    color: white;
+  }
+  background-color: #709CE6;
 }
 </style>
