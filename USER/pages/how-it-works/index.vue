@@ -203,6 +203,7 @@ import logo6 from '~/assets/svg/logoTemplate/logoTemplate6.svg'
 
 // Convert mixins to composables if possible. If myMixin contains global properties or methods, 
 // you might need to create a composable or find another way to integrate the logic.
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc, isLoading } = useWidthScreen();
 
 // Data properties converted to ref
 const imgHoldingPhoneRef = ref(imgHoldingPhone);
@@ -254,19 +255,6 @@ onUnmounted(() => {
   // Remove event listener when the component is unmounted
   window.removeEventListener('resize', updateScreenWidth);
 });
-
-const screenWidth = ref(0);
-
-function updateScreenWidth() {
-  screenWidth.value = window.innerWidth;
-
-}
-
-const mobile = computed(() => screenWidth.value <= 600);
-const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
-const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
-const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
-const extraPc = computed(() => screenWidth.value > 2500);
 
 </script>
 

@@ -5,7 +5,7 @@
         :navigation="showNavigation" :modules="[Pagination, Navigation]" @swiper="onSwiper" @slideChange="onSlideChange">
         <swiper-slide v-for="item, index in items" :key="index">
           <div>
-            <img :src="item.bannerImg ? item.bannerImg : item.img" />
+            <img class="img-thumbnail" :src="item.bannerImg ? item.bannerImg : item.img" />
             <p class="text-center mt-2">{{ item.name }}</p>
             <h1 class=" text-center text-swiper font-semibold mt-2.5" v-if="hasDescription">{{ locale.value == 'US' ? item.titleUS : locale.value == 'US' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</h1>
             <p class="text-center text-swiper mt-1" v-if="hasDescription">{{ locale.value == 'US' ? item.descriptionUS : locale.value == 'US' ? item.descriptionUK : locale.value == 'FR' ? item.descriptionFR : item.descriptionDE }}</p>
@@ -105,4 +105,17 @@ const onSlideChange = () => {
     font-size: 16px;
   }
 }
+
+.img-thumbnail{
+    min-width:0px !important;
+    width: 15vw !important;
+    height: 15vw !important;
+    object-fit:cover;
+    max-height: none !important;
+    @media screen and (max-width:992px) {
+      width: 35vw !important;
+      height: 35vw !important;
+    }
+}
+
 </style>

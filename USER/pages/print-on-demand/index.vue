@@ -1,17 +1,17 @@
 
 <template>
   <div class="product-page-all-screen-wrapper">
-    <div class="product-page-wrapper custom-padding" v-show="pc || lgPc || extraPc">
-      <div class="product-header">
-        <div class="product-banner rounded-lg text-center flex flex-col">
-          <h1 class="section-title font-semibold"> {{ $t('productList.mensClothing') }} </h1>
+    <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
+      <div class="product-header custom-padding">
+        <div class="product-banner rounded-lg text-center flex flex-col custom-padding">
+          <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
           <span> Home / Men</span>
         </div>
         <div class="cloth-category">
-          <swiperComponent :hasDescription="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
+          <swiperComponent @submit="filterByCategoryId" :hasDescription="true" :isCategory="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
         </div>
       </div>
-      <div class="product-grid-wrapper flex justify-between">
+      <div class="product-grid-wrapper flex justify-between custom-padding">
         <div class="filter-sidebar mt-2">
           <h1 class="text-2xl font-semibold filter-by-title">{{ $t('productList.filter') }}</h1>
           <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
@@ -26,7 +26,7 @@
         <div class="product-list-wrapper">
           <div class="sortbar flex justify-between">
             <span class="total-product-amount mt-2 txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
-              listProduct?.length }}</p> </span>
+              listProduct?.length }} of {{ listProduct?.length }}</p> </span>
             <span class="sort-by-select flex gap-x-2">
               <p class="mt-2 txt-gray">{{ $t('productList.sortBy') }}:</p>
               <v-select :items="items" density="compact" :label="$t('productList.select')" class="sorter"></v-select>
@@ -47,6 +47,7 @@
                 <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
                 <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
+              <p v-if="listProduct.length == 0">{{ $t('productList.noProductFound') }}</p>
             </div>
             <div>
               <v-button class="secondary-btn cursor-pointer button-seemore">{{ $t('button.seeMore') }}</v-button>
@@ -56,6 +57,55 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+       <!-- 15 pod ideas -->
+       <div class="pod-idea bg-light-blue-custom custom-padding">
+        <div class="idea-content ">
+          What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
+          and typesetting industry. Lorem Ipsum has been the industry's standard
+          dummy text ever since the 1500s, when an unknown printer took a galley
+          of type and scrambled it to make a type specimen book. It has survived
+          not only five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and more
+          recently with desktop publishing software like Aldus PageMaker including
+          versions of Lorem Ipsum. Why do we use it? It is a long established fact
+          that a reader will be distracted by the readable content of a page when
+          looking at its layout. The point of using Lorem Ipsum is that it has a
+          more-or-less normal distribution of letters, as opposed to using
+          'Content here, content here', making it look like readable English. Many
+          desktop publishing packages and web page editors now use Lorem Ipsum as
+          their default model text, and a search for 'lorem ipsum' will uncover
+          many web sites still in their infancy. Various versions have evolved
+          over the years, sometimes by accident, sometimes on purpose (injected
+          humour and the like). Where does it come from? Contrary to popular
+          belief, Lorem Ipsum is not simply random text. It has roots in a piece
+          of classical Latin literature from 45 BC, making it over 2000 years old.
+          Richard McClintock, a Latin professor at Hampden-Sydney College in
+          Virginia, looked up one of the more obscure Latin words, consectetur,
+          from a Lorem Ipsum passage, and going through the cites of the word in
+          classical literature, discovered the undoubtable source. Lorem Ipsum
+          comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
+          Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+          This book is a treatise on the theory of ethics, very popular during the
+          Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit
+          amet..", comes from a line in section 1.10.32. The standard chunk of
+          Lorem Ipsum used since the 1500s is reproduced below for those
+          interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et
+          Malorum" by Cicero are also reproduced in their exact original form,
+          accompanied by English versions from the 1914 translation by H. Rackham.
+          Where can I get some? There are many variations of passages of Lorem
+          Ipsum available, but the majority have suffered alteration in some form,
+          by injected humour, or randomised words which don't look even slightly
+          believable. If you are going to use a passage of Lorem Ipsum, you need
+          to be sure there isn't anything embarrassing hidden in the middle of
+          text. All the Lorem Ipsum generators on the Internet tend to repeat
+          predefined chunks as necessary, making this the first true generator on
+          the Internet. It uses a dictionary of over 200 Latin words, combined
+          with a handful of model sentence structures, to generate Lorem Ipsum
+          which looks reasonable. The generated Lorem Ipsum is therefore always
+          free from repetition, injected humour, or non-characteristic words etc.
         </div>
       </div>
       <!-- help -->
@@ -68,7 +118,7 @@
           <span> Home / Men</span>
         </div>
         <div class="cloth-category">
-          <SwiperCateComponent :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="mt-12" />
+          <SwiperCateComponent @submit="filterByCategoryId(id)" :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="swiper-category-mobile mt-12" />
         </div>
       </div>
   
@@ -140,19 +190,21 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useFetch } from 'nuxt/app';
 import SwiperCateComponent from './components/SwiperCateComponent.vue';
 import help from '~/components/help.vue';
 import useLanguage from '~/composables/useLanguage';
 import { useI18n, useLocalePath } from '#imports'
+import { defineEmits } from 'vue';
 
 // Replace the mixin with composable if necessary. 
 // const { mixinMethod } = useMyMixin(); // Example usage if you need to replace myMixin with a composable.
 
 const { currentLanguage, setLanguage } = useLanguage();
 const router = useRouter();
-const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+const route = useRoute();
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc, isLoading } = useWidthScreen();
 
 const localePath = useLocalePath()
 const drawer = ref(null);
@@ -173,6 +225,18 @@ const listFilter = ref([
   },
 ]);
 
+watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
+  if (newCategoryProductId) {
+    // Reset listCate when categoryProductId changes
+    isLoading.value = true;
+    listProduct.value = [];
+    const data = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${newCategoryProductId}`).finally(()=>{
+      isLoading.value = false
+    })
+    listProduct.value = data?.data.items || [];
+  }
+});
+
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {
@@ -180,7 +244,6 @@ const listProduct  = await useAsyncData(
     return response.data.items
   }
 )?.data
-console.log('listProduct',listProduct.value)
 const listCate  = await useAsyncData(
   'listCategory',
   async () => {
@@ -202,6 +265,12 @@ function loadMoreItem() {
   // Implement load more functionality
 }
 
+function filterByCategoryId(newValue) {
+  router.push({
+    name: route.name,
+    query: { ...route.query, categoryProductId: newValue },
+  });
+}
 </script>
 
 <style lang="scss" scoped>
@@ -334,4 +403,17 @@ function loadMoreItem() {
   }
 }
 
+.swiper-category-mobile{
+
+}
+.idea-content{
+    background-color: white;
+    height: 352px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    padding: 40px;
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: #D1E0FF white; /* thumb and track color */
+
+}
 </style>

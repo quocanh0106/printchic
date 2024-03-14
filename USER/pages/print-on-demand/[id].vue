@@ -32,30 +32,32 @@
             <p class="product-description mt-6">
               {{ product.description }}
             </p>
-            <div class="product-option mt-8 flex flex-col gap-y-5">
-              <span v-for="(item, index) in product.option" :key="index">
-                <h1 class="text-black font-semibold leading-3">
-                  {{ item.optionName }}
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
                 </h1>
-                <span class="option-variant flex gap-x-3">
-                  <v-button
-                    class="secondary-btn mt-4 txt-primary variant-button cursor-pointer"
-                    v-for="(variant, ind) in item.optionVariant"
-                    :key="ind"
-                  >
-                    {{ variant }}
-                  </v-button>
-                </span>
+              </span>
+            </div>
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
               </span>
             </div>
             <div class="action-button w-100 mt-8 flex flex-col">
-              <v-button
+              <a
+                :href="detail.data.btnLink"
+                target="_blank"
                 class="primary-btn w-100 text-center text-white cursor-pointer"
-                >{{ $t("productDetail.downloadMockup") }}</v-button
+                >{{ $t("productDetail.downloadMockup") }}</a
               >
-              <v-button
+              <a
+                href="/contact-us"
+                target="_blank"
                 class="secondary-btn w-100 text-center cursor-pointer mt-3"
-                >{{ $t("productDetail.contactSupport") }}</v-button
+                >{{ $t("productDetail.contactSupport") }}</a
               >
             </div>
           </div>
@@ -187,7 +189,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent :slidePerView="6" class="mt-12 mb-8" />
+        <swiperComponent :items="listProductRelatedMedia" :slidePerView="6" class="mt-12 related-product mb-8" />
       </div>
 
       <!-- help -->
@@ -231,31 +233,33 @@
             class="product-description mt-6"
             v-html="localizedDescription"
           ></div>
-          <div class="product-option mt-8 flex flex-col gap-y-5">
-            <span v-for="(item, index) in product.option" :key="index">
-              <h1 class="text-black font-semibold leading-3">
-                {{ item.optionName }}
-              </h1>
-              <span class="option-variant flex gap-x-3">
-                <v-button
-                  class="secondary-btn mt-4 txt-primary variant-button cursor-pointer"
-                  v-for="(variant, ind) in item.optionVariant"
-                  :key="ind"
-                >
-                  {{ variant }}
-                </v-button>
+          <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
               </span>
-            </span>
-          </div>
+            </div>
+            <div class="product-option mt-8 flex flex gap-x-3">
+              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
+                <h1 class="font-semibold leading-3">
+                  {{ item }}
+                </h1>
+              </span>
+            </div>
           <div class="action-button w-100 mt-8 flex flex-col mb-5">
-            <v-button
-              class="primary-btn w-100 text-center text-white cursor-pointer"
-              >{{ $t("productDetail.downloadMockup") }}</v-button
-            >
-            <v-button
-              class="secondary-btn w-100 text-center cursor-pointer mt-3"
-              >{{ $t("productDetail.contactSupport") }}</v-button
-            >
+            <a
+                :href="detail.data.btnLink"
+                target="_blank"
+                class="primary-btn w-100 text-center text-white cursor-pointer"
+                >{{ $t("productDetail.downloadMockup") }}</a
+              >
+              <a
+                href="/contact-us"
+                target="_blank"
+                class="secondary-btn w-100 text-center cursor-pointer mt-3"
+                >{{ $t("productDetail.contactSupport") }}</a
+              >
           </div>
           <!--  detail slider -->
           <div class="info-of-product flex flex-col gap-y-10 w-100">
@@ -398,7 +402,7 @@ import VueGallery from "../../components/vueGalery.vue";
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
 import { myMixin } from "~/mixins/myMixin";
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
@@ -463,19 +467,75 @@ const localizedDescription = computed(() => {
 
   // Strip the quotation marks if present
   if (description.startsWith('"') && description.endsWith('"')) {
-    console.log(description.substring(1, description.length - 1), "sdsdsd");
     return description.substring(1, description.length - 1);
   }
   return description;
 });
 
+const currentActiveNameOption = ref(0)
+const changeActiveNameOption = (ind) => {
+  currentActiveNameOption.value = ind
+}
+
+const currentActiveVariant= ref(0)
+const changeActiveVariant = (ind) => {
+  currentActiveVariant.value = ind
+}
+
+const listNameOption = computed(()=>{
+  let listNameOption = []
+  if(detail?.value.data.variants?.[0].nameOption_1){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_1)
+  }
+
+  if(detail?.value.data.variants?.[0].nameOption_2){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_2)
+  }
+
+  if(detail?.value.data.variants?.[0].nameOption_3){
+    listNameOption.push(detail?.value.data.variants[0].nameOption_3)
+  }
+  return listNameOption
+})
+
 
 const { data: detail } = await useAsyncData("productDetail", () =>
-  $fetch(
-    `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
+$fetch(
+  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
-);
-console.log(detail, 'HEHEHE')
+  );
+  
+  
+  const listProduct  = await useAsyncData(
+    'listProduct',
+    async () => {
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value.data.categoryProduct?.[0]}`)
+      return response.data.items
+    }
+)?.data
+
+
+const listProductRelatedMedia = ref([])
+const listProductRelated = () => {
+  listProduct.value.forEach(item => listProductRelatedMedia.value.push(item.media[0]?.path))
+}
+onMounted(() => {
+  listProductRelated()
+})
+const combinedVariants = ref([]);
+const variantProperties = detail?.value.data.variants.map(product => {
+  const variantProps = {};
+  for (const key in product) {
+    if (key.includes('nameVariant_')) {
+      combinedVariants.value.push(product[key]);
+    }
+  }
+  return variantProps;
+});
+
+const uniqueCombinedVariants = ref(Array.from(new Set(combinedVariants.value)));
+
+console.log(listProductRelatedMedia.value, "sdsd");
 
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 </script>
@@ -533,6 +593,32 @@ console.log(detail, 'HEHEHE')
   }
   :deep(.v-slider-track__fill) {
     background-color: #d1e0ff;
+  }
+}
+
+.name-option{
+  border: 1px solid #709CE6;
+  border-radius: 3px;
+  padding: 12px 24px;
+  h1{
+    color: #709CE6;
+  }
+}
+
+.active-name-option{
+  h1{
+    color: white;
+  }
+  background-color: #709CE6;
+}
+
+.related-product{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 276px !important;
+      height: 276px !important;
+      object-fit:cover;
+      max-height: none !important;
   }
 }
 </style>

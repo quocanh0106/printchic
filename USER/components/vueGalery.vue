@@ -106,7 +106,7 @@ body {
 .vueGallery {
   display: flex;
   width: 40vw;
-  height: 40vw;
+  height: 30vw;
 
   .activePhoto {
     width: 100%;

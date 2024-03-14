@@ -123,7 +123,8 @@
     "select" : "Select",
     "filter" : "Filter",
     "saleTag" : "sale",
-    "clearAll" : "Clear All"
+    "clearAll" : "Clear All",
+    "noProductFound" : "No Product Found"
   },
   "howItWorks" : {
     "headerTitle" : "We will make it easier for you from the first time.",
