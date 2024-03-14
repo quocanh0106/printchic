@@ -11,6 +11,7 @@ const {
 } = require('../utils/shared');
 const { IS_DELETED, STATUS } = require('../utils/constants');
 const { MY_CUSTOM_LABELS } = require('../utils/constants');
+const mongoose = require('mongoose');
 const create = async (data) => {
     console.log('data', data)
     try {
@@ -97,12 +98,8 @@ const list = async (data) => {
         const conditions = {
             isDeleted: IS_DELETED[200],
         };
-        console.log(data, 'DADADADA')
-        if (data?.categoryObjId) {
-            conditions.categoryProductId = data?.categoryObjId;
-        }
         if (data?.categoryProductId) {
-            conditions.categoryProductId = data?.categoryProductId;
+            conditions.categoryProduct = { $in: [mongoose.Types.ObjectId(data?.categoryProductId)] } ;
         }
         if (data?.status) {
             conditions.status = data?.status;
@@ -139,10 +136,15 @@ const list = async (data) => {
             // select: REMOVE_FIELDS,
             customLabels: MY_CUSTOM_LABELS,
             // populate: [
-            //     populateModel('categoryProductId')
+            //     populateModel('categoryProduct')
             // ]
         };
         const result = await ProductsModels.paginate(conditions, options);
+        // if (data?.categoryProductId) {
+        //     result.items = result.items.filter(ele => {
+        //         return ele.categoryProduct?.includes(data?.categoryProductId)
+        //     })
+        // }
         return promiseResolve(result);
     } catch (err) {
         console.log(err, 'err')
@@ -355,7 +357,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.btnLink)) {
             set.btnLink = data.btnLink;
         }
-        
+
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {

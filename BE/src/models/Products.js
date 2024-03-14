@@ -52,9 +52,10 @@ const ProductsBase = {
     titleDE: {
         type: String, trim: true,
     },
-    categoryProduct: {
-        type: Array,
-    },
+    categoryProduct: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category_product'
+    }],
     languageId: {
         type: ObjectId, trim: true, ref: 'languages',
     },
@@ -121,7 +122,7 @@ const ProductsBase = {
     maxName_2: {
         type: String, trim: true,
     },
-    
+
     tabProductDetailUS: {
         type: String, trim: true,
     },
@@ -134,7 +135,7 @@ const ProductsBase = {
     tabProductDetailDE: {
         type: String, trim: true,
     },
-    
+
     tabSizeGuideUS: {
         type: String, trim: true,
     },
@@ -147,7 +148,7 @@ const ProductsBase = {
     tabSizeGuideDE: {
         type: String, trim: true,
     },
-    
+
     tabMockupTemplateUS: {
         type: String, trim: true,
     },
@@ -160,7 +161,7 @@ const ProductsBase = {
     tabMockupTemplateDE: {
         type: String, trim: true,
     },
-    
+
     tabCareInstructionUS: {
         type: String, trim: true,
     },

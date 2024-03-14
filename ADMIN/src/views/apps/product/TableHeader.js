@@ -44,10 +44,6 @@ const TableHeader = props => {
   // ** Props
   const { plan, handlePlanChange, handleFilter, value, setVisible, query, setOpenEditSettingProDialog } = props
 
-  const onsubmit = (values) => {
-    console.log('searchching', values)
-  }
-
   return (
     <Box
       sx={{
@@ -58,7 +54,7 @@ const TableHeader = props => {
       <DatePickerWrapper>
         <form>
           <Grid container spacing={5}>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={7} sm={7}>
               <CustomTextField
                 value={value}
                 fullWidth
@@ -66,7 +62,7 @@ const TableHeader = props => {
                 onChange={e => handleFilter(e.target.value)}
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={5} sm={5}>
               <div style={{ height: '100%', display: 'flex', alignItems: 'self-end' }}>
                 <Button
                   sx={{ mr: 2 }}

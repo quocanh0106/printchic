@@ -27,6 +27,7 @@ import dynamic from 'next/dynamic'
 import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
 import { addTag, fetchTag, updateTag } from 'src/store/apps/tag'
+import { fetchEvents } from 'src/store/apps/categoryProduct'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -201,13 +202,13 @@ const FormEdit = () => {
   const dispatch = useDispatch()
 
   const store = useSelector(state => state.categoryBlog)
-  const storeProduct = useSelector(state => state.product)
+  const storeCategoryProduct = useSelector(state => state.categoryProduct)
   const storeBlog = useSelector(state => state.blog)
   const storeTag = useSelector(state => state.tag)
 
   useEffect(() => {
     dispatch(fetchCategoryBlog())
-    dispatch(fetchProduct())
+    dispatch(fetchEvents())
     dispatch(fetchBlog())
     dispatch(fetchTag())
   }, [])
@@ -224,7 +225,7 @@ const FormEdit = () => {
       })
 
       const listRecommend = [];
-      storeProduct.data.forEach(ele => {
+      storeCategoryProduct.data.forEach(ele => {
         if (data?.recommendProduct?.includes(ele._id)) {
           listRecommend.push(ele)
         }
@@ -258,7 +259,7 @@ const FormEdit = () => {
       setFilesBanner(data?.imgBanner)
       setTagValue(listTagSelected)
     }
-  }, [storeBlog,storeTag, storeProduct, store, router.query.id])
+  }, [storeBlog,storeTag, storeCategoryProduct, store, router.query.id])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -598,11 +599,11 @@ const FormEdit = () => {
               value={valueRecommend}
               onChange={handleChange}
               sx={{ width: '100%', mt: 4 }}
-              options={storeProduct.data}
+              options={storeCategoryProduct.data}
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.titleUS || ''}
-              renderInput={params => <CustomTextField {...params} label='Recommend Product' placeholder='Products' />}
+              renderInput={params => <CustomTextField {...params} label='Recommend Category Product'/>}
             />
             <CustomAutocomplete
               multiple

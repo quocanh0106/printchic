@@ -25,6 +25,7 @@ import { LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
 import { addTag, fetchTag } from 'src/store/apps/tag'
 import TableTabs from '../components/TableTabs'
+import { fetchEvents } from 'src/store/apps/categoryProduct'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -212,12 +213,12 @@ const FormCreate = () => {
   const dispatch = useDispatch()
 
   const store = useSelector(state => state.categoryBlog)
-  const storeProduct = useSelector(state => state.product)
+  const storeCategoryProduct = useSelector(state => state.categoryProduct)
   const storeTag = useSelector(state => state.tag)
 
   useEffect(() => {
     dispatch(fetchCategoryBlog())
-    dispatch(fetchProduct())
+    dispatch(fetchEvents())
     dispatch(fetchTag())
   }, [])
 
@@ -538,11 +539,11 @@ const FormCreate = () => {
               value={valueRecommend}
               onChange={handleChange}
               sx={{ width: '100%', mt: 4 }}
-              options={storeProduct.data}
+              options={storeCategoryProduct.data}
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.titleUS || ''}
-              renderInput={params => <CustomTextField {...params} label='Recommend Product' placeholder='Products' />}
+              renderInput={params => <CustomTextField {...params} label='Recommend Category Product'/>}
             />
             <CustomAutocomplete
               multiple
