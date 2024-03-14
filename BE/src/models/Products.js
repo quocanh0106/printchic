@@ -53,7 +53,7 @@ const ProductsBase = {
         type: String, trim: true,
     },
     categoryProduct: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'category_product'
     }],
     languageId: {

@@ -99,7 +99,7 @@ const list = async (data) => {
             isDeleted: IS_DELETED[200],
         };
         if (data?.categoryProductId) {
-            conditions.categoryProduct = { $in: [mongoose.Types.ObjectId(data?.categoryProductId)] } ;
+            conditions.categoryProduct = data?.categoryProductId;
         }
         if (data?.status) {
             conditions.status = data?.status;
@@ -139,6 +139,9 @@ const list = async (data) => {
             //     populateModel('categoryProduct')
             // ]
         };
+        // 1. findAll
+        // 2. filter -> [] -> array ids
+        // 3. conditions.id in ids
         const result = await ProductsModels.paginate(conditions, options);
         // if (data?.categoryProductId) {
         //     result.items = result.items.filter(ele => {
