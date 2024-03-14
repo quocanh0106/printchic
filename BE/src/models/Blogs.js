@@ -70,9 +70,10 @@ const blogBase = {
   contentFR: {
     type: String, trim: true,
   },
-  tags: {
-    type: Array,
-  },
+  tags: [{
+    type: String,
+    ref: 'tags'
+  }],
   recommendProduct: {
     type: Array,
   },

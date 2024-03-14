@@ -57,6 +57,9 @@ const list = async (data) => {
         if (data?.categoryBlogId) {
             conditions.categoryBlogId = data?.categoryBlogId;
         }
+        if (data?.tagId) {
+            conditions.tags = data?.tagId;
+        }
         if (data?.titleUS) {
             conditions.titleUS = data?.titleUS;
         }
