@@ -114,6 +114,12 @@ const FormCreate = () => {
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
   const [contentFR, setContentFR] = useState('');
+
+  const [pajamasUK, setPajamasUK] = useState('');
+  const [pajamasUS, setPajamasUS] = useState('');
+  const [pajamasDE, setPajamasDE] = useState('');
+  const [pajamasFR, setPajamasFR] = useState('');
+
   const [valueRecommend, setValueRecommend] = useState([])
   const [thickness, setThickness] = useState(0);
   const [stretchiness, setStretchiness] = useState(0);
@@ -144,6 +150,22 @@ const FormCreate = () => {
   }
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleChangePajamasUK = (content, delta, source, editor) => {
+    setPajamasUK(content);
+  };
+
+  const handleChangePajamasUS = (content, delta, source, editor) => {
+    setPajamasUS(content);
+  };
+
+  const handleChangePajamasDE = (content, delta, source, editor) => {
+    setPajamasDE(content);
+  };
+
+  const handleChangePajamasFR = (content, delta, source, editor) => {
+    setPajamasFR(content);
+  };
 
   const handleChangeContentUK = (content, delta, source, editor) => {
     setContentUK(content);
@@ -324,6 +346,12 @@ const FormCreate = () => {
     formData.append("descriptionUS", JSON.stringify(contentUS));
     formData.append("descriptionFR", JSON.stringify(contentFR));
     formData.append("descriptionDE", JSON.stringify(contentDE));
+
+    formData.append("pajamasUK", JSON.stringify(pajamasUK));
+    formData.append("pajamasUS", JSON.stringify(pajamasUS));
+    formData.append("pajamasFR", JSON.stringify(pajamasFR));
+    formData.append("pajamasDE", JSON.stringify(pajamasDE));
+
     formData.append("currency", value.currency);
     formData.append("categoryProduct", JSON.stringify(arrayCatPro));
     formData.append("variants", JSON.stringify(variant));
@@ -547,6 +575,11 @@ const FormCreate = () => {
       data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
       data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
       data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
+
+      data?.pajamasUK && setPajamasUK(JSON.parse(data?.pajamasUK))
+      data?.pajamasUS && setPajamasUS(JSON.parse(data?.pajamasUS))
+      data?.pajamasFR && setPajamasFR(JSON.parse(data?.pajamasFR))
+      data?.pajamasDE && setPajamasDE(JSON.parse(data?.pajamasDE))
 
       data?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(data?.tabProductDetailUK))
       data?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(data?.tabProductDetailUS))
@@ -1522,6 +1555,32 @@ const FormCreate = () => {
                 </Box>
               </TabPanel>
             </TabContext>
+          </Card>
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas UK
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasUK} onChange={handleChangePajamasUK} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas US
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasUS} onChange={handleChangePajamasUS} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas DE
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasDE} onChange={handleChangePajamasDE} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas FR
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
+            </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>

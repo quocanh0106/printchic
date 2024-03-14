@@ -113,6 +113,11 @@ const FormCreate = () => {
   const [contentDE, setContentDE] = useState('');
   const [contentFR, setContentFR] = useState('');
 
+  const [pajamasUK, setPajamasUK] = useState('');
+  const [pajamasUS, setPajamasUS] = useState('');
+  const [pajamasDE, setPajamasDE] = useState('');
+  const [pajamasFR, setPajamasFR] = useState('');
+
   const [tabProductDetailUK, setTabProductDetailUK] = useState('');
   const [tabProductDetailUS, setTabProductDetailUS] = useState('');
   const [tabProductDetailDE, setTabProductDetailDE] = useState('');
@@ -159,6 +164,22 @@ const FormCreate = () => {
 
   const handleChangeContentFR = (content, delta, source, editor) => {
     setContentFR(content);
+  };
+
+  const handleChangePajamasUK = (content, delta, source, editor) => {
+    setPajamasUK(content);
+  };
+
+  const handleChangePajamasUS = (content, delta, source, editor) => {
+    setPajamasUS(content);
+  };
+
+  const handleChangePajamasDE = (content, delta, source, editor) => {
+    setPajamasDE(content);
+  };
+
+  const handleChangePajamasFR = (content, delta, source, editor) => {
+    setPajamasFR(content);
   };
 
   const handleChangeTabProductDetailUK = (content, delta, source, editor) => {
@@ -322,6 +343,11 @@ const FormCreate = () => {
     formData.append("descriptionUS", JSON.stringify(contentUS));
     formData.append("descriptionFR", JSON.stringify(contentFR));
     formData.append("descriptionDE", JSON.stringify(contentDE));
+
+    formData.append("pajamasUK", JSON.stringify(pajamasUK));
+    formData.append("pajamasUS", JSON.stringify(pajamasUS));
+    formData.append("pajamasFR", JSON.stringify(pajamasFR));
+    formData.append("pajamasDE", JSON.stringify(pajamasDE));
 
     formData.append("currency", value.currency);
     formData.append("categoryProduct", JSON.stringify(arrayCatPro));
@@ -1290,6 +1316,32 @@ const FormCreate = () => {
             </TabContext>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas UK
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasUK} onChange={handleChangePajamasUK} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas US
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasUS} onChange={handleChangePajamasUS} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas DE
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasDE} onChange={handleChangePajamasDE} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Pajamas FR
+              </Typography>
+              <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
+            </Box>
+          </Card>
+          <Card sx={{ p: 4, mt: 6, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description UK

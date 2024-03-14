@@ -41,6 +41,12 @@ const create = async (data) => {
         set.descriptionUS = data.descriptionUS;
         set.descriptionFR = data.descriptionFR;
         set.descriptionDE = data.descriptionDE;
+
+        set.pajamasUK = data.pajamasUK;
+        set.pajamasUS = data.pajamasUS;
+        set.pajamasFR = data.pajamasFR;
+        set.pajamasDE = data.pajamasDE;
+
         set.variants = JSON.parse(data.variants);
         set.status = data.status;
         set.media = data.media;
@@ -326,6 +332,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.categoryProductId)) {
             set.categoryProductId = convertToObjectId(data?.categoryProductId || '');
         }
+        
         if (!isEmpty(data?.descriptionUK)) {
             set.descriptionUk = data.descriptionUk;
         }
@@ -338,6 +345,20 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.descriptionDE)) {
             set.descriptionDE = data.descriptionDE;
         }
+
+        if (!isEmpty(data?.pajamasUK)) {
+            set.pajamasUk = data.pajamasUk;
+        }
+        if (!isEmpty(data?.pajamasUS)) {
+            set.pajamasUS = data.pajamasUS;
+        }
+        if (!isEmpty(data?.pajamasFR)) {
+            set.pajamasFR = data.pajamasFR;
+        }
+        if (!isEmpty(data?.pajamasDE)) {
+            set.pajamasDE = data.pajamasDE;
+        }
+
         if (!isEmpty(data?.variants)) {
             set.variants = JSON.parse(data.variants);
         }

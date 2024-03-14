@@ -12,9 +12,10 @@ const storage = new CloudinaryStorage({
   cloudinary,
   filename: function (req, file, cb) {
     cb(null, file.originalname); 
-  }
+  },
+  
 });
 
-const uploadCloud = multer({ storage });
+const uploadCloud = multer({ storage, limits: {   fieldSize: 25 * 1024 * 1024, fileSize: 10283775 } });
 
 module.exports = uploadCloud;
