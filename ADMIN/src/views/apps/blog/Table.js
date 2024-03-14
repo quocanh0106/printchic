@@ -151,10 +151,6 @@ const UserList = () => {
                 }
               },
               {
-                text: row.isPublic ? 'Set to Private' : 'Set to Public',
-                icon: <Icon icon={row.isPublic ? 'dashicons:hidden' : 'zondicons:view-show'} fontSize={20} />
-              },
-              {
                 text: 'Delete',
                 icon: <Icon icon='tabler:trash' fontSize={20} />,
                 menuItemProps: {

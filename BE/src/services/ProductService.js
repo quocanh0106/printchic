@@ -47,6 +47,11 @@ const create = async (data) => {
         set.pajamasFR = data.pajamasFR;
         set.pajamasDE = data.pajamasDE;
 
+        set.paragraphUK = data.paragraphUK;
+        set.paragraphUS = data.paragraphUS;
+        set.paragraphFR = data.paragraphFR;
+        set.paragraphDE = data.paragraphDE;
+
         set.variants = JSON.parse(data.variants);
         set.status = data.status;
         set.media = data.media;
@@ -357,6 +362,19 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.pajamasDE)) {
             set.pajamasDE = data.pajamasDE;
+        }
+
+        if (!isEmpty(data?.paragraphUK)) {
+            set.paragraphUk = data.paragraphUk;
+        }
+        if (!isEmpty(data?.paragraphUS)) {
+            set.paragraphUS = data.paragraphUS;
+        }
+        if (!isEmpty(data?.paragraphFR)) {
+            set.paragraphFR = data.paragraphFR;
+        }
+        if (!isEmpty(data?.paragraphDE)) {
+            set.paragraphDE = data.paragraphDE;
         }
 
         if (!isEmpty(data?.variants)) {

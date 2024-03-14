@@ -118,6 +118,11 @@ const FormCreate = () => {
   const [pajamasDE, setPajamasDE] = useState('');
   const [pajamasFR, setPajamasFR] = useState('');
 
+  const [paragraphUK, setParagraphUK] = useState('');
+  const [paragraphUS, setParagraphUS] = useState('');
+  const [paragraphDE, setParagraphDE] = useState('');
+  const [paragraphFR, setParagraphFR] = useState('');
+
   const [tabProductDetailUK, setTabProductDetailUK] = useState('');
   const [tabProductDetailUS, setTabProductDetailUS] = useState('');
   const [tabProductDetailDE, setTabProductDetailDE] = useState('');
@@ -180,6 +185,22 @@ const FormCreate = () => {
 
   const handleChangePajamasFR = (content, delta, source, editor) => {
     setPajamasFR(content);
+  };
+
+  const handleChangeParagraphUK = (content, delta, source, editor) => {
+    setParagraphUK(content);
+  };
+
+  const handleChangeParagraphUS = (content, delta, source, editor) => {
+    setParagraphUS(content);
+  };
+
+  const handleChangeParagraphDE = (content, delta, source, editor) => {
+    setParagraphDE(content);
+  };
+
+  const handleChangeParagraphFR = (content, delta, source, editor) => {
+    setParagraphFR(content);
   };
 
   const handleChangeTabProductDetailUK = (content, delta, source, editor) => {
@@ -348,6 +369,11 @@ const FormCreate = () => {
     formData.append("pajamasUS", JSON.stringify(pajamasUS));
     formData.append("pajamasFR", JSON.stringify(pajamasFR));
     formData.append("pajamasDE", JSON.stringify(pajamasDE));
+
+    formData.append("paragraphUK", JSON.stringify(paragraphUK));
+    formData.append("paragraphUS", JSON.stringify(paragraphUS));
+    formData.append("paragraphFR", JSON.stringify(paragraphFR));
+    formData.append("paragraphDE", JSON.stringify(paragraphDE));
 
     formData.append("currency", value.currency);
     formData.append("categoryProduct", JSON.stringify(arrayCatPro));
@@ -1314,6 +1340,32 @@ const FormCreate = () => {
                 </Box>
               </TabPanel>
             </TabContext>
+          </Card>
+          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Paragraph UK
+              </Typography>
+              <QuillNoSSRWrapper value={paragraphUK} onChange={handleChangeParagraphUK} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Paragraph US
+              </Typography>
+              <QuillNoSSRWrapper value={paragraphUS} onChange={handleChangeParagraphUS} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Paragraph DE
+              </Typography>
+              <QuillNoSSRWrapper value={paragraphDE} onChange={handleChangeParagraphDE} modules={modules} formats={formats} theme="snow" />
+            </Box>
+            <Box sx={{ mb: 7 }}>
+              <Typography variant='h5'>
+                Paragraph FR
+              </Typography>
+              <QuillNoSSRWrapper value={paragraphFR} onChange={handleChangeParagraphFR} modules={modules} formats={formats} theme="snow" />
+            </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>

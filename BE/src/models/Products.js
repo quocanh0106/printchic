@@ -83,6 +83,18 @@ const ProductsBase = {
     pajamasDE: {
         type: String, trim: true,
     },
+    paragraphUK: {
+        type: String, trim: true,
+    },
+    paragraphUS: {
+        type: String, trim: true,
+    },
+    paragraphFR: {
+        type: String, trim: true,
+    },
+    paragraphDE: {
+        type: String, trim: true,
+    },
     media: {
         type: Array, trim: true,
     },
