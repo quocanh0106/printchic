@@ -189,7 +189,11 @@
     "customizeOption" : "Customization Options",
     "details" : "Details",
     "materials" : "Materials",
-    "features" : "Features"
+    "features" : "Features",
+    "productDetail" : "Product Details",
+    "sizeGuide" : "Size Guide",
+    "mockUpNTemplate" : "Mock Up & Template",
+    "careInstruction" : "Care Instruction"
   },
   "contactUs" : {
     "chatToUs" : "Chat to us",

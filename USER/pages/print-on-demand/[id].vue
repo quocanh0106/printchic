@@ -152,15 +152,15 @@
         <div class="tab-wrapper bg-light-gray1-custom p-10 rounded-xl">
           <v-card>
             <v-tabs v-model="tab" bg-color="primary" class="tab-information">
-              <v-tab value="one">Item One</v-tab>
-              <v-tab value="two">Item Two</v-tab>
-              <v-tab value="three">Item Three</v-tab>
-              <v-tab value="four">Item Four</v-tab>
+              <v-tab value="one">{{$t("productDetail.productDetail")}}</v-tab>
+              <v-tab value="two">{{$t("productDetail.sizeGuide")}}</v-tab>
+              <v-tab value="three">{{$t("productDetail.mockUpNTemplate")}}</v-tab>
+              <v-tab value="four">{{$t("productDetail.careInstruction")}}</v-tab>
             </v-tabs>
 
             <v-card-text>
               <v-window v-model="tab">
-                <v-window-item value="one"> One </v-window-item>
+                <v-window-item value="one"></v-window-item>
 
                 <v-window-item value="two"> Two </v-window-item>
 
@@ -503,9 +503,9 @@ const { data: detail } = await useAsyncData("productDetail", () =>
 $fetch(
   `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
-  );
-  
-  
+);
+
+console.log(detail.value.data,'heheeheh');
   const listProduct  = await useAsyncData(
     'listProduct',
     async () => {
