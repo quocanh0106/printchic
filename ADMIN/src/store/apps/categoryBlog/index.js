@@ -13,6 +13,14 @@ export const fetchCategoryBlog = createAsyncThunk('appCategoryBlog/fetchEvents',
 
   return response.data
 })
+// ** Get Info Events
+export const fetchInfoCategoryBlog = createAsyncThunk('appCategoryBlog/fetchInfoEvents', async query => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryBlog/info`, {
+    params: query
+  })
+
+  return response.data
+})
 
 // ** Add Event
 export const addCategoryBlog = createAsyncThunk('appCategoryBlog/addCategoryBlog', async (event, { dispatch }) => {
@@ -65,7 +73,8 @@ export const categoryBlogSlice = createSlice({
     data: [],
     total: 1,
     params: {},
-    allData: []
+    allData: [],
+    infoCategoryBlog: {}
   },
   reducers: {},
   extraReducers: builder => {
@@ -74,6 +83,10 @@ export const categoryBlogSlice = createSlice({
       state.total = action.payload.data?.paginator?.itemCount
       state.params = action.payload.data.params
       state.allData = action.payload.data.items
+    }),
+    builder.addCase(fetchInfoCategoryBlog.fulfilled, (state, action) => {
+      console.log('action.payload.data', action.payload.data)
+      state.infoCategoryBlog = action.payload.data
     })
   }
 })

@@ -14,6 +14,15 @@ export const fetchEvents = createAsyncThunk('appCalendar/fetchEvents', async que
   return response.data
 })
 
+// ** Get Info Events
+export const fetchInfoCategoryProduct = createAsyncThunk('appCategoryProduct/fetchInfoEvents', async query => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryProduct/info`, {
+    params: query
+  })
+
+  return response.data
+})
+
 // ** Add Event
 export const addCategoryProduct = createAsyncThunk('appCalendar/addCategoryProduct', async (event, { dispatch }) => {
   const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryProduct/create`, event.formData, {
@@ -65,7 +74,8 @@ export const appCategoryProductSlice = createSlice({
     data: [],
     total: 1,
     params: {},
-    allData: []
+    allData: [],
+    infoCategoryProduct: {}
   },
   reducers: {},
   extraReducers: builder => {
@@ -74,6 +84,10 @@ export const appCategoryProductSlice = createSlice({
       state.total = action.payload.data?.paginator?.itemCount
       state.params = action.payload.data.params
       state.allData = action.payload.data.items
+    }),
+    builder.addCase(fetchInfoCategoryProduct.fulfilled, (state, action) => {
+      console.log('action.payload.data', action.payload.data)
+      state.infoCategoryProduct = action.payload.data
     })
   }
 })

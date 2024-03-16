@@ -130,6 +130,23 @@ module.exports.AUTH = {
             return res.json(responseError(40004, errors));
         }
     },
+    updateTop: async (req, res) => {
+        try {
+            const errors = await validateResult(validateCatBlogIdValidator, req);
+            if (!isEmpty(errors)) {
+                return res.json(responseError(40004, errors));
+            }
+
+            const result = await BlogService.updateConditions(req.body)
+            if (!isEmpty(result)) {
+                return res.json(responseSuccess(10704, result));
+            }
+            return res.json(responseSuccess(40212, []));
+        } catch (errors) {
+            console.log(errors, 'errors')
+            return res.json(responseError(40004, errors));
+        }
+    },
     update: async (req, res) => {
         // #swagger.tags = ['Tin tức'] 
         // #swagger.summary = 'cập nhật tin tức'

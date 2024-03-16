@@ -3,7 +3,7 @@ const navigation = () => {
     {
       title: 'Product Category',
       icon: 'iconamoon:store-light',
-      path: '/apps/product-category'
+      path: '/apps/category-product'
     },
     {
       title: 'Product',
@@ -11,14 +11,15 @@ const navigation = () => {
       path: '/apps/product'
     },
     {
-      title: 'Blog Category',
-      icon: 'ph:book-bookmark-light',
-      path: '/apps/blog-category'
-    },
-    {
       title: 'Blog',
       icon: 'ph:book-open',
       path: '/apps/blog'
+    },
+    {
+      title: 'Blog Category',
+      icon: 'ph:book-bookmark-light',
+      path: '/apps/category-blog',
+
     },
     {
       title: 'Setting',

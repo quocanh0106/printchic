@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Utils Import
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
@@ -29,8 +28,9 @@ import TableHeader from 'src/views/apps/blogCategory/TableHeader'
 
 // ** Components Imports
 import AddDialogProduct from './AddDialogBlogCategory'
-import DialogEditCard from './EditDialogBlogCategory'
+import DialogEditCard from './edit/FormEdit'
 import { deleteCategoryBlog, fetchCategoryBlog } from 'src/store/apps/categoryBlog'
+import { useRouter } from 'next/router'
 
 
 const UserList = () => {
@@ -41,6 +41,8 @@ const UserList = () => {
   const [createDialog, setOpenCreateDialog] = useState(false)
   const [editDialog, setOpenEditDialog] = useState(false)
   const [rowData, setRowData] = useState({})
+
+  const router = useRouter()
 
   const [query, setQuery] = useState({
     page: 1,
@@ -143,9 +145,7 @@ const UserList = () => {
                 icon: <Icon icon='tabler:edit' fontSize={20} />,
                 menuItemProps: {
                   onClick: () => {
-                    const tempRow = JSON.parse(JSON.stringify(row))
-                    setRowData(tempRow)
-                    setOpenEditDialog(true)
+                    router.push(`/apps/category-blog/edit/${row._id}`)
                   }
                 }
               },

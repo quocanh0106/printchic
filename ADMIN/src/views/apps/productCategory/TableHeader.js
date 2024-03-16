@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
+import Link from 'next/link'
 
 // ** React Imports
 
@@ -17,7 +18,7 @@ const TableHeader = props => {
   const { plan, handlePlanChange, handleFilter, value, setVisible, query } = props
 
   const searchProductCategory = () => {
-    dispatch(fetchEvents({...query, search: value.trim()}))
+    dispatch(fetchEvents({ ...query, search: value.trim() }))
   }
 
   return (
@@ -40,9 +41,14 @@ const TableHeader = props => {
         >
           Search
         </Button>
-        <Button variant='contained' onClick={() => setVisible(true)}>
-          Create
-        </Button>
+        <Box
+          component={Link}
+          href='/apps/category-product/create'
+        >
+          <Button sx={{ width: '135px' }} variant='contained'>
+            Create
+          </Button>
+        </Box>
       </div>
     </Box>
   )

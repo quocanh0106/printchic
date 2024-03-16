@@ -32,6 +32,7 @@ import AddDialogProduct from './AddDialogProduct'
 import DialogEditCard from './EditDialogProduct'
 import { deleteCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
 import { openInNewTab } from 'src/utils'
+import { useRouter } from 'next/router'
 
 
 const UserList = () => {
@@ -49,6 +50,7 @@ const UserList = () => {
   })
 
   // ** Hooks
+  const router = useRouter()
   const dispatch = useDispatch()
   const store = useSelector(state => state.categoryProduct)
 
@@ -129,9 +131,7 @@ const UserList = () => {
                 icon: <Icon icon='tabler:edit' fontSize={20} />,
                 menuItemProps: {
                   onClick: () => {
-                    const tempRow = JSON.parse(JSON.stringify(row))
-                    setRowData(tempRow)
-                    setOpenEditDialog(true)
+                    router.push(`/apps/category-product/edit/${row._id}`)
                   }
                 }
               },

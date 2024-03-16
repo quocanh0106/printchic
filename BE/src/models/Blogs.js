@@ -70,6 +70,9 @@ const blogBase = {
   contentFR: {
     type: String, trim: true,
   },
+  isTop: {
+    type: Boolean,
+  },
   tags: [{
     type: String,
     ref: 'tags'

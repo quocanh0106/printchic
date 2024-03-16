@@ -48,17 +48,25 @@ const TableHeader = props => {
         >
           Search
         </Button>
-        {/* <Box
+        <Box
           component={Link}
-          href='/apps/blog-category/import-excel'
+          href='/apps/category-blog/import-excel'
         >
           <Button sx={{ width: '135px' }} variant='contained'>
             Import excel
           </Button>
-        </Box> */}
-        <Button variant='contained' onClick={() => setVisible(true)}>
+        </Box>
+        <Box
+          component={Link}
+          href='/apps/category-blog/create'
+        >
+          <Button sx={{ width: '135px' }} variant='contained'>
           Create
-        </Button>
+          </Button>
+        </Box>
+        {/* <Button variant='contained' onClick={() => setVisible(true)}>
+          Create
+        </Button> */}
       </div>
     </Box>
   )

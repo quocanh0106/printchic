@@ -21,16 +21,16 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Utils Import
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/user'
+import toast from 'react-hot-toast'
 
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/blog/TableHeader'
-import { deleteBlog, fetchBlog } from 'src/store/apps/blog'
+import { deleteBlog, fetchBlog, updateBlog, updateTopBlog } from 'src/store/apps/blog'
 import { useRouter } from 'next/router'
 
 // ** Components Imports
-
+import { Switch } from 'antd';
 
 const UserList = () => {
   // ** State
@@ -55,6 +55,22 @@ const UserList = () => {
     dispatch(fetchBlog())
   }, [])
 
+  const callBackSubmit = (data) => {
+    if (data.success) {
+      toast.success('Updated blog success', {
+        duration: 2000
+      })
+    } else {
+      toast.success(`${data.message}`, {
+        duration: 2000
+      })
+    }
+  }
+
+  const handleSwitchTop = (isTopBlog, data) => {
+    const formData = { blogId: data._id, isTop: isTopBlog }
+    dispatch(updateTopBlog({ formData, callBackSubmit }))
+  }
 
   const columns = [
     {
@@ -107,6 +123,19 @@ const UserList = () => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
             {row.status}
+          </Typography>
+        )
+      }
+    },
+    {
+      flex: 0.25,
+      minWidth: 190,
+      field: 'isTop',
+      headerName: 'Top Blog',
+      renderCell: ({ row }) => {
+        return (
+          <Typography noWrap sx={{ color: 'text.secondary' }}>
+            <Switch defaultValue={row?.isTop} onChange={(checked) => handleSwitchTop(checked, row)} />
           </Typography>
         )
       }

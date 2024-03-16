@@ -40,6 +40,15 @@ export const updateBlog = createAsyncThunk('appBlog/updateEvent', async (event, 
   return response.data.event
 })
 
+// ** Update Event
+export const updateTopBlog = createAsyncThunk('appBlog/updateTopBlog', async (event, { dispatch }) => {
+  const response = await axios.put(`${process.env.NEXT_PUBLIC_URL_API}/auth/blog/updateTop`, event.formData)
+  await event.callBackSubmit(response.data)
+  await dispatch(fetchBlog())
+
+  return response.data.event
+})
+
 // ** Delete Event
 export const deleteBlog = createAsyncThunk('appBlog/deleteEvent', async (blogId, { dispatch }) => {
   const response = await axios.delete(`${process.env.NEXT_PUBLIC_URL_API}/auth/blog/delete`, {

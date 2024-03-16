@@ -35,3 +35,7 @@ code[class*='language-'] {
 .quill > .ql-container {
   border-radius: 0 0 8px 8px;
 }
+
+.ant-switch-checked {
+  background: #655BD3 !important;
+}

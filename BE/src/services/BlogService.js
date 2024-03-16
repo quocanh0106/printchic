@@ -128,6 +128,9 @@ const updateConditions = async (data) => {
         }
         const set = {};
         
+        if (!isEmpty(data?.isTop)) {
+            set.isTop = data.isTop;
+        }
         if (!isEmpty(data?.titleUK)) {
             set.titleUK = data.titleUK;
         }
