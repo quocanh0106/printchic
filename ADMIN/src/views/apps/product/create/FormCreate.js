@@ -108,6 +108,8 @@ const FormCreate = () => {
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
 
+  const [isVariantNeedUpdate, setIsVariantNeedUpdate] = useState(true)
+
   const [contentUK, setContentUK] = useState('');
   const [contentUS, setContentUS] = useState('');
   const [contentDE, setContentDE] = useState('');
@@ -140,7 +142,7 @@ const FormCreate = () => {
   const [valueTabs, setValueTabs] = useState('1')
 
   const [tempPrice, setTempPrice] = useState(0)
-  
+
   const handleChangeTabs = (event, newValue) => {
     setValueTabs(newValue)
   }
@@ -425,7 +427,7 @@ const FormCreate = () => {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
-                defaultValue={defaultValue}
+                  defaultValue={defaultValue}
                   fullWidth
                   value={value}
                   required
@@ -473,9 +475,10 @@ const FormCreate = () => {
   }
 
   const getListVariant = () => {
-    if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant)) {
+    if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant) && !isVariantNeedUpdate) {
       setOpenDialog(true)
     } else {
+      setIsVariantNeedUpdate(false)
       let idCount = 1;
       let listVariantOptions = []
       if (listVariant.length === 1) {
@@ -1399,7 +1402,10 @@ const FormCreate = () => {
                           value={value}
                           label='Name Variant'
                           required
-                          onChange={onChange}
+                          onChange={(e) => {
+                            setIsVariantNeedUpdate(true)
+                            onChange(e)
+                          }}
                           placeholder='Enter Name Variant'
                           error={Boolean(errors[`nameVariant${el.index}`])}
                           aria-describedby='validation-basic-first-name'
@@ -1424,7 +1430,10 @@ const FormCreate = () => {
                                 value={value}
                                 label='Attribute'
                                 required
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  setIsVariantNeedUpdate(true)
+                                  onChange(e)
+                                }}
                                 placeholder='Enter Attribute'
                                 error={Boolean(errors[`nameOption-${el.index}-${option.index}`])}
                                 aria-describedby='validation-basic-first-name'
