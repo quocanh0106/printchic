@@ -104,12 +104,12 @@ const UserList = () => {
     {
       flex: 0.25,
       minWidth: 190,
-      field: 'parentCategory',
-      headerName: 'Parent Category',
+      field: 'childCategory',
+      headerName: 'Child Category',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
-            {store?.data?.find(ele => ele._id == row.parentCategory)?.titleUS}
+            {store?.data?.find(ele => ele._id == row.childCategory)?.titleUS}
           </Typography>
         )
       }

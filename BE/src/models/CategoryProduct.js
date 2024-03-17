@@ -35,7 +35,43 @@ const ConfigsBase = {
   bannerImg: {
     type: String, trim: true,
   },
-  parentCategory: {
+  pajamasUK: {
+    type: String, trim: true,
+  },
+  pajamasUS: {
+    type: String, trim: true,
+  },
+  pajamasFR: {
+    type: String, trim: true,
+  },
+  pajamasDE: {
+    type: String, trim: true,
+  },
+  paragraphUK: {
+    type: String, trim: true,
+  },
+  paragraphUS: {
+    type: String, trim: true,
+  },
+  paragraphFR: {
+    type: String, trim: true,
+  },
+  paragraphDE: {
+    type: String, trim: true,
+  },
+  breadcrumbUK: {
+    type: String, trim: true,
+  },
+  breadcrumbUS: {
+    type: String, trim: true,
+  },
+  breadcrumbFR: {
+    type: String, trim: true,
+  },
+  breadcrumbDE: {
+    type: String, trim: true,
+  },
+  childCategory: {
     type: String, trim: true,
   },
 }

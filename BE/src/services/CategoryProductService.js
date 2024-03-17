@@ -22,7 +22,22 @@ const create = async (data) => {
         set.descriptionDE = data.descriptionDE;
         set.descriptionFR = data.descriptionFR;
 
-        set.parentCategory = data.parentCategory;
+        set.pajamasUK = data.pajamasUK;
+        set.pajamasUS = data.pajamasUS;
+        set.pajamasFR = data.pajamasFR;
+        set.pajamasDE = data.pajamasDE;
+
+        set.paragraphUK = data.paragraphUK;
+        set.paragraphUS = data.paragraphUS;
+        set.paragraphFR = data.paragraphFR;
+        set.paragraphDE = data.paragraphDE;
+
+        set.breadcrumbUK = data.breadcrumbUK;
+        set.breadcrumbUS = data.breadcrumbUS;
+        set.breadcrumbFR = data.breadcrumbFR;
+        set.breadcrumbDE = data.breadcrumbDE;
+
+        set.childCategory = data.childCategory;
         set.bannerImg = data.bannerImg;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
@@ -134,9 +149,48 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.bannerImg)) {
             set.bannerImg = data.bannerImg;
         }
-        if (!isEmpty(data?.parentCategory)) {
-            set.parentCategory = data.parentCategory;
+        if (!isEmpty(data?.childCategory)) {
+            set.childCategory = data.childCategory;
         }
+        if (!isEmpty(data?.pajamasUK)) {
+            set.pajamasUk = data.pajamasUk;
+        }
+        if (!isEmpty(data?.pajamasUS)) {
+            set.pajamasUS = data.pajamasUS;
+        }
+        if (!isEmpty(data?.pajamasFR)) {
+            set.pajamasFR = data.pajamasFR;
+        }
+        if (!isEmpty(data?.pajamasDE)) {
+            set.pajamasDE = data.pajamasDE;
+        }
+
+        if (!isEmpty(data?.paragraphUK)) {
+            set.paragraphUk = data.paragraphUk;
+        }
+        if (!isEmpty(data?.paragraphUS)) {
+            set.paragraphUS = data.paragraphUS;
+        }
+        if (!isEmpty(data?.paragraphFR)) {
+            set.paragraphFR = data.paragraphFR;
+        }
+        if (!isEmpty(data?.paragraphDE)) {
+            set.paragraphDE = data.paragraphDE;
+        }
+
+        if (!isEmpty(data?.breadcrumbUK)) {
+            set.breadcrumbUk = data.breadcrumbUk;
+        }
+        if (!isEmpty(data?.breadcrumbUS)) {
+            set.breadcrumbUS = data.breadcrumbUS;
+        }
+        if (!isEmpty(data?.breadcrumbFR)) {
+            set.breadcrumbFR = data.breadcrumbFR;
+        }
+        if (!isEmpty(data?.breadcrumbDE)) {
+            set.breadcrumbDE = data.breadcrumbDE;
+        }
+
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
