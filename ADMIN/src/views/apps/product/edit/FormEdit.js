@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, List, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, Divider, ListItem, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -21,7 +21,7 @@ import { addProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
-import { LANG_OBJECT } from 'src/constant'
+import { LANG, LANG_OBJECT } from 'src/constant'
 import { useSnackbar } from 'notistack'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { Slider } from 'antd';
@@ -306,20 +306,28 @@ const FormCreate = () => {
     formData.append("tabCareInstructionFR", JSON.stringify(tabCareInstructionFR));
     formData.append("tabCareInstructionDE", JSON.stringify(tabCareInstructionDE));
 
-    formData.append("customizationOptions", value.customizationOptions);
-    formData.append("detailProduct", value.detailProduct);
+    LANG.forEach(ele => {
 
-    formData.append("optionMaterial_1", value.optionMaterial_1);
-    formData.append("minName_1", value.minName_1);
-    formData.append("maxName_1", value.maxName_1);
-    formData.append("optionMaterial_2", value.optionMaterial_2);
-    formData.append("minName_2", value.minName_2);
-    formData.append("maxName_2", value.maxName_2);
+      formData.append(`customizationOptionsLabel${ele.value}`, value[`customizationOptionsLabel${ele.value}`]);
+      formData.append(`detailProductLabel${ele.value}`, value[`detailProductLabel${ele.value}`]);
+      formData.append(`optionMaterialLabel${ele.value}`, value[`optionMaterialLabel${ele.value}`]);
+      formData.append(`featureProductLabel${ele.value}`, value[`featureProductLabel${ele.value}`]);
 
-    formData.append("valueMaterial_2", stretchiness);
-    formData.append("valueMaterial_1", thickness);
+      formData.append(`customizationOptions${ele.value}`, value[`customizationOptions${ele.value}`]);
+      formData.append(`detailProduct${ele.value}`, value[`detailProduct${ele.value}`]);
 
-    formData.append("featureProduct", value.featureProduct);
+      formData.append(`optionMaterial_1${ele.value}`, value[`optionMaterial_1${ele.value}`]);
+      formData.append(`minName_1${ele.value}`, value[`minName_1${ele.value}`]);
+      formData.append(`maxName_1${ele.value}`, value[`maxName_1${ele.value}`]);
+      formData.append(`optionMaterial_2${ele.value}`, value[`optionMaterial_2${ele.value}`]);
+      formData.append(`minName_2${ele.value}`, value[`minName_2${ele.value}`]);
+      formData.append(`maxName_2${ele.value}`, value[`maxName_2${ele.value}`]);
+
+      formData.append(`featureProduct${ele.value}`, value[`featureProduct${ele.value}`]);
+    })
+    formData.append(`valueMaterial_1`, thickness);
+    formData.append(`valueMaterial_2`, stretchiness);
+
     formData.append("btnLink", value.btnLink);
 
     formData.append("status", value.productStatus);
@@ -530,16 +538,21 @@ const FormCreate = () => {
       setValue('tabCareInstructionFR', data?.tabCareInstructionFR)
       setValue('tabCareInstructionDE', data?.tabCareInstructionDE)
 
-      setValue('customizationOptions', data?.customizationOptions)
-      setValue('detailProduct', data?.detailProduct)
-      setValue('featureProduct', data?.featureProduct)
-
-      setValue('optionMaterial_1', data?.optionMaterial_1)
-      setValue('minName_1', data?.minName_1)
-      setValue('maxName_1', data?.maxName_1)
-      setValue('optionMaterial_2', data?.optionMaterial_2)
-      setValue('minName_2', data?.minName_2)
-      setValue('maxName_2', data?.maxName_2)
+      LANG.forEach(ele => {
+        setValue(`customizationOptions${ele.value}`, data?.[`customizationOptions${ele.value}`])
+        setValue(`detailProduct${ele.value}`, data?.[`detailProduct${ele.value}`])
+        setValue(`featureProduct${ele.value}`, data?.[`featureProduct${ele.value}`])
+        setValue(`optionMaterial_1${ele.value}`, data?.[`optionMaterial_1${ele.value}`])
+        setValue(`minName_1${ele.value}`, data?.[`minName_1${ele.value}`])
+        setValue(`maxName_1${ele.value}`, data?.[`maxName_1${ele.value}`])
+        setValue(`optionMaterial_2${ele.value}`, data?.[`optionMaterial_2${ele.value}`])
+        setValue(`minName_2${ele.value}`, data?.[`minName_2${ele.value}`])
+        setValue(`maxName_2${ele.value}`, data?.[`maxName_2${ele.value}`])
+        setValue(`customizationOptionsLabel${ele.value}`, data?.[`customizationOptionsLabel${ele.value}`])
+        setValue(`detailProductLabel${ele.value}`, data?.[`detailProductLabel${ele.value}`])
+        setValue(`optionMaterialLabel${ele.value}`, data?.[`optionMaterialLabel${ele.value}`])
+        setValue(`featureProductLabel${ele.value}`, data?.[`featureProductLabel${ele.value}`])
+      })
 
       setValue('btnLink', data?.btnLink)
 
@@ -835,411 +848,6 @@ const FormCreate = () => {
       <Grid container xs={12}>
         <Grid item xs={4}>
           <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mb: 2 }}>
-              Handle URL
-            </Typography>
-            <Controller
-              name='handleUrlUK'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Handle Url UK'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Handle Url UK'
-                  error={Boolean(errors.handleUrlUK)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlUK && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='handleUrlUS'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Handle Url US'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Handle Url US'
-                  error={Boolean(errors.handleUrlUS)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlUS && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='handleUrlFR'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Handle Url FR'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Handle Url FR'
-                  error={Boolean(errors.handleUrlFR)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlFR && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='handleUrlDE'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Handle Url DE'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Handle Url DE'
-                  error={Boolean(errors.handleUrlDE)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlDE && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Card>
-          <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mb: 2 }}>
-              Meta description
-            </Typography>
-            <Controller
-              name='metaDescriptionUK'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Meta Description UK'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Meta Description UK'
-                  error={Boolean(errors.metaDescriptionUK)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='metaDescriptionUS'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Meta Description US'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Meta Description US'
-                  error={Boolean(errors.metaDescriptionUS)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='metaDescriptionFR'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Meta Description FR'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Meta Description FR'
-                  error={Boolean(errors.metaDescriptionFR)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='metaDescriptionDE'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Meta Description DE'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Meta Description DE'
-                  error={Boolean(errors.metaDescriptionDE)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Card>
-          <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mb: 2 }}>
-              Product Type
-            </Typography>
-            <Controller
-              name='typeUK'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Product Type UK'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Product Type UK'
-                  error={Boolean(errors.typeUK)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.typeUK && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='typeUS'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Product Type US'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Product Type US'
-                  error={Boolean(errors.typeUS)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.typeUS && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='typeFR'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Product Type FR'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Product Type FR'
-                  error={Boolean(errors.typeFR)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.typeFR && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='typeDE'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Product Type DE'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Product Type DE'
-                  error={Boolean(errors.typeDE)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.typeDE && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Card>
-          <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mb: 2 }}>
-              More detail
-            </Typography>
-            <Controller
-              name='customizationOptions'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Customization Options'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Customization Options'
-                  error={Boolean(errors.customizationOptions)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.customizationOptions && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Controller
-              name='detailProduct'
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Details Product'
-                  required
-                  onChange={onChange}
-                  placeholder='Enter Details Product'
-                  error={Boolean(errors.detailProduct)}
-                  aria-describedby='validation-basic-first-name'
-                  {...(errors.detailProduct && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-            <Typography variant='h5' sx={{ mb: 2 }}>
-              Material
-            </Typography>
-            <Controller
-              name='optionMaterial_1'
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4 }}
-                  fullWidth
-                  value={value}
-                  label='Option Material 1'
-                  onChange={onChange}
-                  placeholder='Enter Option Material 1'
-                  aria-describedby='validation-basic-first-name'
-                />
-              )}
-            />
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ fontSize: 13 }}>
-                <Controller
-                  name='minName_1'
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      sx={{ width: '140px' }}
-                      value={value}
-                      label='Min Name'
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ fontSize: 13 }}>
-                <Controller
-                  name='maxName_1'
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      sx={{ width: '140px' }}
-                      fullWidth
-                      value={value}
-                      label='Max Name'
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Box>
-            </Box>
-            <Slider value={thickness} onChange={onChangeThickness} />
-            <Controller
-              name='optionMaterial_2'
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  sx={{ mb: 4, mt: 8 }}
-                  fullWidth
-                  value={value}
-                  label='Option Material 2'
-                  onChange={onChange}
-                  placeholder='Enter Option Material 2'
-                  aria-describedby='validation-basic-first-name'
-                />
-              )}
-            />
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ fontSize: 13 }}>
-                <Controller
-                  name='minName_2'
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      sx={{ width: '140px' }}
-                      value={value}
-                      label='Min Name 2'
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ fontSize: 13 }}>
-                <Controller
-                  name='maxName_2'
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      sx={{ width: '140px' }}
-                      fullWidth
-                      value={value}
-                      label='Max Name 2'
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Box>
-            </Box>
-            <Slider value={stretchiness} onChange={onChangeStretchiness} />
-            <Controller
-              name='featureProduct'
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <CustomTextField
-                  rows={4}
-                  sx={{ mt: 3 }}
-                  fullWidth
-                  multiline
-                  {...field}
-                  label='Feature'
-                  error={Boolean(errors.featureProduct)}
-                  aria-describedby='validation-basic-featureProduct'
-                  {...(errors.featureProduct && { helperText: 'This field is required' })}
-                />
-              )}
-            />
-          </Card>
-          <Card sx={{ p: 4 }}>
             <Controller
               name='productStatus'
               control={control}
@@ -1331,8 +939,624 @@ const FormCreate = () => {
               )}
             />
           </Card>
+          {
+            LANG.map(ele => <Card key={ele.key} sx={{ p: 4, mb: 4 }}>
+              <Typography variant='h5' sx={{ mb: 2 }}>
+                More detail {ele.value}
+              </Typography>
+              <Box>
+                <Typography variant='h6' sx={{ mb: 2 }}>
+                  Option 1 {ele.value} (ex: customization Options)
+                </Typography>
+                <Controller
+                  name={`customizationOptionsLabel${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Label option 1'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Label option 1'
+                      error={Boolean(errors[`customizationOptionsLabel${ele.value}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`customizationOptionsLabel${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+                <Controller
+                  name={`customizationOptions${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Value option 1'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Value option 1'
+                      error={Boolean(errors[`customizationOptions${ele.value}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`customizationOptions${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Box>
+              <Divider sx={{ my: 4 }} />
+              <Box>
+                <Typography variant='h6' sx={{ mb: 2 }}>
+                  Option 2 {ele.value} (ex: Detail Product)
+                </Typography>
+                <Controller
+                  name={`detailProductLabel${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Label option 2'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Label option 2'
+                      error={Boolean(errors[`detailProductLabel${ele.value}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`detailProductLabel${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+                <Controller
+                  name={`detailProduct${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Value option 2'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Value option 2'
+                      error={Boolean(errors[`detailProduct${ele.value}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`detailProduct${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Box>
+              <Divider sx={{ my: 4 }} />
+
+              <Typography variant='h6' sx={{ mb: 2 }}>
+                Option 3 {ele.value} (ex: material)
+              </Typography>
+              <Controller
+                name={`optionMaterialLabel${ele.value}`}
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label='Label option 3'
+                    required
+                    onChange={onChange}
+                    placeholder='Enter Label option 3'
+                    error={Boolean(errors[`optionMaterialLabel${ele.value}`])}
+                    aria-describedby='validation-basic-first-name'
+                    {...(errors[`optionMaterialLabel${ele.value}`] && { helperText: 'This field is required' })}
+                  />
+                )}
+              />
+              <Controller
+                name={`optionMaterial_1${ele.value}`}
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4 }}
+                    fullWidth
+                    value={value}
+                    label={`Option Slide 1 ${ele.value}`}
+                    onChange={onChange}
+                    placeholder='Enter Option Slide 1'
+                    aria-describedby='validation-basic-first-name'
+                  />
+                )}
+              />
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ fontSize: 13 }}>
+                  <Controller
+                    name={`minName_1${ele.value}`}
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomTextField
+                        sx={{ width: '140px' }}
+                        value={value}
+                        label={`Min Name ${ele.value}`}
+                        onChange={onChange}
+                        aria-describedby='validation-basic-first-name'
+                      />
+                    )}
+                  />
+                </Box>
+                <Box sx={{ fontSize: 13 }}>
+                  <Controller
+                    name={`maxName_1${ele.value}`}
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomTextField
+                        sx={{ width: '140px' }}
+                        fullWidth
+                        value={value}
+                        label={`Max Name ${ele.value}`}
+                        onChange={onChange}
+                        aria-describedby='validation-basic-first-name'
+                      />
+                    )}
+                  />
+                </Box>
+              </Box>
+              <Slider value={thickness} onChange={onChangeThickness} />
+              <Controller
+                name={`optionMaterial_2${ele.value}`}
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <CustomTextField
+                    sx={{ mb: 4, mt: 8 }}
+                    fullWidth
+                    value={value}
+                    label={`Option Slide 2 ${ele.value}`}
+                    onChange={onChange}
+                    placeholder='Enter Option Slide 2'
+                    aria-describedby='validation-basic-first-name'
+                  />
+                )}
+              />
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ fontSize: 13 }}>
+                  <Controller
+                    name={`minName_2${ele.value}`}
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomTextField
+                        sx={{ width: '140px' }}
+                        value={value}
+                        label={`Min Name 2 ${ele.value}`}
+                        onChange={onChange}
+                        aria-describedby='validation-basic-first-name'
+                      />
+                    )}
+                  />
+                </Box>
+                <Box sx={{ fontSize: 13 }}>
+                  <Controller
+                    name={`maxName_2${ele.value}`}
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomTextField
+                        sx={{ width: '140px' }}
+                        fullWidth
+                        value={value}
+                        label={`Max Name 2 ${ele.value}`}
+                        onChange={onChange}
+                        aria-describedby='validation-basic-first-name'
+                      />
+                    )}
+                  />
+                </Box>
+              </Box>
+              <Slider value={stretchiness} onChange={onChangeStretchiness} />
+              <Divider sx={{ my: 4 }} />
+              <Box>
+                <Typography variant='h6' sx={{ mb: 2 }}>
+                  Option 4 {ele.value} (ex: Feature)
+                </Typography>
+                <Controller
+                  name={`featureProductLabel${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Label option 4 ${ele.value}`}
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Label option 4'
+                      error={Boolean(errors[`featureProductLabel${ele.value}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`featureProductLabel${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+                <Controller
+                  name={`featureProduct${ele.value}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      sx={{ mt: 3 }}
+                      fullWidth
+                      {...field}
+                      label={`Feature ${ele.value}`}
+                      error={Boolean(errors[`featureProduct${ele.value}`])}
+                      aria-describedby='validation-basic-featureProduct'
+                      {...(errors[`featureProduct${ele.value}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Box>
+            </Card>)
+          }
         </Grid>
-        <Grid item xs={8} sx={{ pl: 5, textAlign: 'right' }}>
+        <Grid item xs={8} sx={{ pl: 5 }}>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Handle URL
+            </Typography>
+            <Grid container xs={12} sm={12} spacing={5}>
+
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='handleUrlUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Handle Url UK'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Handle Url UK'
+                      error={Boolean(errors.handleUrlUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.handleUrlUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='handleUrlUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Handle Url US'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Handle Url US'
+                      error={Boolean(errors.handleUrlUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.handleUrlUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='handleUrlFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Handle Url FR'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Handle Url FR'
+                      error={Boolean(errors.handleUrlFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.handleUrlFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='handleUrlDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Handle Url DE'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Handle Url DE'
+                      error={Boolean(errors.handleUrlDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.handleUrlDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Grid container xs={12} sm={12} spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`title${LANG_OBJECT.UK}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Title ${LANG_OBJECT.UK}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`title${LANG_OBJECT.US}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Title ${LANG_OBJECT.US}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`title${LANG_OBJECT.US}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`title${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`title${LANG_OBJECT.FR}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Title ${LANG_OBJECT.FR}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`title${LANG_OBJECT.DE}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Title ${LANG_OBJECT.DE}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Meta description
+            </Typography>
+            <Grid container xs={12} sm={12} spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Meta Description UK'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Meta Description UK'
+                      error={Boolean(errors.metaDescriptionUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Meta Description US'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Meta Description US'
+                      error={Boolean(errors.metaDescriptionUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Meta Description FR'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Meta Description FR'
+                      error={Boolean(errors.metaDescriptionFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='metaDescriptionDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Meta Description DE'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Meta Description DE'
+                      error={Boolean(errors.metaDescriptionDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mb: 2 }}>
+              Product Type
+            </Typography>
+            <Grid container xs={12} sm={12} spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='typeUK'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Product Type UK'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Product Type UK'
+                      error={Boolean(errors.typeUK)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.typeUK && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='typeUS'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Product Type US'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Product Type US'
+                      error={Boolean(errors.typeUS)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.typeUS && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='typeFR'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Product Type FR'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Product Type FR'
+                      error={Boolean(errors.typeFR)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.typeFR && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='typeDE'
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label='Product Type DE'
+                      required
+                      onChange={onChange}
+                      placeholder='Enter Product Type DE'
+                      error={Boolean(errors.typeDE)}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors.typeDE && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
           <Card sx={{ p: 4 }}>
             <Grid item xs={12} sm={12}>
               <Controller
