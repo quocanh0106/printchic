@@ -39,6 +39,7 @@ const create = async (data) => {
 
         set.childCategory = data.childCategory;
         set.bannerImg = data.bannerImg;
+        set.faq = data.faq;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await CategoryProductModels.create(set);
@@ -189,6 +190,9 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.breadcrumbDE)) {
             set.breadcrumbDE = data.breadcrumbDE;
+        }
+        if (!isEmpty(data?.faq)) {
+            set.faq = data.faq;
         }
 
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
