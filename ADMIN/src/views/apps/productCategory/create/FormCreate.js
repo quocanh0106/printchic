@@ -221,11 +221,13 @@ const ProductCategoryComponent = () => {
   const onSubmit = (value) => {
     if (files[0]) {
       setLoading(true)
+
       const tempListFAQ = listFAQ.map((ele, index) => {
         LANG.map(language => {
           ele[`question${language.value}`] = getValues(`question_${index+1}${language.value}`);
           ele[`answer${language.value}`] = getValues(`answer_${index+1}${language.value}`);
         })
+        
         return ele
       })
       console.log('tempListFAQ',tempListFAQ)
@@ -583,7 +585,7 @@ const ProductCategoryComponent = () => {
             </Typography>
             {
               listFAQ.map((ele, index) =>
-                <Box sx={{ mb: 3 }}>
+                <Box key={index} sx={{ mb: 3 }}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
                     Question - {index + 1}
                   </Typography>
