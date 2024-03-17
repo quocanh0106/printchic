@@ -59,6 +59,9 @@ const UserPostsBase = {
   bannerImg: {
     type: String, trim: true,
   },
+  faq: {
+    type: String, trim: true,
+  },
 }
 const UserPosts = { ...UserPostsBase, ...common };
 const CategoryBlogSchema = new Schema(UserPosts, { versionKey: false });
