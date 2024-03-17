@@ -456,7 +456,8 @@ const listBlog  = await useAsyncData(
   background: url("../assets/images/introImage.png");
   background-size: cover;
   padding: 190px 16px;
-  height: 800px;
+  padding-bottom: 48px !important;
+  height: 100%;
 }
 
 .distinct-img{
@@ -511,12 +512,17 @@ const listBlog  = await useAsyncData(
       object-fit:cover;
       max-height: none !important;
   }
+  :deep(.swiper-slide){
+    width: 25% !important;
+  }
+  :deep(.text-swiper){
+    margin-right: 6vw !important;
+  }
 }
 
 .swiper-mobile-top-category{
   :deep(.swiper-thumbnail){
       min-width:0px !important;
-      width: 25vw !important;
       height: 25vw !important;
       object-fit:cover;
       max-height: none !important;

@@ -17,13 +17,13 @@
           <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
             <h1 class="text-2xl font-semibold">{{ item.filterBy }}</h1>
             <div class="filter-by mt-3" v-for="(itemfilterBy, index) in item.listFilter" :key="index">
-              <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" v-model="filterBy">
+              <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" v-model="filterBy" @click="filterByTag(itemfilterBy._id)">
               <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy.title }}</label>
               <!-- <v-checkbox :label="filterBy"></v-checkbox> -->
             </div>
           </div>
         </div>
-        <div class="product-list-wrapper">
+        <div class="product-list-wrapper w-100">
           <div class="sortbar flex justify-between">
             <span class="total-product-amount mt-2 txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
               listProduct?.length }} of {{ listProduct?.length }}</p> </span>
@@ -53,7 +53,7 @@
               <button class="secondary-btn cursor-pointer button-seemore">{{ $t('button.seeMore') }}</button>
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
-                <p class="mt-3">{{ $t('servicePage.aboutPjmContent') }}</p>
+                <p class="mt-3" v-html="route.query.categoryProductId ? getPajamas :  $t('servicePage.aboutPjmContent')"></p>
               </div>
             </div>
           </div>
@@ -61,58 +61,14 @@
       </div>
        <!-- 15 pod ideas -->
        <div class="pod-idea bg-light-blue-custom custom-padding">
-        <div class="idea-content ">
-          What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text ever since the 1500s, when an unknown printer took a galley
-          of type and scrambled it to make a type specimen book. It has survived
-          not only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and more
-          recently with desktop publishing software like Aldus PageMaker including
-          versions of Lorem Ipsum. Why do we use it? It is a long established fact
-          that a reader will be distracted by the readable content of a page when
-          looking at its layout. The point of using Lorem Ipsum is that it has a
-          more-or-less normal distribution of letters, as opposed to using
-          'Content here, content here', making it look like readable English. Many
-          desktop publishing packages and web page editors now use Lorem Ipsum as
-          their default model text, and a search for 'lorem ipsum' will uncover
-          many web sites still in their infancy. Various versions have evolved
-          over the years, sometimes by accident, sometimes on purpose (injected
-          humour and the like). Where does it come from? Contrary to popular
-          belief, Lorem Ipsum is not simply random text. It has roots in a piece
-          of classical Latin literature from 45 BC, making it over 2000 years old.
-          Richard McClintock, a Latin professor at Hampden-Sydney College in
-          Virginia, looked up one of the more obscure Latin words, consectetur,
-          from a Lorem Ipsum passage, and going through the cites of the word in
-          classical literature, discovered the undoubtable source. Lorem Ipsum
-          comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
-          Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
-          This book is a treatise on the theory of ethics, very popular during the
-          Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit
-          amet..", comes from a line in section 1.10.32. The standard chunk of
-          Lorem Ipsum used since the 1500s is reproduced below for those
-          interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et
-          Malorum" by Cicero are also reproduced in their exact original form,
-          accompanied by English versions from the 1914 translation by H. Rackham.
-          Where can I get some? There are many variations of passages of Lorem
-          Ipsum available, but the majority have suffered alteration in some form,
-          by injected humour, or randomised words which don't look even slightly
-          believable. If you are going to use a passage of Lorem Ipsum, you need
-          to be sure there isn't anything embarrassing hidden in the middle of
-          text. All the Lorem Ipsum generators on the Internet tend to repeat
-          predefined chunks as necessary, making this the first true generator on
-          the Internet. It uses a dictionary of over 200 Latin words, combined
-          with a handful of model sentence structures, to generate Lorem Ipsum
-          which looks reasonable. The generated Lorem Ipsum is therefore always
-          free from repetition, injected humour, or non-characteristic words etc.
+        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : ''">
         </div>
       </div>
       <!-- help -->
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20" />
     </div>
-    <div class="product-page-wrapper px-3" v-show="mobile || tablet">
-      <div class="product-header">
+    <div class="product-page-wrapper" v-show="mobile || tablet">
+      <div class="product-header px-3">
         <div class="product-banner-mobile rounded-lg text-center flex flex-col">
           <h1 class="section-title font-semibold"> {{ $t('productList.mensClothing') }} </h1>
           <span> Home / Men</span>
@@ -122,13 +78,13 @@
         </div>
       </div>
   
-      <div class="product-grid-wrapper flex justify-between">
+      <div class="product-grid-wrapper px-3 flex justify-between">
         <!-- filter -->
   
   
         <!-- list product -->
         <!-- side bar filter -->
-        <div class="product-list-wrapper">
+        <div class="product-list-wrapper w-100">
           <v-navigation-drawer v-model="drawer" temporary style="width: 80%">
             <v-list density="compact" nav class="pl-5">
               <div class="filter-sidebar mt-2">
@@ -136,8 +92,8 @@
                 <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
                   <h3 class="text-xl font-semibold border-bottom-gray">{{ item.filterBy }}</h3>
                   <div class="filter-by mt-3" v-for="(itemfilterBy, index) in item.listFilter" :key="index">
-                    <input type="checkbox" :id="itemfilterBy" :value="itemfilterBy" v-model="filterBy">
-                    <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy }}</label>
+                    <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" @click="filterByTag(itemfilterBy._id)" v-model="filterBy">
+                    <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy.title }}</label>
                   </div>
                 </div>  
               </div>
@@ -176,26 +132,33 @@
               <button class="secondary-btn cursor-pointer button-seemore-mobile">{{ $t('button.seeMore') }}</button>
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
-                <p class="mt-3">{{ $t('servicePage.aboutPjmContent') }}</p>
+                <p class="mt-3" v-html="route.query.categoryProductId ? getPajamas :  $t('servicePage.aboutPjmContent')"></p>
               </div>
             </div>
           </div>
         </div>
       </div>
+       <!-- 15 pod ideas -->
+      <div class="pod-idea mt-3 bg-light-blue-custom px-3 py-12">
+        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : ''">
+        </div>
+      </div>
+      <faq class="mt-12" />
       <!-- help -->
-      <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20" />
+      <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="px-3 mt-20 mb-10" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useFetch } from 'nuxt/app';
 import SwiperCateComponent from './components/SwiperCateComponent.vue';
 import help from '~/components/help.vue';
 import useLanguage from '~/composables/useLanguage';
 import { useI18n, useLocalePath } from '#imports'
+import faq from "~/components/faq.vue";
 
 // Replace the mixin with composable if necessary. 
 // const { mixinMethod } = useMyMixin(); // Example usage if you need to replace myMixin with a composable.
@@ -211,6 +174,12 @@ const drawer = ref(null);
 const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
 const currentPage = ref(1);
 
+const filterByTag = (newValue) => {
+  router.push({
+    name: route.name,
+    query: { ...route.query, categoryProductId: newValue },
+  });
+}
 watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
   if (newCategoryProductId) {
     // Reset listCate when categoryProductId changes
@@ -238,6 +207,7 @@ const listCate  = await useAsyncData(
     return response.data.items
   }
   )?.data
+  console.log(listCate.value, 'jejeje')
 
 const listFilter = ref([
   {
@@ -253,6 +223,10 @@ const filterBy = ref([]);
 
 function clearAllFilterBy() {
   filterBy.value = [];
+  router.push({
+    name: route.name,
+    query: {  },
+  });
 }
 
 function toProductDetail(id) {
@@ -269,6 +243,36 @@ function filterByCategoryId(newValue) {
     query: { ...route.query, categoryProductId: newValue },
   });
 }
+
+const currentParagraph = ref(null)
+const getPajamas = computed(() => {
+  let currentCategory
+  if(route.query.categoryProductId){
+    console.log(route.query.categoryProductId,'eded')
+    listCate.value.forEach(element => {
+      if(route.query.categoryProductId == element._id){
+        currentCategory = element
+      }
+    });
+  }
+  if(locale.value == 'US'){
+    currentParagraph.value = currentCategory.paragraphUS
+    return currentCategory.pajamasUS 
+  } 
+  if(locale.value == 'UK') {
+    currentParagraph.value = currentCategory.paragraphUK
+    return currentCategory.pajamasUK 
+  }
+  if(locale.value == 'FR'){
+    currentParagraph.value = currentCategory.paragraphFR
+    return currentCategory.pajamasFR 
+  } 
+  if(locale.value == 'DE'){
+    currentParagraph.value = currentCategory.paragraphDE
+    return currentCategory.pajamasDE 
+  } 
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -287,6 +291,7 @@ function filterByCategoryId(newValue) {
 
 .filter-sidebar {
   width: 100%;
+  max-width: 400px;
 }
 
 .product-list {
@@ -398,6 +403,9 @@ function filterByCategoryId(newValue) {
       height: 15vw !important;
       object-fit:cover;
       max-height: none !important;
+  }
+  :deep(.swiper-wrapper){
+    padding-bottom: 0px;
   }
 }
 

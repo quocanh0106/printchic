@@ -419,6 +419,7 @@ const FormCreate = () => {
       headerName: 'SKU',
       renderCell: ({ row }) => {
         const defaultValue = `${row?.nameVariant_1}${row?.nameVariant_2 ? `-${row?.nameVariant_2}` : ''}${row?.nameVariant_3 ? `-${row?.nameVariant_3}` : ''}`
+        
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Controller

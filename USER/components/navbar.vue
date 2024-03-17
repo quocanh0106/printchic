@@ -73,6 +73,16 @@
             >
               <a :href="url.href">{{ url.label }}</a>
             </v-list>
+            <span class="change-language-mobile flex items-center gap-x-3">
+              <span class="mdi--web"></span>
+              <h1 @click="selectLanguage('US')" :class="locale == 'US' ? 'active-lang' : ''" class="cursor-pointer">US</h1>
+              <v-divider style="border: 1px solid #EAECF0" vertical></v-divider>
+              <h1 @click="selectLanguage('UK')" :class="locale == 'UK' ? 'active-lang' : ''" class="cursor-pointer">UK</h1>
+              <v-divider style="border: 1px solid #EAECF0" vertical></v-divider>
+              <h1  @click="selectLanguage('FR')" :class="locale == 'FR' ? 'active-lang' : ''" class="cursor-pointer">FR</h1>
+              <v-divider style="border: 1px solid #EAECF0" vertical></v-divider>
+              <h1  @click="selectLanguage('DE')" :class="locale == 'DE' ? 'active-lang' : ''" class="cursor-pointer">DE</h1>
+            </span>
           </v-navigation-drawer>
         </v-layout>
       </v-card>
@@ -97,7 +107,7 @@ import { useNuxtApp } from '#app';
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const route = useRoute();
 const router = useRouter();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
@@ -106,11 +116,11 @@ const isActive = ref(false);
 const selectedLanguage = ref(locale.value);
 
 const links = computed(() => [
-  { label: "navBar.Home", href: '/' },
-  { label: "navBar.Products", href: '/print-on-demand' },
-  { label: "navBar.HIW", href: '/how-it-works' },
-  { label: "navBar.Blog", href: '/blog'},
-  { label: "navBar.aboutUs", href:'/about-us' },
+  { label: t('navBar.Home'), href: '/' },
+  { label:  t('navBar.Products'), href: '/print-on-demand' },
+  { label: t('navBar.HIW'), href: '/how-it-works' },
+  { label: t('navBar.Blog'), href: '/blog'},
+  { label: t('navBar.aboutUs'), href:'/about-us' },
 ])
 
 const listLang = ref([
@@ -124,8 +134,8 @@ const listLang = ref([
 //   locale.value = newVal;
 // });
 
-function selectLanguage() {
-  const newPath = switchLocalePath(selectedLanguage.value);
+function selectLanguage(lang = null) {
+  const newPath = switchLocalePath(lang == null ? selectedLanguage.value : lang);
   if (newPath !== location.pathname) {
     locale.value = selectedLanguage.value
     window.location.pathname = newPath; // Redirect to the new localized path
@@ -235,5 +245,30 @@ const navigate = (url) =>{
 }
 .signup-btn{
   height: auto;
+}
+
+.mdi--web {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M16.36 14c.08-.66.14-1.32.14-2c0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2c0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2c0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2c0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.change-language-mobile{
+  padding:24px 16px ;
+  h1{
+    color: #98A2B3;
+  }
+}
+.active-lang{
+  color:#3372DB !important;
+  font-weight: 400;
 }
 </style>
