@@ -115,10 +115,7 @@ const FormCreate = () => {
   const [contentDE, setContentDE] = useState('');
   const [contentFR, setContentFR] = useState('');
 
-  const [pajamasUK, setPajamasUK] = useState('');
-  const [pajamasUS, setPajamasUS] = useState('');
-  const [pajamasDE, setPajamasDE] = useState('');
-  const [pajamasFR, setPajamasFR] = useState('');
+  const [isVariantNeedUpdate, setIsVariantNeedUpdate] = useState(true)
 
   const [valueRecommend, setValueRecommend] = useState([])
   const [thickness, setThickness] = useState(0);
@@ -695,9 +692,10 @@ const FormCreate = () => {
   }
 
   const getListVariant = () => {
-    if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant)) {
+    if (JSON.stringify(listVariant) == JSON.stringify(tempListVariant) && !isVariantNeedUpdate) {
       setOpenDialog(true)
     } else {
+      setIsVariantNeedUpdate(false)
       let idCount = 1;
       let listVariantOptions = []
       if (listVariant.length === 1) {
@@ -1637,7 +1635,10 @@ const FormCreate = () => {
                           value={value}
                           label='Name Variant'
                           required
-                          onChange={onChange}
+                          onChange={(e) => {
+                            setIsVariantNeedUpdate(true)
+                            onChange(e)
+                          }}
                           placeholder='Enter Name Variant'
                           error={Boolean(errors[`nameVariant${el.index}`])}
                           aria-describedby='validation-basic-first-name'
@@ -1662,7 +1663,10 @@ const FormCreate = () => {
                                 value={value}
                                 label='Attribute'
                                 required
-                                onChange={onChange}
+                                onChange={(e) => {
+                                  setIsVariantNeedUpdate(true)
+                                  onChange(e)
+                                }}
                                 placeholder='Enter Attribute'
                                 error={Boolean(errors[`nameOption-${el.index}-${option.index}`])}
                                 aria-describedby='validation-basic-first-name'
