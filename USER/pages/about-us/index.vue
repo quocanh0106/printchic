@@ -106,7 +106,7 @@
           <img :src="arrowUpRight" />
         </a>
       </div>
-      <swiperComponent v-show="pc || lgPc || extraPc" :slidePerView="6" class="mt-12 mb-8" />
+      <swiperComponent v-show="pc || lgPc || extraPc" :slidePerView="6" :items="listLogoRef"  class="mt-12 mb-8" />
     </div>
 
     <!-- Banner About Us -->
@@ -185,6 +185,7 @@
         :slidePerView="pc ? 6 : 2"
         :showNavigation="false"
         :showPagination="false"
+        :items="listLogoRef" 
         class="mt-12 mb-8"
       />
     </div>
@@ -197,62 +198,61 @@
   </div>
 </template>
 
-<script>
-import aboutUsImg from "../../assets/svg/aboutUsImg.svg";
-import aboutUsMiddleImg from "../../assets/svg/aboutUsMiddleImg.svg";
-import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
-import aboutUsBanner from "../../assets/svg/aboutUsBanner.svg";
-import cardThumbnail from "../../assets/svg/cardThumbNail.svg";
-
+<script setup>
+import { ref } from 'vue'
+import aboutUsImg from '~/assets/svg/aboutUsImg.svg'
+import aboutUsMiddleImg from '~/assets/svg/aboutUsMiddleImg.svg'
+import arrowUpRight from '~/assets/svg/arrowUpRight.svg'
+import aboutUsBanner from '~/assets/svg/aboutUsBanner.svg'
+import cardThumbnail from '~/assets/svg/cardThumbNail.svg'
+import logo1 from '~/assets/svg/logoTemplate/logoTemplate1.svg'
+import logo2 from '~/assets/svg/logoTemplate/logoTemplate2.svg'
+import logo3 from '~/assets/svg/logoTemplate/logoTemplate3.svg'
+import logo4 from '~/assets/svg/logoTemplate/logoTemplate4.svg'
+import logo5 from '~/assets/svg/logoTemplate/logoTemplate5.svg'
+import logo6 from '~/assets/svg/logoTemplate/logoTemplate6.svg'
 // component
-import cardCounterVue from "../../components/cardCounter.vue"; //
-import swiperComponent from "../../components/swiperComponent.vue";
-import help from "../../components/help.vue";
-import cardInfor from "../../components/cardInfor.vue";
+import CardCounterVue from '~/components/cardCounter.vue'
+import SwiperComponent from '~/components/swiperComponent.vue'
+import Help from '~/components/help.vue'
+import CardInfor from '~/components/cardInfor.vue'
 
-export default {
-  components: {
-    cardCounterVue,
-    swiperComponent,
-    help,
-    cardInfor,
+const aboutUsBannerRef = ref(aboutUsBanner)
+const aboutUsImgRef = ref(aboutUsImg)
+const arrowUpRightRef = ref(arrowUpRight)
+const cardThumbnailRef = ref(cardThumbnail)
+const aboutUsMiddleImgRef = ref(aboutUsMiddleImg)
+const listLogoRef = ref([logo1,logo2,logo3,logo4,logo5,logo6]);
+
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc, isLoading } = useWidthScreen();
+
+const listServiceTags = ref([
+  useI18n().t("aboutUs.ourServiceTag1"),
+  useI18n().t("aboutUs.ourServiceTag2"),
+  useI18n().t("aboutUs.ourServiceTag3"),
+  useI18n().t("aboutUs.ourServiceTag4"),
+  useI18n().t("aboutUs.ourServiceTag5"),
+  useI18n().t("aboutUs.ourServiceTag6"),
+])
+
+const serviceInfoCounter = ref([
+  {
+    amount: "420+",
+    title: useI18n().t("aboutUs.products"),
   },
-  data() {
-    return {
-      aboutUsBanner,
-      aboutUsImg,
-      arrowUpRight,
-      cardThumbnail,
-      aboutUsMiddleImg,
-      listServiceTags: [
-        this.$t("aboutUs.ourServiceTag1"),
-        this.$t("aboutUs.ourServiceTag2"),
-        this.$t("aboutUs.ourServiceTag3"),
-        this.$t("aboutUs.ourServiceTag4"),
-        this.$t("aboutUs.ourServiceTag5"),
-        this.$t("aboutUs.ourServiceTag6"),
-      ],
-      serviceInfoCounter: [
-        {
-          amount: "420+",
-          title: this.$t("aboutUs.products"),
-        },
-        {
-          amount: "30,000+",
-          title: this.$t("aboutUs.happyMerchant"),
-        },
-        {
-          amount: "180+",
-          title: this.$t("aboutUs.countriesDeliveredIn"),
-        },
-        {
-          amount: "90,350",
-          title: this.$t("aboutUs.highestShipment"),
-        },
-      ],
-    };
+  {
+    amount: "30,000+",
+    title: useI18n().t("aboutUs.happyMerchant"),
   },
-};
+  {
+    amount: "180+",
+    title: useI18n().t("aboutUs.countriesDeliveredIn"),
+  },
+  {
+    amount: "90,350",
+    title: useI18n().t("aboutUs.highestShipment"),
+  },
+])
 </script>
 
 <style lang="scss" scoped>

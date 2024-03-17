@@ -13,7 +13,9 @@ export const fetchCategoryBlog = createAsyncThunk('appCategoryBlog/fetchEvents',
 
   return response.data
 })
+
 // ** Get Info Events
+
 export const fetchInfoCategoryBlog = createAsyncThunk('appCategoryBlog/fetchInfoEvents', async query => {
   const response = await axios.get(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryBlog/info`, {
     params: query

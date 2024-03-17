@@ -22,6 +22,7 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 })
+
 // ** Styled Component Imports
 
 // ** Styles Import

@@ -13,7 +13,7 @@
       <div class="blog-body-wrapper gap-x-8 flex mt-10 justify-between">
         <div
           v-show="listBlog.length > 0"
-          class="blog-left-wrapper flex flex-col cursor-pointer"
+          class="blog-left-wrapper flex flex-col cursor-pointer w-50"
           @click="toDetailBlog(listBlog?.[0]?.id)"
         >
           <img :src="listBlog?.[0]?.img" class="blog-img" />
@@ -23,7 +23,7 @@
             <p class="text-sm mt-4">{{ listBlog?.[0]?.createdAt }}</p>
           </div>
         </div>
-        <div class="blog-right-wrapper flex flex-col items-start justify-start">
+        <div class="blog-right-wrapper flex flex-col items-start justify-start w-50">
           <div
             class="side-blog-wrapper cursor-pointer"
             v-for="(blog, index) in listBlog"
@@ -88,6 +88,7 @@ const toDetailBlog = (id) => {
 .blog-img {
   border-radius: 6px;
   max-height: 400px;
+  object-fit: cover;
 }
 
 .small-img-blog {

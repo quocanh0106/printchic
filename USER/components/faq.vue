@@ -66,6 +66,12 @@ export default {
     .accordition-title{
         font-size: 20px;
         line-height: 27px;
+        :deep(.mdi-plus::before){
+            color: #3372DB;
+        }
+        :deep(.mdi-minus::before){
+            color: #3372DB;
+        }
     }
 </style>
 
