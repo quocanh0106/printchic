@@ -49,18 +49,74 @@ const create = async (data) => {
         set.price = data.price;
         set.priceSale = data.priceSale;
 
-        set.customizationOptions = data.customizationOptions;
-        set.detailProduct = data.detailProduct;
-        set.valueMaterial_1 = data.valueMaterial_1;
-        set.valueMaterial_2 = data.valueMaterial_2;
-        set.featureProduct = data.featureProduct;
+        set.customizationOptionsUK = data.customizationOptionsUK;
+        set.customizationOptionsUS = data.customizationOptionsUS;
+        set.customizationOptionsFR = data.customizationOptionsFR;
+        set.customizationOptionsDE = data.customizationOptionsDE;
 
-        set.optionMaterial_1 = data.optionMaterial_1;
-        set.minName_1 = data.minName_1;
-        set.maxName_1 = data.maxName_1;
-        set.optionMaterial_2 = data.optionMaterial_2;
-        set.minName_2 = data.minName_2;
-        set.maxName_2 = data.maxName_2;
+        set.detailProductUK = data.detailProductUK;
+        set.detailProductUS = data.detailProductUS;
+        set.detailProductFR = data.detailProductFR;
+        set.detailProductDE = data.detailProductDE;
+
+        set.valueMaterial_1 = data.valueMaterial_1;
+
+        set.valueMaterial_2 = data.valueMaterial_2;
+
+        set.featureProductUK = data.featureProductUK;
+        set.featureProductUS = data.featureProductUS;
+        set.featureProductFR = data.featureProductFR;
+        set.featureProductDE = data.featureProductDE;
+
+        set.optionMaterial_1UK = data.optionMaterial_1UK;
+        set.optionMaterial_1US = data.optionMaterial_1US;
+        set.optionMaterial_1FR = data.optionMaterial_1FR;
+        set.optionMaterial_1DE = data.optionMaterial_1DE;
+
+        set.minName_1UK = data.minName_1UK;
+        set.minName_1US = data.minName_1US;
+        set.minName_1FR = data.minName_1FR;
+        set.minName_1DE = data.minName_1DE;
+
+        set.maxName_1UK = data.maxName_1UK;
+        set.maxName_1US = data.maxName_1US;
+        set.maxName_1FR = data.maxName_1FR;
+        set.maxName_1DE = data.maxName_1DE;
+
+        set.optionMaterial_2UK = data.optionMaterial_2UK;
+        set.optionMaterial_2US = data.optionMaterial_2US;
+        set.optionMaterial_2FR = data.optionMaterial_2FR;
+        set.optionMaterial_2DE = data.optionMaterial_2DE;
+
+        set.minName_2UK = data.minName_2UK;
+        set.minName_2US = data.minName_2US;
+        set.minName_2FR = data.minName_2FR;
+        set.minName_2DE = data.minName_2DE;
+
+        set.maxName_2UK = data.maxName_2UK;
+        set.maxName_2US = data.maxName_2US;
+        set.maxName_2FR = data.maxName_2FR;
+        set.maxName_2DE = data.maxName_2DE;
+
+        set.featureProductLabelUK = data.featureProductLabelUK;
+        set.featureProductLabelUS = data.featureProductLabelUS;
+        set.featureProductLabelFR = data.featureProductLabelFR;
+        set.featureProductLabelDE = data.featureProductLabelDE;
+
+        set.optionMaterialLabelUK = data.optionMaterialLabelUK;
+        set.optionMaterialLabelUS = data.optionMaterialLabelUS;
+        set.optionMaterialLabelFR = data.optionMaterialLabelFR;
+        set.optionMaterialLabelDE = data.optionMaterialLabelDE;
+
+        set.detailProductLabelUK = data.detailProductLabelUK;
+        set.detailProductLabelUS = data.detailProductLabelUS;
+        set.detailProductLabelFR = data.detailProductLabelFR;
+        set.detailProductLabelDE = data.detailProductLabelDE;
+
+        set.customizationOptionsLabelUK = data.customizationOptionsLabelUK;
+        set.customizationOptionsLabelUS = data.customizationOptionsLabelUS;
+        set.customizationOptionsLabelFR = data.customizationOptionsLabelFR;
+        set.customizationOptionsLabelDE = data.customizationOptionsLabelDE;
 
         set.tabProductDetailUK = data.tabProductDetailUK;
         set.tabProductDetailUS = data.tabProductDetailUS;
@@ -288,41 +344,183 @@ const updateConditions = async (data) => {
             set.tabCareInstructionDE = data.tabCareInstructionDE;
         }
 
-        if (!isEmpty(data?.customizationOptions)) {
-            set.customizationOptions = data.customizationOptions;
+        if (!isEmpty(data?.customizationOptionsUK)) {
+            set.customizationOptionsUK = data.customizationOptionsUK;
         }
-        if (!isEmpty(data?.detailProduct)) {
-            set.detailProduct = data.detailProduct;
+        if (!isEmpty(data?.customizationOptionsUS)) {
+            set.customizationOptionsUS = data.customizationOptionsUS;
         }
+        if (!isEmpty(data?.customizationOptionsFR)) {
+            set.customizationOptionsFR = data.customizationOptionsFR;
+        }
+        if (!isEmpty(data?.customizationOptionsDE)) {
+            set.customizationOptionsDE = data.customizationOptionsDE;
+        }
+
+        if (!isEmpty(data?.detailProductUK)) {
+            set.detailProductUK = data.detailProductUK;
+        }
+        if (!isEmpty(data?.detailProductUS)) {
+            set.detailProductUS = data.detailProductUS;
+        }
+        if (!isEmpty(data?.detailProductFR)) {
+            set.detailProductFR = data.detailProductFR;
+        }
+        if (!isEmpty(data?.detailProductDE)) {
+            set.detailProductDE = data.detailProductDE;
+        }
+
         if (!isEmpty(data?.valueMaterial_1)) {
             set.valueMaterial_1 = data.valueMaterial_1;
         }
+
         if (!isEmpty(data?.valueMaterial_2)) {
             set.valueMaterial_2 = data.valueMaterial_2;
         }
-        if (!isEmpty(data?.featureProduct)) {
-            set.featureProduct = data.featureProduct;
+
+        if (!isEmpty(data?.featureProductUK)) {
+            set.featureProductUK = data.featureProductUK;
+        }
+        if (!isEmpty(data?.featureProductUS)) {
+            set.featureProductUS = data.featureProductUS;
+        }
+        if (!isEmpty(data?.featureProductFR)) {
+            set.featureProductFR = data.featureProductFR;
+        }
+        if (!isEmpty(data?.featureProductDE)) {
+            set.featureProductDE = data.featureProductDE;
         }
 
-        if (!isEmpty(data?.optionMaterial_1)) {
-            set.optionMaterial_1 = data.optionMaterial_1;
+        if (!isEmpty(data?.optionMaterial_1UK)) {
+            set.optionMaterial_1UK = data.optionMaterial_1UK;
         }
-        if (!isEmpty(data?.minName_1)) {
-            set.minName_1 = data.minName_1;
+        if (!isEmpty(data?.optionMaterial_1US)) {
+            set.optionMaterial_1US = data.optionMaterial_1US;
         }
-        if (!isEmpty(data?.maxName_1)) {
-            set.maxName_1 = data.maxName_1;
+        if (!isEmpty(data?.optionMaterial_1FR)) {
+            set.optionMaterial_1FR = data.optionMaterial_1FR;
+        }
+        if (!isEmpty(data?.optionMaterial_1DE)) {
+            set.optionMaterial_1DE = data.optionMaterial_1DE;
         }
 
-        if (!isEmpty(data?.optionMaterial_2)) {
-            set.optionMaterial_2 = data.optionMaterial_2;
+        if (!isEmpty(data?.minName_1UK)) {
+            set.minName_1UK = data.minName_1UK;
         }
-        if (!isEmpty(data?.minName_2)) {
-            set.minName_2 = data.minName_2;
+        if (!isEmpty(data?.minName_1US)) {
+            set.minName_1US = data.minName_1US;
         }
-        if (!isEmpty(data?.maxName_2)) {
-            set.maxName_2 = data.maxName_2;
+        if (!isEmpty(data?.minName_1FR)) {
+            set.minName_1FR = data.minName_1FR;
         }
+        if (!isEmpty(data?.minName_1DE)) {
+            set.minName_1DE = data.minName_1DE;
+        }
+
+        if (!isEmpty(data?.maxName_1UK)) {
+            set.maxName_1UK = data.maxName_1UK;
+        }
+        if (!isEmpty(data?.maxName_1US)) {
+            set.maxName_1US = data.maxName_1US;
+        }
+        if (!isEmpty(data?.maxName_1FR)) {
+            set.maxName_1FR = data.maxName_1FR;
+        }
+        if (!isEmpty(data?.maxName_1DE)) {
+            set.maxName_1DE = data.maxName_1DE;
+        }
+
+        if (!isEmpty(data?.optionMaterial_2UK)) {
+            set.optionMaterial_2UK = data.optionMaterial_2UK;
+        }
+        if (!isEmpty(data?.optionMaterial_2US)) {
+            set.optionMaterial_2US = data.optionMaterial_2US;
+        }
+        if (!isEmpty(data?.optionMaterial_2FR)) {
+            set.optionMaterial_2FR = data.optionMaterial_2FR;
+        }
+        if (!isEmpty(data?.optionMaterial_2DE)) {
+            set.optionMaterial_2DE = data.optionMaterial_2DE;
+        }
+
+        if (!isEmpty(data?.minName_2UK)) {
+            set.minName_2UK = data.minName_2UK;
+        }
+        if (!isEmpty(data?.minName_2US)) {
+            set.minName_2US = data.minName_2US;
+        }
+        if (!isEmpty(data?.minName_2FR)) {
+            set.minName_2FR = data.minName_2FR;
+        }
+        if (!isEmpty(data?.minName_2DE)) {
+            set.minName_2DE = data.minName_2DE;
+        }
+
+        if (!isEmpty(data?.maxName_2UK)) {
+            set.maxName_2UK = data.maxName_2UK;
+        }
+        if (!isEmpty(data?.maxName_2US)) {
+            set.maxName_2US = data.maxName_2US;
+        }
+        if (!isEmpty(data?.maxName_2FR)) {
+            set.maxName_2FR = data.maxName_2FR;
+        }
+        if (!isEmpty(data?.maxName_2DE)) {
+            set.maxName_2DE = data.maxName_2DE;
+        }
+
+        if (!isEmpty(data?.featureProductLabelUK)) {
+            set.featureProductLabelUK = data.featureProductLabelUK;
+        }
+        if (!isEmpty(data?.featureProductLabelUS)) {
+            set.featureProductLabelUS = data.featureProductLabelUS;
+        }
+        if (!isEmpty(data?.featureProductLabelFR)) {
+            set.featureProductLabelFR = data.featureProductLabelFR;
+        }
+        if (!isEmpty(data?.featureProductLabelDE)) {
+            set.featureProductLabelDE = data.featureProductLabelDE;
+        }
+
+        if (!isEmpty(data?.optionMaterialLabelUK)) {
+            set.optionMaterialLabelUK = data.optionMaterialLabelUK;
+        }
+        if (!isEmpty(data?.optionMaterialLabelUS)) {
+            set.optionMaterialLabelUS = data.optionMaterialLabelUS;
+        }
+        if (!isEmpty(data?.optionMaterialLabelFR)) {
+            set.optionMaterialLabelFR = data.optionMaterialLabelFR;
+        }
+        if (!isEmpty(data?.optionMaterialLabelDE)) {
+            set.optionMaterialLabelDE = data.optionMaterialLabelDE;
+        }
+
+        if (!isEmpty(data?.detailProductLabelUK)) {
+            set.detailProductLabelUK = data.detailProductLabelUK;
+        }
+        if (!isEmpty(data?.detailProductLabelUS)) {
+            set.detailProductLabelUS = data.detailProductLabelUS;
+        }
+        if (!isEmpty(data?.detailProductLabelFR)) {
+            set.detailProductLabelFR = data.detailProductLabelFR;
+        }
+        if (!isEmpty(data?.detailProductLabelDE)) {
+            set.detailProductLabelDE = data.detailProductLabelDE;
+        }
+
+        if (!isEmpty(data?.customizationOptionsLabelUK)) {
+            set.customizationOptionsLabelUK = data.customizationOptionsLabelUK;
+        }
+        if (!isEmpty(data?.customizationOptionsLabelUS)) {
+            set.customizationOptionsLabelUS = data.customizationOptionsLabelUS;
+        }
+        if (!isEmpty(data?.customizationOptionsLabelFR)) {
+            set.customizationOptionsLabelFR = data.customizationOptionsLabelFR;
+        }
+        if (!isEmpty(data?.customizationOptionsLabelDE)) {
+            set.customizationOptionsLabelDE = data.customizationOptionsLabelDE;
+        }
+
 
         if (!isEmpty(data?.categoryProductId)) {
             set.categoryProductId = convertToObjectId(data?.categoryProductId || '');

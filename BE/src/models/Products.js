@@ -89,37 +89,180 @@ const ProductsBase = {
     priceSale: {
         type: Number, trim: true,
     },
-    customizationOptions: {
+
+    customizationOptionsLabelUK: {
         type: String, trim: true,
     },
-    detailProduct: {
+    customizationOptionsLabelUS: {
         type: String, trim: true,
     },
+    customizationOptionsLabelFR: {
+        type: String, trim: true,
+    },
+    customizationOptionsLabelDE: {
+        type: String, trim: true,
+    },
+
+    detailProductLabelUK: {
+        type: String, trim: true,
+    },
+    detailProductLabelUS: {
+        type: String, trim: true,
+    },
+    detailProductLabelFR: {
+        type: String, trim: true,
+    },
+    detailProductLabelDE: {
+        type: String, trim: true,
+    },
+
+    optionMaterialLabelUK: {
+        type: String, trim: true,
+    },
+    optionMaterialLabelUS: {
+        type: String, trim: true,
+    },
+    optionMaterialLabelFR: {
+        type: String, trim: true,
+    },
+    optionMaterialLabelDE: {
+        type: String, trim: true,
+    },
+
+    featureProductLabelUK: {
+        type: String, trim: true,
+    },
+    featureProductLabelUS: {
+        type: String, trim: true,
+    },
+    featureProductLabelFR: {
+        type: String, trim: true,
+    },
+    featureProductLabelDE: {
+        type: String, trim: true,
+    },
+
+    customizationOptionsUK: {
+        type: String, trim: true,
+    },
+    customizationOptionsUS: {
+        type: String, trim: true,
+    },
+    customizationOptionsFR: {
+        type: String, trim: true,
+    },
+    customizationOptionsDE: {
+        type: String, trim: true,
+    },
+
+    detailProductUK: {
+        type: String, trim: true,
+    },
+    detailProductUS: {
+        type: String, trim: true,
+    },
+    detailProductFR: {
+        type: String, trim: true,
+    },
+    detailProductDE: {
+        type: String, trim: true,
+    },
+
     valueMaterial_1: {
         type: String, trim: true,
     },
+
     valueMaterial_2: {
         type: String, trim: true,
     },
-    featureProduct: {
+
+    featureProductUK: {
         type: String, trim: true,
     },
-    optionMaterial_1: {
+    featureProductUS: {
         type: String, trim: true,
     },
-    minName_1: {
+    featureProductFR: {
         type: String, trim: true,
     },
-    maxName_1: {
+    featureProductDE: {
         type: String, trim: true,
     },
-    optionMaterial_2: {
+    optionMaterial_1UK: {
         type: String, trim: true,
     },
-    minName_2: {
+    optionMaterial_1US: {
         type: String, trim: true,
     },
-    maxName_2: {
+    optionMaterial_1FR: {
+        type: String, trim: true,
+    },
+    optionMaterial_1DE: {
+        type: String, trim: true,
+    },
+ 
+    minName_1UK: {
+        type: String, trim: true,
+    },
+    minName_1US: {
+        type: String, trim: true,
+    },
+    minName_1FR: {
+        type: String, trim: true,
+    },
+    minName_1DE: {
+        type: String, trim: true,
+    },
+  
+    maxName_1UK: {
+        type: String, trim: true,
+    },
+    maxName_1US: {
+        type: String, trim: true,
+    },
+    maxName_1FR: {
+        type: String, trim: true,
+    },
+    maxName_1DE: {
+        type: String, trim: true,
+    },
+  
+    optionMaterial_2UK: {
+        type: String, trim: true,
+    },
+    optionMaterial_2US: {
+        type: String, trim: true,
+    },
+    optionMaterial_2FR: {
+        type: String, trim: true,
+    },
+    optionMaterial_2DE: {
+        type: String, trim: true,
+    },
+ 
+    minName_2UK: {
+        type: String, trim: true,
+    },
+    minName_2US: {
+        type: String, trim: true,
+    },
+    minName_2FR: {
+        type: String, trim: true,
+    },
+    minName_2DE: {
+        type: String, trim: true,
+    },
+ 
+    maxName_2UK: {
+        type: String, trim: true,
+    },
+    maxName_2US: {
+        type: String, trim: true,
+    },
+    maxName_2FR: {
+        type: String, trim: true,
+    },
+    maxName_2DE: {
         type: String, trim: true,
     },
 
