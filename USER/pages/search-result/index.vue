@@ -18,7 +18,7 @@
         {{ $t('notFound',{keyWord:route.query.search}) }}
       </div>
       </div>
-      <v-btn class="w-100 mt-8 button-see-more" v-if="filterResult.length > 9">{{ $t('button.seeMoreWithItemCount', {count: filterResult.length}) }}</v-btn>
+      <button class="w-100 mt-8 button-see-more" v-if="filterResult.length > 9">{{ $t('button.seeMoreWithItemCount', {count: filterResult.length}) }}</button>
   </div>
 </template>
 

@@ -94,7 +94,6 @@ const onSlideChange = () => {
 };
 
 const pushRouter = (id) => {
-  console.log('sdsd',id)
   emit('submit', id);
 
 }

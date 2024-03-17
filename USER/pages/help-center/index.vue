@@ -23,9 +23,9 @@
               dense
               v-model="searchData"
             ></v-text-field>
-            <v-btn class="seach-btn" color="primary" @click="searchHelpList">
+            <button class="seach-btn" color="primary" @click="searchHelpList">
               Search
-            </v-btn>
+            </button>
           </div>
         </div>
       </div>
@@ -355,7 +355,7 @@ export default {
   }
   .nav-group {
     display: flex;
-    .nav-btn {
+    .nabutton {
       text-transform: capitalize;
       font-size: 14px;
     }

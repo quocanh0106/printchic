@@ -66,7 +66,7 @@ const introImageRef = ref(introImage);
 
 // Methods
 const onSwiper = (swiper) => {
-  console.log(swiper);
+  //console.log(swiper);
 };
 
 const onSlideChange = () => {

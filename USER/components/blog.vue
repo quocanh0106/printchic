@@ -5,12 +5,12 @@
         <h1 class="section-title font-semibold">
           {{ title ? title : $t("homePage.ourBlogStory") }}
         </h1>
-        <a class="flex gap-1 txt-primary cursor-pointer mt-10" @click="$router.push(localePath('/blog'))">
+        <a class="flex gap-1 txt-primary cursor-pointer mt-10" @click="router.push(localePath('/blog'))">
           <p>{{ $t("button.viewAll") }}</p>
           <img :src="arrowUpRight" />
         </a>
       </div>
-      <div class="blog-body-wrapper gap-x-8 flex mt-10">
+      <div class="blog-body-wrapper gap-x-8 flex mt-10 justify-between">
         <div
           v-show="listBlog.length > 0"
           class="blog-left-wrapper flex flex-col cursor-pointer"
@@ -87,6 +87,7 @@ const toDetailBlog = (id) => {
 <style lang="scss" scoped>
 .blog-img {
   border-radius: 6px;
+  max-height: 400px;
 }
 
 .small-img-blog {

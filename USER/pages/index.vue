@@ -8,13 +8,13 @@
             {{ $t("homePage.introductionTitle") }}
           </h1>
           <div class="introduction-actions cursor-pointer mt-8">
-            <v-button class="primary-btn text-white" @click="$router.push(localePath('/contact-us'))">
+            <button class="primary-btn text-white" @click="$router.push(localePath('/contact-us'))">
               {{ $t("ContactUs") }}
-            </v-button>
+            </button>
 
-            <v-button class="secondary-btn cursor-pointer ml-4">
+            <button class="secondary-btn cursor-pointer ml-4">
               {{ $t("button.tryForNow") }}
-            </v-button>
+            </button>
           </div>
         </div>
         <div class="introduction-description">
@@ -174,9 +174,9 @@
             <p>{{ $t("ContactUs") }}</p>
             <img :src="arrowUpRightWhite" />
           </a>
-          <v-button class="secondary-btn txt-primary cursor-pointer  w-100 ml-4">
+          <button class="secondary-btn txt-primary cursor-pointer  w-100 ml-4">
             {{ $t("button.tryForNow") }}
-          </v-button>
+          </button>
         </div>
       </div>
       <!-- Category -->
@@ -267,7 +267,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <SwiperBlogMobile class="blog-mobile-swiper mt-12 mb-8" :items="listBlog.data.items" :slidePerView="1" />
+        <SwiperBlogMobile class="blog-mobile-swiper mt-12 mb-8" :items="listBlog?.data?.items" :slidePerView="1" />
       </div>
 
       <!-- Frequently asked question -->

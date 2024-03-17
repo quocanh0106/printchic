@@ -26,7 +26,7 @@
         </button>
       </div>
       <div class="thumbnails" v-show=" photos.media.length > 1">
-        <div v-for="(photo, index) in photos" :src="photo" :key="index" @click="activePhoto = index"
+        <div v-for="(photo, index) in photos.media" :src="photo" :key="index" @click="activePhoto = index"
           :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>
       </div>
@@ -106,7 +106,7 @@ body {
 .vueGallery {
   display: flex;
   width: 40vw;
-  height: 30vw;
+  height: 100%;
 
   .activePhoto {
     width: 100%;
@@ -156,7 +156,9 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(10vh, 1fr));
     grid-gap: 5px;
-
+    @media screen and (max-width: 992px) {
+      overflow-x: scroll;
+    }
     div {
       width: 100%;
       max-width: 100px;

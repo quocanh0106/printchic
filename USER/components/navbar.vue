@@ -1,4 +1,6 @@
 <template>
+      <client-only>
+
   <div class="nav-bar-outer-wrapper-all-screen">
     <div class="nav-bar" v-show="pc || lgPc || extraPc">
       <img
@@ -43,38 +45,39 @@
         <img :src="drawerIcon" @click.stop="drawer = !drawer" />
       </div>
     </div>
-    <v-card class="drawer" v-if="drawer">
-      <v-layout>
-        <v-navigation-drawer v-model="drawer" temporary>
-          <div class="logo-n-closebtn flex justify-between">
-            <img
-              :src="Logo"
-              class="cursor-pointer"
-              @click="this.$router.push(localePath('/'))"
-            />
-            <img
-              :src="closeIcon"
-              class="cursor-pointer"
-              @click="drawer = false"
-            />
-          </div>
-          <customInput class="search-input-mobile" />
-          <v-divider></v-divider>
-
-          <v-list
-            density="compact"
-            class="navigation-menu-mobile"
-            @click="isCurrentUrl(url.href)"
-            v-for="(url, index) in links"
-            :key="index"
-            :class="{ 'bg-light-blue-custom': isActive }"
-          >
-            <a :href="url.href">{{ url.label }}</a>
-          </v-list>
-        </v-navigation-drawer>
-      </v-layout>
-    </v-card>
-  </div>
+      <v-card class="drawer" v-show="drawer">
+        <v-layout>
+          <v-navigation-drawer v-model="drawer" temporary>
+            <div class="logo-n-closebtn flex justify-between">
+              <img
+                :src="Logo"
+                class="cursor-pointer"
+                @click="this.$router.push(localePath('/'))"
+              />
+              <img
+                :src="closeIcon"
+                class="cursor-pointer"
+                @click="drawer = false"
+              />
+            </div>
+            <customInput class="search-input-mobile" />
+            <v-divider></v-divider>
+  
+            <v-list
+              density="compact"
+              class="navigation-menu-mobile"
+              @click="isCurrentUrl(url.href)"
+              v-for="(url, index) in links"
+              :key="index"
+              :class="{ 'bg-light-blue-custom': isActive }"
+            >
+              <a :href="url.href">{{ url.label }}</a>
+            </v-list>
+          </v-navigation-drawer>
+        </v-layout>
+      </v-card>
+    </div>
+  </client-only>
 </template>
 
 <script setup>

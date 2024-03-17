@@ -22,9 +22,9 @@
               <p>{{ $t("button.contactUs") }}</p>
               <img :src="arrowUpRight" />
             </a>
-            <v-button class="cursor-pointer primary-btn">{{
+            <button class="cursor-pointer primary-btn">{{
               $t("button.tryForNow")
-            }}</v-button>
+            }}</button>
           </div>
         </div>
       </div>
@@ -43,9 +43,9 @@
           <p class="mt-3 mw-790px">
             {{ $t("servicePage.whatIsPrintOnDemandDes2") }}
           </p>
-          <v-button class="mt-8 secondary-btn txt-primary font-semibold">{{
+          <button class="mt-8 secondary-btn txt-primary font-semibold">{{
             $t("button.aboutUs")
-          }}</v-button>
+          }}</button>
         </div>
       </div>
   
@@ -290,9 +290,9 @@
               <p>{{ $t("button.contactUs") }}</p>
               <img :src="arrowUpRight" />
             </a>
-            <v-button class="cursor-pointer primary-btn">{{
+            <button class="cursor-pointer primary-btn">{{
               $t("button.tryForNow")
-            }}</v-button>
+            }}</button>
           </div>
         </div>
       </div>
@@ -311,9 +311,9 @@
           <p class="mt-3 mw-790px">
             {{ $t("servicePage.whatIsPrintOnDemandDes2") }}
           </p>
-          <v-button class="mt-8 secondary-btn txt-primary font-semibold">{{
+          <button class="mt-8 secondary-btn txt-primary font-semibold">{{
             $t("button.aboutUs")
-          }}</v-button>
+          }}</button>
         </div>
       </div>
   

@@ -22,7 +22,7 @@
               SKU: {{ detail.data.variants?.[0].sku }}
             </p>
             <div class="price-n-ship mt-6 flex items-center gap-x-2">
-              <span class="price">${{ detail.data.price }}</span>
+              <span class="price">${{ getPriceByVariant }}</span>
               <span
                 class="include-ship-tag bg-light-blue-custom"
                 v-show="product.includeShipping"
@@ -32,20 +32,21 @@
             <p class="product-description mt-6">
               {{ product.description }}
             </p>
-            <div class="product-option mt-8 flex flex gap-x-3">
-              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
-                <h1 class="font-semibold leading-3">
-                  {{ item }}
-                </h1>
-              </span>
+            <div class="product-option mt-8 flex flex-col gap-y-5">
+                <span v-for="(item, index) in listNameOption" :key="index">
+                  <h1 class="font-semibold leading-3">
+                    {{ item.value }}
+                  </h1>
+                  <div class="product-option mt-8 flex flex gap-x-3">
+                    <span :class="filterVariantBasedOnOption(item.optionNumber)[_ind].isActive ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(variant, _ind) in filterVariantBasedOnOption(item.optionNumber)" :key="_ind" @click="changeActiveVariant(index,variant,_ind)">
+                      <h1 class="font-semibold leading-3">
+                        {{ variant.value }}
+                      </h1>
+                    </span>
+                </div>
+                </span>
             </div>
-            <div class="product-option mt-8 flex flex gap-x-3">
-              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
-                <h1 class="font-semibold leading-3">
-                  {{ item }}
-                </h1>
-              </span>
-            </div>
+           
             <div class="action-button w-100 mt-8 flex flex-col">
               <a
                 :href="detail.data.btnLink"
@@ -84,12 +85,12 @@
               </h1>
               <div class="flex flex-col w-100">
                 <span class="flex flex-col">
-                  <v-layout class="flex justify-between">
-                    <v-flex>{{ detail.data.minName_2 }}</v-flex>
-                    <v-flex class="text-right">{{
+                  <v-row class="flex justify-between">
+                    <v-col>{{ detail.data.minName_2 }}</v-col>
+                    <v-col class="text-right">{{
                       detail.data.maxName_2
-                    }}</v-flex>
-                  </v-layout>
+                    }}</v-col>
+                  </v-row>
   
                   <!-- Slider component -->
                   <v-slider
@@ -99,12 +100,12 @@
                   ></v-slider>
                 </span>
                 <span class="flex flex-col">
-                  <v-layout class="flex justify-between">
-                    <v-flex>{{ detail.data.minName_1 }}</v-flex>
-                    <v-flex class="text-right">{{
+                  <v-row class="flex justify-between">
+                    <v-col>{{ detail.data.minName_1 }}</v-col>
+                    <v-col class="text-right">{{
                       detail.data.maxName_1
-                    }}</v-flex>
-                  </v-layout>
+                    }}</v-col>
+                  </v-row>
   
                   <!-- Slider component -->
                   <v-slider
@@ -160,12 +161,13 @@
 
             <v-card-text>
               <v-window v-model="tab">
-                <v-window-item value="one"></v-window-item>
+                <v-window-item value="one" v-html="contentOne"></v-window-item>
 
-                <v-window-item value="two"> Two </v-window-item>
+                <v-window-item value="two"  v-html="contentTwo"></v-window-item>
 
-                <v-window-item value="three"> Three </v-window-item>
-                <v-window-item value="four"> Four </v-window-item>
+                <v-window-item value="three"  v-html="contentThree"
+                ></v-window-item>
+                <v-window-item value="four" v-html="contentFour"></v-window-item>
               </v-window>
             </v-card-text>
           </v-card>
@@ -189,7 +191,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent :items="listProductRelatedMedia" :slidePerView="6" class="mt-12 related-product mb-8" />
+        <swiperComponent :hasDescription="true" :items="listProductRelatedMedia" :slidePerView="6" class="mt-12 related-product mb-8" />
       </div>
 
       <!-- help -->
@@ -222,7 +224,7 @@
             SKU: {{ detail.data.variants?.[0].sku }}
           </p>
           <div class="price-n-ship mt-6 flex items-center gap-x-2">
-            <span class="price">${{ detail.data.price }}</span>
+            <span class="price">${{ getPriceByVariant }}</span>
             <span
               class="include-ship-tag bg-light-blue-custom"
               v-show="product.includeShipping"
@@ -233,19 +235,19 @@
             class="product-description mt-6"
             v-html="localizedDescription"
           ></div>
-          <div class="product-option mt-8 flex flex gap-x-3">
-              <span :class="currentActiveNameOption == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in listNameOption" :key="index" @click="changeActiveNameOption(index)">
-                <h1 class="font-semibold leading-3">
-                  {{ item }}
-                </h1>
-              </span>
-            </div>
-            <div class="product-option mt-8 flex flex gap-x-3">
-              <span :class="currentActiveVariant == index ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(item, index) in uniqueCombinedVariants" :key="index" @click="changeActiveVariant(index)">
-                <h1 class="font-semibold leading-3">
-                  {{ item }}
-                </h1>
-              </span>
+          <div class="product-option mt-8 flex flex-col gap-y-5">
+            <span v-for="(item, index) in listNameOption" :key="index">
+                  <h1 class="font-semibold leading-3">
+                    {{ item.value }}
+                  </h1>
+                  <div class="product-option mt-3 flex gap-x-3">
+                    <span :class="filterVariantBasedOnOption(item.optionNumber)[_ind].isActive ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(variant, _ind) in filterVariantBasedOnOption(item.optionNumber)" :key="_ind" @click="changeActiveVariant(index,variant,_ind)">
+                      <h1 class="font-semibold leading-3">
+                        {{ variant.value }}
+                      </h1>
+                    </span>
+                </div>
+                </span>
             </div>
           <div class="action-button w-100 mt-8 flex flex-col mb-5">
             <a
@@ -306,12 +308,12 @@
                 </h1>
                 <div class="flex flex-col">
                   <span class="flex flex-col">
-                    <v-layout class="flex justify-between">
-                      <v-flex>{{ detail.data.minName_2 }}</v-flex>
-                      <v-flex class="text-right">{{
+                    <v-row class="flex justify-between">
+                      <v-col>{{ detail.data.minName_2 }}</v-col>
+                      <v-col class="text-right">{{
                         detail.data.maxName_2
-                      }}</v-flex>
-                    </v-layout>
+                      }}</v-col>
+                    </v-row>
   
                     <!-- Slider component -->
                     <v-slider
@@ -321,12 +323,12 @@
                     ></v-slider>
                   </span>
                   <span class="flex flex-col">
-                    <v-layout class="flex justify-between">
-                      <v-flex>{{ detail.data.minName_1 }}</v-flex>
-                      <v-flex class="text-right">{{
+                    <v-row class="flex justify-between">
+                      <v-col>{{ detail.data.minName_1 }}</v-col>
+                      <v-col class="text-right">{{
                         detail.data.maxName_1
-                      }}</v-flex>
-                    </v-layout>
+                      }}</v-col>
+                    </v-row>
   
                     <!-- Slider component -->
                     <v-slider
@@ -353,18 +355,21 @@
         <div class="tab-wrapper bg-light-gray1-custom p-3">
           <v-card>
             <v-tabs v-model="tab" bg-color="primary" class="tab-information">
-              <v-tab value="one">Item One</v-tab>
-              <v-tab value="two">Item Two</v-tab>
-              <v-tab value="three">Item Three</v-tab>
+              <v-tab value="one">{{$t("productDetail.productDetail")}}</v-tab>
+              <v-tab value="two">{{$t("productDetail.sizeGuide")}}</v-tab>
+              <v-tab value="three">{{$t("productDetail.mockUpNTemplate")}}</v-tab>
+              <v-tab value="four">{{$t("productDetail.careInstruction")}}</v-tab>
             </v-tabs>
 
             <v-card-text>
               <v-window v-model="tab">
-                <v-window-item value="one"> One </v-window-item>
+                <v-window-item value="one" v-html="contentOne"></v-window-item>
 
-                <v-window-item value="two"> Two </v-window-item>
+                <v-window-item value="two"  v-html="contentTwo"></v-window-item>
 
-                <v-window-item value="three"> Three </v-window-item>
+                <v-window-item value="three"  v-html="contentThree"
+                ></v-window-item>
+                <v-window-item value="four" v-html="contentFour"></v-window-item>
               </v-window>
             </v-card-text>
           </v-card>
@@ -446,6 +451,7 @@ const panel = ref([0, 3]);
 const slider1 = ref(0);
 const slider2 = ref(0);
 const router = useRoute();
+
 // If you have methods, they can be defined as regular functions within setup
 
 const localizedDescription = computed(() => {
@@ -473,31 +479,52 @@ const localizedDescription = computed(() => {
 });
 
 const currentActiveNameOption = ref(0)
-const changeActiveNameOption = (ind) => {
+const changeActiveNameOption = (ind,item) => {
   currentActiveNameOption.value = ind
 }
 
-const currentActiveVariant= ref(0)
-const changeActiveVariant = (ind) => {
-  currentActiveVariant.value = ind
+const currentActiveVariant1= ref(0)
+const currentActiveVariant2= ref(0)
+const currentActiveVariant3= ref(0)
+const changeActiveVariant = (ind,item,variantInd) => {
+  if(ind == 0){
+    currentActiveVariant1.value = item.value
+  }
+  if(ind == 1){
+    currentActiveVariant2.value = item.value
+  }
+  if(ind == 2){
+    currentActiveVariant3.value = item.value
+  }
+
+  // check which one is active and turns others off
+  combinedVariants.value.forEach(data => {
+    if(data.value == item.value){
+      data.isActive = true
+    }
+    if(data.value != item.value && data.variantInd ==  item.variantInd){
+      data.isActive = false
+    }
+
+  })
+
 }
 
 const listNameOption = computed(()=>{
   let listNameOption = []
   if(detail?.value.data.variants?.[0].nameOption_1){
-    listNameOption.push(detail?.value.data.variants[0].nameOption_1)
+    listNameOption.push({optionNumber: 1,value: detail?.value.data.variants[0].nameOption_1})
   }
 
   if(detail?.value.data.variants?.[0].nameOption_2){
-    listNameOption.push(detail?.value.data.variants[0].nameOption_2)
+    listNameOption.push({optionNumber: 2, value: detail?.value.data.variants[0].nameOption_2})
   }
 
   if(detail?.value.data.variants?.[0].nameOption_3){
-    listNameOption.push(detail?.value.data.variants[0].nameOption_3)
+    listNameOption.push({optionNumber: 3, value:detail?.value.data.variants[0].nameOption_3})
   }
   return listNameOption
 })
-
 
 const { data: detail } = await useAsyncData("productDetail", () =>
 $fetch(
@@ -505,13 +532,12 @@ $fetch(
   )
 );
 
-console.log(detail.value.data,'heheeheh');
-  const listProduct  = await useAsyncData(
-    'listProduct',
-    async () => {
-      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value.data.categoryProduct?.[0]}`)
-      return response.data.items
-    }
+const listProduct  = await useAsyncData(
+  'listProduct',
+  async () => {
+    const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
+    return response?.data?.items
+  }
 )?.data
 
 
@@ -519,25 +545,113 @@ const listProductRelatedMedia = ref([])
 const listProductRelated = () => {
   listProduct.value.forEach(item => listProductRelatedMedia.value.push(item.media[0]?.path))
 }
-onMounted(() => {
-  listProductRelated()
-})
+
 const combinedVariants = ref([]);
-const variantProperties = detail?.value.data.variants.map(product => {
-  const variantProps = {};
+const variantProperties = detail.value?.data?.variants.map((product,ind) => {
   for (const key in product) {
     if (key.includes('nameVariant_')) {
-      combinedVariants.value.push(product[key]);
+      combinedVariants.value.push({
+        variantInd: key.split('_')[1],
+        value: product[key],
+        isActive: false
+      },
+        );
+      }
     }
-  }
-  return variantProps;
 });
 
-const uniqueCombinedVariants = ref(Array.from(new Set(combinedVariants.value)));
-
-console.log(listProductRelatedMedia.value, "sdsd");
-
+ const uniqueCombinedVariants = ref([]);
+ 
+ const filterVariantBasedOnOption = (ind) => {
+  let listData = []
+  combinedVariants.value.forEach(item => {
+    if(ind == item.variantInd){
+      listData.push(item)
+    } 
+  })
+  return [...new Map(listData.map(item => [item['value'], item])).values()];
+}
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
+const initializeVariant = () => {
+  let tempList =  [...new Map(combinedVariants.value.map(item => [item['value'], item])).values()];
+  tempList.sort((a, b) => parseInt(a.variantInd) - parseInt(b.variantInd));
+  tempList.map(option => {
+    if(option.variantInd == 1 && currentActiveVariant1.value == 0 ){
+      currentActiveVariant1.value = option.value
+      option.isActive = true
+    }
+    if(option.variantInd == 2 && currentActiveVariant2.value == 0){
+      currentActiveVariant2.value = option.value
+      option.isActive = true
+    }
+    if(option.variantInd == 3 && currentActiveVariant3.value == 0){
+      currentActiveVariant3.value = option.value
+      option.isActive = true
+    }
+  })
+}
+
+const getPriceByVariant = computed(()=>{
+  for (let variant of detail.value?.data?.variants) {
+        let match = true;
+        
+        if (variant.nameVariant_1 && variant.nameVariant_1 != currentActiveVariant1.value) {
+            match = false;
+        }
+        if (variant.nameVariant_2 && variant.nameVariant_2 != currentActiveVariant2.value) {
+            match = false;
+        }
+        if (variant.nameVariant_3 && variant.nameVariant_3 != currentActiveVariant3.value) {
+            match = false;
+        }
+
+        if (match) {
+            return variant.price;
+        }
+    }
+    return null; // Return null or any default value if no match is found
+})
+
+const getContent = (tabKey) => {
+  const tabs = {
+    US: {
+      one:   detail?.value.data?.tabProductDetailUS,
+      two:   detail?.value.data?.tabSizeGuideUS,
+      three:   detail?.value.data?.tabMockupTemplateUS,
+      four:   detail?.value.data?.tabCareInstructionUS,
+    },
+    UK: {
+      one:   detail?.value.data?.tabProductDetailUK,
+      two:   detail?.value.data?.tabSizeGuideUK,
+      three:   detail?.value.data?.tabMockupTemplateUK,
+      four:   detail?.value.data?.tabCareInstructionUK,
+    },
+    FR: {
+      one:   detail?.value.data?.tabProductDetailFR,
+      two:   detail?.value.data?.tabSizeGuideFR,
+      three:   detail?.value.data?.tabMockupTemplateFR,
+      four:   detail?.value.data?.tabCareInstructionFR,
+    },
+    DE: {
+      one:   detail?.value.data?.tabProductDetailDE,
+      two:   detail?.value.data?.tabSizeGuideDE,
+      three:   detail?.value.data?.tabMockupTemplateDE,
+      four:   detail?.value.data?.tabCareInstructionDE,
+    },
+  };
+
+  return tabs[locale.value][tabKey] || '';
+};
+
+const contentOne = computed(() => getContent('one'));
+const contentTwo = computed(() => getContent('two'));
+const contentThree = computed(() => getContent('three'));
+const contentFour = computed(() => getContent('four'));
+
+onMounted(() => {
+  listProductRelated()
+  initializeVariant()
+})
 </script>
 
 <style scoped lang="scss">
@@ -615,8 +729,8 @@ console.log(listProductRelatedMedia.value, "sdsd");
 .related-product{
   :deep(.swiper-thumbnail){
       min-width:0px !important;
-      width: 276px !important;
-      height: 276px !important;
+      width: 15vw !important;
+      height: 15vw !important;
       object-fit:cover;
       max-height: none !important;
   }

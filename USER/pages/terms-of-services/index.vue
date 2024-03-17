@@ -17,16 +17,16 @@
 
     <div class="side-padding">
       <div class="nav-group">
-        <v-btn
+        <button
           :variant="item.isActive ? 'outlined' : 'text'"
           :color="item.isActive && 'blue'"
-          class="nav-btn"
+          class="nabutton"
           @click="changeActive(item,index)"
           v-for="(item, index) in navMenuData"
           :key="index"
         >
           {{ item.label }}
-        </v-btn>
+        </button>
       </div>
 
       <div class="flex" :class="mobile || tablet ? 'flex-column mt-5' : 'mt-10'">
@@ -182,7 +182,7 @@ export default {
         display: none;
       }
     }
-    .nav-btn {
+    .nabutton {
       text-transform: capitalize;
       font-size: 14px;
     }

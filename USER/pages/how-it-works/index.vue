@@ -14,9 +14,9 @@
                 <img :src="arrowUpRightWhite" />
               </a>
 
-              <v-button class="secondary-btn cursor-pointer ml-4">
+              <button class="secondary-btn cursor-pointer ml-4">
                 {{ $t("ContactUs") }}
-              </v-button>
+              </button>
             </div>
           </div>
         </div>
@@ -104,9 +104,9 @@
               <img :src="arrowUpRightWhite" />
             </a>
 
-            <v-button class="secondary-btn cursor-pointer ml-4 w-100">
+            <button class="secondary-btn cursor-pointer ml-4 w-100">
               {{ $t("ContactUs") }}
-            </v-button>
+            </button>
           </div>
         </div>
       </div>

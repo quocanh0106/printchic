@@ -8,7 +8,7 @@
     </div>
 
     <div class="hero-image mb-10">
-      <img  :src="blogDetail.img" alt="pic" />
+      <img  :src="blogDetail.imgBanner" alt="pic" />
     </div>
 
     <div class="side-paddings" :class="mobile || tablet ? '' : 'flex gap-10 mb-10'">
@@ -19,9 +19,11 @@
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
-          <v-btn class="p-1" size="sm" color="primary" variant="tonal">
-            Selling Guide
-          </v-btn>
+          <div class="" v-for="tag,ind in blogDetail.tags" :key="ind">
+            <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
+              {{ tag }}
+            </button>
+          </div>
           <div class="hyper-link-group flex gap-2">
             <img :src="linkIcon" alt="icon" class="pointer" />
             <img :src="linkedinIcon" alt="icon" class="pointer" />
@@ -63,10 +65,10 @@
           <span class="text-xl font-bold">Products</span>
           <div
             class="info pt-3 pb-3 flex justify-between"
-            v-for="item in 3"
+            v-for="item in blogDetail.recommendProduct"
             :key="item"
           >
-            <span>T-shirts</span>
+            <h1>{{ item }}</h1>
             <span class="text-slate-400">12</span>
           </div>
         </div>
@@ -74,10 +76,10 @@
           <span class="text-xl font-bold">Trending Topics</span>
           <div
             class="info pt-3 pb-3 flex justify-between font-bold text-slate-500 align-start"
-            v-for="item,index in listTrendingTopic.value"
+            v-for="item,index in listTrendingTopic"
             :key="index"
           >
-          <span class="flex flex-col gap-y-2" v-if="index < 3">
+          <span class="flex gap-x-2" v-if="index < 3">
             {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE }}
               <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${item.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
@@ -87,9 +89,9 @@
     </div>
 
     <!-- [component] Block --------------------------------------------------------------------------->
-    <div class="related-post side-paddings" :class="mobile || tablet && 'mt-10'">
-      <Blog title="Related Posts" />
-      <SwiperBlogMobile class="related-post-swipper-mobile" :items="listTrendingTopic" :slidePerView="1" />
+    <div class="related-post side-paddings" >
+      <Blog :listBlog="listTrendingTopic" title="Related Posts"  v-show="pc || lgPc || extraPc"/>
+      <SwiperBlogMobile class="related-post-swipper-mobile"  v-show="mobile || tablet" :items="listTrendingTopic" :slidePerView="1" />
     </div>
 
     <!-- <?Mobile> Summary block --------------------------------------------------------------------------->
@@ -141,7 +143,7 @@ import fbIcon from '~/assets/svg/gray-fb.svg'
 import popupIcon from '~/assets/svg/popup.svg'
 import popupBoxIcon from '~/assets/svg/popup-box.svg'
 import Help from '~/components/help.vue'
-import Blog from '~/components/blog.vue'
+import Blog from '../../components/blog.vue'
 import MenuExpanse from '~/components/MenuExpanse.vue'
 
 import { useAsyncData,useFetch } from 'nuxt/app'
@@ -170,39 +172,20 @@ const { data }  = await useAsyncData(
   () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/info?blogId=${blogId.value}`)
 )
 
+
 const listTrendingTopic = computed(() => {
-  return listTrending.value.data.items
+  console.log(listTrending.value.data.items.filter(item => item.isTop), 'HAHAHA')
+  return listTrending.value.data.items.filter(item => item.isTop)
 })
+
+
 const { data : listTrending }  = await useAsyncData(
   'listTrending',
   () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list`)
 )
+console.log(listTrending.value.data.items,'hehe')
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
-onMounted(() => {
-  if (process.client) {
-    updateScreenWidth();
-    window.addEventListener('resize', updateScreenWidth);
-  }
-  console.log(blogDetail, 'AHAHHA')
-});
-
-onUnmounted(() => {
-  // Remove event listener when the component is unmounted
-  window.removeEventListener('resize', updateScreenWidth);
-});
-
-const screenWidth = ref(0);
-
-function updateScreenWidth() {
-  screenWidth.value = window.innerWidth;
-
-}
-
-const mobile = computed(() => screenWidth.value <= 600);
-const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
-const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
-const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
-const extraPc = computed(() => screenWidth.value > 2500);
 </script>
 
 <script>
@@ -277,5 +260,12 @@ export default {
   :deep(.swiper-wrapper){
     padding-bottom: 0px;
   }
+}
+
+.blog-tag{
+  background-color: #EFF4FF;
+  padding: 4px 12px;
+  border-radius: 2px;
+  color: #3372DB;
 }
 </style>

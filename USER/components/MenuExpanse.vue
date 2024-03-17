@@ -1,8 +1,8 @@
 <template>
   <div class="menu-expanse-container">
-    <v-btn class="expanse-btn" v-if="!isExpanse" @click="isExpanse = true">
+    <button class="expanse-btn" v-if="!isExpanse" @click="isExpanse = true">
       <img :src="menuIcon" alt="icon" />
-    </v-btn>
+    </button>
     <div class="expansed-menu" v-if="isExpanse">
       <div class="header flex justify-between">
         <div class="first-title flex align-center gap-2">

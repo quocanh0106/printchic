@@ -9,13 +9,13 @@
       >
         <div class="list-tab flex items-center gap-x-8">
           <span
-            :class="currentTab == index ? 'secondary-btn txt-primary' : 'txt-gray'"
+            :class="currentTab == index ? 'secondary-btn txt-primary active-tab' : 'txt-gray'"
             class="cursor-pointer font-semibold tab-btn text-base"
-            v-for="(tab, index) in tabList"
+            v-for="(tab, index) in tabList?.data.items"
             :key="index"
             @click="currentTab = index"
           >
-            {{ locale == 'US' ? tab.titleUS : locale == 'US' ? tab.titleUK : locale == 'FR' ? tab.titleFR : tab.titleDE}}
+          {{ locale == 'US' ? tab.titleUS : locale == 'US' ? tab.titleUK : locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
         </div>
         <div class="list-blog-post mt-12">
@@ -35,10 +35,10 @@
             </div>
           </div>
         </div>
-        <v-button
+        <button
           class="secondary-btn mt-12 btn-seemore cursor-pointer"
           @click="loadMore"
-          >{{ t("button.seeMore") }}</v-button
+          >{{ t("button.seeMore") }}</button
         >
       </div>
       <!-- help -->
@@ -83,10 +83,10 @@
             </div>
           </div>
         </div>
-        <v-button
+        <button
           class="secondary-btn mt-4 mb-8 btn-seemore cursor-pointer flex justify-center"
           @click="loadMore"
-          >{{ t("button.seeMore") }}</v-button
+          >{{ t("button.seeMore") }}</button
         >
       </div>
       <!-- help -->
@@ -102,11 +102,13 @@
 import { ref, onMounted, watch } from 'vue';
 import blog from "../../components/blog.vue";
 import help from "../../components/help.vue";
-import { useI18n, useLocalePath } from '#imports'
+import { useI18n, useLocalePath,useRouter } from '#imports'
 
 const currentPage = ref(1);
 const currentTab = ref(0);
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+
+const router = useRouter()
 
 const localePath = useLocalePath()
 const { t , locale } = useI18n()
@@ -120,13 +122,14 @@ const { data:tabList }  = await useAsyncData(
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
 )
 
+console.log(listBlog.value.data, 'HEHEHEH')
 
 const loadMore = () => {
   currentPage.value++;
 };
 
 const toDetailBlog = (id) => {
-  this.$router.push(localePath(`/blog/${id}`));
+  router.push(localePath(`/blog/${id}`));
 };
 </script>
 <style lang="scss">
@@ -160,5 +163,8 @@ const toDetailBlog = (id) => {
   height:183px;
   width:183px;
   object-fit: cover;
+}
+.active-tab{
+  min-width: 0px !important;
 }
 </style>

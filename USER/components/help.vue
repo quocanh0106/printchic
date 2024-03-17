@@ -12,16 +12,16 @@
         v-show="!hideBtn"
         :class="mobile && 'flex flex-column'"
       >
-        <v-button class="primary-btn text-white">
+        <button class="primary-btn text-white">
           {{ $t("button.getStarted") }}
-        </v-button>
+        </button>
 
-        <v-button
+        <button
           class="secondary-btn cursor-pointer"
           :class="mobile ? 'ml-0 mt-5' : 'ml-4'"
         >
           {{ $t("button.tryForFree") }}
-        </v-button>
+        </button>
       </div>
     </div>
   </div>

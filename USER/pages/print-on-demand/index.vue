@@ -2,7 +2,7 @@
 <template>
   <div class="product-page-all-screen-wrapper">
     <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
-      <div class="product-header custom-padding">
+      <div class="product-header pb-0 custom-padding">
         <div class="product-banner rounded-lg text-center flex flex-col custom-padding">
           <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
           <span> Home / Men</span>
@@ -17,8 +17,8 @@
           <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
             <h1 class="text-2xl font-semibold">{{ item.filterBy }}</h1>
             <div class="filter-by mt-3" v-for="(itemfilterBy, index) in item.listFilter" :key="index">
-              <input type="checkbox" :id="itemfilterBy" :value="itemfilterBy" v-model="filterBy">
-              <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy }}</label>
+              <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" v-model="filterBy">
+              <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy.title }}</label>
               <!-- <v-checkbox :label="filterBy"></v-checkbox> -->
             </div>
           </div>
@@ -33,13 +33,13 @@
             </span>
           </div>
           <div class="query-filter-tag flex flex-row items-center gap-x-2.5">
-            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item }}</span>
+            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item.title }}</span>
             <h1 class="txt-primary font-semibold cursor-pointer" v-if="filterBy.length > 0" @click="clearAllFilterBy()">{{
               $t('productList.clearAll') }}</h1>
           </div>
           <div class="right-block-wrapper mt-12">
             <div class="product-list mb-10">
-              <div class="product-card cursor-pointer" @click="toProductDetail(item._id)" v-for="(item, index) in listProduct"
+              <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item?.media[0]?.path" />
                 <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants[0]?.sku }}</p>
@@ -47,10 +47,10 @@
                 <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
                 <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
-              <p v-if="listProduct.length == 0">{{ $t('productList.noProductFound') }}</p>
+              <p v-if="listProduct?.length == 0">{{ $t('productList.noProductFound') }}</p>
             </div>
             <div>
-              <v-button class="secondary-btn cursor-pointer button-seemore">{{ $t('button.seeMore') }}</v-button>
+              <button class="secondary-btn cursor-pointer button-seemore">{{ $t('button.seeMore') }}</button>
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
                 <p class="mt-3">{{ $t('servicePage.aboutPjmContent') }}</p>
@@ -118,7 +118,7 @@
           <span> Home / Men</span>
         </div>
         <div class="cloth-category">
-          <SwiperCateComponent @submit="filterByCategoryId(id)" :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="swiper-category-mobile mt-12" />
+          <SwiperCateComponent @submit="filterByCategoryId" :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="swiper-category-mobile mt-12" />
         </div>
       </div>
   
@@ -146,9 +146,9 @@
   
           <!-- btn filter -->
           <div class="sortbar flex justify-between mt-2 txt-gray">
-            <v-btn color="outlined" @click.stop="drawer = !drawer">
+            <button color="outlined" @click.stop="drawer = !drawer">
               {{ $t('button.filter') }}
-            </v-btn>
+            </button>
             <span class="sort-by-select flex gap-x-2">
               <p class="mt-2 txt-gray">{{ $t('productList.sortBy') }}:</p>
               <v-select :items="items" density="compact" :label="$t('productList.select')" class="sorter"></v-select>
@@ -157,13 +157,13 @@
             <span class="total-product-amount txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
               listProduct?.length }}</p> </span>
           <div class="query-filter-tag flex flex-row items-center gap-x-2.5 justify-center flex-wrap">
-            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item }}</span>
+            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item.title }}</span>
             <h1 class="txt-primary font-semibold cursor-pointer" v-if="filterBy.length > 0" @click="clearAllFilterBy()">{{
               $t('productList.clearAll') }}</h1>
           </div>
           <div class="right-block-wrapper mt-5">
             <div class="product-list-mobile mb-10">
-              <div class="product-card cursor-pointer" @click="toProductDetail(item._id)" v-for="(item, index) in listProduct"
+              <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item.media[0]?.path" />
                 <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
@@ -173,7 +173,7 @@
               </div>
             </div>
             <div>
-              <v-button class="secondary-btn cursor-pointer button-seemore-mobile">{{ $t('button.seeMore') }}</v-button>
+              <button class="secondary-btn cursor-pointer button-seemore-mobile">{{ $t('button.seeMore') }}</button>
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
                 <p class="mt-3">{{ $t('servicePage.aboutPjmContent') }}</p>
@@ -196,7 +196,6 @@ import SwiperCateComponent from './components/SwiperCateComponent.vue';
 import help from '~/components/help.vue';
 import useLanguage from '~/composables/useLanguage';
 import { useI18n, useLocalePath } from '#imports'
-import { defineEmits } from 'vue';
 
 // Replace the mixin with composable if necessary. 
 // const { mixinMethod } = useMyMixin(); // Example usage if you need to replace myMixin with a composable.
@@ -205,25 +204,12 @@ const { currentLanguage, setLanguage } = useLanguage();
 const router = useRouter();
 const route = useRoute();
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc, isLoading } = useWidthScreen();
+const { t, locale } = useI18n();
 
 const localePath = useLocalePath()
 const drawer = ref(null);
 const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
 const currentPage = ref(1);
-const listFilter = ref([
-  {
-    filterBy: 'Categories',
-    listFilter: ['Apparel', 'Gift & Accessories', 'Home & Decorations', 'All Over Print', 'Canvas & Poster', 'Shoes', 'US 2D Printing']
-  },
-  {
-    filterBy: 'Print Area',
-    listFilter: ['Back side', 'All-over Print', 'Front side', 'Sleeve left', 'Sleeve right']
-  },
-  {
-    filterBy: 'Techniques',
-    listFilter: ['UV Digital Printing', 'Vinyl Heat Transfer', 'Digital Cylinder Printing', 'Laser Cut', 'Embroidery', 'Digital Printing (DTG)', 'Dye Sublimation']
-  },
-]);
 
 watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
   if (newCategoryProductId) {
@@ -244,13 +230,25 @@ const listProduct  = await useAsyncData(
     return response.data.items
   }
 )?.data
+
 const listCate  = await useAsyncData(
   'listCategory',
   async () => {
     const response = await $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
     return response.data.items
   }
-)?.data
+  )?.data
+
+const listFilter = ref([
+  {
+    filterBy: 'Categories',
+    listFilter: listCate.value?.map(item => ({
+      _id: item._id,
+      title: locale.value == 'US'? item.titleUS : locale.value == 'UK' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE
+    }))
+  },
+]);
+
 const filterBy = ref([]);
 
 function clearAllFilterBy() {
