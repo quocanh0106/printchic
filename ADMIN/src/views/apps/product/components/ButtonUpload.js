@@ -21,6 +21,7 @@ const ButtonUpload = ({getValues, setValue, id}) => { // ** States
             const listFiles = acceptedFiles.map(file => Object.assign(file))
             const formData = new FormData();
             formData.append('file', listFiles[0])
+            
             const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/cloudinary-upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -30,6 +31,7 @@ const ButtonUpload = ({getValues, setValue, id}) => { // ** States
             setFiles(response.data?.secure_url)
         }
     })
+
     return (
         <div>
             {
