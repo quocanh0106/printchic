@@ -190,7 +190,7 @@
             <img :src="arrowUpRight" />
           </a>
         </div>
-        <swiperComponent class="mt-12 mb-8 swiper-mobile-top-category" :items="data.data.items" :slidePerView="tablet ? 4 : 2" />
+        <swiperComponent class="mt-12 mb-8 swiper-mobile-top-category" :items="data?.data?.items" :slidePerView="tablet ? 4 : 2" />
       </div>
 
       <!-- Card Infor and Process Explaination -->
