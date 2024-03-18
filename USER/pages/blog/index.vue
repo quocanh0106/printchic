@@ -2,7 +2,7 @@
   <div class="blog-list-all-page-wrapper">
     <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
-      <blog :listBlog="listBlog.data.items" class="custom-padding" />
+      <blog :listBlog="listBlog?.data?.items" class="custom-padding" />
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center custom-padding"
@@ -11,7 +11,7 @@
           <span
             :class="currentTab == index ? 'secondary-btn txt-primary active-tab' : 'txt-gray'"
             class="cursor-pointer font-semibold tab-btn text-base"
-            v-for="(tab, index) in tabList?.data.items"
+            v-for="(tab, index) in tabList?.data?.items"
             :key="index"
             @click="currentTab = index"
           >
@@ -22,7 +22,7 @@
           <div class="blog-post-wrapper flex">
             <div
               class="flex blog-post cursor-pointer"
-              v-for="(item, index) in listBlog.data.items"
+              v-for="(item, index) in listBlog?.data?.items"
               :key="index"
               @click="toDetailBlog(item.id)"
             >
@@ -50,7 +50,7 @@
     </div>
     <div class="blog-list-wrapper" v-show="mobile || tablet">
       <!-- featured Post -->
-      <blog :listBlog="listBlog.data.items"/>
+      <blog :listBlog="listBlog?.data?.items"/>
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center w-100"
@@ -70,7 +70,7 @@
           <div class="blog-post-wrapper flex flex-column">
             <div
               class="flex blog-post cursor-pointer flex-column"
-              v-for="(item, index) in listBlog.data.items"
+              v-for="(item, index) in listBlog?.data?.items"
               :key="index"
               @click="toDetailBlog(item._id)"
             >
@@ -122,7 +122,6 @@ const { data:tabList }  = await useAsyncData(
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
 )
 
-console.log(listBlog.value.data, 'HEHEHEH')
 
 const loadMore = () => {
   currentPage.value++;
