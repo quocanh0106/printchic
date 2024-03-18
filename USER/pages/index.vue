@@ -307,8 +307,6 @@ const { data }  = await useAsyncData(
   () => $fetch('http://localhost:8000/auth/categoryProduct/list')
 )
 
-const test = await  $fetch('http://localhost:8000/auth/categoryProduct/list')
-
 const listBlog  = await useAsyncData(
   'blog',
   () => $fetch('http://localhost:8000/auth/blog/list')
