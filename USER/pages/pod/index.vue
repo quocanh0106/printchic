@@ -574,7 +574,7 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const localePath = useLocalePath()
 const { data }  = await useAsyncData(
   'listProduct',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
+  () => $fetch('http://localhost:8000/auth/product/list')
 )
 
 const listPod = ref([])

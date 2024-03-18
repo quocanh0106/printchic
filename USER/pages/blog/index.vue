@@ -115,11 +115,11 @@ const { t , locale } = useI18n()
 
 const { data:listBlog }  = await useAsyncData(
   'listBlog',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
+  () => $fetch('http://localhost:8000/auth/blog/list')
 )
 const { data:tabList }  = await useAsyncData(
   'tabList',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
+  () => $fetch('http://localhost:8000/auth/categoryBlog/list')
 )
 
 

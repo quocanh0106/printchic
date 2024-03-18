@@ -389,7 +389,7 @@ const router = useRouter();
 const listPODProduct = ref([]);
 const localePath = useLocalePath()
 
-const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/product/list`, {
+const { data, pending, error } = useFetch(`http://localhost:8000/auth/product/list`, {
   headers: {
     fetchMode: 'headless',
   },

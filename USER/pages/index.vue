@@ -301,15 +301,17 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { t } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+
 const { data }  = await useAsyncData(
   'categoryProduct',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
+  () => $fetch('http://localhost:8000/auth/categoryProduct/list')
 )
 
+const test = await  $fetch('http://localhost:8000/auth/categoryProduct/list')
 
 const listBlog  = await useAsyncData(
   'blog',
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
+  () => $fetch('http://localhost:8000/auth/blog/list')
 )?.data
 </script>
 

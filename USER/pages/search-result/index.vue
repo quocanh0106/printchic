@@ -43,7 +43,7 @@ const loading = ref(true)
 const data = ref(null)
 const fetchData = async () => {
   try {
-    const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?search=${route.query.search}`); // Replace with your API endpoint
+    const response = await $fetch(`http://localhost:8000/auth/product/list?search=${route.query.search}`); // Replace with your API endpoint
     data.value = await response.data.items;
   } finally {
     loading.value = false;
