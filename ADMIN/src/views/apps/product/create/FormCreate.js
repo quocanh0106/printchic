@@ -29,6 +29,7 @@ import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
+import ButtonUpload from '../components/ButtonUpload'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -258,9 +259,12 @@ const FormCreate = () => {
     const variant = listOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
+      ele.img = value[`imageVariant-${ele.id}`]
 
       return ele
     })
+
+    console.log('variant',variant);
 
     const arrayCatPro = valueRecommend.map(ele => ele._id)
 
@@ -314,14 +318,14 @@ const FormCreate = () => {
 
       formData.append(`customizationOptions${ele.value}`, value[`customizationOptions${ele.value}`]);
       formData.append(`detailProduct${ele.value}`, value[`detailProduct${ele.value}`]);
-  
+
       formData.append(`optionMaterial_1${ele.value}`, value[`optionMaterial_1${ele.value}`]);
       formData.append(`minName_1${ele.value}`, value[`minName_1${ele.value}`]);
       formData.append(`maxName_1${ele.value}`, value[`maxName_1${ele.value}`]);
       formData.append(`optionMaterial_2${ele.value}`, value[`optionMaterial_2${ele.value}`]);
       formData.append(`minName_2${ele.value}`, value[`minName_2${ele.value}`]);
       formData.append(`maxName_2${ele.value}`, value[`maxName_2${ele.value}`]);
-  
+
       formData.append(`featureProduct${ele.value}`, value[`featureProduct${ele.value}`]);
     })
     formData.append(`valueMaterial_1`, thickness);
@@ -477,6 +481,20 @@ const FormCreate = () => {
                 />
               )}
             />
+          </Box>
+        )
+      }
+    },)
+    listColumnOptions.push({
+      flex: 0.2,
+      field: 'imageVariant',
+      minWidth: 170,
+      headerName: 'Image',
+      renderCell: ({ row }) => {
+
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id}/>
           </Box>
         )
       }

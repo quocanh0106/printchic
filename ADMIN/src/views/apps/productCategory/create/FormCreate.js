@@ -29,9 +29,9 @@ const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { Card, CircularProgress, MenuItem } from '@mui/material'
+import { Card, CircularProgress, MenuItem, Divider } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
@@ -115,6 +115,19 @@ const ProductCategoryComponent = () => {
   const [paragraphDE, setParagraphDE] = useState('');
   const [paragraphFR, setParagraphFR] = useState('');
 
+  const [listFAQ, setListFAQ] = useState([
+    {
+      questionUK: '',
+      questionUS: '',
+      questionFR: '',
+      questionDE: '',
+      answerUK: '',
+      answerUS: '',
+      answerFR: '',
+      answerDE: '',
+    }
+  ]);
+
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -133,13 +146,30 @@ const ProductCategoryComponent = () => {
 
   const {
     control,
-    reset,
+    getValues,
     setError,
     clearErrors,
     handleSubmit,
     formState: { errors }
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      faqs: [{
+        questionUK: '',
+        questionUS: '',
+        questionFR: '',
+        questionDE: '',
+        answerUK: '',
+        answerUS: '',
+        answerFR: '',
+        answerDE: '',
+      }]
+    }
+  })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'faqs'
+  });
 
   const handleChangePajamasUK = (content, delta, source, editor) => {
     setPajamasUK(content);
@@ -194,13 +224,14 @@ const ProductCategoryComponent = () => {
   const onSubmit = (value) => {
     if (files[0]) {
       setLoading(true)
+
       const formData = new FormData();
       LANG.forEach(ele => {
         formData.append(`title${ele.value}`, value[`title${ele.value}`]);
         formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`]);
         formData.append(`description${ele.value}`, value[`description${ele.value}`]);
       })
-      formData.append("parentCategory", value.parentCategory);
+      formData.append("childCategory", value.childCategory);
       formData.append("file", files[0]);
 
       formData.append("pajamasUK", JSON.stringify(pajamasUK));
@@ -211,7 +242,8 @@ const ProductCategoryComponent = () => {
       formData.append("paragraphUK", JSON.stringify(paragraphUK));
       formData.append("paragraphUS", JSON.stringify(paragraphUS));
       formData.append("paragraphFR", JSON.stringify(paragraphFR));
-      formData.append("paragraphDE", JSON.stringify(paragraphDE));
+
+      formData.append("faq", JSON.stringify(value.faqs));
 
       dispatch(addCategoryProduct({ formData, callBackSubmit }))
     } else {
@@ -515,7 +547,7 @@ const ProductCategoryComponent = () => {
               <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
             </Box>
           </Card>
-          <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
+          <Card sx={{ p: 4, my: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Paragraph UK
@@ -542,16 +574,212 @@ const ProductCategoryComponent = () => {
             </Box>
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
+            <Typography variant='h4' sx={{ mb: 3 }}>
+              FAQ
+            </Typography>
+            {
+              fields.map((field, index) =>
+                <Box key={field.id} sx={{ mb: 3 }}>
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    Question - {index + 1}
+                  </Typography>
+                  <Grid container spacing={5}>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.question${LANG_OBJECT.UK}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.UK}`}
+                            required
+                            onChange={onChange}
+                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.UK}`])}
+                            aria-describedby='validation-basic-first-name'
+                            {...(errors[`faqs.${index}.question${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.question${LANG_OBJECT.US}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.US}`}
+                            required
+                            onChange={onChange}
+                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.US}`])}
+                            aria-describedby='validation-basic-first-name'
+                            {...(errors[`faqs.${index}.question${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.question${LANG_OBJECT.FR}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.FR}`}
+                            required
+                            onChange={onChange}
+                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.FR}`])}
+                            aria-describedby='validation-basic-first-name'
+                            {...(errors[`faqs.${index}.question${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.question${LANG_OBJECT.DE}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.DE}`}
+                            required
+                            onChange={onChange}
+                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.DE}`])}
+                            aria-describedby='validation-basic-first-name'
+                            {...(errors[`faqs.${index}.question${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Typography variant='h5' sx={{ mb: 3 }}>
+                    Answer - {index + 1}
+                  </Typography>
+                  <Grid container spacing={5}>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.UK}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            required
+                            {...field}
+                            label={`Answer ${LANG_OBJECT.UK}`}
+                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.UK}`])}
+                            aria-describedby='validation-basic-textarea'
+                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.US}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            required
+                            {...field}
+                            label={`answer ${LANG_OBJECT.US}`}
+                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.US}`])}
+                            aria-describedby='validation-basic-textarea'
+                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.FR}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            required
+                            {...field}
+                            label={`answer ${LANG_OBJECT.FR}`}
+                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.FR}`])}
+                            aria-describedby='validation-basic-textarea'
+                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.DE}`}
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            required
+                            {...field}
+                            label={`answer ${LANG_OBJECT.DE}`}
+                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.DE}`])}
+                            aria-describedby='validation-basic-textarea'
+                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
+                          />
+                        )}
+                      />
+                    </Grid>
+                  </Grid>
+                  {
+                    index > 0 ? <Button variant='outlined'  onClick={() => remove(index)} sx={{ justifyContent: 'start', width: '180px', mt: 4 }}>
+                      Remove this FAQ
+                    </Button> : <></>
+                  }
+
+                  <Divider sx={{ my: 5 }} />
+                </Box>
+              )
+            }
+            <Button variant='contained' onClick={() => append({
+              questionUK: '',
+              questionUS: '',
+              questionFR: '',
+              questionDE: '',
+              answerUK: '',
+              answerUS: '',
+              answerFR: '',
+              answerDE: '',
+            })} sx={{ justifyContent: 'start'}}>
+              Add FAQ
+            </Button>
+          </Card>
+          <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Grid item xs={12} sm={12}>
               <Controller
-                name='parentCategory'
+                name='childCategory'
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     select
                     fullWidth
                     defaultValue=''
-                    label='Parent category'
+                    label='child category'
                     SelectProps={{
                       value: value,
                       onChange: e => onChange(e)

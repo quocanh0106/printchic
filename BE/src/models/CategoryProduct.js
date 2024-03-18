@@ -74,6 +74,9 @@ const ConfigsBase = {
   childCategory: {
     type: String, trim: true,
   },
+  faq: {
+    type: String, trim: true,
+  },
 }
 const Configs = { ...ConfigsBase, ...common };
 const ConfigsSchema = new Schema(Configs, { versionKey: false });

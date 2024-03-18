@@ -31,6 +31,7 @@ import Tab from '@mui/material/Tab'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
+import ButtonUpload from '../components/ButtonUpload'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
 
@@ -257,6 +258,7 @@ const FormCreate = () => {
     let variant = tempListOPtionVariant.map((ele) => {
       ele.price = value[`price-${ele.id}`]
       ele.sku = value[`sku-${ele.id}`]
+      ele.img = value[`imageVariant-${ele.id}`]
 
       return ele
     })
@@ -475,6 +477,7 @@ const FormCreate = () => {
     data.forEach(ele => {
       setValue(`price-${ele.id}`, ele.price)
       setValue(`sku-${ele.id}`, ele.sku)
+      setValue(`imageVariant-${ele.id}`, ele.img)
     })
 
     setListOptionVariant(data)
@@ -700,7 +703,20 @@ const FormCreate = () => {
         )
       }
     },)
-    console.log('listColumnOptions', listColumnOptions)
+    listColumnOptions.push({
+      flex: 0.2,
+      field: 'imageVariant',
+      minWidth: 170,
+      headerName: 'Image',
+      renderCell: ({ row }) => {
+
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id}/>
+          </Box>
+        )
+      }
+    },)
     setColumn(listColumnOptions)
   }
 

@@ -13,17 +13,17 @@ const create = async (data) => {
     console.log('data', data)
     try {
         const set = {};
-        
+
         set.titleUK = data.titleUK;
         set.titleUS = data.titleUS;
         set.titleDE = data.titleDE;
         set.titleFR = data.titleFR;
-        
+
         set.handleUrlUK = data.handleUrlUK;
         set.handleUrlUS = data.handleUrlUS;
         set.handleUrlDE = data.handleUrlDE;
         set.handleUrlFR = data.handleUrlFR;
-        
+
         set.metaDescriptionUK = data.metaDescriptionUK;
         set.metaDescriptionUS = data.metaDescriptionUS;
         set.metaDescriptionDE = data.metaDescriptionDE;
@@ -33,6 +33,7 @@ const create = async (data) => {
         set.descriptionUS = data.descriptionUS;
         set.descriptionDE = data.descriptionDE;
         set.descriptionFR = data.descriptionFR;
+        set.faq = data.faq;
 
         set.bannerImg = data.bannerImg;
         set.createdBy = convertToObjectId(data.createdBy);
@@ -118,7 +119,7 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.categoryBlogId);
         }
         const set = {};
-        
+
         if (!isEmpty(data?.titleUK)) {
             set.titleUK = data.titleUK;
         }
@@ -172,6 +173,9 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.bannerImg)) {
             set.bannerImg = data.bannerImg;
+        }
+        if (!isEmpty(data?.faq)) {
+            set.faq = data.faq;
         }
         const result = await CategoryBlogsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
