@@ -1,36 +1,35 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, Divider, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Divider, Fade, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import IconButton from '@mui/material/IconButton'
 
 // ** Custom Components Imports
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
-import { Fragment, forwardRef, useEffect, useState } from 'react'
-import { Box } from '@mui/system'
-import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
-import Icon from 'src/@core/components/icon'
 import styled from '@emotion/styled'
+import { Box } from '@mui/system'
 import { DataGrid } from '@mui/x-data-grid'
-import { useDropzone } from 'react-dropzone'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { addProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
-import { useRouter } from 'next/router'
-import toast from 'react-hot-toast'
+import { Slider } from 'antd'
 import dynamic from 'next/dynamic'
-import { LANG, LANG_OBJECT } from 'src/constant'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
+import { Fragment, forwardRef, useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
-import { Slider } from 'antd';
+import { LANG, LANG_OBJECT } from 'src/constant'
+import { fetchEvents } from 'src/store/apps/categoryProduct'
+import { fetchInfoProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
 
 // import Tabs
-import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
+import Tab from '@mui/material/Tab'
 import ButtonUpload from '../components/ButtonUpload'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
@@ -251,6 +250,31 @@ const FormCreate = () => {
     setValueRecommend(newValue)
   }
 
+  const compareFileArrays = (array1, array2) => {
+    if (array1.length !== array2.length) {
+        return false;
+    }
+
+    // Sắp xếp các mảng để đảm bảo các file được so sánh theo thứ tự
+    array1.sort((a, b) => a.name.localeCompare(b.name));
+    array2.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Kiểm tra từng cặp file
+    for (let i = 0; i < array1.length; i++) {
+        const file1 = array1[i];
+        const file2 = array2[i];
+
+        // So sánh tên, loại MIME, và kích thước
+        if (file1.name !== file2.name || file1.type !== file2.type || file1.size !== file2.size) {
+            return false;
+        }
+
+        // Nếu bạn cần so sánh nội dung, bạn cần thêm mã để đọc và so sánh nội dung tại đây
+    }
+
+    return true;
+}
+
   const onSubmit = (value) => {
     setLoading(true)
     let tempListOPtionVariant = JSON.parse(JSON.stringify(listOPtionVariant))
@@ -344,6 +368,12 @@ const FormCreate = () => {
     formData.append("price", value.price);
     value.priceSale && formData.append("priceSale", value.priceSale);
 
+    if(compareFileArrays(files, )) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+      }
+    }
+
     dispatch(updateProduct({ formData, callBackSubmit }))
   }
 
@@ -369,7 +399,7 @@ const FormCreate = () => {
   const dispatch = useDispatch()
 
   const store = useSelector(state => state.categoryProduct)
-  const storeProduct = useSelector(state => state.product)
+  const {infoProduct} = useSelector(state => state.product)
 
   const URLtoFile = async (url) => {
 
@@ -390,7 +420,6 @@ const FormCreate = () => {
     })
 
     // Creates new File object using blob data, extension and MIME type
-    console.log(file);
 
     return file
 
@@ -398,8 +427,8 @@ const FormCreate = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-    dispatch(fetchProduct())
-  }, [])
+    dispatch(fetchInfoProduct({productId: router.query.id}))
+  }, [router.query.id])
 
   const getUniqueValues = (array, propertyName) => {
 
@@ -484,119 +513,143 @@ const FormCreate = () => {
     setListVariant(tempVariant)
   }
 
+  async function convertToFiles(array) {
+    const files = await Promise.all(array.map(async (item) => {
+      // Fetch the binary data from the URL
+      const response = await fetch(item.path);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok for ${item.path}`);
+      }
+      const blob = await response.blob();
+
+      // Create a File object from the Blob
+      const file = new File([blob], item.originalname, {
+        type: item.mimetype,
+      });
+
+      return file;
+    }));
+
+    return files;
+  }
+
   useEffect(() => {
-    if (storeProduct.data.length > 0) {
-      const data = storeProduct.data.find(ele => ele._id == router.query.id)
+    if (infoProduct) {
 
       const listFile = [];
-      data?.media?.forEach(ele => {
+      infoProduct?.media?.forEach(ele => {
         listFile.push(URLtoFile(ele.path))
       })
 
       const listCatPro = [];
       store.data.forEach(ele => {
-        if (data?.categoryProduct?.includes(ele._id)) {
+        if (infoProduct?.categoryProduct?.includes(ele._id)) {
           listCatPro.push(ele)
         }
       })
 
-      data?.variants && handleListVariant(data?.variants)
-      setValue('titleUK', data?.titleUK)
-      setValue('titleUS', data?.titleUS)
-      setValue('titleFR', data?.titleFR)
-      setValue('titleDE', data?.titleDE)
+      infoProduct?.variants && handleListVariant(infoProduct?.variants)
+      setValue('titleUK', infoProduct?.titleUK)
+      setValue('titleUS', infoProduct?.titleUS)
+      setValue('titleFR', infoProduct?.titleFR)
+      setValue('titleDE', infoProduct?.titleDE)
 
-      setValue('handleUrlUK', data?.handleUrlUK)
-      setValue('handleUrlUS', data?.handleUrlUS)
-      setValue('handleUrlFR', data?.handleUrlFR)
-      setValue('handleUrlDE', data?.handleUrlDE)
+      setValue('handleUrlUK', infoProduct?.handleUrlUK)
+      setValue('handleUrlUS', infoProduct?.handleUrlUS)
+      setValue('handleUrlFR', infoProduct?.handleUrlFR)
+      setValue('handleUrlDE', infoProduct?.handleUrlDE)
 
-      setValue('metaDescriptionUK', data?.metaDescriptionUK)
-      setValue('metaDescriptionUS', data?.metaDescriptionUS)
-      setValue('metaDescriptionFR', data?.metaDescriptionFR)
-      setValue('metaDescriptionDE', data?.metaDescriptionDE)
+      setValue('metaDescriptionUK', infoProduct?.metaDescriptionUK)
+      setValue('metaDescriptionUS', infoProduct?.metaDescriptionUS)
+      setValue('metaDescriptionFR', infoProduct?.metaDescriptionFR)
+      setValue('metaDescriptionDE', infoProduct?.metaDescriptionDE)
 
-      setValue('typeUK', data?.typeUK)
-      setValue('typeUS', data?.typeUS)
-      setValue('typeFR', data?.typeFR)
-      setValue('typeDE', data?.typeDE)
+      setValue('typeUK', infoProduct?.typeUK)
+      setValue('typeUS', infoProduct?.typeUS)
+      setValue('typeFR', infoProduct?.typeFR)
+      setValue('typeDE', infoProduct?.typeDE)
 
-      setValue('tabProductDetailUK', data?.tabProductDetailUK)
-      setValue('tabProductDetailUS', data?.tabProductDetailUS)
-      setValue('tabProductDetailFR', data?.tabProductDetailFR)
-      setValue('tabProductDetailDE', data?.tabProductDetailDE)
+      setValue('tabProductDetailUK', infoProduct?.tabProductDetailUK)
+      setValue('tabProductDetailUS', infoProduct?.tabProductDetailUS)
+      setValue('tabProductDetailFR', infoProduct?.tabProductDetailFR)
+      setValue('tabProductDetailDE', infoProduct?.tabProductDetailDE)
 
-      setValue('tabSizeGuideUK', data?.tabSizeGuideUK)
-      setValue('tabSizeGuideUS', data?.tabSizeGuideUS)
-      setValue('tabSizeGuideFR', data?.tabSizeGuideFR)
-      setValue('tabSizeGuideDE', data?.tabSizeGuideDE)
+      setValue('tabSizeGuideUK', infoProduct?.tabSizeGuideUK)
+      setValue('tabSizeGuideUS', infoProduct?.tabSizeGuideUS)
+      setValue('tabSizeGuideFR', infoProduct?.tabSizeGuideFR)
+      setValue('tabSizeGuideDE', infoProduct?.tabSizeGuideDE)
 
-      setValue('tabMockupTemplateUK', data?.tabMockupTemplateUK)
-      setValue('tabMockupTemplateUS', data?.tabMockupTemplateUS)
-      setValue('tabMockupTemplateFR', data?.tabMockupTemplateFR)
-      setValue('tabMockupTemplateDE', data?.tabMockupTemplateDE)
+      setValue('tabMockupTemplateUK', infoProduct?.tabMockupTemplateUK)
+      setValue('tabMockupTemplateUS', infoProduct?.tabMockupTemplateUS)
+      setValue('tabMockupTemplateFR', infoProduct?.tabMockupTemplateFR)
+      setValue('tabMockupTemplateDE', infoProduct?.tabMockupTemplateDE)
 
-      setValue('tabCareInstructionUK', data?.tabCareInstructionUK)
-      setValue('tabCareInstructionUS', data?.tabCareInstructionUS)
-      setValue('tabCareInstructionFR', data?.tabCareInstructionFR)
-      setValue('tabCareInstructionDE', data?.tabCareInstructionDE)
+      setValue('tabCareInstructionUK', infoProduct?.tabCareInstructionUK)
+      setValue('tabCareInstructionUS', infoProduct?.tabCareInstructionUS)
+      setValue('tabCareInstructionFR', infoProduct?.tabCareInstructionFR)
+      setValue('tabCareInstructionDE', infoProduct?.tabCareInstructionDE)
 
       LANG.forEach(ele => {
-        setValue(`customizationOptions${ele.value}`, data?.[`customizationOptions${ele.value}`])
-        setValue(`detailProduct${ele.value}`, data?.[`detailProduct${ele.value}`])
-        setValue(`featureProduct${ele.value}`, data?.[`featureProduct${ele.value}`])
-        setValue(`optionMaterial_1${ele.value}`, data?.[`optionMaterial_1${ele.value}`])
-        setValue(`minName_1${ele.value}`, data?.[`minName_1${ele.value}`])
-        setValue(`maxName_1${ele.value}`, data?.[`maxName_1${ele.value}`])
-        setValue(`optionMaterial_2${ele.value}`, data?.[`optionMaterial_2${ele.value}`])
-        setValue(`minName_2${ele.value}`, data?.[`minName_2${ele.value}`])
-        setValue(`maxName_2${ele.value}`, data?.[`maxName_2${ele.value}`])
-        setValue(`customizationOptionsLabel${ele.value}`, data?.[`customizationOptionsLabel${ele.value}`])
-        setValue(`detailProductLabel${ele.value}`, data?.[`detailProductLabel${ele.value}`])
-        setValue(`optionMaterialLabel${ele.value}`, data?.[`optionMaterialLabel${ele.value}`])
-        setValue(`featureProductLabel${ele.value}`, data?.[`featureProductLabel${ele.value}`])
+        setValue(`customizationOptions${ele.value}`, infoProduct?.[`customizationOptions${ele.value}`])
+        setValue(`detailProduct${ele.value}`, infoProduct?.[`detailProduct${ele.value}`])
+        setValue(`featureProduct${ele.value}`, infoProduct?.[`featureProduct${ele.value}`])
+        setValue(`optionMaterial_1${ele.value}`, infoProduct?.[`optionMaterial_1${ele.value}`])
+        setValue(`minName_1${ele.value}`, infoProduct?.[`minName_1${ele.value}`])
+        setValue(`maxName_1${ele.value}`, infoProduct?.[`maxName_1${ele.value}`])
+        setValue(`optionMaterial_2${ele.value}`, infoProduct?.[`optionMaterial_2${ele.value}`])
+        setValue(`minName_2${ele.value}`, infoProduct?.[`minName_2${ele.value}`])
+        setValue(`maxName_2${ele.value}`, infoProduct?.[`maxName_2${ele.value}`])
+        setValue(`customizationOptionsLabel${ele.value}`, infoProduct?.[`customizationOptionsLabel${ele.value}`])
+        setValue(`detailProductLabel${ele.value}`, infoProduct?.[`detailProductLabel${ele.value}`])
+        setValue(`optionMaterialLabel${ele.value}`, infoProduct?.[`optionMaterialLabel${ele.value}`])
+        setValue(`featureProductLabel${ele.value}`, infoProduct?.[`featureProductLabel${ele.value}`])
       })
 
-      setValue('btnLink', data?.btnLink)
+      setValue('btnLink', infoProduct?.btnLink)
 
-      setStretchiness(data?.valueMaterial_2)
-      setThickness(data?.valueMaterial_1)
+      setStretchiness(infoProduct?.valueMaterial_2)
+      setThickness(infoProduct?.valueMaterial_1)
 
-      setValue('productStatus', data?.status)
-      data?.descriptionUK && setContentUK(JSON.parse(data?.descriptionUK))
-      data?.descriptionUS && setContentUS(JSON.parse(data?.descriptionUS))
-      data?.descriptionFR && setContentFR(JSON.parse(data?.descriptionFR))
-      data?.descriptionDE && setContentDE(JSON.parse(data?.descriptionDE))
+      setValue('productStatus', infoProduct?.status)
+      infoProduct?.descriptionUK && setContentUK(JSON.parse(infoProduct?.descriptionUK))
+      infoProduct?.descriptionUS && setContentUS(JSON.parse(infoProduct?.descriptionUS))
+      infoProduct?.descriptionFR && setContentFR(JSON.parse(infoProduct?.descriptionFR))
+      infoProduct?.descriptionDE && setContentDE(JSON.parse(infoProduct?.descriptionDE))
 
-      data?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(data?.tabProductDetailUK))
-      data?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(data?.tabProductDetailUS))
-      data?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(data?.tabProductDetailFR))
-      data?.tabProductDetailDE && setTabProductDetailDE(JSON.parse(data?.tabProductDetailDE))
+      infoProduct?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(infoProduct?.tabProductDetailUK))
+      infoProduct?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(infoProduct?.tabProductDetailUS))
+      infoProduct?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(infoProduct?.tabProductDetailFR))
+      infoProduct?.tabProductDetailDE && setTabProductDetailDE(JSON.parse(infoProduct?.tabProductDetailDE))
 
-      data?.tabSizeGuideUK && setTabSizeGuideUK(JSON.parse(data?.tabSizeGuideUK))
-      data?.tabSizeGuideUS && setTabSizeGuideUS(JSON.parse(data?.tabSizeGuideUS))
-      data?.tabSizeGuideFR && setTabSizeGuideFR(JSON.parse(data?.tabSizeGuideFR))
-      data?.tabSizeGuideDE && setTabSizeGuideDE(JSON.parse(data?.tabSizeGuideDE))
+      infoProduct?.tabSizeGuideUK && setTabSizeGuideUK(JSON.parse(infoProduct?.tabSizeGuideUK))
+      infoProduct?.tabSizeGuideUS && setTabSizeGuideUS(JSON.parse(infoProduct?.tabSizeGuideUS))
+      infoProduct?.tabSizeGuideFR && setTabSizeGuideFR(JSON.parse(infoProduct?.tabSizeGuideFR))
+      infoProduct?.tabSizeGuideDE && setTabSizeGuideDE(JSON.parse(infoProduct?.tabSizeGuideDE))
 
-      data?.tabMockupTemplateUK && setTabMockupTemplateUK(JSON.parse(data?.tabMockupTemplateUK))
-      data?.tabMockupTemplateUS && setTabMockupTemplateUS(JSON.parse(data?.tabMockupTemplateUS))
-      data?.tabMockupTemplateFR && setTabMockupTemplateFR(JSON.parse(data?.tabMockupTemplateFR))
-      data?.tabMockupTemplateDE && setTabMockupTemplateDE(JSON.parse(data?.tabMockupTemplateDE))
+      infoProduct?.tabMockupTemplateUK && setTabMockupTemplateUK(JSON.parse(infoProduct?.tabMockupTemplateUK))
+      infoProduct?.tabMockupTemplateUS && setTabMockupTemplateUS(JSON.parse(infoProduct?.tabMockupTemplateUS))
+      infoProduct?.tabMockupTemplateFR && setTabMockupTemplateFR(JSON.parse(infoProduct?.tabMockupTemplateFR))
+      infoProduct?.tabMockupTemplateDE && setTabMockupTemplateDE(JSON.parse(infoProduct?.tabMockupTemplateDE))
 
-      data?.tabCareInstructionUK && setTabCareInstructionUK(JSON.parse(data?.tabCareInstructionUK))
-      data?.tabCareInstructionUS && setTabCareInstructionUS(JSON.parse(data?.tabCareInstructionUS))
-      data?.tabCareInstructionFR && setTabCareInstructionFR(JSON.parse(data?.tabCareInstructionFR))
-      data?.tabCareInstructionDE && setTabCareInstructionDE(JSON.parse(data?.tabCareInstructionDE))
+      infoProduct?.tabCareInstructionUK && setTabCareInstructionUK(JSON.parse(infoProduct?.tabCareInstructionUK))
+      infoProduct?.tabCareInstructionUS && setTabCareInstructionUS(JSON.parse(infoProduct?.tabCareInstructionUS))
+      infoProduct?.tabCareInstructionFR && setTabCareInstructionFR(JSON.parse(infoProduct?.tabCareInstructionFR))
+      infoProduct?.tabCareInstructionDE && setTabCareInstructionDE(JSON.parse(infoProduct?.tabCareInstructionDE))
 
-      setValue('currency', data?.currency)
+      setValue('currency', infoProduct?.currency)
       setValueRecommend(listCatPro)
-      setValue('price', data?.price)
-      setValue('priceSale', data?.priceSale)
-      setFiles(data?.media)
+      setValue('price', infoProduct?.price)
+      setValue('priceSale', infoProduct?.priceSale)
+      
+      convertToFiles(infoProduct?.media).then(files => {
+        setFiles(files)
+    }).catch(error => {
+        console.error('Error converting to files:', error);
+    });
+      
     }
-  }, [storeProduct, store, router.query.id])
+  }, [infoProduct, store, router.query.id])
 
-  console.log('errors', errors)
 
   const handleAddVariant = () => {
     let tempListVariant = JSON.parse(JSON.stringify(listVariant))
@@ -712,7 +765,7 @@ const FormCreate = () => {
 
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id}/>
+            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id} />
           </Box>
         )
       }
@@ -799,12 +852,6 @@ const FormCreate = () => {
     }
   }
 
-  const handleEditorChange = (event, editor) => {
-    console.log('evnet', editor.getData())
-    const data = editor.getData()
-    setValue('description', data) // You can handle the data here
-  }
-
   const removeOption = (indexVariant, indexOption) => {
     let tempListVariant = JSON.parse(JSON.stringify(listVariant))
     tempListVariant.forEach(variant => {
@@ -817,17 +864,13 @@ const FormCreate = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: acceptedFiles => {
+      console.log('acceptedFiles', acceptedFiles);
       setFiles(acceptedFiles.map(file => Object.assign(file)))
+      console.log('files', acceptedFiles.map(file => Object.assign(file)));
     }
   })
 
-  const renderFilePreview = file => {
-    if (file.type.startsWith('image')) {
-      return <img width={38} height={38} alt={file.name} src={URL.createObjectURL(file)} />
-    } else {
-      return <Icon icon='tabler:file-description' />
-    }
-  }
+  console.log('fileee', files);
 
   const handleRemoveFile = file => {
     const uploadedFiles = files
@@ -835,15 +878,12 @@ const FormCreate = () => {
     setFiles([...filtered])
   }
 
-  const fileList = files?.map(file => (
+  const fileList = files.map(file => (
     <Box key={file.name} sx={{ position: 'relative', width: '49%' }}>
       <CustomCloseButton onClick={() => handleRemoveFile(file)}>
         <Icon icon='tabler:x' fontSize='1.25rem' />
       </CustomCloseButton>
-      {
-        typeof file.path == 'string' ? <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={file.path} /> : <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
-      }
-
+      <img width={'100%'} key={file.name} alt={file.name} className='single-file-image' src={URL.createObjectURL(file)} />
     </Box>
   ))
 
@@ -1818,7 +1858,7 @@ const FormCreate = () => {
                   </Typography>
                 </Box>
               </div>
-              {files?.length ? (
+              {files.length ? (
                 <Fragment>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>{fileList}</Box>
                   <div className='buttons'>

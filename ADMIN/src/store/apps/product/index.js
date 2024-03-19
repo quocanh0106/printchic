@@ -14,6 +14,15 @@ export const fetchProduct = createAsyncThunk('product/fetchProduct', async query
   return response.data
 })
 
+// ** Get Info Events
+export const fetchInfoProduct = createAsyncThunk('appproduct/fetchInfoEvents', async query => {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_URL_API}/auth/product/info`, {
+    params: query
+  })
+
+  return response.data
+})
+
 // ** Add Event
 export const addProduct = createAsyncThunk('product/addProduct', async (event, { dispatch }) => {
   const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/auth/product/create`, event.formData, {
@@ -65,7 +74,8 @@ export const productSlice = createSlice({
     data: [],
     total: 1,
     params: {},
-    allData: []
+    allData: [],
+    infoProduct: {}
   },
   reducers: {},
   extraReducers: builder => {
@@ -74,6 +84,9 @@ export const productSlice = createSlice({
       state.total = action.payload.data?.paginator?.itemCount
       state.params = action.payload.data.params
       state.allData = action.payload.data.items
+    }),
+    builder.addCase(fetchInfoProduct.fulfilled, (state, action) => {
+      state.infoProduct = action.payload.data
     })
   }
 })
