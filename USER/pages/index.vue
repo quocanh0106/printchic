@@ -286,6 +286,7 @@ import distictThumbnails from "../assets/images/distictThumbnail.png";
 import arrowUpRight from "../assets/svg/arrowUpRight.svg";
 import arrowUpRightWhite from "../assets/svg/iconUpRightWhite.svg";
 import cardThumbnail from "../assets/svg/cardThumbNail.svg";
+
 // import component
 import carousel from "../components/carousel.vue";
 import cardInfor from "../components/cardInfor.vue";

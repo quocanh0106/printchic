@@ -2,17 +2,17 @@
   <div class="carousel">
     <v-carousel :show-arrows="false">
       <v-carousel-item
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        :src="blogImg"
         cover
       ></v-carousel-item>
 
       <v-carousel-item
-        src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg"
+        :src="pofThumb"
         cover
       ></v-carousel-item>
 
       <v-carousel-item
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+        :src="povCover"
         cover
       ></v-carousel-item>
     </v-carousel>
@@ -20,6 +20,9 @@
 </template>
 
 <script>
+import blogImg from "../assets/images/blog-img.png";
+import pofThumb from "../assets/images/pofThumbNail.png";
+import povCover from "../assets/images/podCover.png";
 export default {
   data() {
     return {
@@ -73,6 +76,9 @@ export default {
           title: "Item 8",
         },
       ],
+      blogImg,
+      pofThumb,
+      povCover
     };
   },
 };

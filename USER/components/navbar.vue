@@ -176,7 +176,6 @@ const navigate = (url) =>{
   /* Your navigation link styles here */
   text-decoration: none;
   color: #333;
-  padding: 0.5rem 1rem;
   font-weight: bold;
 }
 
