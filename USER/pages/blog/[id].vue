@@ -19,10 +19,12 @@
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
-          <div class="" v-for="tag,ind in blogDetail.tags" :key="ind">
-            <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
-              {{ tag }}
-            </button>
+          <div class="tags flex gap-x-2">
+            <div class="" v-for="tag,ind in blogDetail.tags" :key="ind">
+              <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
+                {{ locale.value == 'US' ? tag.titleUS : locale.value == 'UK' ? tag.titleUK : locale.value == 'FR' ? tag.titleFR :tag.titleDE}}
+              </button>
+            </div>
           </div>
           <div class="hyper-link-group flex gap-2">
             <img :src="linkIcon" alt="icon" class="pointer" />
@@ -164,6 +166,7 @@ const { t , locale, d } = useI18n()
 const blogId = computed(() => route.params.id);
 
 const blogDetail = computed(() => {
+  console.log(data.value.data,'HEHEHE')
   return data.value.data
 })
 
@@ -214,9 +217,9 @@ export default {
     }
     .link-bar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       border-top: 1px solid #eaecf0;
+      justify-content: space-between;
       padding: 16px;
       flex-wrap: wrap;
     }
