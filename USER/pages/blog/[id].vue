@@ -219,7 +219,6 @@ export default {
       border-top: 1px solid #eaecf0;
       padding: 16px;
       flex-wrap: wrap;
-      gap: 3px;
     }
   }
   .related-post {
