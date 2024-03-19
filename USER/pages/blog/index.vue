@@ -36,10 +36,12 @@
           </div>
         </div>
         <button
+          v-if="hasMoreBlogPost"
           class="secondary-btn mt-12 btn-seemore cursor-pointer"
           @click="loadMore"
           >{{ t("button.seeMore") }}</button
         >
+        <p v-else class="text-center mt-6">{{ t("blogList.noMorePost") }}</p>
       </div>
       <!-- help -->
       <help
@@ -84,10 +86,12 @@
           </div>
         </div>
         <button
+          v-if="hasMoreBlogPost"
           class="secondary-btn mt-4 mb-8 btn-seemore cursor-pointer flex justify-center"
           @click="loadMore"
           >{{ t("button.seeMore") }}</button
         >
+        <p v-else class="text-center mt-4">{{ t("blogList.noMorePost") }}</p>
       </div>
       <!-- help -->
       <help
@@ -104,7 +108,6 @@ import blog from "../../components/blog.vue";
 import help from "../../components/help.vue";
 import { useI18n, useLocalePath,useRouter } from '#imports'
 
-const currentPage = ref(1);
 const currentTab = ref(0);
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
@@ -113,18 +116,27 @@ const router = useRouter()
 const localePath = useLocalePath()
 const { t , locale } = useI18n()
 
-const { data:listBlog }  = await useAsyncData(
+const listBlog   = await useAsyncData(
   'listBlog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
-)
+  () => $fetch('http://localhost:8000/auth/blog/list?page=1&limit=10')
+)?.data
 const { data:tabList }  = await useAsyncData(
   'tabList',
   () => $fetch('http://localhost:8000/auth/categoryBlog/list')
 )
 
+const currentPage = ref(1)
+const limit = ref(9)
+const hasMoreBlogPost = ref(true)
 
-const loadMore = () => {
+const loadMore = async () => {
   currentPage.value++;
+  const response = await $fetch(`http://localhost:8000/auth/blog/list?page=${currentPage.value}&limit=${limit.value}`)
+  
+  listBlog.value.data.items = [...listBlog.value.data.items,...response.data.items]
+  if(response.data.items.length == 0){
+    hasMoreBlogPost.value = false
+  }
 };
 
 const toDetailBlog = (id) => {

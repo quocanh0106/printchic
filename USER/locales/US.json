@@ -124,7 +124,9 @@
     "filter" : "Filter",
     "saleTag" : "sale",
     "clearAll" : "Clear All",
-    "noProductFound" : "No Product Found"
+    "noProductFound" : "No Product Found",
+    "noMoreProduct" : "No More Product",
+    "template":"This is a template"
   },
   "howItWorks" : {
     "headerTitle" : "We will make it easier for you from the first time.",
@@ -267,6 +269,9 @@
   "tos": {
     "helpTitle" : "How can we help?",
     "helpDes" : "In addition to the quality of prints, we also provide unparalleled services. Our team of experienced industry professionals works tirelessly to manage your products. We take pride in what we do and can fulfill your on-demand needs."
+  },
+  "blogList": {
+    "noMorePost" : "No more posts"
   },
   "pod": {
     "podProduct" : "Print on demand Products",

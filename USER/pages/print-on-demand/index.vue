@@ -41,8 +41,8 @@
             <div class="product-list mb-10">
               <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
-                <img class="product-thumbnail" :src="item?.media[0]?.path" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants[0]?.sku }}</p>
+                <img class="product-thumbnail" :src="item?.media?.[0]?.path" />
+                <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants?.[0]?.sku }}</p>
                 <p class="mt-1 txt-dark-blue font-semibold">{{ item?.[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
                 <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
@@ -50,7 +50,9 @@
               <p v-if="listProduct?.length == 0">{{ $t('productList.noProductFound') }}</p>
             </div>
             <div>
-              <button class="secondary-btn cursor-pointer button-seemore">{{ $t('button.seeMore') }}</button>
+              <button class="secondary-btn cursor-pointer button-seemore" v-if="hasMoreProducts" @click="loadMoreData">{{ $t('button.seeMore') }}</button>
+              <h1 class="text-center" v-else>{{  $t('productList.noMoreProduct') }}</h1>
+
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
                 <p class="mt-3" v-html="route.query.categoryProductId ? getPajamas :  $t('servicePage.aboutPjmContent')"></p>
@@ -61,7 +63,7 @@
       </div>
        <!-- 15 pod ideas -->
        <div class="pod-idea bg-light-blue-custom custom-padding">
-        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : ''">
+        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : t('productList.template')">
         </div>
       </div>
       <!-- help -->
@@ -121,15 +123,16 @@
             <div class="product-list-mobile mb-10">
               <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
-                <img class="product-thumbnail" :src="item.media[0]?.path" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants[0]?.sku }}</p>
+                <img class="product-thumbnail" :src="item.media?.[0]?.path" />
+                <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants?.[0]?.sku }}</p>
                 <p class="mt-1 txt-dark-blue font-semibold">{{ item[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item.price }}</p>
                 <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
             </div>
             <div>
-              <button class="secondary-btn cursor-pointer button-seemore-mobile">{{ $t('button.seeMore') }}</button>
+              <button class="secondary-btn cursor-pointer button-seemore-mobile" v-if="hasMoreProducts" @click="loadMoreData">{{ $t('button.seeMore') }}</button>
+              <h1 class="text-center" v-else>{{  $t('productList.noMoreProduct') }}</h1>
               <div class="about-pjm mt-20 bg-light-gray-custom p-6 rounded-md">
                 <h1 class="text-xl font-semibold">{{ $t('servicePage.aboutPjmTitle') }}</h1>
                 <p class="mt-3" v-html="route.query.categoryProductId ? getPajamas :  $t('servicePage.aboutPjmContent')"></p>
@@ -140,7 +143,7 @@
       </div>
        <!-- 15 pod ideas -->
       <div class="pod-idea mt-3 bg-light-blue-custom px-3 py-12">
-        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : ''">
+        <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : t('productList.template')">
         </div>
       </div>
       <faq class="mt-12" />
@@ -172,7 +175,10 @@ const { t, locale } = useI18n();
 const localePath = useLocalePath()
 const drawer = ref(null);
 const items = ref(['Best Selling', 'Price Low To High', 'Price High To Low', 'Most Popular']);
+
 const currentPage = ref(1);
+const limit = ref(9);
+const hasMoreProducts = ref(true);
 
 const filterByTag = (newValue) => {
   router.push({
@@ -180,6 +186,19 @@ const filterByTag = (newValue) => {
     query: { ...route.query, categoryProductId: newValue },
   });
 }
+
+const loadMoreData = async () => {
+  currentPage.value++
+  const response = await $fetch(`http://localhost:8000/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
+  console.log('ssdsđ', response.data.items.length)
+  
+  listProduct.value = [...listProduct.value,...response.data.items]
+  if(response.data.items.length == 0){
+    hasMoreProducts.value = false
+    console.log('hasMoreProducts', hasMoreProducts.value)
+  }
+}
+
 watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
   if (newCategoryProductId) {
     // Reset listCate when categoryProductId changes
@@ -195,10 +214,10 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {
-    const response = await $fetch('http://localhost:8000/auth/product/list')
+    const response = await $fetch(`http://localhost:8000/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
     return response.data.items
   }
-)?.data
+  )?.data
 
 const listCate  = await useAsyncData(
   'listCategory',
@@ -207,7 +226,6 @@ const listCate  = await useAsyncData(
     return response.data.items
   }
   )?.data
-  console.log(listCate.value, 'jejeje')
 
 const listFilter = ref([
   {
@@ -248,7 +266,6 @@ const currentParagraph = ref(null)
 const getPajamas = computed(() => {
   let currentCategory
   if(route.query.categoryProductId){
-    console.log(route.query.categoryProductId,'eded')
     listCate.value.forEach(element => {
       if(route.query.categoryProductId == element._id){
         currentCategory = element
