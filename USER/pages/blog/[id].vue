@@ -79,7 +79,7 @@
             v-for="item,index in listTrendingTopic"
             :key="index"
           >
-          <span class="flex gap-x-2" v-if="index < 3">
+          <span class="flex gap-x-2">
             {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE }}
               <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${item.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
@@ -114,7 +114,7 @@
           v-for="news,index in listTrendingTopic"
           :key="index"
         >
-        <span class="flex gap-x-2" v-if="index < 3">
+        <span class="flex gap-x-2">
             {{ locale == 'US' ? news.titleUS : locale == 'UK' ? news.titleUK : locale == 'FR' ? news.titleFR : news.titleDE }}
               <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${news.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
@@ -174,8 +174,7 @@ const { data }  = await useAsyncData(
 
 
 const listTrendingTopic = computed(() => {
-  console.log(listTrending.value.data.items.filter(item => item.isTop), 'HAHAHA')
-  return listTrending.value.data.items.filter(item => item.isTop)
+  return listTrending.value.data.items.filter(item => item.isTop).slice(0, 3);
 })
 
 
@@ -183,7 +182,6 @@ const { data : listTrending }  = await useAsyncData(
   'listTrending',
   () => $fetch(`http://localhost:8000/auth/blog/list`)
 )
-console.log(listTrending.value.data.items,'hehe')
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
 </script>
@@ -220,6 +218,7 @@ export default {
       align-items: center;
       border-top: 1px solid #eaecf0;
       padding: 16px;
+      flex-wrap: wrap;
     }
   }
   .related-post {

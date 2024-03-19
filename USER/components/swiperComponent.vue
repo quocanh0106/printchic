@@ -13,8 +13,8 @@
         >
           <swiper-slide class="cursor-pointer" v-for="item,index in items" :key="index" @click="pushRouter(item._id)">
             <img class="swiper-thumbnail cursor-pointer rounded" :src="item.bannerImg? item.bannerImg : item" :class="imgWidth100 && 'w-100'" />
-            <h1 class=" text-center text-swiper font-semibold mt-2.5" v-if="hasDescription">{{ locale.value == 'US' ? item.titleUS : locale.value == 'US' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</h1>
-            <p class="text-center text-swiper mt-1" v-if="hasDescription">{{ locale.value == 'US' ? item.descriptionUS : locale.value == 'US' ? item.descriptionUK : locale.value == 'FR' ? item.descriptionFR : item.descriptionDE }}</p>
+            <h1 class=" text-center text-swiper font-semibold mt-2.5" v-if="hasDescription">{{ locale.value == 'US' ? item.titleUS : locale.value == 'UK' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</h1>
+            <p class="text-center text-swiper mt-1" v-if="hasDescription">{{ locale.value == 'US' ? item.descriptionUS : locale.value == 'UK' ? item.descriptionUK : locale.value == 'FR' ? item.descriptionFR : item.descriptionDE }}</p>
           </swiper-slide>
         </swiper>
     </div>

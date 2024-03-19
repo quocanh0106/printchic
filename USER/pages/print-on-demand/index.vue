@@ -66,6 +66,7 @@
         <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : t('productList.template')">
         </div>
       </div>
+      <faq :data="listFaq" class="mt-12 custom-padding" />
       <!-- help -->
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="mt-20" />
     </div>
@@ -146,7 +147,7 @@
         <div class="idea-content " v-html="route.query.categoryProductId ? currentParagraph : t('productList.template')">
         </div>
       </div>
-      <faq class="mt-12" />
+      <faq class="mt-12" :data="listFaq" />
       <!-- help -->
       <help :headerTitle="$t('homePage.howCanWeHelp')" :headerDesc="$t('homePage.howCanWeHelpDesc')" class="px-3 mt-20 mb-10" />
     </div>
@@ -190,12 +191,10 @@ const filterByTag = (newValue) => {
 const loadMoreData = async () => {
   currentPage.value++
   const response = await $fetch(`http://localhost:8000/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
-  console.log('ssdsđ', response.data.items.length)
   
   listProduct.value = [...listProduct.value,...response.data.items]
   if(response.data.items.length == 0){
     hasMoreProducts.value = false
-    console.log('hasMoreProducts', hasMoreProducts.value)
   }
 }
 
@@ -208,9 +207,15 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
       isLoading.value = false
     })
     listProduct.value = data?.data.items || [];
+    listCate.value.map(category => {
+      if(newCategoryProductId == category._id) {
+        listFaq.value = JSON.parse(category.faq ?? '')
+      }
+    })
   }
 });
 
+const listFaq = ref([])
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {

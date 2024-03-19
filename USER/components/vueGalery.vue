@@ -9,8 +9,8 @@
           <i class="fas fa-chevron-circle-right"></i>
         </button>
       </div>
-      <div class="thumbnails" v-show=" photos.media.length > 1">
-        <div v-for="(photo, index) in photos.media" :src="photo" :key="index" @click="activePhoto = index"
+      <div class="thumbnails" v-show=" photos?.media?.length > 1">
+        <div v-for="(photo, index) in photos?.media" :src="photo" :key="index" @click="activePhoto = index"
           :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>
       </div>
@@ -25,7 +25,7 @@
           <i class="fas fa-chevron-circle-right"></i>
         </button>
       </div>
-      <div class="thumbnails" v-show=" photos.media.length > 1">
+      <div class="thumbnails" v-show=" photos?.media?.length > 1">
         <div v-for="(photo, index) in photos.media" :src="photo" :key="index" @click="activePhoto = index"
           :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>

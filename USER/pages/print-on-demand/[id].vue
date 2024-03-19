@@ -354,7 +354,7 @@
       <div class="tab-info-wrapper">
         <div class="tab-wrapper bg-light-gray1-custom p-3">
           <v-card>
-            <v-tabs v-model="tab" bg-color="primary" class="tab-information">
+            <v-tabs v-model="tab" bg-color="primary" @click="tabValue" class="tab-information">
               <v-tab value="one">{{$t("productDetail.productDetail")}}</v-tab>
               <v-tab value="two">{{$t("productDetail.sizeGuide")}}</v-tab>
               <v-tab value="three">{{$t("productDetail.mockUpNTemplate")}}</v-tab>
@@ -403,10 +403,11 @@
 <script setup>
 // Import the components and assets
 import help from "../../components/help.vue";
+import SwiperComponent from '~/components/swiperComponent.vue'
 import VueGallery from "../../components/vueGalery.vue";
+// asset
 import arrowUpRight from "../../assets/svg/arrowUpRight.svg";
 import productInfo from "../../assets/svg/productInfo.svg";
-import { myMixin } from "~/mixins/myMixin";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -414,7 +415,11 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 // Define your reactive data
 const arrowUpRightIcon = arrowUpRight;
 const productInfoIcon = productInfo;
-const tab = ref(null);
+const tab = ref('one');
+
+const tabValue = () => {
+  console.log(tab.value, "TAB");
+}
 const photos = ref([
   "https://s3-us-west-2.amazonaws.com/s.cdpn.io/20625/lordea-home-01-min.jpg",
   // Add all other photos...
@@ -487,27 +492,28 @@ const currentActiveVariant1= ref(0)
 const currentActiveVariant2= ref(0)
 const currentActiveVariant3= ref(0)
 const changeActiveVariant = (ind,item,variantInd) => {
-  if(ind == 0){
-    currentActiveVariant1.value = item.value
-  }
-  if(ind == 1){
-    currentActiveVariant2.value = item.value
-  }
-  if(ind == 2){
-    currentActiveVariant3.value = item.value
+  
+  // Update the active variant based on the index
+  switch(ind) {
+    case 0:
+      currentActiveVariant1.value = item.value;
+      break;
+    case 1:
+      currentActiveVariant2.value = item.value;
+      break;
+    case 2:
+      currentActiveVariant3.value = item.value;
+      break;
+    default:
+      console.error('Invalid index for active variant');
   }
 
-  // check which one is active and turns others off
-  combinedVariants.value.forEach(data => {
-    if(data.value == item.value){
-      data.isActive = true
+  // Update the isActive status for the variants
+  combinedVariants.value.forEach(variant => {
+    if (variant.variantInd === item.variantInd) {
+      variant.isActive = variant.value === item.value;
     }
-    if(data.value != item.value && data.variantInd ==  item.variantInd){
-      data.isActive = false
-    }
-
-  })
-
+  });
 }
 
 const listNameOption = computed(()=>{
@@ -543,7 +549,13 @@ const listProduct  = await useAsyncData(
 
 const listProductRelatedMedia = ref([])
 const listProductRelated = () => {
-  listProduct.value.forEach(item => listProductRelatedMedia.value.push(item.media[0]?.path))
+  listProduct.value.forEach(item => listProductRelatedMedia.value.push({
+    bannerImg : item?.media?.[0]?.path,
+    titleUS: item?.titleUS,
+    titleUK: item?.titleUK,
+    titleFR: item?.titleFR,
+    titleDE: item?.titleDE,
+  }))
 }
 
 const combinedVariants = ref([]);
@@ -612,31 +624,35 @@ const getPriceByVariant = computed(()=>{
     return null; // Return null or any default value if no match is found
 })
 
+const tabContent = computed(() => {
+  return detail.value?.data
+})
+
 const getContent = (tabKey) => {
   const tabs = {
     US: {
-      one:   detail?.value.data?.tabProductDetailUS,
-      two:   detail?.value.data?.tabSizeGuideUS,
-      three:   detail?.value.data?.tabMockupTemplateUS,
-      four:   detail?.value.data?.tabCareInstructionUS,
+      one:   tabContent.value.tabProductDetailUS,
+      two:   tabContent.value.tabSizeGuideUS,
+      three:   tabContent.value.tabMockupTemplateUS,
+      four:   tabContent.value.tabCareInstructionUS,
     },
     UK: {
-      one:   detail?.value.data?.tabProductDetailUK,
-      two:   detail?.value.data?.tabSizeGuideUK,
-      three:   detail?.value.data?.tabMockupTemplateUK,
-      four:   detail?.value.data?.tabCareInstructionUK,
+      one:   tabContent.value.tabProductDetailUK,
+      two:   tabContent.value.tabSizeGuideUK,
+      three:   tabContent.value.tabMockupTemplateUK,
+      four:   tabContent.value.tabCareInstructionUK,
     },
     FR: {
-      one:   detail?.value.data?.tabProductDetailFR,
-      two:   detail?.value.data?.tabSizeGuideFR,
-      three:   detail?.value.data?.tabMockupTemplateFR,
-      four:   detail?.value.data?.tabCareInstructionFR,
+      one:   tabContent.value.tabProductDetailFR,
+      two:   tabContent.value.tabSizeGuideFR,
+      three:   tabContent.value.tabMockupTemplateFR,
+      four:   tabContent.value.tabCareInstructionFR,
     },
     DE: {
-      one:   detail?.value.data?.tabProductDetailDE,
-      two:   detail?.value.data?.tabSizeGuideDE,
-      three:   detail?.value.data?.tabMockupTemplateDE,
-      four:   detail?.value.data?.tabCareInstructionDE,
+      one:   tabContent.value.tabProductDetailDE,
+      two:   tabContent.value.tabSizeGuideDE,
+      three:   tabContent.value.tabMockupTemplateDE,
+      four:   tabContent.value.tabCareInstructionDE,
     },
   };
 
@@ -733,6 +749,9 @@ onMounted(() => {
       height: 15vw !important;
       object-fit:cover;
       max-height: none !important;
+  }
+  :deep(.text-swiper){
+    margin-right: 0px !important;
   }
 }
 </style>
