@@ -1,5 +1,6 @@
 const {
     blogs: BlogsModels,
+    tags: TagModels,
 } = require('../models/utils/connectToModels');
 
 const {
@@ -114,6 +115,12 @@ const findByConditions = async (data) => {
             return promiseResolve(result);
         }
         const result = await BlogsModels.findOne(conditions);
+        const newTagsList = []
+        for (let i = 0; i < result?.tags?.length; i++) {
+            const data = await TagModels.findOne({_id: convertToObjectId(result?.tags[i])})
+           newTagsList.push(data)
+          }
+          result.tags = newTagsList;
         return promiseResolve(result);
     } catch (err) {
         return promiseReject(err);

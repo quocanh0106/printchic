@@ -2,7 +2,7 @@
 <template>
   <div class="product-page-all-screen-wrapper">
     <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
-      <div class="product-header pb-0 custom-padding">
+      <div class="product-header pb-0 custom-padding" style="padding-top: 40px">
         <div class="product-banner rounded-lg text-center flex flex-col custom-padding">
           <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
           <span> Home / Men</span>
