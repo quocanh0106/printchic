@@ -138,13 +138,14 @@ function selectLanguage(lang = null) {
   const newPath = switchLocalePath(lang == null ? selectedLanguage.value : lang);
   if (newPath !== location.pathname) {
     locale.value = selectedLanguage.value
-    window.location.pathname = newPath; // Redirect to the new localized path
+    router.push({
+      path: newPath,
+    });
   }
 }
 
 function isCurrentUrl(url) {
   if (route.path === url) {
-    console.log("TRUE");
     isActive.value = !isActive.value;
   }
 }

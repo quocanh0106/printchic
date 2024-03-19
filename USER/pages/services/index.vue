@@ -411,18 +411,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateScreenWidth);
 });
 
-const screenWidth = ref(0);
-
-function updateScreenWidth() {
-  screenWidth.value = window.innerWidth;
-
-}
-
-const mobile = computed(() => screenWidth.value <= 600);
-const tablet = computed(() => screenWidth.value > 600 && screenWidth.value <= 992);
-const pc = computed(() => screenWidth.value > 992 && screenWidth.value <= 2000);
-const lgPc = computed(() => screenWidth.value > 2000 && screenWidth.value <= 2500);
-const extraPc = computed(() => screenWidth.value > 2500);
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
 function toProductList() {
   router.push(localePath('/print-on-demand'));
