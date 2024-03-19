@@ -27,11 +27,12 @@
   </div>
 </template>
 
-<script>
-import { myMixin } from "~/mixins/myMixin";
-export default {
-  mixins: [myMixin],
-  props: {
+<script  setup lang="js">
+import useWidthScreen from '~/composables/useWidthScreen';
+
+const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+
+defineProps({
     headerTitle: {
       type: String,
       default: "",
@@ -44,13 +45,8 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      property: "value",
-    };
-  },
-};
+});
+
 </script>
 
 <style lang="scss" scoped>
