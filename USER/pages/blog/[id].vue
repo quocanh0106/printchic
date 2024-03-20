@@ -8,7 +8,7 @@
     </div>
 
     <div class="hero-image mb-10">
-      <img  :src="blogDetail.imgBanner" alt="pic" />
+      <img  :src="blogDetail?.imgBanner" alt="pic" />
     </div>
 
     <div class="side-paddings" :class="mobile || tablet ? '' : 'flex gap-10 mb-10'">
@@ -19,10 +19,10 @@
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
-          <div class="tags flex gap-x-2">
-            <div class="" v-for="tag,ind in blogDetail.tags" :key="ind">
+          <div class="tags flex gap-x-2" v-if="blogDetail.tags.length > 1 && blogDetail.tags[0] != null">
+            <div class="" v-for="tag,ind in blogDetail?.tags" :key="ind">
               <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
-                {{ locale.value == 'US' ? tag.titleUS : locale.value == 'UK' ? tag.titleUK : locale.value == 'FR' ? tag.titleFR :tag.titleDE}}
+                {{ locale == 'US' ? tag.titleUS : locale == 'UK' ? tag.titleUK : locale == 'FR' ? tag.titleFR :tag.titleDE}}
               </button>
             </div>
           </div>
@@ -166,7 +166,6 @@ const { t , locale, d } = useI18n()
 const blogId = computed(() => route.params.id);
 
 const blogDetail = computed(() => {
-  console.log(data.value.data,'HEHEHE')
   return data.value.data
 })
 

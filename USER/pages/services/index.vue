@@ -398,7 +398,7 @@ const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net
 });
 
 onMounted(async () => {
-  listPODProduct.value = data.value.data.items.map(item => item.media[0]?.path);
+  listPODProduct.value = data.value?.data.items.map(item => item.media[0]?.path);
 
   if (process.client) {
     updateScreenWidth();

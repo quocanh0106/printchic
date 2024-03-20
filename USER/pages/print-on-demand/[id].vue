@@ -5,17 +5,17 @@
         class="product-detail-head-block flex flex-col justify-between gap-y-10 custom-padding"
       >
         <div class="display-image flex gap-x-16">
-          <VueGallery class="w-1/2" :photos="detail.data" />
+          <VueGallery class="w-1/2" :photos="detail?.data" />
           <div class="product-variant-and-infor w-1/2">
             <h1 class="section-title font-semibold product-name">
               {{
                 locale == "US"
-                  ? detail?.data.titleUS
+                  ? detail?.data?.titleUS
                   : locale == "UK"
-                  ? detail?.data.titleUK
+                  ? detail?.data?.titleUK
                   : locale == "FR"
-                  ? detail?.data.titleFR
-                  : detail?.data.titleDE
+                  ? detail?.data?.titleFR
+                  : detail?.data?.titleDE
               }}
             </h1>
             <p class="product-sku mt-2">
@@ -429,6 +429,7 @@ const product = ref({
   name: "Colorblast Heavyweight T-Shirt Comfort Colors 1745 (Made in US)",
   // Add other product details...
 });
+
 const listShippingInfo = ref([
   {
     title: "Average Est. Processing Time",
@@ -549,7 +550,7 @@ const listProduct  = await useAsyncData(
 
 const listProductRelatedMedia = ref([])
 const listProductRelated = () => {
-  listProduct.value.forEach(item => listProductRelatedMedia.value.push({
+  listProduct.value?.forEach(item => listProductRelatedMedia.value.push({
     bannerImg : item?.media?.[0]?.path,
     titleUS: item?.titleUS,
     titleUK: item?.titleUK,

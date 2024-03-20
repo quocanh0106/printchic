@@ -13,33 +13,32 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useI18n, useLocalePath } from '#imports'
 
-export default {
- components: {
-  },
-  props:{
-    rules:{
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      querySearch:'',
-    };
-  },
-  methods:{
-    searchProduct() {
-      const url = `/search-result?search=${this.querySearch}`;
-      // this.$router.push({path:'/search-result',query: this.querySearch})
-      window.location.href = url;
-    }
-  },
-  mounted(){
-    this.querySearch = '';
+const props = defineProps({
+  rules: {
+    type: Array,
+    default: () => []
   }
+});
+
+const querySearch = ref('');
+const router = useRouter();
+const localePath = useLocalePath()
+
+const searchProduct = () => {
+  // Use Nuxt's useRouter composable for navigation
+  router.push(localePath({ path: '/search-result', query: { search: querySearch.value } }));
 }
+
+// Optional: If you need to perform actions when the component is mounted,
+// you can use the onMounted lifecycle hook from Vue 3.
+onMounted(() => {
+  querySearch.value = '';
+});
 </script>
 
 <style lang="scss" scoped>

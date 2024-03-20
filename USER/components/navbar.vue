@@ -199,6 +199,7 @@ const navigate = (url) =>{
 
 .navigation-menu {
   font-size: 1vw;
+  padding: 0px 10px;
   @media screen and (max-width:1600px){
     font-size: 12px;
   }
@@ -245,6 +246,7 @@ const navigate = (url) =>{
 }
 .signup-btn{
   height: auto;
+  padding: 12px 24px;
 }
 
 .mdi--web {

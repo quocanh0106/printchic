@@ -244,18 +244,6 @@ const { t } = useI18n();
 // If there are any methods or lifecycle hooks from the original component, 
 // they should be converted to the Composition API style.
 
-onMounted(async () => {
-  if (process.client) {
-    updateScreenWidth();
-    window.addEventListener('resize', updateScreenWidth);
-  }
-});
-
-onUnmounted(() => {
-  // Remove event listener when the component is unmounted
-  window.removeEventListener('resize', updateScreenWidth);
-});
-
 </script>
 
 <style lang="scss" scoped>

@@ -18,7 +18,7 @@
                     'bg-blue-500': currentIndex === index,
                     'bg-gray-300': currentIndex !== index,
                   }"
-                  class="h-2 w-2 mx-1 rounded-full"
+                  class="h-2 w-2 mx-1 rounded-full paginate-dot"
                 ></span>
               </div>
               <div class="action-btns">
@@ -751,7 +751,7 @@ const { data } = await useAsyncData("showCaseProduct", () =>
 const listProdcutShowcase = ref([]);
 
 onMounted(() => {
-  listProdcutShowcase.value = data.value.data.items.map(
+  listProdcutShowcase.value = data.value?.data.items.map(
     (item) => item.media[0]?.path
   );
 });
@@ -789,6 +789,9 @@ onMounted(() => {
 
 .current-text {
   min-width: 300px;
+  @media screen and (max-width:1200px) {
+    font-size: 17px;
+  }
 }
 
 .infor-card {
@@ -950,5 +953,8 @@ onMounted(() => {
     min-height: 180px !important;
     max-height: none !important;
   }
+}
+.paginate-dot{
+  transition: background-color 0.2s;
 }
 </style>

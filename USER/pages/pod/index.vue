@@ -580,7 +580,7 @@ const { data }  = await useAsyncData(
 const listPod = ref([])
 
 onMounted(() => {
-  listPod.value = data.value.data.items.map(item => item.media[0]?.path);
+  listPod.value = data.value?.data?.items.map(item => item.media[0]?.path);
 })
 </script>
 

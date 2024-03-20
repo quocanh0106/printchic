@@ -7,7 +7,7 @@
 
       <div class="product-card cursor-pointer" @click="toProductDetail(item)" v-for="(item, index) in data"
           :key="index">
-          <img class="product-thumbnail" :src="item.media[0]?.path" />
+          <img class="product-thumbnail" :src="item.media?.[0]?.path" />
           <div class="product-infor flex flex-col ml-2">
             <p class="mt-1 txt-dark-blue font-semibold">{{ locale.value == 'US' ? item.titleUS : locale.value == 'US' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE }}</p>
             <p class="mt-2 txt-primary font-semibold ">$ {{ item.price }}</p>
@@ -35,12 +35,27 @@ const { locale } = useI18n();
 const localePath = useLocalePath()
 
 function toProductDetail(item) {
-  let id = 1
-  router.push(localePath(`/print-on-demand/${id}`))
+  router.push(localePath(`/print-on-demand/${item._id}`))
 }
 
 const loading = ref(true)
 const data = ref(null)
+
+
+watch(() => route.query.search, async (newSearch) => {
+  if (newSearch) {
+    // Reset listCate when categoryProductId changes
+    data.value = [];
+    loading.value = true;
+    try {
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?search=${route.query.search}`); // Replace with your API endpoint
+      data.value = await response.data.items;
+    } finally {
+      loading.value = false;
+    }
+  }
+});
+
 const fetchData = async () => {
   try {
     const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?search=${route.query.search}`); // Replace with your API endpoint
