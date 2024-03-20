@@ -42,7 +42,7 @@ module.exports.AUTH = {
         // beforeUploadMulti(req, res, async () => {
 
         try {
-            console.log('req',req.body, req.files)
+            console.log('req', req.body, req.files)
             const errors = await validateResult(createValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
@@ -55,20 +55,20 @@ module.exports.AUTH = {
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await BlogService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await BlogService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await BlogService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await BlogService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK) {
+            const checkExistProductCategory_UK = await BlogService.checkExist({ titleUK: req.body?.titleUK })
+            const checkExistProductCategory_US = await BlogService.checkExist({ titleUS: req.body?.titleUS })
+            const checkExistProductCategory_FR = await BlogService.checkExist({ titleFR: req.body?.titleFR })
+            const checkExistProductCategory_DE = await BlogService.checkExist({ titleDE: req.body?.titleDE })
+            if (checkExistProductCategory_UK) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US) {
+            if (checkExistProductCategory_US) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR) {
+            if (checkExistProductCategory_FR) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE) {
+            if (checkExistProductCategory_DE) {
                 fieldExistTitle.push('titleDE')
             }
             if (checkExistProductCategory_UK || checkExistProductCategory_US || checkExistProductCategory_FR || checkExistProductCategory_DE) {
@@ -158,27 +158,32 @@ module.exports.AUTH = {
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
             }
-            console.log('req.files',req.files)
+
             if (req.files && req.files.length > 0) {
-                req.body.img = req.files[0].path;
-                req.body.imgBanner = req.files[1].path;
+                req.files.forEach(ele => {
+                    if (ele.fieldname == 'img') {
+                        req.body.img = ele.path;
+                    } else if (ele.fieldname == 'imgBanner') {
+                        req.body.imgBanner = ele.path;
+                    }
+                })
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await BlogService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await BlogService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await BlogService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await BlogService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.blogId) {
+            const checkExistProductCategory_UK = await BlogService.checkExist({ titleUK: req.body?.titleUK })
+            const checkExistProductCategory_US = await BlogService.checkExist({ titleUS: req.body?.titleUS })
+            const checkExistProductCategory_FR = await BlogService.checkExist({ titleFR: req.body?.titleFR })
+            const checkExistProductCategory_DE = await BlogService.checkExist({ titleDE: req.body?.titleDE })
+            if (checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.blogId) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.blogId) {
+            if (checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.blogId) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.blogId) {
+            if (checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.blogId) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.blogId) {
+            if (checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.blogId) {
                 fieldExistTitle.push('titleDE')
             }
             if (fieldExistTitle.length > 0) {

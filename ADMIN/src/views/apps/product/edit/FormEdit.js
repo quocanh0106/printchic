@@ -231,9 +231,8 @@ const FormCreate = () => {
   const callBackSubmit = (data) => {
     if (data.success) {
       toast.success('Update Product created successfully', {
-        duration: 2000
+        duration: 2500
       })
-      router.replace('/apps/product/')
     } else {
       if (data.statusCode == 10805) {
         data.errors.forEach(ele => {
@@ -244,6 +243,10 @@ const FormCreate = () => {
       }
     }
     setLoading(false)
+    const anchor = document.querySelector('body')
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const handleChange = (event, newValue) => {
@@ -251,8 +254,8 @@ const FormCreate = () => {
   }
 
   const compareFileArrays = (array1, array2) => {
-    if (array1.length !== array2.length) {
-        return false;
+    if (array1?.length !== array2?.length) {
+      return false;
     }
 
     // Sắp xếp các mảng để đảm bảo các file được so sánh theo thứ tự
@@ -261,19 +264,19 @@ const FormCreate = () => {
 
     // Kiểm tra từng cặp file
     for (let i = 0; i < array1.length; i++) {
-        const file1 = array1[i];
-        const file2 = array2[i];
+      const file1 = array1[i];
+      const file2 = array2[i];
 
-        // So sánh tên, loại MIME, và kích thước
-        if (file1.name !== file2.name || file1.type !== file2.type || file1.size !== file2.size) {
-            return false;
-        }
+      // So sánh tên, loại MIME, và kích thước
+      if (file1.name !== file2.name || file1.type !== file2.type || file1.size !== file2.size) {
+        return false;
+      }
 
-        // Nếu bạn cần so sánh nội dung, bạn cần thêm mã để đọc và so sánh nội dung tại đây
+      // Nếu bạn cần so sánh nội dung, bạn cần thêm mã để đọc và so sánh nội dung tại đây
     }
 
     return true;
-}
+  }
 
   const onSubmit = (value) => {
     setLoading(true)
@@ -368,7 +371,7 @@ const FormCreate = () => {
     formData.append("price", value.price);
     value.priceSale && formData.append("priceSale", value.priceSale);
 
-    if(compareFileArrays(files, )) {
+    if (compareFileArrays(files,)) {
       for (let i = 0; i < files.length; i++) {
         formData.append('files', files[i]);
       }
@@ -399,7 +402,7 @@ const FormCreate = () => {
   const dispatch = useDispatch()
 
   const store = useSelector(state => state.categoryProduct)
-  const {infoProduct} = useSelector(state => state.product)
+  const { infoProduct } = useSelector(state => state.product)
 
   const URLtoFile = async (url) => {
 
@@ -427,7 +430,7 @@ const FormCreate = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-    dispatch(fetchInfoProduct({productId: router.query.id}))
+    dispatch(fetchInfoProduct({ productId: router.query.id }))
   }, [router.query.id])
 
   const getUniqueValues = (array, propertyName) => {
@@ -640,13 +643,13 @@ const FormCreate = () => {
       setValueRecommend(listCatPro)
       setValue('price', infoProduct?.price)
       setValue('priceSale', infoProduct?.priceSale)
-      
+
       convertToFiles(infoProduct?.media).then(files => {
         setFiles(files)
-    }).catch(error => {
+      }).catch(error => {
         console.error('Error converting to files:', error);
-    });
-      
+      });
+
     }
   }, [infoProduct, store, router.query.id])
 

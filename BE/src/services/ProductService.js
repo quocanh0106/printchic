@@ -527,7 +527,7 @@ const updateConditions = async (data) => {
         }
         
         if (!isEmpty(data?.descriptionUK)) {
-            set.descriptionUk = data.descriptionUk;
+            set.descriptionUK = data.descriptionUK;
         }
         if (!isEmpty(data?.descriptionUS)) {
             set.descriptionUS = data.descriptionUS;

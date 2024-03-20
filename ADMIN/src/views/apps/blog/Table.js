@@ -57,7 +57,7 @@ const UserList = () => {
 
   const callBackSubmit = (data) => {
     if (data.success) {
-      toast.success('Updated blog success', {
+      toast.success('Successfully updated blog trends', {
         duration: 2000
       })
     } else {
@@ -65,6 +65,7 @@ const UserList = () => {
         duration: 2000
       })
     }
+
   }
 
   const handleSwitchTop = (isTopBlog, data) => {
@@ -131,7 +132,7 @@ const UserList = () => {
       flex: 0.25,
       minWidth: 190,
       field: 'isTop',
-      headerName: 'Top Blog',
+      headerName: 'Trending',
       renderCell: ({ row }) => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>

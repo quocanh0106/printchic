@@ -1651,7 +1651,7 @@ const FormCreate = () => {
         scroll='body'
         onClose={() => setOpenDialog(false)}
         TransitionComponent={Transition}
-        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
+        sx={{ '& .MuiDialog-paper': { overflowY: 'visible' } }}
       >
         <DialogContent
           sx={{
