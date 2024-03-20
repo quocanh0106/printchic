@@ -60,7 +60,7 @@ defineProps({
 const localePath = useLocalePath()
 const { data }  = await useAsyncData(
   'blog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )
 
 const onSwiper = (swiper) => {

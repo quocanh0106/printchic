@@ -172,7 +172,7 @@ const blogDetail = computed(() => {
 
 const { data }  = await useAsyncData(
   'blogDetail',
-  () => $fetch(`http://localhost:8000/auth/blog/info?blogId=${blogId.value}`)
+  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/info?blogId=${blogId.value}`)
 )
 
 
@@ -183,7 +183,7 @@ const listTrendingTopic = computed(() => {
 
 const { data : listTrending }  = await useAsyncData(
   'listTrending',
-  () => $fetch(`http://localhost:8000/auth/blog/list`)
+  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list`)
 )
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 

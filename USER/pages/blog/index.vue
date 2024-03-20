@@ -118,11 +118,11 @@ const { t , locale } = useI18n()
 
 const listBlog   = await useAsyncData(
   'listBlog',
-  () => $fetch('http://localhost:8000/auth/blog/list?page=1&limit=10')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list?page=1&limit=10')
 )?.data
 const { data:tabList }  = await useAsyncData(
   'tabList',
-  () => $fetch('http://localhost:8000/auth/categoryBlog/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
 )
 
 const currentPage = ref(1)
@@ -131,7 +131,7 @@ const hasMoreBlogPost = ref(true)
 
 const loadMore = async () => {
   currentPage.value++;
-  const response = await $fetch(`http://localhost:8000/auth/blog/list?page=${currentPage.value}&limit=${limit.value}`)
+  const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list?page=${currentPage.value}&limit=${limit.value}`)
   
   listBlog.value.data.items = [...listBlog.value.data.items,...response.data.items]
   if(response.data.items.length == 0){

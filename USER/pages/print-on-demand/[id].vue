@@ -534,14 +534,14 @@ const listNameOption = computed(()=>{
 
 const { data: detail } = await useAsyncData("productDetail", () =>
 $fetch(
-  `http://localhost:8000/auth/product/info?productId=${router.params.id}`
+  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
 );
 
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {
-    const response = await $fetch(`http://localhost:8000/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
+    const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
     return response?.data?.items
   }
 )?.data

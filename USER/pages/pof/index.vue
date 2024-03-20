@@ -746,7 +746,7 @@ function prev() {
 }
 
 const { data } = await useAsyncData("showCaseProduct", () =>
-  $fetch("http://localhost:8000/auth/product/list")
+  $fetch("http://printchic-api.tvo-solution.net/auth/product/list")
 );
 const listProdcutShowcase = ref([]);
 

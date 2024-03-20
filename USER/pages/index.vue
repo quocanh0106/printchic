@@ -305,12 +305,12 @@ const switchLocalePath = useSwitchLocalePath()
 
 const { data }  = await useAsyncData(
   'categoryProduct',
-  () => $fetch('http://localhost:8000/auth/categoryProduct/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
 )
 
 const listBlog  = await useAsyncData(
   'blog',
-  () => $fetch('http://localhost:8000/auth/blog/list')
+  () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )?.data
 </script>
 

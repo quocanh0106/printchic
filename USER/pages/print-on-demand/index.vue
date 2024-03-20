@@ -190,7 +190,7 @@ const filterByTag = (newValue) => {
 
 const loadMoreData = async () => {
   currentPage.value++
-  const response = await $fetch(`http://localhost:8000/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
+  const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
   
   listProduct.value = [...listProduct.value,...response.data.items]
   if(response.data.items.length == 0){
@@ -203,7 +203,7 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
     // Reset listCate when categoryProductId changes
     isLoading.value = true;
     listProduct.value = [];
-    const data = await $fetch(`http://localhost:8000/auth/product/list?categoryProductId=${newCategoryProductId}`).finally(()=>{
+    const data = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${newCategoryProductId}`).finally(()=>{
       isLoading.value = false
     })
     listProduct.value = data?.data.items || [];
@@ -219,7 +219,7 @@ const listFaq = ref([])
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {
-    const response = await $fetch(`http://localhost:8000/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
+    const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
     return response.data.items
   }
   )?.data
@@ -227,7 +227,7 @@ const listProduct  = await useAsyncData(
 const listCate  = await useAsyncData(
   'listCategory',
   async () => {
-    const response = await $fetch('http://localhost:8000/auth/categoryProduct/list')
+    const response = await $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
     return response.data.items
   }
   )?.data
