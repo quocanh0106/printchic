@@ -138,6 +138,22 @@ const create = async (data) => {
         set.tabCareInstructionFR = data.tabCareInstructionFR;
         set.tabCareInstructionDE = data.tabCareInstructionDE;
 
+        // setting
+        set.processingTimeUK = data.processingTimeUK;
+        set.processingTimeUS = data.processingTimeUS;
+        set.processingTimeFR = data.processingTimeFR;
+        set.processingTimeDE = data.processingTimeDE;
+
+        set.shippingTimeUK = data.shippingTimeUK;
+        set.shippingTimeUS = data.shippingTimeUS;
+        set.shippingTimeFR = data.shippingTimeFR;
+        set.shippingTimeDE = data.shippingTimeDE;
+        
+        set.templateProductUK = data.templateProductUK;
+        set.templateProductUS = data.templateProductUS;
+        set.templateProductFR = data.templateProductFR;
+        set.templateProductDE = data.templateProductDE;
+
         set.btnLink = data.btnLink;
 
         set.createdBy = convertToObjectId(data.createdBy);
@@ -527,7 +543,7 @@ const updateConditions = async (data) => {
         }
         
         if (!isEmpty(data?.descriptionUK)) {
-            set.descriptionUk = data.descriptionUk;
+            set.descriptionUK = data.descriptionUK;
         }
         if (!isEmpty(data?.descriptionUS)) {
             set.descriptionUS = data.descriptionUS;

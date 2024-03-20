@@ -129,9 +129,8 @@ const FormEdit = () => {
   const callBackSubmit = (data) => {
     if (data.success) {
       toast.success('Blog updated successfully', {
-        duration: 2000
+        duration: 2500
       })
-      router.replace('/apps/blog/')
     } else {
       if (data.statusCode == 10705) {
         data.errors.forEach(ele => {
@@ -142,6 +141,10 @@ const FormEdit = () => {
       }
     }
     setLoading(false)
+    const anchor = document.querySelector('body')
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const onSubmit = async (value) => {
@@ -174,8 +177,8 @@ const FormEdit = () => {
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus);
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
-    typeof files === "string" || formData.append("files", files);
-    typeof filesBanner === "string" || formData.append('files', filesBanner);
+    typeof files === "string" || formData.append("img", files);
+    typeof filesBanner === "string" || formData.append('imgBanner', filesBanner);
     formData.append("tags", JSON.stringify(arrayTagValue));
 
     dispatch(updateBlog({ formData, callBackSubmit }))
@@ -259,7 +262,7 @@ const FormEdit = () => {
       setFilesBanner(data?.imgBanner)
       setTagValue(listTagSelected)
     }
-  }, [storeBlog,storeTag, storeCategoryProduct, store, router.query.id])
+  }, [storeBlog, storeTag, storeCategoryProduct, store, router.query.id])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -603,7 +606,7 @@ const FormEdit = () => {
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.titleUS || ''}
-              renderInput={params => <CustomTextField {...params} label='Recommend Category Product'/>}
+              renderInput={params => <CustomTextField {...params} label='Recommend Category Product' />}
             />
             <CustomAutocomplete
               multiple

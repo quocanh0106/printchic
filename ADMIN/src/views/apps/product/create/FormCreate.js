@@ -264,7 +264,7 @@ const FormCreate = () => {
       return ele
     })
 
-    console.log('variant',variant);
+    console.log('variant', variant);
 
     const arrayCatPro = valueRecommend.map(ele => ele._id)
 
@@ -327,6 +327,10 @@ const FormCreate = () => {
       formData.append(`maxName_2${ele.value}`, value[`maxName_2${ele.value}`]);
 
       formData.append(`featureProduct${ele.value}`, value[`featureProduct${ele.value}`]);
+
+      formData.append(`processingTime${ele.value}`, value[`processingTime${ele.value}`]);
+      formData.append(`shippingTime${ele.value}`, value[`shippingTime${ele.value}`]);
+      formData.append(`templateProduct${ele.value}`, value[`templateProduct${ele.value}`]);
     })
     formData.append(`valueMaterial_1`, thickness);
     formData.append(`valueMaterial_2`, stretchiness);
@@ -494,7 +498,7 @@ const FormCreate = () => {
 
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id}/>
+            <ButtonUpload getValues={getValues} setValue={setValue} id={row.id} />
           </Box>
         )
       }
@@ -594,7 +598,7 @@ const FormCreate = () => {
     onDrop: acceptedFiles => {
       console.log('fileeeeee', acceptedFiles);
       setFiles(acceptedFiles.map(file => Object.assign(file)))
-      console.log('dsadsadsa',acceptedFiles.map(file => Object.assign(file)));
+      console.log('dsadsadsa', acceptedFiles.map(file => Object.assign(file)));
     }
   })
   console.log('fileee', files);
@@ -1159,6 +1163,7 @@ const FormCreate = () => {
               </Grid>
             </Grid>
           </Card>
+
           <Card sx={{ p: 4, mb: 4 }}>
             <Typography variant='h5' sx={{ mb: 2 }}>
               Meta description
@@ -1624,6 +1629,233 @@ const FormCreate = () => {
               Fill list variants
             </Button>
           </Card>
+          {/* setting */}
+          <Card sx={{ p: 4, mb: 4, mt: 4 }}>
+            <Typography variant='h4' sx={{ mb: 3 }}>
+              Setting
+            </Typography>
+            <Typography variant='h5' sx={{ mb: 3 }}>
+              Average Est. Processing Time
+            </Typography>
+            <Grid container spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='processingTimeUK'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Average Est. Processing Time UK'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Processing Time UK'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='processingTimeUS'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Average Est. Processing Time US'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Processing Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='processingTimeFR'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Average Est. Processing Time FR'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Processing Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='processingTimeDE'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Average Est. Processing Time DE'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Processing Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+              Average Est. Shipping Time
+            </Typography>
+            <Grid container spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='shippingTimeUK'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      fullWidth
+                      value={value}
+                      label='Average Est. Shipping Time UK'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Shipping Time UK'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='shippingTimeUS'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      fullWidth
+                      value={value}
+                      label='Average Est. Shipping Time US'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Shipping Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='shippingTimeFR'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      fullWidth
+                      value={value}
+                      label='Average Est. Shipping Time FR'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Shipping Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='shippingTimeDE'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      rows={4}
+                      multiline
+                      fullWidth
+                      value={value}
+                      label='Average Est. Shipping Time DE'
+                      onChange={onChange}
+                      placeholder='Enter Average Est. Shipping Time'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+              Template Product
+            </Typography>
+            <Grid container spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='templateProductUK'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Template Product UK'
+                      onChange={onChange}
+                      placeholder='Enter Template Product UK'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='templateProductUS'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Template Product US'
+                      onChange={onChange}
+                      placeholder='Enter Template Product'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='templateProductFR'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Template Product FR'
+                      onChange={onChange}
+                      placeholder='Enter Template Product'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name='templateProductDE'
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label='Template Product DE'
+                      onChange={onChange}
+                      placeholder='Enter Template Product'
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '100%', mt: 3 }}>
           <Button variant='tonal' color='secondary' sx={{ mr: 3 }} onClick={() => router.replace('/apps/product/')}>
@@ -1651,7 +1883,7 @@ const FormCreate = () => {
         scroll='body'
         onClose={() => setOpenDialog(false)}
         TransitionComponent={Transition}
-        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
+        sx={{ '& .MuiDialog-paper': { overflowY: 'visible' } }}
       >
         <DialogContent
           sx={{
