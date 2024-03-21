@@ -21,19 +21,14 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Utils Import
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
-import OptionsMenu from 'src/@core/components/option-menu'
-import TableHeader from 'src/views/apps/product/TableHeader'
-import { deleteProduct, fetchProduct } from 'src/store/apps/product'
 import { useRouter } from 'next/router'
-import { openInNewTab } from 'src/utils'
+import OptionsMenu from 'src/@core/components/option-menu'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
-import EditDialogSettingProduct from './EditDialogSettingProduct'
-
-// ** Components Imports
-
+import { deleteProduct, fetchProduct } from 'src/store/apps/product'
+import { openInNewTab } from 'src/utils'
+import TableHeader from 'src/views/apps/product/TableHeader'
 
 const UserList = () => {
   // ** State
@@ -41,8 +36,6 @@ const UserList = () => {
   const [value, setValue] = useState('')
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
   const [createDialog, setOpenCreateDialog] = useState(false)
-  const [editDialog, setOpenEditDialog] = useState(false)
-  const [rowData, setRowData] = useState({})
   const [openEditSettingProDialog, setOpenEditSettingProDialog] = useState(false)
 
   const [query, setQuery] = useState({
@@ -200,7 +193,6 @@ const UserList = () => {
           />
         </Card>
       </Grid>
-      <EditDialogSettingProduct visible={openEditSettingProDialog} setVisible={setOpenEditSettingProDialog}/>
     </Grid>
   )
 }

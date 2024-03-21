@@ -1,24 +1,20 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import MenuItem from '@mui/material/MenuItem'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** React Imports
 import { Grid } from '@mui/material'
-import { forwardRef, useState } from 'react'
-import DatePicker from 'react-datepicker'
-import { Controller, useForm } from 'react-hook-form'
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import Link from 'next/link'
+import { forwardRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 import { fetchProduct } from 'src/store/apps/product'
 
 const TableHeader = props => {
-  // ** State
-  const [openModalSettingProduct, setOpenModalSettingProduct] = useState(false)
 
   const {
     control,
@@ -54,7 +50,7 @@ const TableHeader = props => {
       <DatePickerWrapper>
         <form>
           <Grid container spacing={5}>
-            <Grid item xs={7} sm={7}>
+            <Grid item xs={10} sm={10}>
               <CustomTextField
                 value={value}
                 fullWidth
@@ -62,7 +58,7 @@ const TableHeader = props => {
                 onChange={e => handleFilter(e.target.value)}
               />
             </Grid>
-            <Grid item xs={5} sm={5}>
+            <Grid item xs={2} sm={2}>
               <div style={{ height: '100%', display: 'flex', alignItems: 'self-end' }}>
                 <Button
                   sx={{ mr: 2 }}
@@ -70,13 +66,6 @@ const TableHeader = props => {
                   onClick={() => searchProductCategory()}
                 >
                   Search
-                </Button>
-                <Button
-                  sx={{ mr: 2, }}
-                  variant='contained'
-                  onClick={() => setOpenEditSettingProDialog(true)}
-                >
-                  Setting Shipping Info
                 </Button>
                 <Box
                   component={Link}

@@ -611,9 +611,9 @@ const FormCreate = () => {
         setValue(`optionMaterialLabel${ele.value}`, infoProduct?.[`optionMaterialLabel${ele.value}`])
         setValue(`featureProductLabel${ele.value}`, infoProduct?.[`featureProductLabel${ele.value}`])
 
-        setValue(`processingTime${ele.value}`, store.data[`processingTime${ele.value}`])
-        setValue(`shippingTime${ele.value}`, store.data[`shippingTime${ele.value}`])
-        setValue(`templateProduct${ele.value}`, store.data[`templateProduct${ele.value}`])
+        setValue(`processingTime${ele.value}`, infoProduct?.[`processingTime${ele.value}`])
+        setValue(`shippingTime${ele.value}`, infoProduct?.[`shippingTime${ele.value}`])
+        setValue(`templateProduct${ele.value}`, infoProduct?.[`templateProduct${ele.value}`])
       })
 
       setValue('btnLink', infoProduct?.btnLink)
@@ -2063,7 +2063,7 @@ const FormCreate = () => {
           </Card>
 
           <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+            <Typography variant='h5' sx={{ mb: 3 }}>
               Average Est. Shipping Time
             </Typography>
             <Grid container spacing={5}>
@@ -2143,7 +2143,7 @@ const FormCreate = () => {
           </Card>
 
           <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+            <Typography variant='h5' sx={{ mb: 3 }}>
               Template Product
             </Typography>
             <Grid container spacing={5}>

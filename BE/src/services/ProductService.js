@@ -148,7 +148,7 @@ const create = async (data) => {
         set.shippingTimeUS = data.shippingTimeUS;
         set.shippingTimeFR = data.shippingTimeFR;
         set.shippingTimeDE = data.shippingTimeDE;
-        
+
         set.templateProductUK = data.templateProductUK;
         set.templateProductUS = data.templateProductUS;
         set.templateProductFR = data.templateProductFR;
@@ -541,7 +541,7 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.categoryProductId)) {
             set.categoryProductId = convertToObjectId(data?.categoryProductId || '');
         }
-        
+
         if (!isEmpty(data?.descriptionUK)) {
             set.descriptionUK = data.descriptionUK;
         }
@@ -576,6 +576,46 @@ const updateConditions = async (data) => {
 
         if (!isEmpty(data?.btnLink)) {
             set.btnLink = data.btnLink;
+        }
+
+        // setting
+        if (!isEmpty(data?.processingTimeUK)) {
+            set.processingTimeUK = data.processingTimeUK;
+        }
+        if (!isEmpty(data?.processingTimeUS)) {
+            set.processingTimeUS = data.processingTimeUS;
+        }
+        if (!isEmpty(data?.processingTimeFR)) {
+            set.processingTimeFR = data.processingTimeFR;
+        }
+        if (!isEmpty(data?.processingTimeDE)) {
+            set.processingTimeDE = data.processingTimeDE;
+        }
+
+        if (!isEmpty(data?.shippingTimeUK)) {
+            set.shippingTimeUK = data.shippingTimeUK;
+        }
+        if (!isEmpty(data?.shippingTimeUS)) {
+            set.shippingTimeUS = data.shippingTimeUS;
+        }
+        if (!isEmpty(data?.shippingTimeFR)) {
+            set.shippingTimeFR = data.shippingTimeFR;
+        }
+        if (!isEmpty(data?.shippingTimeDE)) {
+            set.shippingTimeDE = data.shippingTimeDE;
+        }
+
+        if (!isEmpty(data?.templateProductUK)) {
+            set.templateProductUK = data.templateProductUK;
+        }
+        if (!isEmpty(data?.templateProductUS)) {
+            set.templateProductUS = data.templateProductUS;
+        }
+        if (!isEmpty(data?.templateProductFR)) {
+            set.templateProductFR = data.templateProductFR;
+        }
+        if (!isEmpty(data?.templateProductDE)) {
+            set.templateProductDE = data.templateProductDE;
         }
 
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
