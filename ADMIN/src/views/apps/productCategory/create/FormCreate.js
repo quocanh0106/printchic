@@ -537,7 +537,7 @@ const ProductCategoryComponent = () => {
               fields.map((field, index) =>
                 <Box key={field.id} sx={{ mb: 3 }}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    Question - {index + 1}
+                    FAQ - {index + 1}
                   </Typography>
                   <Grid container spacing={5}>
                     <Grid item xs={6}>
@@ -572,41 +572,6 @@ const ProductCategoryComponent = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Controller
-                        name={`faqs.${index}.question${LANG_OBJECT.FR}`}
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <CustomTextField
-                            fullWidth
-                            value={value}
-                            label={`question ${LANG_OBJECT.FR}`}
-                            onChange={onChange}
-                            aria-describedby='validation-basic-first-name'
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Controller
-                        name={`faqs.${index}.question${LANG_OBJECT.DE}`}
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <CustomTextField
-                            fullWidth
-                            value={value}
-                            label={`question ${LANG_OBJECT.DE}`}
-                            onChange={onChange}
-                            aria-describedby='validation-basic-first-name'
-                          />
-                        )}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Typography variant='h5' sx={{ mb: 3 }}>
-                    Answer - {index + 1}
-                  </Typography>
-                  <Grid container spacing={5}>
-                    <Grid item xs={6}>
-                      <Controller
                         name={`faqs.${index}.answer${LANG_OBJECT.UK}`}
                         control={control}
                         render={({ field }) => (
@@ -637,18 +602,34 @@ const ProductCategoryComponent = () => {
                         )}
                       />
                     </Grid>
+                  </Grid>
+                  <Grid container sx={{ mt: 5 }} spacing={5}>
                     <Grid item xs={6}>
                       <Controller
-                        name={`faqs.${index}.answer${LANG_OBJECT.FR}`}
+                        name={`faqs.${index}.question${LANG_OBJECT.DE}`}
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { value, onChange } }) => (
                           <CustomTextField
-                            rows={4}
                             fullWidth
-                            multiline
-                            {...field}
-                            label={`answer ${LANG_OBJECT.FR}`}
-                            aria-describedby='validation-basic-textarea'
+                            value={value}
+                            label={`question ${LANG_OBJECT.DE}`}
+                            onChange={onChange}
+                            aria-describedby='validation-basic-first-name'
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.question${LANG_OBJECT.FR}`}
+                        control={control}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.FR}`}
+                            onChange={onChange}
+                            aria-describedby='validation-basic-first-name'
                           />
                         )}
                       />
@@ -664,6 +645,22 @@ const ProductCategoryComponent = () => {
                             multiline
                             {...field}
                             label={`answer ${LANG_OBJECT.DE}`}
+                            aria-describedby='validation-basic-textarea'
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.FR}`}
+                        control={control}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            {...field}
+                            label={`answer ${LANG_OBJECT.FR}`}
                             aria-describedby='validation-basic-textarea'
                           />
                         )}
