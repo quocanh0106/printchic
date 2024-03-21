@@ -15,14 +15,14 @@
       <div class="blog-content">
         <!-- Title --------------------------------------------------------------------------->
         <div class="title text-3xl font-bold mb-5">
-          {{ locale == 'US' ? blogDetail.titleUS : locale == 'UK' ? blogDetail.titleUK : locale == 'FR' ? blogDetail.titleFR : blogDetail.titleDE}}
+          {{ locale == 'US' ? blogDetail.titleUS : locale == 'UK' ? blogDetail.titleUK : locale == 'FR' ? blogDetail.titleFR : blogDetail.titleDE ?? ''}}
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
-          <div class="tags flex gap-x-2" v-if="blogDetail.tags.length > 1 && blogDetail.tags[0] != null">
+          <div class="tags flex gap-x-2" v-if="blogDetail?.tags?.length > 1 && blogDetail.tags?.[0] != null">
             <div class="" v-for="tag,ind in blogDetail?.tags" :key="ind">
               <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
-                {{ locale == 'US' ? tag.titleUS : locale == 'UK' ? tag.titleUK : locale == 'FR' ? tag.titleFR :tag.titleDE}}
+                {{ locale == 'US' ? tag.titleUS : locale == 'UK' ? tag.titleUK : locale == 'FR' ? tag.titleFR :tag.titleDE ?? ''}}
               </button>
             </div>
           </div>
@@ -40,7 +40,7 @@
         </div>
 
         <!-- Content --------------------------------------------------------------------------->
-        <p class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'" v-html="locale == 'US' ? blogDetail.contentUS : locale == 'UK' ? blogDetail.contentUK : locale == 'FR' ? blogDetail.contentFR : blogDetail.contentDE">
+        <p class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'" v-html="locale == 'US' ? blogDetail.contentUS : locale == 'UK' ? blogDetail.contentUK : locale == 'FR' ? blogDetail.contentFR : blogDetail.contentDE ?? ''">
         </p>
 
         <!-- Avatar and link bar --------------------------------------------------------------------------->
@@ -49,7 +49,7 @@
             <v-avatar :image="heroImg" size="50"></v-avatar>
             <div class="flex flex-column justify-between">
               <span class="font-bold">Chloe Nguyen</span>
-              <span class="text-sm text-slate-400">{{ blogDetail.createdAt }}</span>
+              <span class="text-sm text-slate-400">{{ blogDetail.createdAt  ?? ''}}</span>
             </div>
           </div>
           <div class="hyper-link-group flex gap-2">
@@ -67,7 +67,7 @@
           <span class="text-xl font-bold">Products</span>
           <div
             class="info pt-3 pb-3 flex justify-between"
-            v-for="item in blogDetail.recommendProduct"
+            v-for="item in blogDetail?.recommendProduct"
             :key="item"
           >
             <h1>{{ item }}</h1>
@@ -82,7 +82,7 @@
             :key="index"
           >
           <span class="flex gap-x-2">
-            {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE }}
+            {{ locale == 'US' ? item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleFR : item.titleDE ?? ''}}
               <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${item.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
           </div>
@@ -117,7 +117,7 @@
           :key="index"
         >
         <span class="flex gap-x-2">
-            {{ locale == 'US' ? news.titleUS : locale == 'UK' ? news.titleUK : locale == 'FR' ? news.titleFR : news.titleDE }}
+            {{ locale == 'US' ? news.titleUS : locale == 'UK' ? news.titleUK : locale == 'FR' ? news.titleFR : news.titleDE ?? '' }}
               <img class="cursor-pointer" @click="this.$router.push(localePath(`/blog/${news.id}`))" :src="popupBoxIcon" alt="icon" />
           </span>
         </div>
