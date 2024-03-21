@@ -3,9 +3,10 @@
   <div class="product-page-all-screen-wrapper">
     <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
       <div class="product-header pb-0 custom-padding" style="padding-top: 40px">
-        <div class="product-banner rounded-lg text-center flex flex-col custom-padding">
+        <span> Home / Men</span>
+        <div class="product-banner mt-6 rounded-lg text-start flex flex-col custom-padding">
           <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
-          <span> Home / Men</span>
+          <p class="mt-4">Check out PrintChic's awesome print-on-demand Men's Pajamas! We've got a huge range of cool Men's Pajamas with all-over prints in different sizes and colors, our service helps retailers broaden their product offerings and increase earnings seamlessly. Enjoy the perfect blend of style and comfort with our </p>
         </div>
         <div class="cloth-category">
           <swiperComponent @submit="filterByCategoryId" :hasDescription="true" :isCategory="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
@@ -42,7 +43,6 @@
               <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item?.media?.[0]?.path" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item?.variants?.[0]?.sku }}</p>
                 <p class="mt-1 txt-dark-blue font-semibold">{{ item?.[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
                 <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
@@ -72,9 +72,10 @@
     </div>
     <div class="product-page-wrapper" v-show="mobile || tablet">
       <div class="product-header px-3">
-        <div class="product-banner-mobile rounded-lg text-center flex flex-col">
-          <h1 class="section-title font-semibold"> {{ $t('productList.mensClothing') }} </h1>
-          <span> Home / Men</span>
+        <span> Home / Men</span>
+        <div class="product-banner mt-6 rounded-lg text-start flex flex-col custom-padding">
+          <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
+          <p class="mt-4">Check out PrintChic's awesome print-on-demand Men's Pajamas! We've got a huge range of cool Men's Pajamas with all-over prints in different sizes and colors, our service helps retailers broaden their product offerings and increase earnings seamlessly. Enjoy the perfect blend of style and comfort with our </p>
         </div>
         <div class="cloth-category">
           <SwiperCateComponent @submit="filterByCategoryId" :slidePerView="2" :items="listCate" :showNavigation="false" :hasDescription="true" :showPagination="true" class="swiper-category-mobile mt-12" />
@@ -125,7 +126,6 @@
               <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item.media?.[0]?.path" />
-                <p class="mt-3 txt-gray font-medium">SKU: {{ item.variants?.[0]?.sku }}</p>
                 <p class="mt-1 txt-dark-blue font-semibold">{{ item[`title${currentLanguage}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item.price }}</p>
                 <div class="sale-tag" v-if="item.isSale">{{ $t('productList.saleTag') }}</div>
@@ -181,7 +181,7 @@ const currentPage = ref(1);
 const limit = ref(9);
 const hasMoreProducts = ref(true);
 
-const filterByTag = (newValue) => {
+const filterByTag = async (newValue) => {
   router.push({
     name: route.name,
     query: { ...route.query, categoryProductId: newValue },
@@ -244,12 +244,14 @@ const listFilter = ref([
 
 const filterBy = ref([]);
 
-function clearAllFilterBy() {
+const clearAllFilterBy = async () => {
   filterBy.value = [];
   router.push({
     name: route.name,
     query: {  },
   });
+  const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
+  listProduct.value = [...response.data.items]
 }
 
 function toProductDetail(id) {
@@ -300,8 +302,7 @@ const getPajamas = computed(() => {
 <style lang="scss" scoped>
 .product-banner {
   background-color: #F2F4F7;
-  padding: 115px 15vw;
-  height: 307px;
+  padding: 32px 32px;
   max-height: 307px;
 }
 
