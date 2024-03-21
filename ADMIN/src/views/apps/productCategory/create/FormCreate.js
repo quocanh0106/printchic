@@ -227,21 +227,21 @@ const ProductCategoryComponent = () => {
 
       const formData = new FormData();
       LANG.forEach(ele => {
-        formData.append(`title${ele.value}`, value[`title${ele.value}`]);
-        formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`]);
-        formData.append(`description${ele.value}`, value[`description${ele.value}`]);
+        formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
+        formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`] || '');
+        formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
       })
       formData.append("childCategory", value.childCategory);
       formData.append("file", files[0]);
 
-      formData.append("pajamasUK", JSON.stringify(pajamasUK));
-      formData.append("pajamasUS", JSON.stringify(pajamasUS));
-      formData.append("pajamasFR", JSON.stringify(pajamasFR));
-      formData.append("pajamasDE", JSON.stringify(pajamasDE));
+      formData.append("pajamasUK", JSON.stringify(pajamasUK) || '');
+      formData.append("pajamasUS", JSON.stringify(pajamasUS) || '');
+      formData.append("pajamasFR", JSON.stringify(pajamasFR) || '');
+      formData.append("pajamasDE", JSON.stringify(pajamasDE) || '');
 
-      formData.append("paragraphUK", JSON.stringify(paragraphUK));
-      formData.append("paragraphUS", JSON.stringify(paragraphUS));
-      formData.append("paragraphFR", JSON.stringify(paragraphFR));
+      formData.append("paragraphUK", JSON.stringify(paragraphUK) || '');
+      formData.append("paragraphUS", JSON.stringify(paragraphUS) || '');
+      formData.append("paragraphFR", JSON.stringify(paragraphFR) || '');
 
       formData.append("faq", JSON.stringify(value.faqs));
 
@@ -273,17 +273,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.UK}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -311,17 +307,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.FR}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -330,17 +322,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.DE}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -358,17 +346,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`breadcrumb${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Breadcrumb ${LANG_OBJECT.UK}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`breadcrumb${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`breadcrumb${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -377,17 +361,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`breadcrumb${LANG_OBJECT.US}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Breadcrumb ${LANG_OBJECT.US}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`breadcrumb${LANG_OBJECT.US}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`breadcrumb${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -396,17 +376,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`breadcrumb${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Breadcrumb ${LANG_OBJECT.FR}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`breadcrumb${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`breadcrumb${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -415,17 +391,13 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`breadcrumb${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Breadcrumb ${LANG_OBJECT.DE}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`breadcrumb${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`breadcrumb${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -443,18 +415,14 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.UK}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -463,18 +431,14 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.US}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.US}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.US}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -483,18 +447,14 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.FR}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -503,18 +463,14 @@ const ProductCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.DE}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -588,17 +544,13 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.question${LANG_OBJECT.UK}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.UK}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.UK}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`faqs.${index}.question${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -607,17 +559,13 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.question${LANG_OBJECT.US}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.US}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.US}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`faqs.${index}.question${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -626,17 +574,13 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.question${LANG_OBJECT.FR}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.FR}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.FR}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`faqs.${index}.question${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -645,17 +589,13 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.question${LANG_OBJECT.DE}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.DE}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`faqs.${index}.question${LANG_OBJECT.DE}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`faqs.${index}.question${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -669,18 +609,14 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.answer${LANG_OBJECT.UK}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`Answer ${LANG_OBJECT.UK}`}
-                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.UK}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -689,18 +625,14 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.answer${LANG_OBJECT.US}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.US}`}
-                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.US}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -709,18 +641,14 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.answer${LANG_OBJECT.FR}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.FR}`}
-                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.FR}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -729,25 +657,21 @@ const ProductCategoryComponent = () => {
                       <Controller
                         name={`faqs.${index}.answer${LANG_OBJECT.DE}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.DE}`}
-                            error={Boolean(errors[`faqs.${index}.answer${LANG_OBJECT.DE}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`faqs.${index}.answer${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
                     </Grid>
                   </Grid>
                   {
-                    index > 0 ? <Button variant='outlined'  onClick={() => remove(index)} sx={{ justifyContent: 'start', width: '180px', mt: 4 }}>
+                    index > 0 ? <Button variant='outlined' onClick={() => remove(index)} sx={{ justifyContent: 'start', width: '180px', mt: 4 }}>
                       Remove this FAQ
                     </Button> : <></>
                   }
@@ -765,7 +689,7 @@ const ProductCategoryComponent = () => {
               answerUS: '',
               answerFR: '',
               answerDE: '',
-            })} sx={{ justifyContent: 'start'}}>
+            })} sx={{ justifyContent: 'start' }}>
               Add FAQ
             </Button>
           </Card>

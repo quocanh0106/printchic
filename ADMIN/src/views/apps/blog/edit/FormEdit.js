@@ -154,32 +154,32 @@ const FormEdit = () => {
 
     const formData = new FormData();
     formData.append("blogId", router.query.id);
-    formData.append("titleUK", value.titleUK);
-    formData.append("titleUS", value.titleUS);
-    formData.append("titleDE", value.titleDE);
-    formData.append("titleFR", value.titleFR);
+    formData.append("titleUK", value.titleUK || '');
+    formData.append("titleUS", value.titleUS || '');
+    formData.append("titleDE", value.titleDE || '');
+    formData.append("titleFR", value.titleFR || '');
 
 
-    formData.append("handleUrlUK", value.handleUrlUK);
-    formData.append("handleUrlUS", value.handleUrlUS);
-    formData.append("handleUrlDE", value.handleUrlDE);
-    formData.append("handleUrlFR", value.handleUrlFR);
+    formData.append("handleUrlUK", value.handleUrlUK || '');
+    formData.append("handleUrlUS", value.handleUrlUS || '');
+    formData.append("handleUrlDE", value.handleUrlDE || '');
+    formData.append("handleUrlFR", value.handleUrlFR || '');
 
-    formData.append("metaDescriptionUK", value.metaDescriptionUK);
-    formData.append("metaDescriptionUS", value.metaDescriptionUS);
-    formData.append("metaDescriptionDE", value.metaDescriptionDE);
-    formData.append("metaDescriptionFR", value.metaDescriptionFR);
+    formData.append("metaDescriptionUK", value.metaDescriptionUK || '');
+    formData.append("metaDescriptionUS", value.metaDescriptionUS || '');
+    formData.append("metaDescriptionDE", value.metaDescriptionDE || '');
+    formData.append("metaDescriptionFR", value.metaDescriptionFR || '');
 
-    formData.append("contentUK", JSON.stringify(contentUK));
-    formData.append("contentUS", JSON.stringify(contentUS));
-    formData.append("contentDE", JSON.stringify(contentDE));
-    formData.append("contentFR", JSON.stringify(contentFR));
+    formData.append("contentUK", JSON.stringify(contentUK) || '');
+    formData.append("contentUS", JSON.stringify(contentUS) || '');
+    formData.append("contentDE", JSON.stringify(contentDE) || '');
+    formData.append("contentFR", JSON.stringify(contentFR) || '');
     formData.append("categoryBlogId", value.blogCategory);
-    formData.append("status", value.blogStatus);
+    formData.append("status", value.blogStatus || '');
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
     typeof files === "string" || formData.append("img", files);
     typeof filesBanner === "string" || formData.append('imgBanner', filesBanner);
-    formData.append("tags", JSON.stringify(arrayTagValue));
+    formData.append("tags", JSON.stringify(arrayTagValue) || '');
 
     dispatch(updateBlog({ formData, callBackSubmit }))
 
@@ -235,27 +235,27 @@ const FormEdit = () => {
       })
 
       setValue('blogCategory', data?.categoryBlogId?._id)
-      setContentUK(data?.contentUK)
-      setContentUS(data?.contentUS)
-      setContentFR(data?.contentFR)
-      setContentDE(data?.contentDE)
-      setValue('blogStatus', data?.status)
-      setValue('tags', data?.tags)
+      setContentUK(data?.contentUK || '')
+      setContentUS(data?.contentUS || '')
+      setContentFR(data?.contentFR || '')
+      setContentDE(data?.contentDE || '')
+      setValue('blogStatus', data?.status || '')
+      setValue('tags', data?.tags || '')
 
-      setValue('titleUK', data?.titleUK)
-      setValue('titleUS', data?.titleUS)
-      setValue('titleFR', data?.titleFR)
-      setValue('titleDE', data?.titleDE)
+      setValue('titleUK', data?.titleUK || '')
+      setValue('titleUS', data?.titleUS || '')
+      setValue('titleFR', data?.titleFR || '')
+      setValue('titleDE', data?.titleDE || '')
 
-      setValue('handleUrlUK', data?.handleUrlUK)
-      setValue('handleUrlUS', data?.handleUrlUS)
-      setValue('handleUrlFR', data?.handleUrlFR)
-      setValue('handleUrlDE', data?.handleUrlDE)
+      setValue('handleUrlUK', data?.handleUrlUK || '')
+      setValue('handleUrlUS', data?.handleUrlUS || '')
+      setValue('handleUrlFR', data?.handleUrlFR || '')
+      setValue('handleUrlDE', data?.handleUrlDE || '')
 
-      setValue('metaDescriptionUK', data?.metaDescriptionUK)
-      setValue('metaDescriptionUS', data?.metaDescriptionUS)
-      setValue('metaDescriptionFR', data?.metaDescriptionFR)
-      setValue('metaDescriptionDE', data?.metaDescriptionDE)
+      setValue('metaDescriptionUK', data?.metaDescriptionUK || '')
+      setValue('metaDescriptionUS', data?.metaDescriptionUS || '')
+      setValue('metaDescriptionFR', data?.metaDescriptionFR || '')
+      setValue('metaDescriptionDE', data?.metaDescriptionDE || '')
 
       setValueRecommend(listRecommend)
       setFiles(data?.img)
@@ -392,19 +392,15 @@ const FormEdit = () => {
             <Controller
               name='handleUrlUK'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Handle Url UK'
-                  required
                   onChange={onChange}
                   placeholder='Enter Handle Url UK'
-                  error={Boolean(errors.handleUrlUK)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlUK && { helperText: 'This field is required' })}
                 />
               )}
             />
@@ -430,38 +426,30 @@ const FormEdit = () => {
             <Controller
               name='handleUrlFR'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Handle Url FR'
-                  required
                   onChange={onChange}
                   placeholder='Enter Handle Url FR'
-                  error={Boolean(errors.handleUrlFR)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlFR && { helperText: 'This field is required' })}
                 />
               )}
             />
             <Controller
               name='handleUrlDE'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Handle Url DE'
-                  required
                   onChange={onChange}
                   placeholder='Enter Handle Url DE'
-                  error={Boolean(errors.handleUrlDE)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.handleUrlDE && { helperText: 'This field is required' })}
                 />
               )}
             />
@@ -473,76 +461,60 @@ const FormEdit = () => {
             <Controller
               name='metaDescriptionUK'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Meta Description UK'
-                  required
                   onChange={onChange}
                   placeholder='Enter Meta Description UK'
-                  error={Boolean(errors.metaDescriptionUK)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
                 />
               )}
             />
             <Controller
               name='metaDescriptionUS'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Meta Description US'
-                  required
                   onChange={onChange}
                   placeholder='Enter Meta Description US'
-                  error={Boolean(errors.metaDescriptionUS)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
                 />
               )}
             />
             <Controller
               name='metaDescriptionFR'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Meta Description FR'
-                  required
                   onChange={onChange}
                   placeholder='Enter Meta Description FR'
-                  error={Boolean(errors.metaDescriptionFR)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
                 />
               )}
             />
             <Controller
               name='metaDescriptionDE'
               control={control}
-              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <CustomTextField
                   sx={{ mb: 4 }}
                   fullWidth
                   value={value}
                   label='Meta Description DE'
-                  required
                   onChange={onChange}
                   placeholder='Enter Meta Description DE'
-                  error={Boolean(errors.metaDescriptionDE)}
                   aria-describedby='validation-basic-first-name'
-                  {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
                 />
               )}
             />
@@ -658,18 +630,14 @@ const FormEdit = () => {
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     sx={{ mb: 4 }}
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.UK}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -698,18 +666,14 @@ const FormEdit = () => {
               <Controller
                 name={`title${LANG_OBJECT.FR}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     sx={{ mb: 4 }}
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.FR}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -718,17 +682,13 @@ const FormEdit = () => {
               <Controller
                 name={`title${LANG_OBJECT.DE}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.DE}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -804,7 +764,6 @@ const FormEdit = () => {
               fullWidth
               value={newTags.titleUK}
               label={`Tag UK`}
-              required
               onChange={(e) => {
                 if (e.target.value && errorsTag.titleUK) {
                   setErrorsTag({ ...errorsTag, titleUK: false })
@@ -812,16 +771,13 @@ const FormEdit = () => {
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUK: e.target.value })
               }}
-              error={Boolean(errorsTag.titleUK)}
               aria-describedby='validation-basic-first-name'
-              {...(errorsTag.titleUK && { helperText: 'This field is required' })}
             />
             <CustomTextField
               sx={{ mb: 4 }}
               fullWidth
               value={newTags.titleUS}
               label={`Tag US`}
-              required
               onChange={(e) => {
                 if (e.target.value && errorsTag.titleUS) {
                   setErrorsTag({ ...errorsTag, titleUS: false })
@@ -829,16 +785,13 @@ const FormEdit = () => {
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleUS: e.target.value })
               }}
-              error={Boolean(errorsTag.titleUS)}
               aria-describedby='validation-basic-first-name'
-              {...(errorsTag.titleUS && { helperText: 'This field is required' })}
             />
             <CustomTextField
               sx={{ mb: 4 }}
               fullWidth
               value={newTags.titleFR}
               label={`Tag FR`}
-              required
               onChange={(e) => {
                 if (e.target.value && errorsTag.titleFR) {
                   setErrorsTag({ ...errorsTag, titleFR: false })
@@ -846,16 +799,13 @@ const FormEdit = () => {
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleFR: e.target.value })
               }}
-              error={Boolean(errorsTag.titleFR)}
               aria-describedby='validation-basic-first-name'
-              {...(errorsTag.titleFR && { helperText: 'This field is required' })}
             />
             <CustomTextField
               sx={{ mb: 4 }}
               fullWidth
               value={newTags.titleDE}
               label={`Tag DE`}
-              required
               onChange={(e) => {
                 if (e.target.value && errorsTag.titleDE) {
                   setErrorsTag({ ...errorsTag, titleDE: false })
@@ -863,9 +813,7 @@ const FormEdit = () => {
                 let tempNewTags = { ...newTags }
                 setNewTags({ ...tempNewTags, titleDE: e.target.value })
               }}
-              error={Boolean(errorsTag.titleDE)}
               aria-describedby='validation-basic-first-name'
-              {...(errorsTag.titleDE && { helperText: 'This field is required' })}
             />
           </Box>
         </DialogContent>

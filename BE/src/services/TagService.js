@@ -14,10 +14,10 @@ const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const create = async (data) => {
     try {
         const set = {};
-        set.titleUK = data.titleUK;
-        set.titleUS = data.titleUS;
-        set.titleDE = data.titleDE;
-        set.titleFR = data.titleFR;
+        set.titleUK = data?.titleUK;
+        set.titleUS = data?.titleUS;
+        set.titleDE = data?.titleDE;
+        set.titleFR = data?.titleFR;
         set.createdBy = convertToObjectId(data.createdBy);
         set.createdAt = generatorTime();
         const result = await TagModels.create(set);

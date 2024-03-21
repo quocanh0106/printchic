@@ -126,10 +126,10 @@ const BlogCategoryComponent = () => {
 
   useEffect(() => {
     LANG.forEach(ele => {
-      setValue(`title${ele.value}`, infoCategoryBlog?.[`title${ele.value}`]);
-      setValue(`description${ele.value}`, infoCategoryBlog?.[`description${ele.value}`]);
-      setValue(`handleUrl${ele.value}`, infoCategoryBlog?.[`handleUrl${ele.value}`]);
-      setValue(`metaDescription${ele.value}`, infoCategoryBlog?.[`metaDescription${ele.value}`]);
+      setValue(`title${ele.value}`, infoCategoryBlog?.[`title${ele.value}`] || '');
+      setValue(`description${ele.value}`, infoCategoryBlog?.[`description${ele.value}`] || '');
+      setValue(`handleUrl${ele.value}`, infoCategoryBlog?.[`handleUrl${ele.value}`] || '');
+      setValue(`metaDescription${ele.value}`, infoCategoryBlog?.[`metaDescription${ele.value}`] || '');
     })
 
     setValue('parentCategory', infoCategoryBlog?.parentCategory)
@@ -191,10 +191,10 @@ const BlogCategoryComponent = () => {
       formData.append("categoryBlogId", infoCategoryBlog._id);
 
       LANG.forEach(ele => {
-        formData.append(`title${ele.value}`, value[`title${ele.value}`]);
-        formData.append(`description${ele.value}`, value[`description${ele.value}`]);
-        formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`]);
-        formData.append(`metaDescription${ele.value}`, value[`metaDescription${ele.value}`]);
+        formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
+        formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
+        formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
+        formData.append(`metaDescription${ele.value}`, value[`metaDescription${ele.value}`] || '');
       })
 
       formData.append("faq", JSON.stringify(tempListFAQ));
@@ -230,18 +230,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='handleUrlUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Handle URL UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle URL UK'
-                      error={Boolean(errors.handleUrlUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -270,18 +266,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='handleUrlFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Handle URL FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle URL FR'
-                      error={Boolean(errors.handleUrlFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -290,18 +282,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='handleUrlDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Handle URL DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle URL DE'
-                      error={Boolean(errors.handleUrlDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -317,18 +305,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='metaDescriptionUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Meta Description UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description UK'
-                      error={Boolean(errors.metaDescriptionUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -337,18 +321,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='metaDescriptionUS'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Meta DescriptionUS'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta DescriptionUS'
-                      error={Boolean(errors.metaDescriptionUS)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -357,18 +337,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='metaDescriptionFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Meta Description FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description FR'
-                      error={Boolean(errors.metaDescriptionFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -377,18 +353,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name='metaDescriptionDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label='Meta Description DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description DE'
-                      error={Boolean(errors.metaDescriptionDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -404,17 +376,13 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.UK}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -442,17 +410,13 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.FR}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -461,17 +425,13 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`title${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.DE}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -493,17 +453,13 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`question_${index + 1}${LANG_OBJECT.UK}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.UK}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`question_${index + 1}${LANG_OBJECT.UK}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`question_${index + 1}${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -512,17 +468,13 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`question_${index + 1}${LANG_OBJECT.US}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.US}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`question_${index + 1}${LANG_OBJECT.US}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`question_${index + 1}${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -531,17 +483,13 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`question_${index + 1}${LANG_OBJECT.FR}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.FR}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`question_${index + 1}${LANG_OBJECT.FR}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`question_${index + 1}${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -550,17 +498,13 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`question_${index + 1}${LANG_OBJECT.DE}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
                             fullWidth
                             value={value}
                             label={`question ${LANG_OBJECT.DE}`}
-                            required
                             onChange={onChange}
-                            error={Boolean(errors[`question_${index + 1}${LANG_OBJECT.DE}`])}
                             aria-describedby='validation-basic-first-name'
-                            {...(errors[`question_${index + 1}${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -574,18 +518,14 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`answer_${index + 1}${LANG_OBJECT.UK}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`Answer ${LANG_OBJECT.UK}`}
-                            error={Boolean(errors[`answer_${index + 1}${LANG_OBJECT.UK}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`answer_${index + 1}${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -594,18 +534,14 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`answer_${index + 1}${LANG_OBJECT.US}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.US}`}
-                            error={Boolean(errors[`answer_${index + 1}${LANG_OBJECT.US}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`answer_${index + 1}${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -614,18 +550,14 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`answer_${index + 1}${LANG_OBJECT.FR}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.FR}`}
-                            error={Boolean(errors[`answer_${index + 1}${LANG_OBJECT.FR}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`answer_${index + 1}${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -634,18 +566,14 @@ const BlogCategoryComponent = () => {
                       <Controller
                         name={`answer_${index + 1}${LANG_OBJECT.DE}`}
                         control={control}
-                        rules={{ required: true }}
                         render={({ field }) => (
                           <CustomTextField
                             rows={4}
                             fullWidth
                             multiline
-                            required
                             {...field}
                             label={`answer ${LANG_OBJECT.DE}`}
-                            error={Boolean(errors[`answer_${index + 1}${LANG_OBJECT.DE}`])}
                             aria-describedby='validation-basic-textarea'
-                            {...(errors[`answer_${index + 1}${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                           />
                         )}
                       />
@@ -668,18 +596,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.UK}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -688,18 +612,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.US}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.US}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.US}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -708,18 +628,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.FR}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -728,18 +644,14 @@ const BlogCategoryComponent = () => {
                 <Controller
                   name={`description${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field }) => (
                     <CustomTextField
                       rows={4}
                       fullWidth
                       multiline
-                      required
                       {...field}
                       label={`Description ${LANG_OBJECT.DE}`}
-                      error={Boolean(errors[`description${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-textarea'
-                      {...(errors[`description${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />

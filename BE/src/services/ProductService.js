@@ -13,150 +13,149 @@ const { IS_DELETED, STATUS } = require('../utils/constants');
 const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const mongoose = require('mongoose');
 const create = async (data) => {
-    console.log('data', data)
     try {
         const set = {};
-        set.titleUK = data.titleUK;
-        set.titleUS = data.titleUS;
-        set.titleFR = data.titleFR;
-        set.titleDE = data.titleDE;
+        set.titleUK = data?.titleUK;
+        set.titleUS = data?.titleUS;
+        set.titleFR = data?.titleFR;
+        set.titleDE = data?.titleDE;
 
-        set.handleUrlUK = data.handleUrlUK;
-        set.handleUrlUS = data.handleUrlUS;
-        set.handleUrlFR = data.handleUrlFR;
-        set.handleUrlDE = data.handleUrlDE;
+        set.handleUrlUK = data?.handleUrlUK;
+        set.handleUrlUS = data?.handleUrlUS;
+        set.handleUrlFR = data?.handleUrlFR;
+        set.handleUrlDE = data?.handleUrlDE;
 
-        set.metaDescriptionUK = data.metaDescriptionUK;
-        set.metaDescriptionUS = data.metaDescriptionUS;
-        set.metaDescriptionFR = data.metaDescriptionFR;
-        set.metaDescriptionDE = data.metaDescriptionDE;
+        set.metaDescriptionUK = data?.metaDescriptionUK;
+        set.metaDescriptionUS = data?.metaDescriptionUS;
+        set.metaDescriptionFR = data?.metaDescriptionFR;
+        set.metaDescriptionDE = data?.metaDescriptionDE;
 
-        set.typeUK = data.typeUK;
-        set.typeUS = data.typeUS;
-        set.typeFR = data.typeFR;
-        set.typeDE = data.typeDE;
+        set.typeUK = data?.typeUK;
+        set.typeUS = data?.typeUS;
+        set.typeFR = data?.typeFR;
+        set.typeDE = data?.typeDE;
 
-        set.categoryProduct = JSON.parse(data.categoryProduct)
-        set.descriptionUK = data.descriptionUK;
-        set.descriptionUS = data.descriptionUS;
-        set.descriptionFR = data.descriptionFR;
-        set.descriptionDE = data.descriptionDE;
+        set.categoryProduct = JSON.parse(data?.categoryProduct)
+        set.descriptionUK = data?.descriptionUK;
+        set.descriptionUS = data?.descriptionUS;
+        set.descriptionFR = data?.descriptionFR;
+        set.descriptionDE = data?.descriptionDE;
 
-        set.variants = JSON.parse(data.variants);
-        set.status = data.status;
-        set.media = data.media;
-        set.currency = data.currency;
-        set.price = data.price;
-        set.priceSale = data.priceSale;
+        set.variants = JSON.parse(data?.variants);
+        set.status = data?.status;
+        set.media = data?.media;
+        set.currency = data?.currency;
+        set.price = data?.price;
+        set.priceSale = data?.priceSale;
 
-        set.customizationOptionsUK = data.customizationOptionsUK;
-        set.customizationOptionsUS = data.customizationOptionsUS;
-        set.customizationOptionsFR = data.customizationOptionsFR;
-        set.customizationOptionsDE = data.customizationOptionsDE;
+        set.customizationOptionsUK = data?.customizationOptionsUK;
+        set.customizationOptionsUS = data?.customizationOptionsUS;
+        set.customizationOptionsFR = data?.customizationOptionsFR;
+        set.customizationOptionsDE = data?.customizationOptionsDE;
 
-        set.detailProductUK = data.detailProductUK;
-        set.detailProductUS = data.detailProductUS;
-        set.detailProductFR = data.detailProductFR;
-        set.detailProductDE = data.detailProductDE;
+        set.detailProductUK = data?.detailProductUK;
+        set.detailProductUS = data?.detailProductUS;
+        set.detailProductFR = data?.detailProductFR;
+        set.detailProductDE = data?.detailProductDE;
 
-        set.valueMaterial_1 = data.valueMaterial_1;
+        set.valueMaterial_1 = data?.valueMaterial_1;
 
-        set.valueMaterial_2 = data.valueMaterial_2;
+        set.valueMaterial_2 = data?.valueMaterial_2;
 
-        set.featureProductUK = data.featureProductUK;
-        set.featureProductUS = data.featureProductUS;
-        set.featureProductFR = data.featureProductFR;
-        set.featureProductDE = data.featureProductDE;
+        set.featureProductUK = data?.featureProductUK;
+        set.featureProductUS = data?.featureProductUS;
+        set.featureProductFR = data?.featureProductFR;
+        set.featureProductDE = data?.featureProductDE;
 
-        set.optionMaterial_1UK = data.optionMaterial_1UK;
-        set.optionMaterial_1US = data.optionMaterial_1US;
-        set.optionMaterial_1FR = data.optionMaterial_1FR;
-        set.optionMaterial_1DE = data.optionMaterial_1DE;
+        set.optionMaterial_1UK = data?.optionMaterial_1UK;
+        set.optionMaterial_1US = data?.optionMaterial_1US;
+        set.optionMaterial_1FR = data?.optionMaterial_1FR;
+        set.optionMaterial_1DE = data?.optionMaterial_1DE;
 
-        set.minName_1UK = data.minName_1UK;
-        set.minName_1US = data.minName_1US;
-        set.minName_1FR = data.minName_1FR;
-        set.minName_1DE = data.minName_1DE;
+        set.minName_1UK = data?.minName_1UK;
+        set.minName_1US = data?.minName_1US;
+        set.minName_1FR = data?.minName_1FR;
+        set.minName_1DE = data?.minName_1DE;
 
-        set.maxName_1UK = data.maxName_1UK;
-        set.maxName_1US = data.maxName_1US;
-        set.maxName_1FR = data.maxName_1FR;
-        set.maxName_1DE = data.maxName_1DE;
+        set.maxName_1UK = data?.maxName_1UK;
+        set.maxName_1US = data?.maxName_1US;
+        set.maxName_1FR = data?.maxName_1FR;
+        set.maxName_1DE = data?.maxName_1DE;
 
-        set.optionMaterial_2UK = data.optionMaterial_2UK;
-        set.optionMaterial_2US = data.optionMaterial_2US;
-        set.optionMaterial_2FR = data.optionMaterial_2FR;
-        set.optionMaterial_2DE = data.optionMaterial_2DE;
+        set.optionMaterial_2UK = data?.optionMaterial_2UK;
+        set.optionMaterial_2US = data?.optionMaterial_2US;
+        set.optionMaterial_2FR = data?.optionMaterial_2FR;
+        set.optionMaterial_2DE = data?.optionMaterial_2DE;
 
-        set.minName_2UK = data.minName_2UK;
-        set.minName_2US = data.minName_2US;
-        set.minName_2FR = data.minName_2FR;
-        set.minName_2DE = data.minName_2DE;
+        set.minName_2UK = data?.minName_2UK;
+        set.minName_2US = data?.minName_2US;
+        set.minName_2FR = data?.minName_2FR;
+        set.minName_2DE = data?.minName_2DE;
 
-        set.maxName_2UK = data.maxName_2UK;
-        set.maxName_2US = data.maxName_2US;
-        set.maxName_2FR = data.maxName_2FR;
-        set.maxName_2DE = data.maxName_2DE;
+        set.maxName_2UK = data?.maxName_2UK;
+        set.maxName_2US = data?.maxName_2US;
+        set.maxName_2FR = data?.maxName_2FR;
+        set.maxName_2DE = data?.maxName_2DE;
 
-        set.featureProductLabelUK = data.featureProductLabelUK;
-        set.featureProductLabelUS = data.featureProductLabelUS;
-        set.featureProductLabelFR = data.featureProductLabelFR;
-        set.featureProductLabelDE = data.featureProductLabelDE;
+        set.featureProductLabelUK = data?.featureProductLabelUK;
+        set.featureProductLabelUS = data?.featureProductLabelUS;
+        set.featureProductLabelFR = data?.featureProductLabelFR;
+        set.featureProductLabelDE = data?.featureProductLabelDE;
 
-        set.optionMaterialLabelUK = data.optionMaterialLabelUK;
-        set.optionMaterialLabelUS = data.optionMaterialLabelUS;
-        set.optionMaterialLabelFR = data.optionMaterialLabelFR;
-        set.optionMaterialLabelDE = data.optionMaterialLabelDE;
+        set.optionMaterialLabelUK = data?.optionMaterialLabelUK;
+        set.optionMaterialLabelUS = data?.optionMaterialLabelUS;
+        set.optionMaterialLabelFR = data?.optionMaterialLabelFR;
+        set.optionMaterialLabelDE = data?.optionMaterialLabelDE;
 
-        set.detailProductLabelUK = data.detailProductLabelUK;
-        set.detailProductLabelUS = data.detailProductLabelUS;
-        set.detailProductLabelFR = data.detailProductLabelFR;
-        set.detailProductLabelDE = data.detailProductLabelDE;
+        set.detailProductLabelUK = data?.detailProductLabelUK;
+        set.detailProductLabelUS = data?.detailProductLabelUS;
+        set.detailProductLabelFR = data?.detailProductLabelFR;
+        set.detailProductLabelDE = data?.detailProductLabelDE;
 
-        set.customizationOptionsLabelUK = data.customizationOptionsLabelUK;
-        set.customizationOptionsLabelUS = data.customizationOptionsLabelUS;
-        set.customizationOptionsLabelFR = data.customizationOptionsLabelFR;
-        set.customizationOptionsLabelDE = data.customizationOptionsLabelDE;
+        set.customizationOptionsLabelUK = data?.customizationOptionsLabelUK;
+        set.customizationOptionsLabelUS = data?.customizationOptionsLabelUS;
+        set.customizationOptionsLabelFR = data?.customizationOptionsLabelFR;
+        set.customizationOptionsLabelDE = data?.customizationOptionsLabelDE;
 
-        set.tabProductDetailUK = data.tabProductDetailUK;
-        set.tabProductDetailUS = data.tabProductDetailUS;
-        set.tabProductDetailFR = data.tabProductDetailFR;
-        set.tabProductDetailDE = data.tabProductDetailDE;
+        set.tabProductDetailUK = data?.tabProductDetailUK;
+        set.tabProductDetailUS = data?.tabProductDetailUS;
+        set.tabProductDetailFR = data?.tabProductDetailFR;
+        set.tabProductDetailDE = data?.tabProductDetailDE;
 
-        set.tabSizeGuideUK = data.tabSizeGuideUK;
-        set.tabSizeGuideUS = data.tabSizeGuideUS;
-        set.tabSizeGuideFR = data.tabSizeGuideFR;
-        set.tabSizeGuideDE = data.tabSizeGuideDE;
+        set.tabSizeGuideUK = data?.tabSizeGuideUK;
+        set.tabSizeGuideUS = data?.tabSizeGuideUS;
+        set.tabSizeGuideFR = data?.tabSizeGuideFR;
+        set.tabSizeGuideDE = data?.tabSizeGuideDE;
 
-        set.tabMockupTemplateUK = data.tabMockupTemplateUK;
-        set.tabMockupTemplateUS = data.tabMockupTemplateUS;
-        set.tabMockupTemplateFR = data.tabMockupTemplateFR;
-        set.tabMockupTemplateDE = data.tabMockupTemplateDE;
+        set.tabMockupTemplateUK = data?.tabMockupTemplateUK;
+        set.tabMockupTemplateUS = data?.tabMockupTemplateUS;
+        set.tabMockupTemplateFR = data?.tabMockupTemplateFR;
+        set.tabMockupTemplateDE = data?.tabMockupTemplateDE;
 
-        set.tabCareInstructionUK = data.tabCareInstructionUK;
-        set.tabCareInstructionUS = data.tabCareInstructionUS;
-        set.tabCareInstructionFR = data.tabCareInstructionFR;
-        set.tabCareInstructionDE = data.tabCareInstructionDE;
+        set.tabCareInstructionUK = data?.tabCareInstructionUK;
+        set.tabCareInstructionUS = data?.tabCareInstructionUS;
+        set.tabCareInstructionFR = data?.tabCareInstructionFR;
+        set.tabCareInstructionDE = data?.tabCareInstructionDE;
 
         // setting
-        set.processingTimeUK = data.processingTimeUK;
-        set.processingTimeUS = data.processingTimeUS;
-        set.processingTimeFR = data.processingTimeFR;
-        set.processingTimeDE = data.processingTimeDE;
+        set.processingTimeUK = data?.processingTimeUK;
+        set.processingTimeUS = data?.processingTimeUS;
+        set.processingTimeFR = data?.processingTimeFR;
+        set.processingTimeDE = data?.processingTimeDE;
 
-        set.shippingTimeUK = data.shippingTimeUK;
-        set.shippingTimeUS = data.shippingTimeUS;
-        set.shippingTimeFR = data.shippingTimeFR;
-        set.shippingTimeDE = data.shippingTimeDE;
+        set.shippingTimeUK = data?.shippingTimeUK;
+        set.shippingTimeUS = data?.shippingTimeUS;
+        set.shippingTimeFR = data?.shippingTimeFR;
+        set.shippingTimeDE = data?.shippingTimeDE;
 
-        set.templateProductUK = data.templateProductUK;
-        set.templateProductUS = data.templateProductUS;
-        set.templateProductFR = data.templateProductFR;
-        set.templateProductDE = data.templateProductDE;
+        set.templateProductUK = data?.templateProductUK;
+        set.templateProductUS = data?.templateProductUS;
+        set.templateProductFR = data?.templateProductFR;
+        set.templateProductDE = data?.templateProductDE;
 
-        set.btnLink = data.btnLink;
+        set.btnLink = data?.btnLink;
 
-        set.createdBy = convertToObjectId(data.createdBy);
+        set.createdBy = convertToObjectId(data?.createdBy);
         set.createdAt = generatorTime();
         const result = await ProductsModels.create(set);
         return promiseResolve(result);

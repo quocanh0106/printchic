@@ -15,33 +15,33 @@ const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const create = async (data) => {
     try {
         const set = {};
-        set.categoryBlogId = data.categoryBlogId;
-        set.status = data.status;
-        set.img = data.img;
-        set.imgBanner = data.imgBanner;
-        set.tags = JSON.parse(data.tags);
+        set.categoryBlogId = data?.categoryBlogId;
+        set.status = data?.status;
+        set.img = data?.img;
+        set.imgBanner = data?.imgBanner;
+        set.tags = JSON.parse(data?.tags);
 
-        set.titleUK = data.titleUK;
-        set.titleUS = data.titleUS;
-        set.titleDE = data.titleDE;
-        set.titleFR = data.titleFR;
+        set.titleUK = data?.titleUK;
+        set.titleUS = data?.titleUS;
+        set.titleDE = data?.titleDE;
+        set.titleFR = data?.titleFR;
 
-        set.handleUrlUK = data.handleUrlUK;
-        set.handleUrlUS = data.handleUrlUS;
-        set.handleUrlFR = data.handleUrlFR;
-        set.handleUrlDE = data.handleUrlDE;
+        set.handleUrlUK = data?.handleUrlUK;
+        set.handleUrlUS = data?.handleUrlUS;
+        set.handleUrlFR = data?.handleUrlFR;
+        set.handleUrlDE = data?.handleUrlDE;
 
-        set.metaDescriptionUK = data.metaDescriptionUK;
-        set.metaDescriptionUS = data.metaDescriptionUS;
-        set.metaDescriptionFR = data.metaDescriptionFR;
-        set.metaDescriptionDE = data.metaDescriptionDE;
+        set.metaDescriptionUK = data?.metaDescriptionUK;
+        set.metaDescriptionUS = data?.metaDescriptionUS;
+        set.metaDescriptionFR = data?.metaDescriptionFR;
+        set.metaDescriptionDE = data?.metaDescriptionDE;
 
-        set.recommendProduct = JSON.parse(data.recommendProduct);
-        set.contentUK = data.contentUK;
-        set.contentUS = data.contentUS;
-        set.contentDE = data.contentDE;
-        set.contentFR = data.contentFR;
-        set.createdBy = convertToObjectId(data.createdBy);
+        set.recommendProduct = JSON.parse(data?.recommendProduct);
+        set.contentUK = data?.contentUK;
+        set.contentUS = data?.contentUS;
+        set.contentDE = data?.contentDE;
+        set.contentFR = data?.contentFR;
+        set.createdBy = convertToObjectId(data?.createdBy);
         set.createdAt = generatorTime();
         const result = await BlogsModels.create(set);
         return promiseResolve(result);
