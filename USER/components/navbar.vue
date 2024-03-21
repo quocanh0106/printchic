@@ -13,7 +13,7 @@
         <ul class="nav-bar-wrapper">
 
           <li v-for="(item, index) in links" :key="index">
-            <a class="navigation-menu" :href="localePath(item.href)">{{ $t(item.label) }}</a>
+            <span class="navigation-menu cursor-pointer" @click="router.push(localePath(item.href))">{{ t(item.label) }}</span>
           </li>
           <li>
             <v-select
@@ -71,7 +71,7 @@
               :key="index"
               :class="{ 'bg-light-blue-custom': isActive }"
             >
-              <a :href="url.href">{{ url.label }}</a>
+              <span @click="router.push(localePath(url.href))">{{ t(url.label) }}</span>
             </v-list>
             <span class="change-language-mobile flex items-center gap-x-3">
               <span class="mdi--web"></span>
@@ -116,11 +116,11 @@ const isActive = ref(false);
 const selectedLanguage = ref(locale.value);
 
 const links = computed(() => [
-  { label: t('navBar.Home'), href: '/' },
-  { label:  t('navBar.Products'), href: '/print-on-demand' },
-  { label: t('navBar.HIW'), href: '/how-it-works' },
-  { label: t('navBar.Blog'), href: '/blog'},
-  { label: t('navBar.aboutUs'), href:'/about-us' },
+  { label: 'navBar.Home', href: '/' },
+  { label:  'navBar.Products', href: '/print-on-demand' },
+  { label: 'navBar.HIW', href: '/how-it-works' },
+  { label: 'navBar.Blog', href: '/blog'},
+  { label: 'navBar.aboutUs', href:'/about-us' },
 ])
 
 const listLang = ref([

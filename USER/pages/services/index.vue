@@ -387,11 +387,13 @@ const nuxtApp = useNuxtApp();
 const router = useRouter();
 const listPODProduct = ref([]);
 const localePath = useLocalePath()
+const {data}  = await useFetch('http://printchic-api.tvo-solution.net/auth/product/list');
 
-const {data}  = await useFetch(`http://printchic-api.tvo-solution.net/auth/product/list`);
-console.log(data,'DATA')
+const podImage = computed(() => {
+  return data.value?.data?.items
+})
 onMounted(async () => {
-  listPODProduct.value = data.value?.data?.items.map(item => item.media[0]?.path);
+  listPODProduct.value = podImage.value.map(item => item.media[0]?.path);
 });
 
 

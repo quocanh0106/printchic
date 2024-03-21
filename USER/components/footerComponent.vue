@@ -106,7 +106,7 @@ export default {
           listUrl: [
             {
               urlName: this.$t("footer.product"),
-              url: "product",
+              url: "print-on-demand",
             },
             {
               urlName: this.$t("footer.service"),
@@ -131,7 +131,7 @@ export default {
             },
             {
               urlName: this.$t("footer.productCatalog"),
-              url: "product",
+              url: "print-on-demand",
             },
             {
               urlName: this.$t("footer.helpCenter"),
