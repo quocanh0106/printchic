@@ -201,8 +201,6 @@ const UserList = () => {
           />
         </Card>
       </Grid>
-      <AddDialogProduct visible={createDialog} setVisible={setOpenCreateDialog} />
-      <DialogEditCard visible={editDialog} setVisible={setOpenEditDialog} rowData={rowData} />
     </Grid>
   )
 }

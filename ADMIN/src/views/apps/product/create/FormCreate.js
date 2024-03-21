@@ -269,86 +269,86 @@ const FormCreate = () => {
     const arrayCatPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
-    formData.append("titleUK", value.titleUK);
-    formData.append("titleUS", value.titleUS);
-    formData.append("titleFR", value.titleFR);
-    formData.append("titleDE", value.titleDE);
+    formData.append("titleUK", value.titleUK || '');
+    formData.append("titleUS", value.titleUS || '');
+    formData.append("titleFR", value.titleFR || '');
+    formData.append("titleDE", value.titleDE || '');
 
-    formData.append("handleUrlUK", value.handleUrlUK);
-    formData.append("handleUrlUS", value.handleUrlUS);
-    formData.append("handleUrlFR", value.handleUrlFR);
-    formData.append("handleUrlDE", value.handleUrlDE);
+    formData.append("handleUrlUK", value.handleUrlUK || '');
+    formData.append("handleUrlUS", value.handleUrlUS || '');
+    formData.append("handleUrlFR", value.handleUrlFR || '');
+    formData.append("handleUrlDE", value.handleUrlDE || '');
 
-    formData.append("metaDescriptionUK", value.metaDescriptionUK);
-    formData.append("metaDescriptionUS", value.metaDescriptionUS);
-    formData.append("metaDescriptionFR", value.metaDescriptionFR);
-    formData.append("metaDescriptionDE", value.metaDescriptionDE);
+    formData.append("metaDescriptionUK", value.metaDescriptionUK || '');
+    formData.append("metaDescriptionUS", value.metaDescriptionUS || '');
+    formData.append("metaDescriptionFR", value.metaDescriptionFR || '');
+    formData.append("metaDescriptionDE", value.metaDescriptionDE || '');
 
-    formData.append("typeUK", value.typeUK);
-    formData.append("typeUS", value.typeUS);
-    formData.append("typeFR", value.typeFR);
-    formData.append("typeDE", value.typeDE);
+    formData.append("typeUK", value.typeUK || '');
+    formData.append("typeUS", value.typeUS || '');
+    formData.append("typeFR", value.typeFR || '');
+    formData.append("typeDE", value.typeDE || '');
 
-    formData.append("tabProductDetailUK", JSON.stringify(tabProductDetailUK));
-    formData.append("tabProductDetailUS", JSON.stringify(tabProductDetailUS));
-    formData.append("tabProductDetailFR", JSON.stringify(tabProductDetailFR));
-    formData.append("tabProductDetailDE", JSON.stringify(tabProductDetailDE));
+    formData.append("tabProductDetailUK", JSON.stringify(tabProductDetailUK) || '');
+    formData.append("tabProductDetailUS", JSON.stringify(tabProductDetailUS) || '');
+    formData.append("tabProductDetailFR", JSON.stringify(tabProductDetailFR) || '');
+    formData.append("tabProductDetailDE", JSON.stringify(tabProductDetailDE) || '');
 
-    formData.append("tabSizeGuideUK", JSON.stringify(tabSizeGuideUK));
-    formData.append("tabSizeGuideUS", JSON.stringify(tabSizeGuideUS));
-    formData.append("tabSizeGuideFR", JSON.stringify(tabSizeGuideFR));
-    formData.append("tabSizeGuideDE", JSON.stringify(tabSizeGuideDE));
+    formData.append("tabSizeGuideUK", JSON.stringify(tabSizeGuideUK) || '');
+    formData.append("tabSizeGuideUS", JSON.stringify(tabSizeGuideUS) || '');
+    formData.append("tabSizeGuideFR", JSON.stringify(tabSizeGuideFR) || '');
+    formData.append("tabSizeGuideDE", JSON.stringify(tabSizeGuideDE) || '');
 
-    formData.append("tabMockupTemplateUK", JSON.stringify(tabMockupTemplateUK));
-    formData.append("tabMockupTemplateUS", JSON.stringify(tabMockupTemplateUS));
-    formData.append("tabMockupTemplateFR", JSON.stringify(tabMockupTemplateFR));
-    formData.append("tabMockupTemplateDE", JSON.stringify(tabMockupTemplateDE));
+    formData.append("tabMockupTemplateUK", JSON.stringify(tabMockupTemplateUK) || '');
+    formData.append("tabMockupTemplateUS", JSON.stringify(tabMockupTemplateUS) || '');
+    formData.append("tabMockupTemplateFR", JSON.stringify(tabMockupTemplateFR) || '');
+    formData.append("tabMockupTemplateDE", JSON.stringify(tabMockupTemplateDE) || '');
 
-    formData.append("tabCareInstructionUK", JSON.stringify(tabCareInstructionUK));
-    formData.append("tabCareInstructionUS", JSON.stringify(tabCareInstructionUS));
-    formData.append("tabCareInstructionFR", JSON.stringify(tabCareInstructionFR));
-    formData.append("tabCareInstructionDE", JSON.stringify(tabCareInstructionDE));
+    formData.append("tabCareInstructionUK", JSON.stringify(tabCareInstructionUK) || '');
+    formData.append("tabCareInstructionUS", JSON.stringify(tabCareInstructionUS) || '');
+    formData.append("tabCareInstructionFR", JSON.stringify(tabCareInstructionFR) || '');
+    formData.append("tabCareInstructionDE", JSON.stringify(tabCareInstructionDE) || '');
 
     LANG.forEach(ele => {
 
-      formData.append(`customizationOptionsLabel${ele.value}`, value[`customizationOptionsLabel${ele.value}`]);
-      formData.append(`detailProductLabel${ele.value}`, value[`detailProductLabel${ele.value}`]);
-      formData.append(`optionMaterialLabel${ele.value}`, value[`optionMaterialLabel${ele.value}`]);
-      formData.append(`featureProductLabel${ele.value}`, value[`featureProductLabel${ele.value}`]);
+      formData.append(`customizationOptionsLabel${ele.value}`, value[`customizationOptionsLabel${ele.value}`] || '');
+      formData.append(`detailProductLabel${ele.value}`, value[`detailProductLabel${ele.value}`] || '');
+      formData.append(`optionMaterialLabel${ele.value}`, value[`optionMaterialLabel${ele.value}`] || '');
+      formData.append(`featureProductLabel${ele.value}`, value[`featureProductLabel${ele.value}`] || '');
 
-      formData.append(`customizationOptions${ele.value}`, value[`customizationOptions${ele.value}`]);
-      formData.append(`detailProduct${ele.value}`, value[`detailProduct${ele.value}`]);
+      formData.append(`customizationOptions${ele.value}`, value[`customizationOptions${ele.value}`] || '');
+      formData.append(`detailProduct${ele.value}`, value[`detailProduct${ele.value}`] || '');
 
-      formData.append(`optionMaterial_1${ele.value}`, value[`optionMaterial_1${ele.value}`]);
-      formData.append(`minName_1${ele.value}`, value[`minName_1${ele.value}`]);
-      formData.append(`maxName_1${ele.value}`, value[`maxName_1${ele.value}`]);
-      formData.append(`optionMaterial_2${ele.value}`, value[`optionMaterial_2${ele.value}`]);
-      formData.append(`minName_2${ele.value}`, value[`minName_2${ele.value}`]);
-      formData.append(`maxName_2${ele.value}`, value[`maxName_2${ele.value}`]);
+      formData.append(`optionMaterial_1${ele.value}`, value[`optionMaterial_1${ele.value}`] || '');
+      formData.append(`minName_1${ele.value}`, value[`minName_1${ele.value}`] || '');
+      formData.append(`maxName_1${ele.value}`, value[`maxName_1${ele.value}`] || '');
+      formData.append(`optionMaterial_2${ele.value}`, value[`optionMaterial_2${ele.value}`] || '');
+      formData.append(`minName_2${ele.value}`, value[`minName_2${ele.value}`] || '');
+      formData.append(`maxName_2${ele.value}`, value[`maxName_2${ele.value}`] || '');
 
-      formData.append(`featureProduct${ele.value}`, value[`featureProduct${ele.value}`]);
+      formData.append(`featureProduct${ele.value}`, value[`featureProduct${ele.value}`] || '');
 
-      formData.append(`processingTime${ele.value}`, value[`processingTime${ele.value}`]);
-      formData.append(`shippingTime${ele.value}`, value[`shippingTime${ele.value}`]);
-      formData.append(`templateProduct${ele.value}`, value[`templateProduct${ele.value}`]);
+      formData.append(`processingTime${ele.value}`, value[`processingTime${ele.value}`] || '');
+      formData.append(`shippingTime${ele.value}`, value[`shippingTime${ele.value}`] || '');
+      formData.append(`templateProduct${ele.value}`, value[`templateProduct${ele.value}`] || '');
     })
-    formData.append(`valueMaterial_1`, thickness);
-    formData.append(`valueMaterial_2`, stretchiness);
+    formData.append(`valueMaterial_1`, thickness || 0);
+    formData.append(`valueMaterial_2`, stretchiness || 0);
 
 
-    formData.append("status", value.productStatus);
-    formData.append("btnLink", value.btnLink);
+    formData.append("status", value.productStatus || '');
+    formData.append("btnLink", value.btnLink || '');
 
-    formData.append("descriptionUK", JSON.stringify(contentUK));
-    formData.append("descriptionUS", JSON.stringify(contentUS));
-    formData.append("descriptionFR", JSON.stringify(contentFR));
-    formData.append("descriptionDE", JSON.stringify(contentDE));
+    formData.append("descriptionUK", JSON.stringify(contentUK) || '');
+    formData.append("descriptionUS", JSON.stringify(contentUS) || '');
+    formData.append("descriptionFR", JSON.stringify(contentFR) || '');
+    formData.append("descriptionDE", JSON.stringify(contentDE) || '');
 
-    formData.append("currency", value.currency);
-    formData.append("categoryProduct", JSON.stringify(arrayCatPro));
-    formData.append("price", value.price);
-    value.priceSale && formData.append("priceSale", value.priceSale);
-    formData.append("variants", JSON.stringify(variant));
+    formData.append("currency", value.currency || 'US');
+    formData.append("categoryProduct", JSON.stringify(arrayCatPro) || '');
+    formData.append("price", value.price || 0);
+    value.priceSale && formData.append("priceSale", value.priceSale || 0);
+    formData.append("variants", JSON.stringify(variant) || '');
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
@@ -436,7 +436,7 @@ const FormCreate = () => {
       headerName: 'SKU',
       renderCell: ({ row }) => {
         const defaultValue = `${row?.nameVariant_1}${row?.nameVariant_2 ? `-${row?.nameVariant_2}` : ''}${row?.nameVariant_3 ? `-${row?.nameVariant_3}` : ''}`
-        
+
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Controller
@@ -998,19 +998,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url UK'
-                      error={Boolean(errors.handleUrlUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1040,19 +1036,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url FR'
-                      error={Boolean(errors.handleUrlFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1061,19 +1053,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url DE'
-                      error={Boolean(errors.handleUrlDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1086,18 +1074,14 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.UK}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1126,18 +1110,14 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.FR}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1146,17 +1126,13 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.DE}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1173,19 +1149,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description UK'
-                      error={Boolean(errors.metaDescriptionUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1194,19 +1166,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionUS'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description US'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description US'
-                      error={Boolean(errors.metaDescriptionUS)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1215,19 +1183,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description FR'
-                      error={Boolean(errors.metaDescriptionFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1236,19 +1200,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description DE'
-                      error={Boolean(errors.metaDescriptionDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1264,19 +1224,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type UK'
-                      error={Boolean(errors.typeUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1285,19 +1241,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeUS'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type US'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type US'
-                      error={Boolean(errors.typeUS)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeUS && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1306,19 +1258,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type FR'
-                      error={Boolean(errors.typeFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1327,19 +1275,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type DE'
-                      error={Boolean(errors.typeDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />

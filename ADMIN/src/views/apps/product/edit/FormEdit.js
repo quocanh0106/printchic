@@ -555,102 +555,102 @@ const FormCreate = () => {
         }
       })
 
-      infoProduct?.variants && handleListVariant(infoProduct?.variants)
-      setValue('titleUK', infoProduct?.titleUK)
-      setValue('titleUS', infoProduct?.titleUS)
-      setValue('titleFR', infoProduct?.titleFR)
-      setValue('titleDE', infoProduct?.titleDE)
+      infoProduct?.variants && handleListVariant(infoProduct?.variants || '')
+      setValue('titleUK', infoProduct?.titleUK || '')
+      setValue('titleUS', infoProduct?.titleUS || '')
+      setValue('titleFR', infoProduct?.titleFR || '')
+      setValue('titleDE', infoProduct?.titleDE || '')
 
-      setValue('handleUrlUK', infoProduct?.handleUrlUK)
-      setValue('handleUrlUS', infoProduct?.handleUrlUS)
-      setValue('handleUrlFR', infoProduct?.handleUrlFR)
-      setValue('handleUrlDE', infoProduct?.handleUrlDE)
+      setValue('handleUrlUK', infoProduct?.handleUrlUK || '')
+      setValue('handleUrlUS', infoProduct?.handleUrlUS || '')
+      setValue('handleUrlFR', infoProduct?.handleUrlFR || '')
+      setValue('handleUrlDE', infoProduct?.handleUrlDE || '')
 
-      setValue('metaDescriptionUK', infoProduct?.metaDescriptionUK)
-      setValue('metaDescriptionUS', infoProduct?.metaDescriptionUS)
-      setValue('metaDescriptionFR', infoProduct?.metaDescriptionFR)
-      setValue('metaDescriptionDE', infoProduct?.metaDescriptionDE)
+      setValue('metaDescriptionUK', infoProduct?.metaDescriptionUK || '')
+      setValue('metaDescriptionUS', infoProduct?.metaDescriptionUS || '')
+      setValue('metaDescriptionFR', infoProduct?.metaDescriptionFR || '')
+      setValue('metaDescriptionDE', infoProduct?.metaDescriptionDE || '')
 
-      setValue('typeUK', infoProduct?.typeUK)
-      setValue('typeUS', infoProduct?.typeUS)
-      setValue('typeFR', infoProduct?.typeFR)
-      setValue('typeDE', infoProduct?.typeDE)
+      setValue('typeUK', infoProduct?.typeUK || '')
+      setValue('typeUS', infoProduct?.typeUS || '')
+      setValue('typeFR', infoProduct?.typeFR || '')
+      setValue('typeDE', infoProduct?.typeDE || '')
 
-      setValue('tabProductDetailUK', infoProduct?.tabProductDetailUK)
-      setValue('tabProductDetailUS', infoProduct?.tabProductDetailUS)
-      setValue('tabProductDetailFR', infoProduct?.tabProductDetailFR)
-      setValue('tabProductDetailDE', infoProduct?.tabProductDetailDE)
+      setValue('tabProductDetailUK', infoProduct?.tabProductDetailUK || '')
+      setValue('tabProductDetailUS', infoProduct?.tabProductDetailUS || '')
+      setValue('tabProductDetailFR', infoProduct?.tabProductDetailFR || '')
+      setValue('tabProductDetailDE', infoProduct?.tabProductDetailDE || '')
 
-      setValue('tabSizeGuideUK', infoProduct?.tabSizeGuideUK)
-      setValue('tabSizeGuideUS', infoProduct?.tabSizeGuideUS)
-      setValue('tabSizeGuideFR', infoProduct?.tabSizeGuideFR)
-      setValue('tabSizeGuideDE', infoProduct?.tabSizeGuideDE)
+      setValue('tabSizeGuideUK', infoProduct?.tabSizeGuideUK || '')
+      setValue('tabSizeGuideUS', infoProduct?.tabSizeGuideUS || '')
+      setValue('tabSizeGuideFR', infoProduct?.tabSizeGuideFR || '')
+      setValue('tabSizeGuideDE', infoProduct?.tabSizeGuideDE || '')
 
-      setValue('tabMockupTemplateUK', infoProduct?.tabMockupTemplateUK)
-      setValue('tabMockupTemplateUS', infoProduct?.tabMockupTemplateUS)
-      setValue('tabMockupTemplateFR', infoProduct?.tabMockupTemplateFR)
-      setValue('tabMockupTemplateDE', infoProduct?.tabMockupTemplateDE)
+      setValue('tabMockupTemplateUK', infoProduct?.tabMockupTemplateUK || '')
+      setValue('tabMockupTemplateUS', infoProduct?.tabMockupTemplateUS || '')
+      setValue('tabMockupTemplateFR', infoProduct?.tabMockupTemplateFR || '')
+      setValue('tabMockupTemplateDE', infoProduct?.tabMockupTemplateDE || '')
 
-      setValue('tabCareInstructionUK', infoProduct?.tabCareInstructionUK)
-      setValue('tabCareInstructionUS', infoProduct?.tabCareInstructionUS)
-      setValue('tabCareInstructionFR', infoProduct?.tabCareInstructionFR)
-      setValue('tabCareInstructionDE', infoProduct?.tabCareInstructionDE)
+      setValue('tabCareInstructionUK', infoProduct?.tabCareInstructionUK || '')
+      setValue('tabCareInstructionUS', infoProduct?.tabCareInstructionUS || '')
+      setValue('tabCareInstructionFR', infoProduct?.tabCareInstructionFR || '')
+      setValue('tabCareInstructionDE', infoProduct?.tabCareInstructionDE || '')
 
       LANG.forEach(ele => {
-        setValue(`customizationOptions${ele.value}`, infoProduct?.[`customizationOptions${ele.value}`])
-        setValue(`detailProduct${ele.value}`, infoProduct?.[`detailProduct${ele.value}`])
-        setValue(`featureProduct${ele.value}`, infoProduct?.[`featureProduct${ele.value}`])
-        setValue(`optionMaterial_1${ele.value}`, infoProduct?.[`optionMaterial_1${ele.value}`])
-        setValue(`minName_1${ele.value}`, infoProduct?.[`minName_1${ele.value}`])
-        setValue(`maxName_1${ele.value}`, infoProduct?.[`maxName_1${ele.value}`])
-        setValue(`optionMaterial_2${ele.value}`, infoProduct?.[`optionMaterial_2${ele.value}`])
-        setValue(`minName_2${ele.value}`, infoProduct?.[`minName_2${ele.value}`])
-        setValue(`maxName_2${ele.value}`, infoProduct?.[`maxName_2${ele.value}`])
-        setValue(`customizationOptionsLabel${ele.value}`, infoProduct?.[`customizationOptionsLabel${ele.value}`])
-        setValue(`detailProductLabel${ele.value}`, infoProduct?.[`detailProductLabel${ele.value}`])
-        setValue(`optionMaterialLabel${ele.value}`, infoProduct?.[`optionMaterialLabel${ele.value}`])
-        setValue(`featureProductLabel${ele.value}`, infoProduct?.[`featureProductLabel${ele.value}`])
+        setValue(`customizationOptions${ele.value}`, infoProduct?.[`customizationOptions${ele.value}`] || '')
+        setValue(`detailProduct${ele.value}`, infoProduct?.[`detailProduct${ele.value}`] || '')
+        setValue(`featureProduct${ele.value}`, infoProduct?.[`featureProduct${ele.value}`] || '')
+        setValue(`optionMaterial_1${ele.value}`, infoProduct?.[`optionMaterial_1${ele.value}`] || '')
+        setValue(`minName_1${ele.value}`, infoProduct?.[`minName_1${ele.value}`] || '')
+        setValue(`maxName_1${ele.value}`, infoProduct?.[`maxName_1${ele.value}`] || '')
+        setValue(`optionMaterial_2${ele.value}`, infoProduct?.[`optionMaterial_2${ele.value}`] || '')
+        setValue(`minName_2${ele.value}`, infoProduct?.[`minName_2${ele.value}`] || '')
+        setValue(`maxName_2${ele.value}`, infoProduct?.[`maxName_2${ele.value}`] || '')
+        setValue(`customizationOptionsLabel${ele.value}`, infoProduct?.[`customizationOptionsLabel${ele.value}`] || '')
+        setValue(`detailProductLabel${ele.value}`, infoProduct?.[`detailProductLabel${ele.value}`] || '')
+        setValue(`optionMaterialLabel${ele.value}`, infoProduct?.[`optionMaterialLabel${ele.value}`] || '')
+        setValue(`featureProductLabel${ele.value}`, infoProduct?.[`featureProductLabel${ele.value}`] || '')
 
-        setValue(`processingTime${ele.value}`, store.data[`processingTime${ele.value}`])
-        setValue(`shippingTime${ele.value}`, store.data[`shippingTime${ele.value}`])
-        setValue(`templateProduct${ele.value}`, store.data[`templateProduct${ele.value}`])
+        setValue(`processingTime${ele.value}`, infoProduct?.[`processingTime${ele.value}`] || '')
+        setValue(`shippingTime${ele.value}`, infoProduct?.[`shippingTime${ele.value}`] || '')
+        setValue(`templateProduct${ele.value}`, infoProduct?.[`templateProduct${ele.value}`] || '')
       })
 
-      setValue('btnLink', infoProduct?.btnLink)
+      setValue('btnLink', infoProduct?.btnLink || 0)
 
-      setStretchiness(infoProduct?.valueMaterial_2)
-      setThickness(infoProduct?.valueMaterial_1)
+      setStretchiness(infoProduct?.valueMaterial_2 || 0)
+      setThickness(infoProduct?.valueMaterial_1 || 0)
 
       setValue('productStatus', infoProduct?.status)
-      infoProduct?.descriptionUK && setContentUK(JSON.parse(infoProduct?.descriptionUK))
-      infoProduct?.descriptionUS && setContentUS(JSON.parse(infoProduct?.descriptionUS))
-      infoProduct?.descriptionFR && setContentFR(JSON.parse(infoProduct?.descriptionFR))
-      infoProduct?.descriptionDE && setContentDE(JSON.parse(infoProduct?.descriptionDE))
+      infoProduct?.descriptionUK && setContentUK(JSON.parse(infoProduct?.descriptionUK) || '')
+      infoProduct?.descriptionUS && setContentUS(JSON.parse(infoProduct?.descriptionUS) || '')
+      infoProduct?.descriptionFR && setContentFR(JSON.parse(infoProduct?.descriptionFR) || '')
+      infoProduct?.descriptionDE && setContentDE(JSON.parse(infoProduct?.descriptionDE) || '')
 
-      infoProduct?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(infoProduct?.tabProductDetailUK))
-      infoProduct?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(infoProduct?.tabProductDetailUS))
-      infoProduct?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(infoProduct?.tabProductDetailFR))
-      infoProduct?.tabProductDetailDE && setTabProductDetailDE(JSON.parse(infoProduct?.tabProductDetailDE))
+      infoProduct?.tabProductDetailUK && setTabProductDetailUK(JSON.parse(infoProduct?.tabProductDetailUK) || '')
+      infoProduct?.tabProductDetailUS && setTabProductDetailUS(JSON.parse(infoProduct?.tabProductDetailUS) || '')
+      infoProduct?.tabProductDetailFR && setTabProductDetailFR(JSON.parse(infoProduct?.tabProductDetailFR) || '')
+      infoProduct?.tabProductDetailDE && setTabProductDetailDE(JSON.parse(infoProduct?.tabProductDetailDE) || '')
 
-      infoProduct?.tabSizeGuideUK && setTabSizeGuideUK(JSON.parse(infoProduct?.tabSizeGuideUK))
-      infoProduct?.tabSizeGuideUS && setTabSizeGuideUS(JSON.parse(infoProduct?.tabSizeGuideUS))
-      infoProduct?.tabSizeGuideFR && setTabSizeGuideFR(JSON.parse(infoProduct?.tabSizeGuideFR))
-      infoProduct?.tabSizeGuideDE && setTabSizeGuideDE(JSON.parse(infoProduct?.tabSizeGuideDE))
+      infoProduct?.tabSizeGuideUK && setTabSizeGuideUK(JSON.parse(infoProduct?.tabSizeGuideUK) || '')
+      infoProduct?.tabSizeGuideUS && setTabSizeGuideUS(JSON.parse(infoProduct?.tabSizeGuideUS) || '')
+      infoProduct?.tabSizeGuideFR && setTabSizeGuideFR(JSON.parse(infoProduct?.tabSizeGuideFR) || '')
+      infoProduct?.tabSizeGuideDE && setTabSizeGuideDE(JSON.parse(infoProduct?.tabSizeGuideDE) || '')
 
-      infoProduct?.tabMockupTemplateUK && setTabMockupTemplateUK(JSON.parse(infoProduct?.tabMockupTemplateUK))
-      infoProduct?.tabMockupTemplateUS && setTabMockupTemplateUS(JSON.parse(infoProduct?.tabMockupTemplateUS))
-      infoProduct?.tabMockupTemplateFR && setTabMockupTemplateFR(JSON.parse(infoProduct?.tabMockupTemplateFR))
-      infoProduct?.tabMockupTemplateDE && setTabMockupTemplateDE(JSON.parse(infoProduct?.tabMockupTemplateDE))
+      infoProduct?.tabMockupTemplateUK && setTabMockupTemplateUK(JSON.parse(infoProduct?.tabMockupTemplateUK) || '')
+      infoProduct?.tabMockupTemplateUS && setTabMockupTemplateUS(JSON.parse(infoProduct?.tabMockupTemplateUS) || '')
+      infoProduct?.tabMockupTemplateFR && setTabMockupTemplateFR(JSON.parse(infoProduct?.tabMockupTemplateFR) || '')
+      infoProduct?.tabMockupTemplateDE && setTabMockupTemplateDE(JSON.parse(infoProduct?.tabMockupTemplateDE) || '')
 
-      infoProduct?.tabCareInstructionUK && setTabCareInstructionUK(JSON.parse(infoProduct?.tabCareInstructionUK))
-      infoProduct?.tabCareInstructionUS && setTabCareInstructionUS(JSON.parse(infoProduct?.tabCareInstructionUS))
-      infoProduct?.tabCareInstructionFR && setTabCareInstructionFR(JSON.parse(infoProduct?.tabCareInstructionFR))
-      infoProduct?.tabCareInstructionDE && setTabCareInstructionDE(JSON.parse(infoProduct?.tabCareInstructionDE))
+      infoProduct?.tabCareInstructionUK && setTabCareInstructionUK(JSON.parse(infoProduct?.tabCareInstructionUK) || '')
+      infoProduct?.tabCareInstructionUS && setTabCareInstructionUS(JSON.parse(infoProduct?.tabCareInstructionUS) || '')
+      infoProduct?.tabCareInstructionFR && setTabCareInstructionFR(JSON.parse(infoProduct?.tabCareInstructionFR) || '')
+      infoProduct?.tabCareInstructionDE && setTabCareInstructionDE(JSON.parse(infoProduct?.tabCareInstructionDE) || '')
 
-      setValue('currency', infoProduct?.currency)
-      setValueRecommend(listCatPro)
-      setValue('price', infoProduct?.price)
-      setValue('priceSale', infoProduct?.priceSale)
+      setValue('currency', infoProduct?.currency || '')
+      setValueRecommend(listCatPro || '')
+      setValue('price', infoProduct?.price || 0)
+      setValue('priceSale', infoProduct?.priceSale || 0)
 
       convertToFiles(infoProduct?.media).then(files => {
         setFiles(files)
@@ -1277,19 +1277,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url UK'
-                      error={Boolean(errors.handleUrlUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1319,19 +1315,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url FR'
-                      error={Boolean(errors.handleUrlFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1340,19 +1332,15 @@ const FormCreate = () => {
                 <Controller
                   name='handleUrlDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Handle Url DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Handle Url DE'
-                      error={Boolean(errors.handleUrlDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.handleUrlDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1365,18 +1353,14 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.UK}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.UK}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1405,18 +1389,14 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.FR}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.FR}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1425,17 +1405,13 @@ const FormCreate = () => {
                 <Controller
                   name={`title${LANG_OBJECT.DE}`}
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.DE}`}
-                      required
                       onChange={onChange}
-                      error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1451,19 +1427,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description UK'
-                      error={Boolean(errors.metaDescriptionUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1472,19 +1444,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionUS'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description US'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description US'
-                      error={Boolean(errors.metaDescriptionUS)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionUS && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1493,19 +1461,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description FR'
-                      error={Boolean(errors.metaDescriptionFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1514,19 +1478,15 @@ const FormCreate = () => {
                 <Controller
                   name='metaDescriptionDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Meta Description DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Meta Description DE'
-                      error={Boolean(errors.metaDescriptionDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.metaDescriptionDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1542,19 +1502,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeUK'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type UK'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type UK'
-                      error={Boolean(errors.typeUK)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeUK && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1563,19 +1519,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeUS'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type US'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type US'
-                      error={Boolean(errors.typeUS)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeUS && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1584,19 +1536,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeFR'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type FR'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type FR'
-                      error={Boolean(errors.typeFR)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeFR && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1605,19 +1553,15 @@ const FormCreate = () => {
                 <Controller
                   name='typeDE'
                   control={control}
-                  rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       sx={{ mb: 4 }}
                       fullWidth
                       value={value}
                       label='Product Type DE'
-                      required
                       onChange={onChange}
                       placeholder='Enter Product Type DE'
-                      error={Boolean(errors.typeDE)}
                       aria-describedby='validation-basic-first-name'
-                      {...(errors.typeDE && { helperText: 'This field is required' })}
                     />
                   )}
                 />
@@ -1629,18 +1573,14 @@ const FormCreate = () => {
               <Controller
                 name={`title${LANG_OBJECT.UK}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     sx={{ mb: 4 }}
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.UK}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.UK}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.UK}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -1669,18 +1609,14 @@ const FormCreate = () => {
               <Controller
                 name={`title${LANG_OBJECT.FR}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     sx={{ mb: 4 }}
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.FR}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.FR}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.FR}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -1689,17 +1625,13 @@ const FormCreate = () => {
               <Controller
                 name={`title${LANG_OBJECT.DE}`}
                 control={control}
-                rules={{ required: true }}
                 render={({ field: { value, onChange } }) => (
                   <CustomTextField
                     fullWidth
                     value={value}
                     label={`Title ${LANG_OBJECT.DE}`}
-                    required
                     onChange={onChange}
-                    error={Boolean(errors[`title${LANG_OBJECT.DE}`])}
                     aria-describedby='validation-basic-first-name'
-                    {...(errors[`title${LANG_OBJECT.DE}`] && { helperText: 'This field is required' })}
                   />
                 )}
               />
@@ -2063,7 +1995,7 @@ const FormCreate = () => {
           </Card>
 
           <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+            <Typography variant='h5' sx={{ mb: 3 }}>
               Average Est. Shipping Time
             </Typography>
             <Grid container spacing={5}>
@@ -2143,7 +2075,7 @@ const FormCreate = () => {
           </Card>
 
           <Card sx={{ p: 4, mb: 4 }}>
-            <Typography variant='h5' sx={{ mt: 10, mb: 3 }}>
+            <Typography variant='h5' sx={{ mb: 3 }}>
               Template Product
             </Typography>
             <Grid container spacing={5}>

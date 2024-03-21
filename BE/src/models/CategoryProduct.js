@@ -32,6 +32,18 @@ const ConfigsBase = {
   descriptionFR: {
     type: String, trim: true,
   },
+  handleUrlUK: {
+    type: String, trim: true,
+  },
+  handleUrlUS: {
+    type: String, trim: true,
+  },
+  handleUrlDE: {
+    type: String, trim: true,
+  },
+  handleUrlFR: {
+    type: String, trim: true,
+  },
   bannerImg: {
     type: String, trim: true,
   },

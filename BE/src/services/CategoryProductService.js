@@ -12,35 +12,40 @@ const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const create = async (data) => {
     try {
         const set = {};
-        set.titleUK = data.titleUK;
-        set.titleUS = data.titleUS;
-        set.titleDE = data.titleDE;
-        set.titleFR = data.titleFR;
+        set.titleUK = data?.titleUK;
+        set.titleUS = data?.titleUS;
+        set.titleDE = data?.titleDE;
+        set.titleFR = data?.titleFR;
 
-        set.descriptionUK = data.descriptionUK;
-        set.descriptionUS = data.descriptionUS;
-        set.descriptionDE = data.descriptionDE;
-        set.descriptionFR = data.descriptionFR;
+        set.descriptionUK = data?.descriptionUK;
+        set.descriptionUS = data?.descriptionUS;
+        set.descriptionDE = data?.descriptionDE;
+        set.descriptionFR = data?.descriptionFR;
 
-        set.pajamasUK = data.pajamasUK;
-        set.pajamasUS = data.pajamasUS;
-        set.pajamasFR = data.pajamasFR;
-        set.pajamasDE = data.pajamasDE;
+        set.pajamasUK = data?.pajamasUK;
+        set.pajamasUS = data?.pajamasUS;
+        set.pajamasFR = data?.pajamasFR;
+        set.pajamasDE = data?.pajamasDE;
 
-        set.paragraphUK = data.paragraphUK;
-        set.paragraphUS = data.paragraphUS;
-        set.paragraphFR = data.paragraphFR;
-        set.paragraphDE = data.paragraphDE;
+        set.paragraphUK = data?.paragraphUK;
+        set.paragraphUS = data?.paragraphUS;
+        set.paragraphFR = data?.paragraphFR;
+        set.paragraphDE = data?.paragraphDE;
 
-        set.breadcrumbUK = data.breadcrumbUK;
-        set.breadcrumbUS = data.breadcrumbUS;
-        set.breadcrumbFR = data.breadcrumbFR;
-        set.breadcrumbDE = data.breadcrumbDE;
+        set.breadcrumbUK = data?.breadcrumbUK;
+        set.breadcrumbUS = data?.breadcrumbUS;
+        set.breadcrumbFR = data?.breadcrumbFR;
+        set.breadcrumbDE = data?.breadcrumbDE;
 
-        set.childCategory = data.childCategory;
-        set.bannerImg = data.bannerImg;
-        set.faq = data.faq;
-        set.createdBy = convertToObjectId(data.createdBy);
+        set.handleUrlUK = data?.handleUrlUK;
+        set.handleUrlUS = data?.handleUrlUS;
+        set.handleUrlFR = data?.handleUrlFR;
+        set.handleUrlDE = data?.handleUrlDE;
+
+        set.childCategory = data?.childCategory;
+        set.bannerImg = data?.bannerImg;
+        set.faq = data?.faq;
+        set.createdBy = convertToObjectId(data?.createdBy);
         set.createdAt = generatorTime();
         const result = await CategoryProductModels.create(set);
         return promiseResolve(result);
@@ -190,6 +195,19 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.breadcrumbDE)) {
             set.breadcrumbDE = data.breadcrumbDE;
+        }
+
+        if (!isEmpty(data?.handleUrlUK)) {
+            set.handleUrlUk = data.handleUrlUk;
+        }
+        if (!isEmpty(data?.handleUrlUS)) {
+            set.handleUrlUS = data.handleUrlUS;
+        }
+        if (!isEmpty(data?.handleUrlFR)) {
+            set.handleUrlFR = data.handleUrlFR;
+        }
+        if (!isEmpty(data?.handleUrlDE)) {
+            set.handleUrlDE = data.handleUrlDE;
         }
         if (!isEmpty(data?.faq)) {
             set.faq = data.faq;

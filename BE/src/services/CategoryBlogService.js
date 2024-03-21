@@ -10,33 +10,32 @@ const {
 const { IS_DELETED, STATUS } = require('../utils/constants');
 const { MY_CUSTOM_LABELS } = require('../utils/constants');
 const create = async (data) => {
-    console.log('data', data)
     try {
         const set = {};
 
-        set.titleUK = data.titleUK;
-        set.titleUS = data.titleUS;
-        set.titleDE = data.titleDE;
-        set.titleFR = data.titleFR;
+        set.titleUK = data?.titleUK;
+        set.titleUS = data?.titleUS;
+        set.titleDE = data?.titleDE;
+        set.titleFR = data?.titleFR;
 
-        set.handleUrlUK = data.handleUrlUK;
-        set.handleUrlUS = data.handleUrlUS;
-        set.handleUrlDE = data.handleUrlDE;
-        set.handleUrlFR = data.handleUrlFR;
+        set.handleUrlUK = data?.handleUrlUK;
+        set.handleUrlUS = data?.handleUrlUS;
+        set.handleUrlDE = data?.handleUrlDE;
+        set.handleUrlFR = data?.handleUrlFR;
 
-        set.metaDescriptionUK = data.metaDescriptionUK;
-        set.metaDescriptionUS = data.metaDescriptionUS;
-        set.metaDescriptionDE = data.metaDescriptionDE;
-        set.metaDescriptionFR = data.metaDescriptionFR;
+        set.metaDescriptionUK = data?.metaDescriptionUK;
+        set.metaDescriptionUS = data?.metaDescriptionUS;
+        set.metaDescriptionDE = data?.metaDescriptionDE;
+        set.metaDescriptionFR = data?.metaDescriptionFR;
 
-        set.descriptionUK = data.descriptionUK;
-        set.descriptionUS = data.descriptionUS;
-        set.descriptionDE = data.descriptionDE;
-        set.descriptionFR = data.descriptionFR;
-        set.faq = data.faq;
+        set.descriptionUK = data?.descriptionUK;
+        set.descriptionUS = data?.descriptionUS;
+        set.descriptionDE = data?.descriptionDE;
+        set.descriptionFR = data?.descriptionFR;
+        set.faq = data?.faq;
 
-        set.bannerImg = data.bannerImg;
-        set.createdBy = convertToObjectId(data.createdBy);
+        set.bannerImg = data?.bannerImg;
+        set.createdBy = convertToObjectId(data?.createdBy);
         set.createdAt = generatorTime();
         const result = await CategoryBlogsModels.create(set);
         return promiseResolve(result);
