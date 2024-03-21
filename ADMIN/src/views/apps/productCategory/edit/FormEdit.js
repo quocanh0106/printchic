@@ -253,7 +253,6 @@ const ProductCategoryComponent = () => {
       toast.success('Category Product updated successfully', {
         duration: 3000
       })
-      router.replace('/apps/category-product')
     } else {
       if (data.statusCode == 10505) {
         data.errors.forEach(ele => {

@@ -24,10 +24,10 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { Card, CircularProgress,Divider  } from '@mui/material'
+import { Card, CircularProgress, Divider } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useDropzone } from 'react-dropzone'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
@@ -63,19 +63,6 @@ const BlogCategoryComponent = () => {
   // ** States
   const [files, setFiles] = useState()
   const [loading, setLoading] = useState(false)
-  
-  const [listFAQ, setListFAQ] = useState([
-    {
-      questionUK: '',
-      questionUS: '',
-      questionFR: '',
-      questionDE: '',
-      answerUK: '',
-      answerUS: '',
-      answerFR: '',
-      answerDE: '',
-    }
-  ]);
 
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
@@ -98,27 +85,24 @@ const BlogCategoryComponent = () => {
     getValues,
     formState: { errors }
   } = useForm({
-    id: 0,
-    bannerImg: '',
-    title: '',
-    description: '',
-    status: '',
+    defaultValues: {
+      faqs: [{
+        questionUK: '',
+        questionUS: '',
+        questionFR: '',
+        questionDE: '',
+        answerUK: '',
+        answerUS: '',
+        answerFR: '',
+        answerDE: '',
+      }]
+    }
   })
 
-  const handleAddFAQ = () => {
-    let tempListFAQ = JSON.parse(JSON.stringify(listFAQ))
-    tempListFAQ.push({
-      questionUK: '',
-      questionUS: '',
-      questionFR: '',
-      questionDE: '',
-      answerUK: '',
-      answerUS: '',
-      answerFR: '',
-      answerDE: '',
-    })
-    setListFAQ(tempListFAQ)
-  }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'faqs'
+  });
 
   useEffect(() => {
     dispatch(fetchInfoCategoryBlog({ categoryBlogId: id }))
@@ -131,30 +115,9 @@ const BlogCategoryComponent = () => {
       setValue(`handleUrl${ele.value}`, infoCategoryBlog?.[`handleUrl${ele.value}`] || '');
       setValue(`metaDescription${ele.value}`, infoCategoryBlog?.[`metaDescription${ele.value}`] || '');
     })
-
+    infoCategoryBlog?.faq && setValue('faqs', JSON.parse(infoCategoryBlog?.faq))
     setValue('parentCategory', infoCategoryBlog?.parentCategory)
     setFiles(infoCategoryBlog?.bannerImg)
-
-
-    let tempListFAQ = []
-    infoCategoryBlog?.faq && JSON.parse(infoCategoryBlog?.faq).forEach((ele, index) => {
-      tempListFAQ.push({
-        questionUK: '',
-        questionUS: '',
-        questionFR: '',
-        questionDE: '',
-        answerUK: '',
-        answerUS: '',
-        answerFR: '',
-        answerDE: '',
-      })
-      LANG.forEach(language => {
-        setValue(`question_${index + 1}${language.value}`, ele[`question${language.value}`]);
-        setValue(`answer_${index + 1}${language.value}`, ele[`answer${language.value}`]);
-      })
-    })
-    setListFAQ(tempListFAQ)
-
   }, [id, infoCategoryBlog])
 
   const callBackSubmit = (data) => {
@@ -162,7 +125,6 @@ const BlogCategoryComponent = () => {
       toast.success('Category blog updated successfully', {
         duration: 3000
       })
-      router.replace('/apps/category-blog/')
     } else {
       if (data.statusCode == 10605) {
         data.errors.forEach(ele => {
@@ -178,15 +140,6 @@ const BlogCategoryComponent = () => {
   const onSubmit = (value) => {
     if (files) {
       setLoading(true)
-
-      const tempListFAQ = listFAQ.map((ele, index) => {
-        LANG.map(language => {
-          ele[`question${language.value}`] = getValues(`question_${index + 1}${language.value}`);
-          ele[`answer${language.value}`] = getValues(`answer_${index + 1}${language.value}`);
-        })
-
-        return ele
-      })
       const formData = new FormData();
       formData.append("categoryBlogId", infoCategoryBlog._id);
 
@@ -197,7 +150,7 @@ const BlogCategoryComponent = () => {
         formData.append(`metaDescription${ele.value}`, value[`metaDescription${ele.value}`] || '');
       })
 
-      formData.append("faq", JSON.stringify(tempListFAQ));
+      formData.append("faq", JSON.stringify(value.faqs));
       typeof files === "string" || formData.append("file", files);
       dispatch(updateCategoryBlog({ formData, callBackSubmit }))
     } else {
@@ -443,15 +396,15 @@ const BlogCategoryComponent = () => {
               FAQ
             </Typography>
             {
-              listFAQ.map((ele, index) =>
-                <Box key={index} sx={{ mb: 3 }}>
+              fields.map((field, index) =>
+                <Box key={field.id} sx={{ mb: 3 }}>
                   <Typography variant='h5' sx={{ mb: 3 }}>
-                    Question - {index + 1}
+                    FAQ - {index + 1}
                   </Typography>
                   <Grid container spacing={5}>
                     <Grid item xs={6}>
                       <Controller
-                        name={`question_${index + 1}${LANG_OBJECT.UK}`}
+                        name={`faqs.${index}.question${LANG_OBJECT.UK}`}
                         control={control}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
@@ -466,7 +419,7 @@ const BlogCategoryComponent = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Controller
-                        name={`question_${index + 1}${LANG_OBJECT.US}`}
+                        name={`faqs.${index}.question${LANG_OBJECT.US}`}
                         control={control}
                         render={({ field: { value, onChange } }) => (
                           <CustomTextField
@@ -481,42 +434,7 @@ const BlogCategoryComponent = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Controller
-                        name={`question_${index + 1}${LANG_OBJECT.FR}`}
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <CustomTextField
-                            fullWidth
-                            value={value}
-                            label={`question ${LANG_OBJECT.FR}`}
-                            onChange={onChange}
-                            aria-describedby='validation-basic-first-name'
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Controller
-                        name={`question_${index + 1}${LANG_OBJECT.DE}`}
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <CustomTextField
-                            fullWidth
-                            value={value}
-                            label={`question ${LANG_OBJECT.DE}`}
-                            onChange={onChange}
-                            aria-describedby='validation-basic-first-name'
-                          />
-                        )}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Typography variant='h5' sx={{ mb: 3 }}>
-                    Answer - {index + 1}
-                  </Typography>
-                  <Grid container spacing={5}>
-                    <Grid item xs={6}>
-                      <Controller
-                        name={`answer_${index + 1}${LANG_OBJECT.UK}`}
+                        name={`faqs.${index}.answer${LANG_OBJECT.UK}`}
                         control={control}
                         render={({ field }) => (
                           <CustomTextField
@@ -532,7 +450,7 @@ const BlogCategoryComponent = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Controller
-                        name={`answer_${index + 1}${LANG_OBJECT.US}`}
+                        name={`faqs.${index}.answer${LANG_OBJECT.US}`}
                         control={control}
                         render={({ field }) => (
                           <CustomTextField
@@ -546,25 +464,41 @@ const BlogCategoryComponent = () => {
                         )}
                       />
                     </Grid>
+                  </Grid>
+                  <Grid container sx={{ mt: 5 }} spacing={5}>
                     <Grid item xs={6}>
                       <Controller
-                        name={`answer_${index + 1}${LANG_OBJECT.FR}`}
+                        name={`faqs.${index}.question${LANG_OBJECT.DE}`}
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { value, onChange } }) => (
                           <CustomTextField
-                            rows={4}
                             fullWidth
-                            multiline
-                            {...field}
-                            label={`answer ${LANG_OBJECT.FR}`}
-                            aria-describedby='validation-basic-textarea'
+                            value={value}
+                            label={`question ${LANG_OBJECT.DE}`}
+                            onChange={onChange}
+                            aria-describedby='validation-basic-first-name'
                           />
                         )}
                       />
                     </Grid>
                     <Grid item xs={6}>
                       <Controller
-                        name={`answer_${index + 1}${LANG_OBJECT.DE}`}
+                        name={`faqs.${index}.question${LANG_OBJECT.FR}`}
+                        control={control}
+                        render={({ field: { value, onChange } }) => (
+                          <CustomTextField
+                            fullWidth
+                            value={value}
+                            label={`question ${LANG_OBJECT.FR}`}
+                            onChange={onChange}
+                            aria-describedby='validation-basic-first-name'
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.DE}`}
                         control={control}
                         render={({ field }) => (
                           <CustomTextField
@@ -578,12 +512,43 @@ const BlogCategoryComponent = () => {
                         )}
                       />
                     </Grid>
+                    <Grid item xs={6}>
+                      <Controller
+                        name={`faqs.${index}.answer${LANG_OBJECT.FR}`}
+                        control={control}
+                        render={({ field }) => (
+                          <CustomTextField
+                            rows={4}
+                            fullWidth
+                            multiline
+                            {...field}
+                            label={`answer ${LANG_OBJECT.FR}`}
+                            aria-describedby='validation-basic-textarea'
+                          />
+                        )}
+                      />
+                    </Grid>
                   </Grid>
+                  {
+                    index > 0 ? <Button variant='outlined' onClick={() => remove(index)} sx={{ justifyContent: 'start', width: '180px', mt: 4 }}>
+                      Remove this FAQ
+                    </Button> : <></>
+                  }
+
                   <Divider sx={{ my: 5 }} />
                 </Box>
               )
             }
-            <Button onClick={handleAddFAQ} sx={{ justifyContent: 'start', width: '100%' }}>
+            <Button variant='contained' onClick={() => append({
+              questionUK: '',
+              questionUS: '',
+              questionFR: '',
+              questionDE: '',
+              answerUK: '',
+              answerUS: '',
+              answerFR: '',
+              answerDE: '',
+            })} sx={{ justifyContent: 'start' }}>
               Add FAQ
             </Button>
           </Card>
