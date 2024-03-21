@@ -42,6 +42,11 @@ const create = async (data) => {
         set.handleUrlFR = data?.handleUrlFR;
         set.handleUrlDE = data?.handleUrlDE;
 
+        set.metaTitleUK = data?.metaTitleUK;
+        set.metaTitleUS = data?.metaTitleUS;
+        set.metaTitleDE = data?.metaTitleDE;
+        set.metaTitleFR = data?.metaTitleFR;
+
         set.childCategory = data?.childCategory;
         set.bannerImg = data?.bannerImg;
         set.faq = data?.faq;
@@ -209,6 +214,20 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.handleUrlDE)) {
             set.handleUrlDE = data.handleUrlDE;
         }
+
+        if (!isEmpty(data?.metaTitleUK)) {
+            set.metaTitleUK = JSON.parse(data.metaTitleUK);
+        }
+        if (!isEmpty(data?.metaTitleUS)) {
+            set.metaTitleUS = JSON.parse(data.metaTitleUS);
+        }
+        if (!isEmpty(data?.metaTitleFR)) {
+            set.metaTitleFR = JSON.parse(data.metaTitleFR);
+        }
+        if (!isEmpty(data?.metaTitleDE)) {
+            set.metaTitleDE = JSON.parse(data.metaTitleDE);
+        }
+
         if (!isEmpty(data?.faq)) {
             set.faq = data.faq;
         }

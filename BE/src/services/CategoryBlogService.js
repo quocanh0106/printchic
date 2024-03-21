@@ -32,6 +32,12 @@ const create = async (data) => {
         set.descriptionUS = data?.descriptionUS;
         set.descriptionDE = data?.descriptionDE;
         set.descriptionFR = data?.descriptionFR;
+
+        set.metaTitleUK = data?.metaTitleUK;
+        set.metaTitleUS = data?.metaTitleUS;
+        set.metaTitleDE = data?.metaTitleDE;
+        set.metaTitleFR = data?.metaTitleFR;
+
         set.faq = data?.faq;
 
         set.bannerImg = data?.bannerImg;
@@ -170,6 +176,20 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.descriptionFR)) {
             set.descriptionFR = data.descriptionFR;
         }
+
+        if (!isEmpty(data?.metaTitleUK)) {
+            set.metaTitleUK = JSON.parse(data.metaTitleUK);
+        }
+        if (!isEmpty(data?.metaTitleUS)) {
+            set.metaTitleUS = JSON.parse(data.metaTitleUS);
+        }
+        if (!isEmpty(data?.metaTitleFR)) {
+            set.metaTitleFR = JSON.parse(data.metaTitleFR);
+        }
+        if (!isEmpty(data?.metaTitleDE)) {
+            set.metaTitleDE = JSON.parse(data.metaTitleDE);
+        }
+
         if (!isEmpty(data?.bannerImg)) {
             set.bannerImg = data.bannerImg;
         }

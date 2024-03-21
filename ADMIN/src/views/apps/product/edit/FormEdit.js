@@ -300,6 +300,11 @@ const FormCreate = () => {
     formData.append("titleFR", value.titleFR);
     formData.append("titleDE", value.titleDE);
 
+    formData.append("metaTitleUK", value.metaTitleUK || '');
+    formData.append("metaTitleUS", value.metaTitleUS || '');
+    formData.append("metaTitleFR", value.metaTitleFR || '');
+    formData.append("metaTitleDE", value.metaTitleDE || '');
+
     formData.append("handleUrlUK", value.handleUrlUK);
     formData.append("handleUrlUS", value.handleUrlUS);
     formData.append("handleUrlFR", value.handleUrlFR);
@@ -560,6 +565,11 @@ const FormCreate = () => {
       setValue('titleUS', infoProduct?.titleUS || '')
       setValue('titleFR', infoProduct?.titleFR || '')
       setValue('titleDE', infoProduct?.titleDE || '')
+
+      setValue('metaTitleUK', infoProduct?.metaTitleUK || '')
+      setValue('metaTitleUS', infoProduct?.metaTitleUS || '')
+      setValue('metaTitleFR', infoProduct?.metaTitleFR || '')
+      setValue('metaTitleDE', infoProduct?.metaTitleDE || '')
 
       setValue('handleUrlUK', infoProduct?.handleUrlUK || '')
       setValue('handleUrlUS', infoProduct?.handleUrlUS || '')
@@ -1418,6 +1428,79 @@ const FormCreate = () => {
               </Grid>
             </Grid>
           </Card>
+
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Grid container xs={12} sm={12} spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.UK}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.UK}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.US}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.US}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`metaTitle${LANG_OBJECT.US}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`metaTitle${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.FR}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.FR}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.DE}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Meta Title ${LANG_OBJECT.DE}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
           <Card sx={{ p: 4, mb: 4 }}>
             <Typography variant='h5' sx={{ mb: 2 }}>
               Meta description

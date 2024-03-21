@@ -153,6 +153,11 @@ const create = async (data) => {
         set.templateProductFR = data?.templateProductFR;
         set.templateProductDE = data?.templateProductDE;
 
+        set.metaTitleUK = data?.metaTitleUK;
+        set.metaTitleUS = data?.metaTitleUS;
+        set.metaTitleDE = data?.metaTitleDE;
+        set.metaTitleFR = data?.metaTitleFR;
+
         set.btnLink = data?.btnLink;
 
         set.createdBy = convertToObjectId(data?.createdBy);
@@ -615,6 +620,19 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.templateProductDE)) {
             set.templateProductDE = data.templateProductDE;
+        }
+
+        if (!isEmpty(data?.metaTitleUK)) {
+            set.metaTitleUK = JSON.parse(data.metaTitleUK);
+        }
+        if (!isEmpty(data?.metaTitleUS)) {
+            set.metaTitleUS = JSON.parse(data.metaTitleUS);
+        }
+        if (!isEmpty(data?.metaTitleFR)) {
+            set.metaTitleFR = JSON.parse(data.metaTitleFR);
+        }
+        if (!isEmpty(data?.metaTitleDE)) {
+            set.metaTitleDE = JSON.parse(data.metaTitleDE);
         }
 
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
