@@ -59,8 +59,8 @@
               <h1 class="font-semibold txt-primary mt-5 text-2xl">
                 {{ "0" + (index + 1) + "." }}
               </h1>
-              <h1 class="font-semibold section-title mt-3">{{ item.title }}</h1>
-              <p class="section-content mt-2">{{ item.content }}</p>
+              <h1 class="font-semibold section-title mt-3">{{ item.title ?? '' }}</h1>
+              <p class="section-content mt-2">{{ item.content ?? '' }}</p>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@
               <img :src="arrowUpRight" />
             </a>
           </div>
-          <swiperComponent :showPagination="true" :items="listPODProduct" class="mt-12 mb-8" />
+          <swiperComponent :showPagination="true" :items="listPODProduct" class="pod-product mt-12 mb-8" />
         </div>
   
         <!-- Top current trending print -->
@@ -305,7 +305,7 @@
               <img :src="arrowUpRight" />
             </a>
           </div>
-          <swiperComponent :showPagination="true" :items="listPODProduct" class="mt-12 mb-8" slidePerView="2"/>
+          <swiperComponent :showPagination="true" :items="listPODProduct" class="pod-product mt-12 mb-8" :slidePerView='2'/>
         </div>
   
         <!-- Top current trending print -->
@@ -381,7 +381,6 @@ import prosAndConsVue from '~/components/prosAndCons.vue';
 import { myMixin } from '~/mixins/myMixin';
 import { useI18n, useLocalePath } from '#imports'
 
-import { useAsyncData,useFetch  } from 'nuxt/app'
 
 const { t } = useI18n()
 const nuxtApp = useNuxtApp();
@@ -389,27 +388,13 @@ const router = useRouter();
 const listPODProduct = ref([]);
 const localePath = useLocalePath()
 
-const { data, pending, error } = useFetch(`http://printchic-api.tvo-solution.net/auth/product/list`, {
-  headers: {
-    fetchMode: 'headless',
-  },
-  server: true,
-  watch: false,
-});
-
+const data  = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list`);
+console.log(data,'DATA')
 onMounted(async () => {
-  listPODProduct.value = data.value?.data.items.map(item => item.media[0]?.path);
-
-  if (process.client) {
-    updateScreenWidth();
-    window.addEventListener('resize', updateScreenWidth);
-  }
+  listPODProduct.value = data?.data?.items.map(item => item.media[0]?.path);
 });
 
-onUnmounted(() => {
-  // Remove event listener when the component is unmounted
-  window.removeEventListener('resize', updateScreenWidth);
-});
+
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
@@ -507,5 +492,23 @@ const listTopCurrentPOD = ref([
 
 .bullet-tips {
   list-style-type: disc;
+}
+
+.pod-product{
+  :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      width: 15vw !important;
+      height: 15vw !important;
+      object-fit:cover;
+      max-height: none !important;
+  }
+  @media screen and (max-width: 992px){
+    :deep(.swiper-thumbnail){
+      min-width:0px !important;
+      max-width: 160px !important;
+      min-height: 160px !important;
+      max-height: none !important;
+    }
+  }
 }
 </style>

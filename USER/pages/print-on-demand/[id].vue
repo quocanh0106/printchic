@@ -15,11 +15,11 @@
                   ? detail?.data?.titleUK
                   : locale == "FR"
                   ? detail?.data?.titleFR
-                  : detail?.data?.titleDE
+                  : detail?.data?.titleDE ?? ''
               }}
             </h1>
             <p class="product-sku mt-2">
-              SKU: {{ detail.data.variants?.[0].sku }}
+              SKU: {{ detail?.data?.variants?.[0]?.sku ?? '' }}
             </p>
             <div class="price-n-ship mt-6 flex items-center gap-x-2">
               <span class="price">${{ getPriceByVariant }}</span>
@@ -35,12 +35,12 @@
             <div class="product-option mt-8 flex flex-col gap-y-5">
                 <span v-for="(item, index) in listNameOption" :key="index">
                   <h1 class="font-semibold leading-3">
-                    {{ item.value }}
+                    {{ item.value??'' }}
                   </h1>
                   <div class="product-option mt-8 flex flex gap-x-3">
                     <span :class="filterVariantBasedOnOption(item.optionNumber)[_ind].isActive ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(variant, _ind) in filterVariantBasedOnOption(item.optionNumber)" :key="_ind" @click="changeActiveVariant(index,variant,_ind)">
                       <h1 class="font-semibold leading-3">
-                        {{ variant.value }}
+                        {{ variant.value ?? ''}}
                       </h1>
                     </span>
                 </div>
@@ -69,7 +69,7 @@
               <h1 class="font-semibold text-lg">
                 {{ $t("productDetail.customizeOption") }}
               </h1>
-              <p>{{ detail.data.customizationOptions }}</p>
+              <p>{{ detail.data.customizationOptions ?? '' }}</p>
             </span>
             <span
               class="custimize-option flex items-center gap-x-4 justify-between w-100"
@@ -77,7 +77,7 @@
               <h1 class="font-semibold text-lg w-30">
                 {{ $t("productDetail.details") }}
               </h1>
-              <p>{{ detail.data.featureProduct }}</p>
+              <p>{{ detail.data.featureProduct ?? ''}}</p>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg w-30">
@@ -86,9 +86,9 @@
               <div class="flex flex-col w-100">
                 <span class="flex flex-col">
                   <v-row class="flex justify-between">
-                    <v-col>{{ detail.data.minName_2 }}</v-col>
+                    <v-col>{{ detail.data.minName_2 ?? '' }}</v-col>
                     <v-col class="text-right">{{
-                      detail.data.maxName_2
+                      detail.data.maxName_2 ?? ''
                     }}</v-col>
                   </v-row>
   
@@ -101,9 +101,9 @@
                 </span>
                 <span class="flex flex-col">
                   <v-row class="flex justify-between">
-                    <v-col>{{ detail.data.minName_1 }}</v-col>
+                    <v-col>{{ detail?.data?.minName_1 ?? '' }}</v-col>
                     <v-col class="text-right">{{
-                      detail.data.maxName_1
+                      detail?.data.maxName_1 ?? ''
                     }}</v-col>
                   </v-row>
   
@@ -120,7 +120,7 @@
               <h1 class="font-semibold text-lg">
                 {{ $t("productDetail.features") }}
               </h1>
-              <p v-html="detail.data.featureProduct"></p>
+              <p v-html="detail?.data?.featureProduct ?? ''"></p>
             </span>
           </div>
           <div class="shipping-handle-info w-1/2">
@@ -135,12 +135,12 @@
                   expand-icon="mdi-plus"
                   collapse-icon="mdi-minus"
                 >
-                  {{ item.title }}
+                  {{ item.title ?? ''}}
                 </v-expansion-panel-title>
                 <v-expansion-panel-text
                   class="text-lg font-normal section-content"
                 >
-                  {{ item.contentUS }}
+                  {{ item.contentUS ?? '' }}
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -176,7 +176,7 @@
       <!-- Description -->
       <div
         class="description-wrapper custom-padding"
-        v-html="localizedDescription"
+        v-html="localizedDescription ?? ''"
       ></div>
       <!-- Related Product -->
       <div class="related-product-wrapper bg-light-gray1-custom custom-padding">
@@ -206,7 +206,7 @@
         class="product-detail-head-block flex justify-between gap-x-16 flex-column"
       >
         <div class="display-image flex flex-col gap-y-10">
-          <VueGallery :photos="detail.data" />
+          <VueGallery :photos="detail?.data " />
         </div>
         <div class="product-variant-and-infor p-5">
           <h1 class="section-title font-semibold product-name">
@@ -217,11 +217,11 @@
                 ? detail?.data.titleUK
                 : locale == "FR"
                 ? detail?.data.titleFR
-                : detail?.data.titleDE
+                : detail?.data.titleDE ?? ''
             }}
           </h1>
           <p class="product-sku mt-2">
-            SKU: {{ detail.data.variants?.[0].sku }}
+            SKU: {{ detail?.data?.variants?.[0]?.sku ?? '' }}
           </p>
           <div class="price-n-ship mt-6 flex items-center gap-x-2">
             <span class="price">${{ getPriceByVariant }}</span>
@@ -233,17 +233,17 @@
           </div>
           <div
             class="product-description mt-6"
-            v-html="localizedDescription"
+            v-html="localizedDescription ?? ''"
           ></div>
           <div class="product-option mt-8 flex flex-col gap-y-5">
             <span v-for="(item, index) in listNameOption" :key="index">
                   <h1 class="font-semibold leading-3">
-                    {{ item.value }}
+                    {{ item.value ?? '' }}
                   </h1>
                   <div class="product-option mt-3 flex gap-x-3">
                     <span :class="filterVariantBasedOnOption(item.optionNumber)[_ind].isActive ? 'active-name-option' : ''" class="name-option cursor-pointer" v-for="(variant, _ind) in filterVariantBasedOnOption(item.optionNumber)" :key="_ind" @click="changeActiveVariant(index,variant,_ind)">
                       <h1 class="font-semibold leading-3">
-                        {{ variant.value }}
+                        {{ variant.value ?? '' }}
                       </h1>
                     </span>
                 </div>
@@ -277,12 +277,12 @@
                     expand-icon="mdi-plus"
                     collapse-icon="mdi-minus"
                   >
-                    {{ item.title }}
+                    {{ item.title ?? ''}}
                   </v-expansion-panel-title>
                   <v-expansion-panel-text
                     class="text-lg font-normal section-content"
                   >
-                    {{ item.contentUS }}
+                    {{ item.contentUS ?? ''}}
                   </v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -292,7 +292,7 @@
                 <h1 class="font-semibold text-lg">
                   {{ $t("productDetail.customizeOption") }}
                 </h1>
-                <p>{{ detail.data.customizationOptions }}</p>
+                <p>{{ detail?.data?.customizationOptions ?? ''}}</p>
               </span>
               <span
                 class="custimize-option flex flex-col w-100"
@@ -300,7 +300,7 @@
                 <h1 class="font-semibold text-lg w-30">
                   {{ $t("productDetail.details") }}
                 </h1>
-                <p>{{ detail.data.detailProduct }}</p>
+                <p>{{ detail?.data?.detailProduct ?? '' }}</p>
               </span>
               <span class="custimize-option flex flex-col">
                 <h1 class="font-semibold text-lg">
@@ -309,9 +309,9 @@
                 <div class="flex flex-col">
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
-                      <v-col>{{ detail.data.minName_2 }}</v-col>
+                      <v-col>{{ detail?.data?.minName_2 ?? '' }}</v-col>
                       <v-col class="text-right">{{
-                        detail.data.maxName_2
+                        detail?.data?.maxName_2 ?? ''
                       }}</v-col>
                     </v-row>
   
@@ -324,9 +324,9 @@
                   </span>
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
-                      <v-col>{{ detail.data.minName_1 }}</v-col>
+                      <v-col>{{ detail?.data?.minName_1 ?? '' }}</v-col>
                       <v-col class="text-right">{{
-                        detail.data.maxName_1
+                        detail.data.maxName_1 ?? ''
                       }}</v-col>
                     </v-row>
   
@@ -343,7 +343,7 @@
                 <h1 class="font-semibold text-lg">
                   {{ $t("productDetail.features") }}
                 </h1>
-                <p v-html="detail.data.featureProduct"></p>
+                <p v-html="detail.data.featureProduct ?? ''"></p>
               </span>
             </div>
           </div>
@@ -519,15 +519,15 @@ const changeActiveVariant = (ind,item,variantInd) => {
 
 const listNameOption = computed(()=>{
   let listNameOption = []
-  if(detail?.value.data.variants?.[0].nameOption_1){
-    listNameOption.push({optionNumber: 1,value: detail?.value.data.variants[0].nameOption_1})
+  if(detail.value?.data.variants?.[0]?.nameOption_1){
+    listNameOption.push({optionNumber: 1,value: detail.value?.data.variants?.[0]?.nameOption_1})
   }
 
-  if(detail?.value.data.variants?.[0].nameOption_2){
+  if(detail.value?.data.variants?.[0]?.nameOption_2){
     listNameOption.push({optionNumber: 2, value: detail?.value.data.variants[0].nameOption_2})
   }
 
-  if(detail?.value.data.variants?.[0].nameOption_3){
+  if(detail.value?.data.variants?.[0]?.nameOption_3){
     listNameOption.push({optionNumber: 3, value:detail?.value.data.variants[0].nameOption_3})
   }
   return listNameOption
@@ -539,11 +539,19 @@ $fetch(
   )
 );
 
+const productDetail = await $fetch(  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`)
+console.log(productDetail, 'TETETTET')
+onMounted(async ()=>{
+})
+
 const listProduct  = await useAsyncData(
   'listProduct',
   async () => {
-    const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
-    return response?.data?.items
+    if(detail.value?.data.categoryProduct?.[0]){
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
+      return response?.data?.items
+    }
+    return []
   }
 )?.data
 
@@ -632,28 +640,28 @@ const tabContent = computed(() => {
 const getContent = (tabKey) => {
   const tabs = {
     US: {
-      one:   tabContent.value.tabProductDetailUS,
-      two:   tabContent.value.tabSizeGuideUS,
-      three:   tabContent.value.tabMockupTemplateUS,
-      four:   tabContent.value.tabCareInstructionUS,
+      one:   tabContent.value.tabProductDetailUS ?? '',
+      two:   tabContent.value.tabSizeGuideUS ?? '',
+      three:   tabContent.value.tabMockupTemplateUS ?? '',
+      four:   tabContent.value.tabCareInstructionUS ?? '',
     },
     UK: {
-      one:   tabContent.value.tabProductDetailUK,
-      two:   tabContent.value.tabSizeGuideUK,
-      three:   tabContent.value.tabMockupTemplateUK,
-      four:   tabContent.value.tabCareInstructionUK,
+      one:   tabContent.value.tabProductDetailUK ?? '',
+      two:   tabContent.value.tabSizeGuideUK ?? '',
+      three:   tabContent.value.tabMockupTemplateUK ?? '',
+      four:   tabContent.value.tabCareInstructionUK ?? '',
     },
     FR: {
-      one:   tabContent.value.tabProductDetailFR,
-      two:   tabContent.value.tabSizeGuideFR,
-      three:   tabContent.value.tabMockupTemplateFR,
-      four:   tabContent.value.tabCareInstructionFR,
+      one:   tabContent.value.tabProductDetailFR ?? '',
+      two:   tabContent.value.tabSizeGuideFR ?? '',
+      three:   tabContent.value.tabMockupTemplateFR ?? '',
+      four:   tabContent.value.tabCareInstructionFR ?? '',
     },
     DE: {
-      one:   tabContent.value.tabProductDetailDE,
-      two:   tabContent.value.tabSizeGuideDE,
-      three:   tabContent.value.tabMockupTemplateDE,
-      four:   tabContent.value.tabCareInstructionDE,
+      one:   tabContent.value.tabProductDetailDE ?? '',
+      two:   tabContent.value.tabSizeGuideDE ?? '',
+      three:   tabContent.value.tabMockupTemplateDE ?? '',
+      four:   tabContent.value.tabCareInstructionDE ?? '',
     },
   };
 
