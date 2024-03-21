@@ -229,6 +229,7 @@ const ProductCategoryComponent = () => {
       setValue(`title${ele.value}`, infoCategoryProduct?.[`title${ele.value}`] || '');
       setValue(`breadcrumb${ele.value}`, infoCategoryProduct?.[`breadcrumb${ele.value}`] || '');
       setValue(`description${ele.value}`, infoCategoryProduct?.[`description${ele.value}`] || '');
+      setValue(`handleUrl${ele.value}`, infoCategoryProduct?.[`handleUrl${ele.value}`] || '');
     })
     setValue('description', infoCategoryProduct?.description || '')
     setValue('childCategory', infoCategoryProduct.childCategory)
@@ -264,6 +265,10 @@ const ProductCategoryComponent = () => {
         })
       }
     }
+    const anchor = document.querySelector('body')
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const onSubmit = (value) => {
@@ -275,6 +280,7 @@ const ProductCategoryComponent = () => {
       formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
       formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`] || '');
       formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
+      formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
     })
     formData.append("childCategory", value.childCategory);
 
@@ -372,6 +378,79 @@ const ProductCategoryComponent = () => {
                       fullWidth
                       value={value}
                       label={`Title ${LANG_OBJECT.DE}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              {/* description */}
+
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mb: 4, pb: 6 }}>
+            <Typography variant='h5' sx={{ mb: 3 }}>
+              Handle Url
+            </Typography>
+            <Grid container spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`handleUrl${LANG_OBJECT.UK}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Handle Url ${LANG_OBJECT.UK}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`handleUrl${LANG_OBJECT.US}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Handle Url ${LANG_OBJECT.US}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`handleUrl${LANG_OBJECT.US}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`handleUrl${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`handleUrl${LANG_OBJECT.FR}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Handle Url ${LANG_OBJECT.FR}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`handleUrl${LANG_OBJECT.DE}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Handle Url ${LANG_OBJECT.DE}`}
                       onChange={onChange}
                       aria-describedby='validation-basic-first-name'
                     />

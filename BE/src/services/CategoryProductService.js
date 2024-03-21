@@ -37,6 +37,11 @@ const create = async (data) => {
         set.breadcrumbFR = data?.breadcrumbFR;
         set.breadcrumbDE = data?.breadcrumbDE;
 
+        set.handleUrlUK = data?.handleUrlUK;
+        set.handleUrlUS = data?.handleUrlUS;
+        set.handleUrlFR = data?.handleUrlFR;
+        set.handleUrlDE = data?.handleUrlDE;
+
         set.childCategory = data?.childCategory;
         set.bannerImg = data?.bannerImg;
         set.faq = data?.faq;
@@ -190,6 +195,19 @@ const updateConditions = async (data) => {
         }
         if (!isEmpty(data?.breadcrumbDE)) {
             set.breadcrumbDE = data.breadcrumbDE;
+        }
+
+        if (!isEmpty(data?.handleUrlUK)) {
+            set.handleUrlUk = data.handleUrlUk;
+        }
+        if (!isEmpty(data?.handleUrlUS)) {
+            set.handleUrlUS = data.handleUrlUS;
+        }
+        if (!isEmpty(data?.handleUrlFR)) {
+            set.handleUrlFR = data.handleUrlFR;
+        }
+        if (!isEmpty(data?.handleUrlDE)) {
+            set.handleUrlDE = data.handleUrlDE;
         }
         if (!isEmpty(data?.faq)) {
             set.faq = data.faq;

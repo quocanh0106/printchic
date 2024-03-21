@@ -135,6 +135,10 @@ const BlogCategoryComponent = () => {
       }
     }
     setLoading(false)
+    const anchor = document.querySelector('body')
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const onSubmit = (value) => {
