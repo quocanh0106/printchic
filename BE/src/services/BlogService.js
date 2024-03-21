@@ -41,6 +41,12 @@ const create = async (data) => {
         set.contentUS = data?.contentUS;
         set.contentDE = data?.contentDE;
         set.contentFR = data?.contentFR;
+
+        set.metaTitleUK = data?.metaTitleUK;
+        set.metaTitleUS = data?.metaTitleUS;
+        set.metaTitleDE = data?.metaTitleDE;
+        set.metaTitleFR = data?.metaTitleFR;
+
         set.createdBy = convertToObjectId(data?.createdBy);
         set.createdAt = generatorTime();
         const result = await BlogsModels.create(set);
@@ -189,6 +195,20 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.contentDE)) {
             set.contentDE = JSON.parse(data.contentDE);
         }
+
+        if (!isEmpty(data?.metaTitleUK)) {
+            set.metaTitleUK = JSON.parse(data.metaTitleUK);
+        }
+        if (!isEmpty(data?.metaTitleUS)) {
+            set.metaTitleUS = JSON.parse(data.metaTitleUS);
+        }
+        if (!isEmpty(data?.metaTitleFR)) {
+            set.metaTitleFR = JSON.parse(data.metaTitleFR);
+        }
+        if (!isEmpty(data?.metaTitleDE)) {
+            set.metaTitleDE = JSON.parse(data.metaTitleDE);
+        }
+
         if (!isEmpty(data?.img)) {
             set.img = data.img;
         }

@@ -113,7 +113,7 @@ const FormCreate = () => {
     titleFR: '',
     titleDE: '',
   });
-  
+
   const [errorsTag, setErrorsTag] = useState({
     titleUK: false,
     titleUS: false,
@@ -169,6 +169,11 @@ const FormCreate = () => {
     formData.append("titleUS", value.titleUS || '');
     formData.append("titleDE", value.titleDE || '');
     formData.append("titleFR", value.titleFR || '');
+
+    formData.append("metaTitleUK", value.metaTitleUK || '');
+    formData.append("metaTitleUS", value.metaTitleUS || '');
+    formData.append("metaTitleDE", value.metaTitleDE || '');
+    formData.append("metaTitleFR", value.metaTitleFR || '');
 
     formData.append("handleUrlUK", value.handleUrlUK || '');
     formData.append("handleUrlUS", value.handleUrlUS || '');
@@ -515,7 +520,7 @@ const FormCreate = () => {
               filterSelectedOptions
               id='autocomplete-multiple-outlined'
               getOptionLabel={option => option.titleUS || ''}
-              renderInput={params => <CustomTextField {...params} label='Recommend Category Product'/>}
+              renderInput={params => <CustomTextField {...params} label='Recommend Category Product' />}
             />
             <CustomAutocomplete
               multiple
@@ -633,6 +638,77 @@ const FormCreate = () => {
                   />
                 )}
               />
+            </Grid>
+          </Card>
+          <Card sx={{ p: 4, mb: 4 }}>
+            <Grid container xs={12} sm={12} spacing={5}>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.UK}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.UK}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.US}`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.US}`}
+                      required
+                      onChange={onChange}
+                      error={Boolean(errors[`metaTitle${LANG_OBJECT.US}`])}
+                      aria-describedby='validation-basic-first-name'
+                      {...(errors[`metaTitle${LANG_OBJECT.US}`] && { helperText: 'This field is required' })}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.FR}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      sx={{ mb: 4 }}
+                      fullWidth
+                      value={value}
+                      label={`Meta Title  ${LANG_OBJECT.FR}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <Controller
+                  name={`metaTitle${LANG_OBJECT.DE}`}
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomTextField
+                      fullWidth
+                      value={value}
+                      label={`Meta Title ${LANG_OBJECT.DE}`}
+                      onChange={onChange}
+                      aria-describedby='validation-basic-first-name'
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>

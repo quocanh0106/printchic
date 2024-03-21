@@ -360,6 +360,18 @@ const ProductsBase = {
     templateProductDE: {
       type: String, trim: true,
     },
+    metaTitleUK: {
+      type: String, trim: true,
+    },
+    metaTitleUS: {
+      type: String, trim: true,
+    },
+    metaTitleDE: {
+      type: String, trim: true,
+    },
+    metaTitleFR: {
+      type: String, trim: true,
+    },
 
 }
 const Products = { ...ProductsBase, ...common };
