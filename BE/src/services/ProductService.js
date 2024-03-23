@@ -623,16 +623,16 @@ const updateConditions = async (data) => {
         }
 
         if (!isEmpty(data?.metaTitleUK)) {
-            set.metaTitleUK = JSON.parse(data.metaTitleUK);
+            set.metaTitleUK = data.metaTitleUK;
         }
         if (!isEmpty(data?.metaTitleUS)) {
-            set.metaTitleUS = JSON.parse(data.metaTitleUS);
+            set.metaTitleUS = data.metaTitleUS;
         }
         if (!isEmpty(data?.metaTitleFR)) {
-            set.metaTitleFR = JSON.parse(data.metaTitleFR);
+            set.metaTitleFR = data.metaTitleFR;
         }
         if (!isEmpty(data?.metaTitleDE)) {
-            set.metaTitleDE = JSON.parse(data.metaTitleDE);
+            set.metaTitleDE = data.metaTitleDE;
         }
 
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
