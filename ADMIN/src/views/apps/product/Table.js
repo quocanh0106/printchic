@@ -149,7 +149,7 @@ const UserList = () => {
                 text: 'Preview',
                 icon: <Icon icon='icon-park-outline:preview-open' fontSize={20} />,
                 menuItemProps: {
-                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_URL_USER}/product/${row?.id}`)
+                  onClick: () => openInNewTab(`${process.env.NEXT_PUBLIC_URL_USER}/${row?.id}`)
                 }
               },
               {
