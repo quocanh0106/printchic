@@ -26,6 +26,7 @@ import { useSnackbar } from 'notistack'
 import { addTag, fetchTag } from 'src/store/apps/tag'
 import TableTabs from '../components/TableTabs'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -105,6 +106,7 @@ const FormCreate = () => {
   const [openDialogCreateTag, setOpenDialogCreateTag] = useState(false);
   const [openDialogTableTag, setOpenDialogTableTag] = useState(false);
   const [contentFR, setContentFR] = useState('');
+  const [content, setContent] = useState('');
 
   // handle tag
   const [newTags, setNewTags] = useState({
@@ -125,6 +127,7 @@ const FormCreate = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChangeContentUK = (content, delta, source, editor) => {
+    console.log('content', content)
     setContentUK(content);
   };
 
@@ -297,7 +300,7 @@ const FormCreate = () => {
     }
     setLoading(false)
   }
-
+  
   const handleSubmitNewTag = () => {
     let tempErrorTag = {}
     if (!newTags.titleUK) {
@@ -713,6 +716,7 @@ const FormCreate = () => {
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
+              <SunEditorWrapper  content={content} setContent={setContent}/>
               <Typography variant='h5'>
                 Description UK
               </Typography>

@@ -59,6 +59,7 @@ import 'src/iconify-bundle/icons-bundle-react'
 import '../../styles/globals.css'
 
 import 'react-quill/dist/quill.snow.css'
+import 'suneditor/dist/css/suneditor.min.css';
 
 const clientSideEmotionCache = createEmotionCache()
 
