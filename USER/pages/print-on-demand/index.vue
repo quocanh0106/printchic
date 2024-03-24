@@ -1,6 +1,10 @@
 
 <template>
   <div class="product-page-all-screen-wrapper">
+    <Head>
+      <Title>{{ currentMetaTitle }}</Title>
+      <Meta name="description" :content="title" />
+    </Head>
     <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
       <div class="product-header pb-0 custom-padding" style="padding-top: 40px">
         <span> Home / Men</span>
@@ -26,8 +30,8 @@
         </div>
         <div class="product-list-wrapper w-100">
           <div class="sortbar flex justify-between">
-            <span class="total-product-amount mt-2 txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
-              listProduct?.length }} of {{ listProduct?.length }}</p> </span>
+            <span class="total-product-amount mt-2 txt-gray flex"> {{ $t('productList.showing') }} 
+            <p class="ml-2"> {{listProduct?.length }} of {{ listProduct?.length }}</p> </span>
             <span class="sort-by-select flex gap-x-2">
               <p class="mt-2 txt-gray">{{ $t('productList.sortBy') }}:</p>
               <v-select :items="items" density="compact" :label="$t('productList.select')" class="sorter"></v-select>
@@ -43,7 +47,7 @@
               <div class="product-card cursor-pointer" @click="toProductDetail(item.id)" v-for="(item, index) in listProduct"
                 :key="index">
                 <img class="product-thumbnail" :src="item?.media?.[0]?.path" />
-                <p class="mt-1 txt-dark-blue font-semibold">{{ item?.[`title${currentLanguage}`] }}</p>
+                <p class="mt-1 txt-dark-blue font-semibold">{{ item?.[`title${locale}`] }}</p>
                 <p class="mt-2 txt-primary font-medium">$ {{ item?.price }}</p>
                 <div class="sale-tag" v-if="item?.isSale">{{ $t('productList.saleTag') }}</div>
               </div>
@@ -181,6 +185,7 @@ const currentPage = ref(1);
 const limit = ref(9);
 const hasMoreProducts = ref(true);
 
+const title= ref('hihi')
 const filterByTag = async (newValue) => {
   router.push({
     name: route.name,
@@ -198,6 +203,8 @@ const loadMoreData = async () => {
   }
 }
 
+const currentMetaTitle = ref('Print On Demand')
+
 watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
   if (newCategoryProductId) {
     // Reset listCate when categoryProductId changes
@@ -209,7 +216,19 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
     listProduct.value = data?.data.items || [];
     listCate.value.map(category => {
       if(newCategoryProductId == category._id) {
-        listFaq.value = JSON.parse(category.faq ?? '')
+        listFaq.value = category.faq ? JSON.parse(category.faq ?? '') : []
+        if(locale.value == 'US'){
+          currentMetaTitle.value = category.metaTitleUS ? category.metaTitleUS : 'Print On Demand'
+        } 
+        if(locale.value == 'UK') {
+          currentMetaTitle.value = category.metaTitleUK ?  category.metaTitleUK : category.metaTitleUS ?? 'Print On Demand'
+        }
+        if(locale.value == 'FR'){
+          currentMetaTitle.value = category.metaTitleFR ?  category.metaTitleFR : category.metaTitleUS ?? 'Print On Demand'
+        } 
+        if(locale.value == 'DE'){
+          currentMetaTitle.value = category.metaTitleDE ? category.metaTitleDE : category.metaTitleUS ?? 'Print On Demand'
+        } 
       }
     })
   }
@@ -232,6 +251,7 @@ const listCate  = await useAsyncData(
   }
   )?.data
 
+  console.log(listCate.value, 'EHEHEHEH')
 const listFilter = ref([
   {
     filterBy: 'Categories',

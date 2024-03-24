@@ -67,44 +67,31 @@
           <div class="fabric-detail flex flex-col gap-y-5 w-1/2">
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg">
-                {{ $t("productDetail.customizeOption") }}
+                {{ locale == 'US' ? detail.data.customizationOptionsLabelUS : locale == 'UK' ? detail.data.customizationOptionsLabelUK : locale == 'FR' ? detail.data.customizationOptionsLabelFR : detail.data.customizationOptionsLabelDE ?? ''}}
               </h1>
-              <p>{{ detail.data.customizationOptions ?? '' }}</p>
+              <p>{{ locale == 'US' ? detail.data.customizationOptionsUS : locale == 'UK' ? detail.data.customizationOptionsUK : locale == 'FR' ? detail.data.customizationOptionsFR : detail.data.customizationOptionsDE  ?? '' }}</p>
             </span>
             <span
               class="custimize-option flex items-center gap-x-4 justify-between w-100"
             >
               <h1 class="font-semibold text-lg w-30">
-                {{ $t("productDetail.details") }}
+                {{ locale == 'US' ? detail.data.detailProductLabelUS : locale == 'UK' ? detail.data.detailProductLabelUK : locale == 'FR' ? detail.data.detailProductLabelFR : detail.data.detailProductLabelDE ?? ''}}
               </h1>
-              <p>{{ detail.data.featureProduct ?? ''}}</p>
+              <p>  {{ locale == 'US' ? detail.data.detailProductUS : locale == 'UK' ? detail.data.detailProductUK : locale == 'FR' ? detail.data.detailProductFR : detail.data.detailProductDE ?? ''}}</p>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg w-30">
-                {{ $t("productDetail.materials") }}
+                {{ locale == 'US' ? detail.data.optionMaterialLabelUS : locale == 'UK' ? detail.data.optionMaterialLabelUK : locale == 'FR' ? detail.data.optionMaterialLabelFR : detail.data.optionMaterialLabelDE ?? ''}}
               </h1>
               <div class="flex flex-col w-100">
                 <span class="flex flex-col">
                   <v-row class="flex justify-between">
-                    <v-col>{{ detail.data.minName_2 ?? '' }}</v-col>
-                    <v-col class="text-right">{{
-                      detail.data.maxName_2 ?? ''
-                    }}</v-col>
-                  </v-row>
-  
-                  <!-- Slider component -->
-                  <v-slider
-                    class="slider-detail"
-                    v-model="detail.data.valueMaterial_2"
-                    disabled
-                  ></v-slider>
-                </span>
-                <span class="flex flex-col">
-                  <v-row class="flex justify-between">
-                    <v-col>{{ detail?.data?.minName_1 ?? '' }}</v-col>
-                    <v-col class="text-right">{{
-                      detail?.data.maxName_1 ?? ''
-                    }}</v-col>
+                    <v-col>                
+                      {{ locale == 'US' ? detail.data.minName_1US : locale == 'UK' ? detail.data.minName_1UK : locale == 'FR' ? detail.data.minName_1FR : detail.data.minName_1DE ?? ''}}
+                    </v-col>
+                    <v-col class="text-right">
+                      {{ locale == 'US' ? detail.data.maxName_1US : locale == 'UK' ? detail.data.maxName_1UK : locale == 'FR' ? detail.data.maxName_1FR : detail.data.maxName_1DE ?? ''}}
+                    </v-col>
                   </v-row>
   
                   <!-- Slider component -->
@@ -114,13 +101,30 @@
                     disabled
                   ></v-slider>
                 </span>
+                <span class="flex flex-col">
+                  <v-row class="flex justify-between">
+                    <v-col>
+                      {{ locale == 'US' ? detail.data.minName_2US : locale == 'UK' ? detail.data.minName_2UK : locale == 'FR' ? detail.data.minName_2FR : detail.data.minName_2DE ?? ''}}
+                    </v-col>
+                    <v-col class="text-right">
+                      {{ locale == 'US' ? detail.data.maxName_2US : locale == 'UK' ? detail.data.maxName_2UK : locale == 'FR' ? detail.data.maxName_2FR : detail.data.maxName_2DE ?? ''}}
+                    </v-col>
+                  </v-row>
+  
+                  <!-- Slider component -->
+                  <v-slider
+                    class="slider-detail"
+                    v-model="detail.data.valueMaterial_2"
+                    disabled
+                  ></v-slider>
+                </span>
               </div>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg">
-                {{ $t("productDetail.features") }}
+                {{ locale == 'US' ? detail.data.featureProductLabelUS : locale == 'UK' ? detail.data.featureProductLabelUK : locale == 'FR' ? detail.data.featureProductLabelFR : detail.data.featureProductLabelDE ?? ''}}
               </h1>
-              <p v-html="detail?.data?.featureProduct ?? ''"></p>
+              <p v-html="locale == 'US' ? detail?.data?.featureProductUS : locale == 'UK' ?  detail?.data?.featureProductUK : locale == 'FR' ? detail?.data?.featureProductFR : detail?.data?.featureProductDE ?? ''  "></p>
             </span>
           </div>
           <div class="shipping-handle-info w-1/2">
@@ -152,7 +156,7 @@
       <div class="tab-info-wrapper custom-padding">
         <div class="tab-wrapper bg-light-gray1-custom p-10 rounded-xl">
           <v-card>
-            <v-tabs v-model="tab" bg-color="primary" class="tab-information">
+            <v-tabs v-model="tab" bg-color="primary"  @click="tabValue" class="tab-information">
               <v-tab value="one">{{$t("productDetail.productDetail")}}</v-tab>
               <v-tab value="two">{{$t("productDetail.sizeGuide")}}</v-tab>
               <v-tab value="three">{{$t("productDetail.mockUpNTemplate")}}</v-tab>
@@ -290,29 +294,31 @@
             <div class="fabric-detail flex flex-col gap-y-5 w-100">
               <span class="custimize-option flex flex-col justify-between">
                 <h1 class="font-semibold text-lg">
-                  {{ $t("productDetail.customizeOption") }}
+                  {{ locale == 'US' ? detail.data.customizationOptionsLabelUS : locale == 'UK' ? detail.data.customizationOptionsLabelUK : locale == 'FR' ? detail.data.customizationOptionsLabelFR : detail.data.customizationOptionsLabelDE ?? ''}}
                 </h1>
-                <p>{{ detail?.data?.customizationOptions ?? ''}}</p>
+                <p>{{ locale == 'US' ? detail.data.customizationOptionsUS : locale == 'UK' ? detail.data.customizationOptionsUK : locale == 'FR' ? detail.data.customizationOptionsFR : detail.data.customizationOptionsDE  ?? '' }}</p>
               </span>
               <span
                 class="custimize-option flex flex-col w-100"
               >
                 <h1 class="font-semibold text-lg w-30">
-                  {{ $t("productDetail.details") }}
+                  {{ locale == 'US' ? detail.data.detailProductLabelUS : locale == 'UK' ? detail.data.detailProductLabelUK : locale == 'FR' ? detail.data.detailProductLabelFR : detail.data.detailProductLabelDE ?? ''}}
                 </h1>
-                <p>{{ detail?.data?.detailProduct ?? '' }}</p>
+                <p>  {{ locale == 'US' ? detail.data.detailProductUS : locale == 'UK' ? detail.data.detailProductUK : locale == 'FR' ? detail.data.detailProductFR : detail.data.detailProductDE ?? ''}}</p>
               </span>
               <span class="custimize-option flex flex-col">
                 <h1 class="font-semibold text-lg">
-                  {{ $t("productDetail.materials") }}
+                  {{ locale == 'US' ? detail.data.optionMaterialLabelUS : locale == 'UK' ? detail.data.optionMaterialLabelUK : locale == 'FR' ? detail.data.optionMaterialLabelFR : detail.data.optionMaterialLabelDE ?? ''}}
                 </h1>
                 <div class="flex flex-col">
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
-                      <v-col>{{ detail?.data?.minName_2 ?? '' }}</v-col>
-                      <v-col class="text-right">{{
-                        detail?.data?.maxName_2 ?? ''
-                      }}</v-col>
+                      <v-col>
+                        {{ locale == 'US' ? detail.data.minName_1US : locale == 'UK' ? detail.data.minName_1UK : locale == 'FR' ? detail.data.minName_1FR : detail.data.minName_1DE ?? ''}}
+                      </v-col>
+                      <v-col class="text-right">
+                        {{ locale == 'US' ? detail.data.maxName_1US : locale == 'UK' ? detail.data.maxName_1UK : locale == 'FR' ? detail.data.maxName_1FR : detail.data.maxName_1DE ?? ''}}
+                      </v-col>
                     </v-row>
   
                     <!-- Slider component -->
@@ -324,10 +330,12 @@
                   </span>
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
-                      <v-col>{{ detail?.data?.minName_1 ?? '' }}</v-col>
-                      <v-col class="text-right">{{
-                        detail.data.maxName_1 ?? ''
-                      }}</v-col>
+                      <v-col>
+                        {{ locale == 'US' ? detail.data.minName_2US : locale == 'UK' ? detail.data.minName_2UK : locale == 'FR' ? detail.data.minName_2FR : detail.data.minName_2DE ?? ''}}
+                      </v-col>
+                      <v-col class="text-right">
+                        {{ locale == 'US' ? detail.data.maxName_2US : locale == 'UK' ? detail.data.maxName_2UK : locale == 'FR' ? detail.data.maxName_2FR : detail.data.maxName_2DE ?? ''}}
+                      </v-col>
                     </v-row>
   
                     <!-- Slider component -->
@@ -341,9 +349,9 @@
               </span>
               <span class="custimize-option flex flex-col">
                 <h1 class="font-semibold text-lg">
-                  {{ $t("productDetail.features") }}
+                  {{ locale == 'US' ? detail.data.featureProductLabelUS : locale == 'UK' ? detail.data.featureProductLabelUK : locale == 'FR' ? detail.data.featureProductLabelFR : detail.data.featureProductLabelDE ?? ''}}
                 </h1>
-                <p v-html="detail.data.featureProduct ?? ''"></p>
+                <p v-html="locale == 'US' ? detail?.data?.featureProductUS : locale == 'UK' ?  detail?.data?.featureProductUK : locale == 'FR' ? detail?.data?.featureProductFR : detail?.data?.featureProductDE ?? '' "></p>
               </span>
             </div>
           </div>
@@ -354,7 +362,7 @@
       <div class="tab-info-wrapper">
         <div class="tab-wrapper bg-light-gray1-custom p-3">
           <v-card>
-            <v-tabs v-model="tab" bg-color="primary" @click="tabValue" class="tab-information">
+            <v-tabs v-model="tab" bg-color="primary" class="tab-information">
               <v-tab value="one">{{$t("productDetail.productDetail")}}</v-tab>
               <v-tab value="two">{{$t("productDetail.sizeGuide")}}</v-tab>
               <v-tab value="three">{{$t("productDetail.mockUpNTemplate")}}</v-tab>

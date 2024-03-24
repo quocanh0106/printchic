@@ -121,6 +121,7 @@ module.exports.AUTH = {
             const result = await BlogService.findByConditions({
                 blogId,
             })
+            console.log(result,'hjejeje')
             if (!isEmpty(result)) {
                 return res.json(responseSuccess(10704, result));
             }
