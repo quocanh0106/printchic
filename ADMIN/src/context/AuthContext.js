@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
           : null
         setUser({ ...response.data.data })
         params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.data)) : null
-        const redirectURL = '/apps/dashboard'
+        const redirectURL = '/apps/category-product/'
         router.replace(redirectURL)
       })
       .catch(err => {
