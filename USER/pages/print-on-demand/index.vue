@@ -236,7 +236,7 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
 
 const listFaq = ref([])
 const listProduct  = await useAsyncData(
-  'listProduct',
+  `listProduct-${new Date().getTime()}`,
   async () => {
     const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
     return response.data.items
@@ -244,7 +244,7 @@ const listProduct  = await useAsyncData(
   )?.data
 
 const listCate  = await useAsyncData(
-  'listCategory',
+  `listCategories-${new Date().getTime()}`,
   async () => {
     const response = await $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
     return response.data.items
