@@ -210,7 +210,7 @@
         class="product-detail-head-block flex justify-between gap-x-16 flex-column"
       >
         <div class="display-image flex flex-col gap-y-10">
-          <VueGallery :photos=" detail " />
+          <VueGallery :photos="detail" />
         </div>
         <div class="product-variant-and-infor p-5">
           <h1 class="section-title font-semibold product-name">
@@ -519,6 +519,9 @@ const listNameOption = computed(()=>{
 })
 
 const detail = ref(null)
+const detailForGaler = computed(() => {
+  return detail.value
+})
 const { data: detailServer } = await useAsyncData(`productDetailData-${new Date().getTime()}`, async () =>
 {
 
@@ -526,24 +529,27 @@ const { data: detailServer } = await useAsyncData(`productDetailData-${new Date(
     `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
     )
     detail.value = response.data
-    console.log(detail?.value, 'HEHEHEH')
     return response.data
 }
 );
 
 const productDetail = await $fetch(  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`)
 
+const listProductForRelatedItem = ref([])
 
 const listProduct  = await useAsyncData(
   `listProduct-1-${new Date().getTime()}`,
   async () => {
-    if(detail?.value?.data.categoryProduct?.[0]){
-      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail?.value?.data.categoryProduct?.[0]}`)
+    if(detail.value?.categoryProduct?.[0]){
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail?.value?.categoryProduct?.[0]}`)
+      listProductForRelatedItem.value = [...response?.data?.items]
+      console.log(listProductForRelatedItem.value , 'HEEEEEEEEEEEEEEEE')
+      listProductRelated()
       return response?.data?.items
     }
     return []
   }
-)?.data
+)
 
 const valueMaterial_1 = computed(() => {
   return detail?.value?.valueMaterial_1 ?? 0
@@ -579,7 +585,7 @@ const listShippingInfo = ref([
 
 const listProductRelatedMedia = ref([])
 const listProductRelated = () => {
-  listProduct.value?.forEach(item => listProductRelatedMedia.value?.push({
+  listProductForRelatedItem.value?.forEach(item => listProductRelatedMedia.value?.push({
     bannerImg : item?.media?.[0]?.path,
     titleUS: item?.titleUS,
     titleUK: item?.titleUK,
