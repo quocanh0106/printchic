@@ -42,6 +42,7 @@ const UserList = () => {
     page: 1,
     search: ''
   })
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchEvents())
@@ -49,7 +50,6 @@ const UserList = () => {
 
   // ** Hooks
   const router = useRouter()
-  const dispatch = useDispatch()
   const store = useSelector(state => state.product)
   const categoryProduct = useSelector(state => state.categoryProduct)
   useEffect(() => {

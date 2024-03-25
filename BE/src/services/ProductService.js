@@ -632,6 +632,9 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.metaTitleDE)) {
             set.metaTitleDE = data.metaTitleDE;
         }
+        if (!isEmpty(data?.categoryProduct)) {
+            set.categoryProduct = JSON.parse(data.categoryProduct);
+        }
 
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
