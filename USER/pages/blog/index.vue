@@ -68,7 +68,7 @@
             class="cursor-pointer font-semibold tab-btn text-base"
             v-for="(tab, index) in tabList"
             :key="index"
-            @click="currentTab = index"
+            @click="filterByTab(tab._id,  index)"
           >
           {{  locale == 'US' ? tab.titleUS :  locale == 'US' ? tab.titleUK :  locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
