@@ -5,21 +5,21 @@
         class="product-detail-head-block flex flex-col justify-between gap-y-10 custom-padding"
       >
         <div class="display-image flex gap-x-16">
-          <VueGallery class="w-1/2" :photos="detail?.data" />
+          <VueGallery class="w-1/2" :photos="detail" />
           <div class="product-variant-and-infor w-1/2">
             <h1 class="section-title font-semibold product-name">
               {{
                 locale == "US"
-                  ? detail?.data?.titleUS
+                  ?  detail?.titleUS
                   : locale == "UK"
-                  ? detail?.data?.titleUK
+                  ?  detail?.titleUK
                   : locale == "FR"
-                  ? detail?.data?.titleFR
-                  : detail?.data?.titleDE ?? ''
+                  ?  detail?.titleFR
+                  :  detail?.titleDE ?? ''
               }}
             </h1>
             <p class="product-sku mt-2">
-              SKU: {{ detail?.data?.variants?.[0]?.sku ?? '' }}
+              SKU: {{  detail?.variants?.[0]?.sku ?? '' }}
             </p>
             <div class="price-n-ship mt-6 flex items-center gap-x-2">
               <span class="price">${{ getPriceByVariant }}</span>
@@ -49,7 +49,7 @@
            
             <div class="action-button w-100 mt-8 flex flex-col">
               <a
-                :href="detail.data.btnLink"
+                :href="detail?.btnLink"
                 target="_blank"
                 class="primary-btn w-100 text-center text-white cursor-pointer"
                 >{{ $t("productDetail.downloadMockup") }}</a
@@ -67,54 +67,54 @@
           <div class="fabric-detail flex flex-col gap-y-5 w-1/2">
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg">
-                {{ locale == 'US' ? detail.data.customizationOptionsLabelUS : locale == 'UK' ? detail.data.customizationOptionsLabelUK : locale == 'FR' ? detail.data.customizationOptionsLabelFR : detail.data.customizationOptionsLabelDE ?? ''}}
+                {{ locale == 'US' ?  detail?.customizationOptionsLabelUS : locale == 'UK' ?  detail?.customizationOptionsLabelUK : locale == 'FR' ?  detail?.customizationOptionsLabelFR :  detail?.customizationOptionsLabelDE ?? ''}}
               </h1>
-              <p>{{ locale == 'US' ? detail.data.customizationOptionsUS : locale == 'UK' ? detail.data.customizationOptionsUK : locale == 'FR' ? detail.data.customizationOptionsFR : detail.data.customizationOptionsDE  ?? '' }}</p>
+              <p>{{ locale == 'US' ?  detail?.customizationOptionsUS : locale == 'UK' ?  detail?.customizationOptionsUK : locale == 'FR' ?  detail?.customizationOptionsFR :  detail?.customizationOptionsDE  ?? '' }}</p>
             </span>
             <span
               class="custimize-option flex items-center gap-x-4 justify-between w-100"
             >
               <h1 class="font-semibold text-lg w-30">
-                {{ locale == 'US' ? detail.data.detailProductLabelUS : locale == 'UK' ? detail.data.detailProductLabelUK : locale == 'FR' ? detail.data.detailProductLabelFR : detail.data.detailProductLabelDE ?? ''}}
+                {{ locale == 'US' ?  detail?.detailProductLabelUS : locale == 'UK' ?  detail?.detailProductLabelUK : locale == 'FR' ?  detail?.detailProductLabelFR :  detail?.detailProductLabelDE ?? ''}}
               </h1>
-              <p>  {{ locale == 'US' ? detail.data.detailProductUS : locale == 'UK' ? detail.data.detailProductUK : locale == 'FR' ? detail.data.detailProductFR : detail.data.detailProductDE ?? ''}}</p>
+              <p>  {{ locale == 'US' ?  detail?.detailProductUS : locale == 'UK' ?  detail?.detailProductUK : locale == 'FR' ?  detail?.detailProductFR :  detail?.detailProductDE ?? ''}}</p>
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg w-30">
-                {{ locale == 'US' ? detail.data.optionMaterialLabelUS : locale == 'UK' ? detail.data.optionMaterialLabelUK : locale == 'FR' ? detail.data.optionMaterialLabelFR : detail.data.optionMaterialLabelDE ?? ''}}
+                {{ locale == 'US' ?  detail?.optionMaterialLabelUS : locale == 'UK' ?  detail?.optionMaterialLabelUK : locale == 'FR' ?  detail?.optionMaterialLabelFR :  detail?.optionMaterialLabelDE ?? ''}}
               </h1>
               <div class="flex flex-col w-100">
                 <span class="flex flex-col">
                   <v-row class="flex justify-between">
                     <v-col>                
-                      {{ locale == 'US' ? detail.data.minName_1US : locale == 'UK' ? detail.data.minName_1UK : locale == 'FR' ? detail.data.minName_1FR : detail.data.minName_1DE ?? ''}}
+                      {{ locale == 'US' ?  detail?.minName_1US : locale == 'UK' ?  detail?.minName_1UK : locale == 'FR' ?  detail?.minName_1FR :  detail?.minName_1DE ?? ''}}
                     </v-col>
                     <v-col class="text-right">
-                      {{ locale == 'US' ? detail.data.maxName_1US : locale == 'UK' ? detail.data.maxName_1UK : locale == 'FR' ? detail.data.maxName_1FR : detail.data.maxName_1DE ?? ''}}
+                      {{ locale == 'US' ?  detail?.maxName_1US : locale == 'UK' ?  detail?.maxName_1UK : locale == 'FR' ?  detail?.maxName_1FR :  detail?.maxName_1DE ?? ''}}
                     </v-col>
                   </v-row>
   
                   <!-- Slider component -->
                   <v-slider
                     class="slider-detail"
-                    v-model="detail.data.valueMaterial_1"
+                    v-model="valueMaterial_1"
                     disabled
                   ></v-slider>
                 </span>
                 <span class="flex flex-col">
                   <v-row class="flex justify-between">
                     <v-col>
-                      {{ locale == 'US' ? detail.data.minName_2US : locale == 'UK' ? detail.data.minName_2UK : locale == 'FR' ? detail.data.minName_2FR : detail.data.minName_2DE ?? ''}}
+                      {{ locale == 'US' ? detail?.minName_2US : locale == 'UK' ? detail?.minName_2UK : locale == 'FR' ? detail?.minName_2FR : detail?.minName_2DE ?? ''}}
                     </v-col>
                     <v-col class="text-right">
-                      {{ locale == 'US' ? detail.data.maxName_2US : locale == 'UK' ? detail.data.maxName_2UK : locale == 'FR' ? detail.data.maxName_2FR : detail.data.maxName_2DE ?? ''}}
+                      {{ locale == 'US' ? detail?.maxName_2US : locale == 'UK' ? detail?.maxName_2UK : locale == 'FR' ? detail?.maxName_2FR : detail?.maxName_2DE ?? ''}}
                     </v-col>
                   </v-row>
   
                   <!-- Slider component -->
                   <v-slider
                     class="slider-detail"
-                    v-model="detail.data.valueMaterial_2"
+                    v-model="valueMaterial_2"
                     disabled
                   ></v-slider>
                 </span>
@@ -122,9 +122,9 @@
             </span>
             <span class="custimize-option flex gap-x-4 justify-between">
               <h1 class="font-semibold text-lg">
-                {{ locale == 'US' ? detail.data.featureProductLabelUS : locale == 'UK' ? detail.data.featureProductLabelUK : locale == 'FR' ? detail.data.featureProductLabelFR : detail.data.featureProductLabelDE ?? ''}}
+                {{ locale == 'US' ? detail?.featureProductLabelUS : locale == 'UK' ? detail?.featureProductLabelUK : locale == 'FR' ? detail?.featureProductLabelFR : detail?.featureProductLabelDE ?? ''}}
               </h1>
-              <p v-html="locale == 'US' ? detail?.data?.featureProductUS : locale == 'UK' ?  detail?.data?.featureProductUK : locale == 'FR' ? detail?.data?.featureProductFR : detail?.data?.featureProductDE ?? ''  "></p>
+              <p v-html="locale == 'US' ?  detail?.featureProductUS : locale == 'UK' ?   detail?.featureProductUK : locale == 'FR' ?  detail?.featureProductFR :  detail?.featureProductDE ?? ''  "></p>
             </span>
           </div>
           <div class="shipping-handle-info w-1/2">
@@ -210,22 +210,22 @@
         class="product-detail-head-block flex justify-between gap-x-16 flex-column"
       >
         <div class="display-image flex flex-col gap-y-10">
-          <VueGallery :photos="detail?.data " />
+          <VueGallery :photos=" detail " />
         </div>
         <div class="product-variant-and-infor p-5">
           <h1 class="section-title font-semibold product-name">
             {{
               locale == "US"
-                ? detail?.data.titleUS
+                ?  detail?.titleUS
                 : locale == "UK"
-                ? detail?.data.titleUK
+                ?  detail?.titleUK
                 : locale == "FR"
-                ? detail?.data.titleFR
-                : detail?.data.titleDE ?? ''
+                ?  detail?.titleFR
+                :  detail?.titleDE ?? ''
             }}
           </h1>
           <p class="product-sku mt-2">
-            SKU: {{ detail?.data?.variants?.[0]?.sku ?? '' }}
+            SKU: {{  detail?.variants?.[0]?.sku ?? '' }}
           </p>
           <div class="price-n-ship mt-6 flex items-center gap-x-2">
             <span class="price">${{ getPriceByVariant }}</span>
@@ -255,7 +255,7 @@
             </div>
           <div class="action-button w-100 mt-8 flex flex-col mb-5">
             <a
-                :href="detail.data.btnLink"
+                :href="detail?.btnLink"
                 target="_blank"
                 class="primary-btn w-100 text-center text-white cursor-pointer"
                 >{{ $t("productDetail.downloadMockup") }}</a
@@ -294,54 +294,54 @@
             <div class="fabric-detail flex flex-col gap-y-5 w-100">
               <span class="custimize-option flex flex-col justify-between">
                 <h1 class="font-semibold text-lg">
-                  {{ locale == 'US' ? detail.data.customizationOptionsLabelUS : locale == 'UK' ? detail.data.customizationOptionsLabelUK : locale == 'FR' ? detail.data.customizationOptionsLabelFR : detail.data.customizationOptionsLabelDE ?? ''}}
+                  {{ locale == 'US' ? detail?.customizationOptionsLabelUS : locale == 'UK' ? detail?.customizationOptionsLabelUK : locale == 'FR' ? detail?.customizationOptionsLabelFR : detail?.customizationOptionsLabelDE ?? ''}}
                 </h1>
-                <p>{{ locale == 'US' ? detail.data.customizationOptionsUS : locale == 'UK' ? detail.data.customizationOptionsUK : locale == 'FR' ? detail.data.customizationOptionsFR : detail.data.customizationOptionsDE  ?? '' }}</p>
+                <p>{{ locale == 'US' ? detail?.customizationOptionsUS : locale == 'UK' ? detail?.customizationOptionsUK : locale == 'FR' ? detail?.customizationOptionsFR : detail?.customizationOptionsDE  ?? '' }}</p>
               </span>
               <span
                 class="custimize-option flex flex-col w-100"
               >
                 <h1 class="font-semibold text-lg w-30">
-                  {{ locale == 'US' ? detail.data.detailProductLabelUS : locale == 'UK' ? detail.data.detailProductLabelUK : locale == 'FR' ? detail.data.detailProductLabelFR : detail.data.detailProductLabelDE ?? ''}}
+                  {{ locale == 'US' ? detail?.detailProductLabelUS : locale == 'UK' ? detail?.detailProductLabelUK : locale == 'FR' ? detail?.detailProductLabelFR : detail?.detailProductLabelDE ?? ''}}
                 </h1>
-                <p>  {{ locale == 'US' ? detail.data.detailProductUS : locale == 'UK' ? detail.data.detailProductUK : locale == 'FR' ? detail.data.detailProductFR : detail.data.detailProductDE ?? ''}}</p>
+                <p>  {{ locale == 'US' ? detail?.detailProductUS : locale == 'UK' ? detail?.detailProductUK : locale == 'FR' ? detail?.detailProductFR : detail?.detailProductDE ?? ''}}</p>
               </span>
               <span class="custimize-option flex flex-col">
                 <h1 class="font-semibold text-lg">
-                  {{ locale == 'US' ? detail.data.optionMaterialLabelUS : locale == 'UK' ? detail.data.optionMaterialLabelUK : locale == 'FR' ? detail.data.optionMaterialLabelFR : detail.data.optionMaterialLabelDE ?? ''}}
+                  {{ locale == 'US' ? detail?.optionMaterialLabelUS : locale == 'UK' ? detail?.optionMaterialLabelUK : locale == 'FR' ? detail?.optionMaterialLabelFR : detail?.optionMaterialLabelDE ?? ''}}
                 </h1>
                 <div class="flex flex-col">
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
                       <v-col>
-                        {{ locale == 'US' ? detail.data.minName_1US : locale == 'UK' ? detail.data.minName_1UK : locale == 'FR' ? detail.data.minName_1FR : detail.data.minName_1DE ?? ''}}
+                        {{ locale == 'US' ? detail?.minName_1US : locale == 'UK' ? detail?.minName_1UK : locale == 'FR' ? detail?.minName_1FR : detail?.minName_1DE ?? ''}}
                       </v-col>
                       <v-col class="text-right">
-                        {{ locale == 'US' ? detail.data.maxName_1US : locale == 'UK' ? detail.data.maxName_1UK : locale == 'FR' ? detail.data.maxName_1FR : detail.data.maxName_1DE ?? ''}}
+                        {{ locale == 'US' ? detail?.maxName_1US : locale == 'UK' ? detail?.maxName_1UK : locale == 'FR' ? detail?.maxName_1FR : detail?.maxName_1DE ?? ''}}
                       </v-col>
                     </v-row>
   
                     <!-- Slider component -->
                     <v-slider
                       class="slider-detail"
-                      v-model="detail.data.valueMaterial_2"
+                      v-model="valueMaterial_2"
                       disabled
                     ></v-slider>
                   </span>
                   <span class="flex flex-col">
                     <v-row class="flex justify-between">
                       <v-col>
-                        {{ locale == 'US' ? detail.data.minName_2US : locale == 'UK' ? detail.data.minName_2UK : locale == 'FR' ? detail.data.minName_2FR : detail.data.minName_2DE ?? ''}}
+                        {{ locale == 'US' ? detail?.minName_2US : locale == 'UK' ? detail?.minName_2UK : locale == 'FR' ? detail?.minName_2FR : detail?.minName_2DE ?? ''}}
                       </v-col>
                       <v-col class="text-right">
-                        {{ locale == 'US' ? detail.data.maxName_2US : locale == 'UK' ? detail.data.maxName_2UK : locale == 'FR' ? detail.data.maxName_2FR : detail.data.maxName_2DE ?? ''}}
+                        {{ locale == 'US' ? detail?.maxName_2US : locale == 'UK' ? detail?.maxName_2UK : locale == 'FR' ? detail?.maxName_2FR : detail?.maxName_2DE ?? ''}}
                       </v-col>
                     </v-row>
   
                     <!-- Slider component -->
                     <v-slider
                       class="slider-detail"
-                      v-model="detail.data.valueMaterial_1"
+                      v-model="valueMaterial_1"
                       disabled
                     ></v-slider>
                   </span>
@@ -349,9 +349,9 @@
               </span>
               <span class="custimize-option flex flex-col">
                 <h1 class="font-semibold text-lg">
-                  {{ locale == 'US' ? detail.data.featureProductLabelUS : locale == 'UK' ? detail.data.featureProductLabelUK : locale == 'FR' ? detail.data.featureProductLabelFR : detail.data.featureProductLabelDE ?? ''}}
+                  {{ locale == 'US' ? detail?.featureProductLabelUS : locale == 'UK' ? detail?.featureProductLabelUK : locale == 'FR' ? detail?.featureProductLabelFR : detail?.featureProductLabelDE ?? ''}}
                 </h1>
-                <p v-html="locale == 'US' ? detail?.data?.featureProductUS : locale == 'UK' ?  detail?.data?.featureProductUK : locale == 'FR' ? detail?.data?.featureProductFR : detail?.data?.featureProductDE ?? '' "></p>
+                <p v-html="locale == 'US' ?  detail?.featureProductUS : locale == 'UK' ?   detail?.featureProductUK : locale == 'FR' ?  detail?.featureProductFR :  detail?.featureProductDE ?? '' "></p>
               </span>
             </div>
           </div>
@@ -438,29 +438,6 @@ const product = ref({
   // Add other product details...
 });
 
-const listShippingInfo = ref([
-  {
-    title: "Average Est. Processing Time",
-    contentUS: "2-4 business days",
-    contentUK: "2-4 business days",
-    contentFR: "2-4 business days",
-    contentDE: "2-4 business days",
-  },
-  {
-    title: "Average Est. Shipping Time",
-    contentUS: "US: 4-7 business days",
-    contentUK: "US: 4-7 business days",
-    contentFR: "US: 4-7 business days",
-    contentDE: "US: 4-7 business days",
-  },
-  {
-    title: "Template",
-    contentUS: "12000 x 7300px",
-    contentUK: "12000 x 7300px",
-    contentFR: "12000 x 7300px",
-    contentDE: "12000 x 7300px",
-  },
-]);
 const panel = ref([0, 3]);
 const slider1 = ref(0);
 const slider2 = ref(0);
@@ -472,21 +449,21 @@ const localizedDescription = computed(() => {
   let description = "";
   switch (locale.value) {
     case "US":
-      description = detail?.value.data.descriptionUS;
+      description = detail.value?.descriptionUS;
       break;
     case "UK":
-      description = detail?.value.data.descriptionUK;
+      description = detail.value?.descriptionUK;
       break;
     case "FR":
-      description = detail?.value.data.descriptionFR;
+      description = detail.value?.descriptionFR;
       break;
     case "DE":
-      description = detail?.value.data.descriptionDE;
+      description = detail.value?.descriptionDE;
       break;
   }
 
   // Strip the quotation marks if present
-  if (description.startsWith('"') && description.endsWith('"')) {
+  if (description?.startsWith('"') && description?.endsWith('"') && description) {
     return description.substring(1, description.length - 1);
   }
   return description;
@@ -518,7 +495,7 @@ const changeActiveVariant = (ind,item,variantInd) => {
   }
 
   // Update the isActive status for the variants
-  combinedVariants.value.forEach(variant => {
+  combinedVariants.value?.forEach(variant => {
     if (variant.variantInd === item.variantInd) {
       variant.isActive = variant.value === item.value;
     }
@@ -527,46 +504,82 @@ const changeActiveVariant = (ind,item,variantInd) => {
 
 const listNameOption = computed(()=>{
   let listNameOption = []
-  if(detail.value?.data.variants?.[0]?.nameOption_1){
-    listNameOption.push({optionNumber: 1,value: detail.value?.data.variants?.[0]?.nameOption_1})
+  if(detail?.value?.variants?.[0]?.nameOption_1){
+    listNameOption.push({optionNumber: 1,value: detail?.value?.variants?.[0]?.nameOption_1})
   }
 
-  if(detail.value?.data.variants?.[0]?.nameOption_2){
-    listNameOption.push({optionNumber: 2, value: detail?.value.data.variants[0].nameOption_2})
+  if(detail?.value?.variants?.[0]?.nameOption_2){
+    listNameOption.push({optionNumber: 2, value: detail?.value?.variants[0].nameOption_2})
   }
 
-  if(detail.value?.data.variants?.[0]?.nameOption_3){
-    listNameOption.push({optionNumber: 3, value:detail?.value.data.variants[0].nameOption_3})
+  if(detail?.value?.variants?.[0]?.nameOption_3){
+    listNameOption.push({optionNumber: 3, value:detail?.value?.variants[0].nameOption_3})
   }
   return listNameOption
 })
 
-const { data: detail } = await useAsyncData(`productDetailData-${new Date().getTime()}`, () =>
-$fetch(
-  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
-  )
+const detail = ref(null)
+const { data: detailServer } = await useAsyncData(`productDetailData-${new Date().getTime()}`, async () =>
+{
+
+  const response = await $fetch(
+    `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
+    )
+    detail.value = response.data
+    console.log(detail?.value, 'HEHEHEH')
+    return response.data
+}
 );
 
 const productDetail = await $fetch(  `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`)
-console.log(productDetail, 'TETETTET')
-onMounted(async ()=>{
-})
+
 
 const listProduct  = await useAsyncData(
   `listProduct-1-${new Date().getTime()}`,
   async () => {
-    if(detail.value?.data.categoryProduct?.[0]){
-      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)
+    if(detail?.value?.data.categoryProduct?.[0]){
+      const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail?.value?.data.categoryProduct?.[0]}`)
       return response?.data?.items
     }
     return []
   }
 )?.data
 
+const valueMaterial_1 = computed(() => {
+  return detail?.value?.valueMaterial_1 ?? 0
+})
+
+const valueMaterial_2 = computed(() => {
+  return detail?.value?.valueMaterial_2 ?? 0
+})
+
+const listShippingInfo = ref([
+  {
+    title: "Average Est. Processing Time",
+    contentUS: detail?.value?.processingTimeUS ?? '',
+    contentUK: detail?.value?.processingTimeUK ?? '',
+    contentFR: detail?.value?.processingTimeFR ?? '',
+    contentDE: detail?.value?.processingTimeDE ?? '',
+  },
+  {
+    title: "Average Est. Shipping Time",
+    contentUS: detail?.value?.shippingTimeUS ?? '',
+    contentUK: detail?.value?.shippingTimeUK ?? '' ,
+    contentFR: detail?.value?.shippingTimeFR ?? '',
+    contentDE: detail?.value?.shippingTimeDE ?? '',
+  },
+  {
+    title: "Template",
+    contentUS: detail?.value?.templateProductUS ?? '',
+    contentUK: detail?.value?.templateProductUK ?? '',
+    contentFR: detail?.value?.templateProductFR ?? '',
+    contentDE: detail?.value?.templateProductDE ?? '',
+  },
+]);
 
 const listProductRelatedMedia = ref([])
 const listProductRelated = () => {
-  listProduct.value?.forEach(item => listProductRelatedMedia.value.push({
+  listProduct.value?.forEach(item => listProductRelatedMedia.value?.push({
     bannerImg : item?.media?.[0]?.path,
     titleUS: item?.titleUS,
     titleUK: item?.titleUK,
@@ -576,10 +589,10 @@ const listProductRelated = () => {
 }
 
 const combinedVariants = ref([]);
-const variantProperties = detail.value?.data?.variants.map((product,ind) => {
+const variantProperties = detail?.value?.variants.map((product,ind) => {
   for (const key in product) {
     if (key.includes('nameVariant_')) {
-      combinedVariants.value.push({
+      combinedVariants.value?.push({
         variantInd: key.split('_')[1],
         value: product[key],
         isActive: false
@@ -593,7 +606,7 @@ const variantProperties = detail.value?.data?.variants.map((product,ind) => {
  
  const filterVariantBasedOnOption = (ind) => {
   let listData = []
-  combinedVariants.value.forEach(item => {
+  combinedVariants.value?.forEach(item => {
     if(ind == item.variantInd){
       listData.push(item)
     } 
@@ -602,7 +615,7 @@ const variantProperties = detail.value?.data?.variants.map((product,ind) => {
 }
 // Mixins usage needs to be adapted for the Composition API or integrated directly into the setup function
 const initializeVariant = () => {
-  let tempList =  [...new Map(combinedVariants.value.map(item => [item['value'], item])).values()];
+  let tempList =  [...new Map(combinedVariants.value?.map(item => [item['value'], item])).values()];
   tempList.sort((a, b) => parseInt(a.variantInd) - parseInt(b.variantInd));
   tempList.map(option => {
     if(option.variantInd == 1 && currentActiveVariant1.value == 0 ){
@@ -621,55 +634,57 @@ const initializeVariant = () => {
 }
 
 const getPriceByVariant = computed(()=>{
-  for (let variant of detail.value?.data?.variants) {
-        let match = true;
-        
-        if (variant.nameVariant_1 && variant.nameVariant_1 != currentActiveVariant1.value) {
-            match = false;
-        }
-        if (variant.nameVariant_2 && variant.nameVariant_2 != currentActiveVariant2.value) {
-            match = false;
-        }
-        if (variant.nameVariant_3 && variant.nameVariant_3 != currentActiveVariant3.value) {
-            match = false;
-        }
-
-        if (match) {
-            return variant.price;
-        }
-    }
+  if(detail?.value?.data?.variants){
+    for (let variant of detail?.value?.data?.variants) {
+          let match = true;
+          
+          if (variant.nameVariant_1 && variant.nameVariant_1 != currentActiveVariant1.value) {
+              match = false;
+          }
+          if (variant.nameVariant_2 && variant.nameVariant_2 != currentActiveVariant2.value) {
+              match = false;
+          }
+          if (variant.nameVariant_3 && variant.nameVariant_3 != currentActiveVariant3.value) {
+              match = false;
+          }
+  
+          if (match) {
+              return variant.price;
+          }
+      }
+  }
     return null; // Return null or any default value if no match is found
 })
 
 const tabContent = computed(() => {
-  return detail.value?.data
+  return detail?.value
 })
 
 const getContent = (tabKey) => {
   const tabs = {
     US: {
-      one:   tabContent.value.tabProductDetailUS ?? '',
-      two:   tabContent.value.tabSizeGuideUS ?? '',
-      three:   tabContent.value.tabMockupTemplateUS ?? '',
-      four:   tabContent.value.tabCareInstructionUS ?? '',
+      one:   tabContent.value?.tabProductDetailUS ?? '',
+      two:   tabContent.value?.tabSizeGuideUS ?? '',
+      three:   tabContent.value?.tabMockupTemplateUS ?? '',
+      four:   tabContent.value?.tabCareInstructionUS ?? '',
     },
     UK: {
-      one:   tabContent.value.tabProductDetailUK ?? '',
-      two:   tabContent.value.tabSizeGuideUK ?? '',
-      three:   tabContent.value.tabMockupTemplateUK ?? '',
-      four:   tabContent.value.tabCareInstructionUK ?? '',
+      one:   tabContent.value?.tabProductDetailUK ?? '',
+      two:   tabContent.value?.tabSizeGuideUK ?? '',
+      three:   tabContent.value?.tabMockupTemplateUK ?? '',
+      four:   tabContent.value?.tabCareInstructionUK ?? '',
     },
     FR: {
-      one:   tabContent.value.tabProductDetailFR ?? '',
-      two:   tabContent.value.tabSizeGuideFR ?? '',
-      three:   tabContent.value.tabMockupTemplateFR ?? '',
-      four:   tabContent.value.tabCareInstructionFR ?? '',
+      one:   tabContent.value?.tabProductDetailFR ?? '',
+      two:   tabContent.value?.tabSizeGuideFR ?? '',
+      three:   tabContent.value?.tabMockupTemplateFR ?? '',
+      four:   tabContent.value?.tabCareInstructionFR ?? '',
     },
     DE: {
-      one:   tabContent.value.tabProductDetailDE ?? '',
-      two:   tabContent.value.tabSizeGuideDE ?? '',
-      three:   tabContent.value.tabMockupTemplateDE ?? '',
-      four:   tabContent.value.tabCareInstructionDE ?? '',
+      one:   tabContent.value?.tabProductDetailDE ?? '',
+      two:   tabContent.value?.tabSizeGuideDE ?? '',
+      three:   tabContent.value?.tabMockupTemplateDE ?? '',
+      four:   tabContent.value?.tabCareInstructionDE ?? '',
     },
   };
 

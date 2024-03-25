@@ -18,8 +18,8 @@
         >
           <img :src="listBlog?.[0]?.img" class="blog-img" />
           <div class="content flex flex-col mt-8">
-            <h1 class="text-2xl font-semibold">{{ listBlog?.[0]?.[`title${currentLanguage}`] }}</h1>
-            <div v-html="listBlog[0]?.[`content${currentLanguage}`] ? listBlog?.[0][`content${currentLanguage}`] : ''" class="text-base mt-2"></div>
+            <h1 class="text-2xl font-semibold">{{ listBlog?.[0]?.[`title${locale}`] }}</h1>
+            <div v-html="sanitizedContent(listBlog[0]?.[`content${locale}`] ? listBlog?.[0][`content${locale}`] : '')" class="text-base mt-2"></div>
             <p class="text-sm mt-4">{{ listBlog?.[0]?.createdAt }}</p>
           </div>
         </div>
@@ -36,8 +36,8 @@
             >
               <img class="small-img-blog blog-img" :src="blog.img" />
               <div class="">
-                <h1 class="font-semibold">{{ blog[`title${currentLanguage}`] }}</h1>
-                <p v-html="blog[`content${currentLanguage}`]" class="mt-2"></p>
+                <h1 class="font-semibold">{{ blog[`title${locale}`] }}</h1>
+                <p v-html="sanitizedContent(blog[`content${locale}`] ?? '')" class="mt-2"></p>
                 <p class="mt-3">{{ blog.createdAt }}</p>
               </div>
             </div>
@@ -65,6 +65,8 @@ import { useI18n, useLocalePath, useSwitchLocalePath } from '#imports'
 
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 const { currentLanguage, setLanguage } = useLanguage();
+const { t, locale } = useI18n();
+
 const router = useRouter();
 defineProps({
   title: {
@@ -79,6 +81,9 @@ defineProps({
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
+const sanitizedContent = (html) => {
+  return html.replace(/<img[^>]*>/g, '');
+}
 const toDetailBlog = (id) => {
   router.push(localePath(`/blog/${id}`));
 };
@@ -98,4 +103,5 @@ const toDetailBlog = (id) => {
   min-height: 183px;
   object-fit: cover;
 }
+
 </style>

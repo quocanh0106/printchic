@@ -7,7 +7,7 @@
     </Head> -->
     <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
-      <blog :listBlog="listBlog?.data?.items" class="custom-padding" />
+      <blog :listBlog="featuredBlog" class="custom-padding" />
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center custom-padding"
@@ -34,7 +34,7 @@
               <img class="thumbnail-img rounded" :src="item.img" />
               <span class="content p-6">
                 <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <span class="text-base font-normal mt-2" v-html="sanitizedContent(locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE)"></span>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="blog-list-wrapper" v-show="mobile || tablet">
       <!-- featured Post -->
-      <blog :listBlog="listBlog?.data?.items"/>
+      <blog :listBlog="featuredBlog"/>
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center w-100"
@@ -84,7 +84,7 @@
               <img class="rounded" :src="item.img" />
               <span class="content p-6">
                 <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <span class="text-base font-normal mt-2" v-html=" sanitizedContent(locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE)"></span>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -157,6 +157,14 @@ const toDetailBlog = (id) => {
   router.push(localePath(`/blog/${id}`));
 };
 
+const featuredBlog = computed(() => {
+  return listBlog.value?.data?.items.slice(0,4)
+}) 
+
+const sanitizedContent = (html) => {
+  return html.replace(/<img[^>]*>/g, '');
+}
+
 useHead({
   title: 'Blog',
   meta: [
@@ -205,5 +213,11 @@ useSeoMeta({
 }
 .active-tab{
   min-width: 0px !important;
+}
+
+content {
+  :deep(p){
+    background-color: transparent !important;
+  }
 }
 </style>

@@ -572,16 +572,18 @@ const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 // Convert methods to simple functions if there are any in the methods block.
 
 const localePath = useLocalePath()
-const { data }  = await useAsyncData(
-  `listProductData-${new Date().getTime()}`,
-  () => $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
-)
-
+const data = ref()
 const listPod = ref([])
-
-onMounted(() => {
-  listPod.value = data.value?.data?.items.map(item => item.media[0]?.path);
-})
+const  dataServer   = await useAsyncData(
+  `listProductData-${new Date().getTime()}`,
+  async () =>{
+    const response = await $fetch('http://printchic-api.tvo-solution.net/auth/product/list')
+    data.value = await response.data
+    listPod.value = data.value?.items.map(item => item.media[0]?.path);
+    console.log(data.value, 'HJEHEHE')
+    return response.data
+  } 
+)
 
 useHead({
   title: 'Print on demand',

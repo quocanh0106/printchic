@@ -135,11 +135,12 @@ const listLang = ref([
 // });
 
 function selectLanguage(lang = null) {
-  const newPath = switchLocalePath(lang == null ? selectedLanguage.value : lang);
+  const newPath = switchLocalePath(lang == null ? locale.value : lang);
   if (newPath !== location.pathname) {
     locale.value = selectedLanguage.value
     router.push({
       path: newPath,
+      query: {...route.query}
     });
   }
 }

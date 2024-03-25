@@ -152,7 +152,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useFetch } from 'nuxt/app';
 import SwiperCateComponent from './components/SwiperCateComponent.vue';
@@ -315,6 +315,12 @@ const getPajamas = computed(() => {
   } 
 })
 
+onMounted(() => {
+  router.push({
+    name: route.name,
+    query: {  },
+  });
+})
 // SEO
 useHead({
   title: currentMetaTitle,

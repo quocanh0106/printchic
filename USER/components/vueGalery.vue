@@ -26,7 +26,7 @@
         </button>
       </div>
       <div class="thumbnails" v-show=" photos?.media?.length > 1">
-        <div v-for="(photo, index) in photos.media" :src="photo" :key="index" @click="activePhoto = index"
+        <div v-for="(photo, index) in photos?.media" :src="photo" :key="index" @click="activePhoto = index"
           :class="{ 'active': activePhoto == index }" :style="'background-image: url(' + photo?.path + ')'">
         </div>
       </div>
