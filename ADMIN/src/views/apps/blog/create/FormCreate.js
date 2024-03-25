@@ -28,11 +28,6 @@ import TableTabs from '../components/TableTabs'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
 import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
 
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
-
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />
 })
@@ -106,7 +101,6 @@ const FormCreate = () => {
   const [openDialogCreateTag, setOpenDialogCreateTag] = useState(false);
   const [openDialogTableTag, setOpenDialogTableTag] = useState(false);
   const [contentFR, setContentFR] = useState('');
-  const [content, setContent] = useState('');
 
   // handle tag
   const [newTags, setNewTags] = useState({
@@ -126,20 +120,20 @@ const FormCreate = () => {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChangeContentUK = (content, delta, source, editor) => {
-    console.log('content', content)
+  const handleChangeContentUK = (content) => {
+    console.log('content1111111111', content)
     setContentUK(content);
   };
 
-  const handleChangeContentUS = (content, delta, source, editor) => {
+  const handleChangeContentUS = (content) => {
     setContentUS(content);
   };
 
-  const handleChangeContentDE = (content, delta, source, editor) => {
+  const handleChangeContentDE = (content) => {
     setContentDE(content);
   };
 
-  const handleChangeContentFR = (content, delta, source, editor) => {
+  const handleChangeContentFR = (content) => {
     setContentFR(content);
   };
 
@@ -188,10 +182,10 @@ const FormCreate = () => {
     formData.append("metaDescriptionDE", value.metaDescriptionDE || '');
     formData.append("metaDescriptionFR", value.metaDescriptionFR || '');
 
-    formData.append("contentUK", JSON.stringify(contentUK) || '');
-    formData.append("contentUS", JSON.stringify(contentUS) || '');
-    formData.append("contentDE", JSON.stringify(contentDE) || '');
-    formData.append("contentFR", JSON.stringify(contentFR) || '');
+    formData.append("contentUK", contentUK || '');
+    formData.append("contentUS", contentUS || '');
+    formData.append("contentDE", contentDE || '');
+    formData.append("contentFR", contentFR || '');
 
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus || '');
@@ -300,7 +294,7 @@ const FormCreate = () => {
     }
     setLoading(false)
   }
-  
+
   const handleSubmitNewTag = () => {
     let tempErrorTag = {}
     if (!newTags.titleUK) {
@@ -643,7 +637,7 @@ const FormCreate = () => {
               />
             </Grid>
           </Card>
-          <Card sx={{ p: 4, mb: 4 }}>
+          <Card sx={{ p: 4, my: 4 }}>
             <Grid container xs={12} sm={12} spacing={5}>
               <Grid item xs={6} sm={6}>
                 <Controller
@@ -716,29 +710,28 @@ const FormCreate = () => {
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
-              <SunEditorWrapper  content={content} setContent={setContent}/>
               <Typography variant='h5'>
                 Description UK
               </Typography>
-              <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUK} onChange={handleChangeContentUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description US
               </Typography>
-              <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUS} onChange={handleChangeContentUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description DE
               </Typography>
-              <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentDE} onChange={handleChangeContentDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description FR
               </Typography>
-              <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentFR} onChange={handleChangeContentFR} />
             </Box>
           </Card>
         </Grid>

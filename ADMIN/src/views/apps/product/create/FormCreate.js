@@ -30,53 +30,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import TabContext from '@mui/lab/TabContext'
 import ButtonUpload from '../components/ButtonUpload'
-
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-}
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-]
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -150,83 +104,83 @@ const FormCreate = () => {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChangeContentUK = (content, delta, source, editor) => {
+  const handleChangeContentUK = (content) => {
     setContentUK(content);
   };
 
-  const handleChangeContentUS = (content, delta, source, editor) => {
+  const handleChangeContentUS = (content) => {
     setContentUS(content);
   };
 
-  const handleChangeContentDE = (content, delta, source, editor) => {
+  const handleChangeContentDE = (content) => {
     setContentDE(content);
   };
 
-  const handleChangeContentFR = (content, delta, source, editor) => {
+  const handleChangeContentFR = (content) => {
     setContentFR(content);
   };
 
-  const handleChangeTabProductDetailUK = (content, delta, source, editor) => {
+  const handleChangeTabProductDetailUK = (content) => {
     setTabProductDetailUK(content);
   };
 
-  const handleChangeTabProductDetailUS = (content, delta, source, editor) => {
+  const handleChangeTabProductDetailUS = (content) => {
     setTabProductDetailUS(content);
   };
 
-  const handleChangeTabProductDetailDE = (content, delta, source, editor) => {
+  const handleChangeTabProductDetailDE = (content) => {
     setTabProductDetailDE(content);
   };
 
-  const handleChangeTabProductDetailFR = (content, delta, source, editor) => {
+  const handleChangeTabProductDetailFR = (content) => {
     setTabProductDetailFR(content);
   };
 
-  const handleChangeTabSizeGuideUK = (content, delta, source, editor) => {
+  const handleChangeTabSizeGuideUK = (content) => {
     setTabSizeGuideUK(content);
   };
 
-  const handleChangeTabSizeGuideUS = (content, delta, source, editor) => {
+  const handleChangeTabSizeGuideUS = (content) => {
     setTabSizeGuideUS(content);
   };
 
-  const handleChangeTabSizeGuideDE = (content, delta, source, editor) => {
+  const handleChangeTabSizeGuideDE = (content) => {
     setTabSizeGuideDE(content);
   };
 
-  const handleChangeTabSizeGuideFR = (content, delta, source, editor) => {
+  const handleChangeTabSizeGuideFR = (content) => {
     setTabSizeGuideFR(content);
   };
 
-  const handleChangeTabMockupTemplateUK = (content, delta, source, editor) => {
+  const handleChangeTabMockupTemplateUK = (content) => {
     setTabMockupTemplateUK(content);
   };
 
-  const handleChangeTabMockupTemplateUS = (content, delta, source, editor) => {
+  const handleChangeTabMockupTemplateUS = (content) => {
     setTabMockupTemplateUS(content);
   };
 
-  const handleChangeTabMockupTemplateDE = (content, delta, source, editor) => {
+  const handleChangeTabMockupTemplateDE = (content) => {
     setTabMockupTemplateDE(content);
   };
 
-  const handleChangeTabMockupTemplateFR = (content, delta, source, editor) => {
+  const handleChangeTabMockupTemplateFR = (content) => {
     setTabMockupTemplateFR(content);
   };
 
-  const handleChangeTabCareInstructionUK = (content, delta, source, editor) => {
+  const handleChangeTabCareInstructionUK = (content) => {
     setTabCareInstructionUK(content);
   };
 
-  const handleChangeTabCareInstructionUS = (content, delta, source, editor) => {
+  const handleChangeTabCareInstructionUS = (content) => {
     setTabCareInstructionUS(content);
   };
 
-  const handleChangeTabCareInstructionDE = (content, delta, source, editor) => {
+  const handleChangeTabCareInstructionDE = (content) => {
     setTabCareInstructionDE(content);
   };
 
-  const handleChangeTabCareInstructionFR = (content, delta, source, editor) => {
+  const handleChangeTabCareInstructionFR = (content) => {
     setTabCareInstructionFR(content);
   };
 
@@ -294,25 +248,25 @@ const FormCreate = () => {
     formData.append("typeFR", value.typeFR || '');
     formData.append("typeDE", value.typeDE || '');
 
-    formData.append("tabProductDetailUK", JSON.stringify(tabProductDetailUK) || '');
-    formData.append("tabProductDetailUS", JSON.stringify(tabProductDetailUS) || '');
-    formData.append("tabProductDetailFR", JSON.stringify(tabProductDetailFR) || '');
-    formData.append("tabProductDetailDE", JSON.stringify(tabProductDetailDE) || '');
+    formData.append("tabProductDetailUK", tabProductDetailUK || '');
+    formData.append("tabProductDetailUS", tabProductDetailUS || '');
+    formData.append("tabProductDetailFR", tabProductDetailFR || '');
+    formData.append("tabProductDetailDE", tabProductDetailDE || '');
 
-    formData.append("tabSizeGuideUK", JSON.stringify(tabSizeGuideUK) || '');
-    formData.append("tabSizeGuideUS", JSON.stringify(tabSizeGuideUS) || '');
-    formData.append("tabSizeGuideFR", JSON.stringify(tabSizeGuideFR) || '');
-    formData.append("tabSizeGuideDE", JSON.stringify(tabSizeGuideDE) || '');
+    formData.append("tabSizeGuideUK", tabSizeGuideUK || '');
+    formData.append("tabSizeGuideUS", tabSizeGuideUS || '');
+    formData.append("tabSizeGuideFR", tabSizeGuideFR || '');
+    formData.append("tabSizeGuideDE", tabSizeGuideDE || '');
 
-    formData.append("tabMockupTemplateUK", JSON.stringify(tabMockupTemplateUK) || '');
-    formData.append("tabMockupTemplateUS", JSON.stringify(tabMockupTemplateUS) || '');
-    formData.append("tabMockupTemplateFR", JSON.stringify(tabMockupTemplateFR) || '');
-    formData.append("tabMockupTemplateDE", JSON.stringify(tabMockupTemplateDE) || '');
+    formData.append("tabMockupTemplateUK", tabMockupTemplateUK || '');
+    formData.append("tabMockupTemplateUS", tabMockupTemplateUS || '');
+    formData.append("tabMockupTemplateFR", tabMockupTemplateFR || '');
+    formData.append("tabMockupTemplateDE", tabMockupTemplateDE || '');
 
-    formData.append("tabCareInstructionUK", JSON.stringify(tabCareInstructionUK) || '');
-    formData.append("tabCareInstructionUS", JSON.stringify(tabCareInstructionUS) || '');
-    formData.append("tabCareInstructionFR", JSON.stringify(tabCareInstructionFR) || '');
-    formData.append("tabCareInstructionDE", JSON.stringify(tabCareInstructionDE) || '');
+    formData.append("tabCareInstructionUK", tabCareInstructionUK || '');
+    formData.append("tabCareInstructionUS", tabCareInstructionUS || '');
+    formData.append("tabCareInstructionFR", tabCareInstructionFR || '');
+    formData.append("tabCareInstructionDE", tabCareInstructionDE || '');
 
     LANG.forEach(ele => {
 
@@ -344,10 +298,10 @@ const FormCreate = () => {
     formData.append("status", value.productStatus || '');
     formData.append("btnLink", value.btnLink || '');
 
-    formData.append("descriptionUK", JSON.stringify(contentUK) || '');
-    formData.append("descriptionUS", JSON.stringify(contentUS) || '');
-    formData.append("descriptionFR", JSON.stringify(contentFR) || '');
-    formData.append("descriptionDE", JSON.stringify(contentDE) || '');
+    formData.append("descriptionUK", contentUK || '');
+    formData.append("descriptionUS", contentUS || '');
+    formData.append("descriptionFR", contentFR || '');
+    formData.append("descriptionDE", contentDE || '');
 
     formData.append("currency", value.currency || 'US');
     formData.append("categoryProduct", JSON.stringify(arrayCatPro) || '');
@@ -1380,25 +1334,25 @@ const FormCreate = () => {
                   <Typography variant='h6'>
                     Product Details UK
                   </Typography>
-                  <QuillNoSSRWrapper value={tabProductDetailUK} onChange={handleChangeTabProductDetailUK} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabProductDetailUK} onChange={handleChangeTabProductDetailUK} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Product Details US
                   </Typography>
-                  <QuillNoSSRWrapper value={tabProductDetailUS} onChange={handleChangeTabProductDetailUS} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabProductDetailUS} onChange={handleChangeTabProductDetailUS} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Product Details FR
                   </Typography>
-                  <QuillNoSSRWrapper value={tabProductDetailFR} onChange={handleChangeTabProductDetailFR} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabProductDetailFR} onChange={handleChangeTabProductDetailFR} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Product Details DE
                   </Typography>
-                  <QuillNoSSRWrapper value={tabProductDetailDE} onChange={handleChangeTabProductDetailDE} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabProductDetailDE} onChange={handleChangeTabProductDetailDE} />
                 </Box>
               </TabPanel>
               <TabPanel value='2'>
@@ -1406,25 +1360,25 @@ const FormCreate = () => {
                   <Typography variant='h6'>
                     Size Guide UK
                   </Typography>
-                  <QuillNoSSRWrapper value={tabSizeGuideUK} onChange={handleChangeTabSizeGuideUK} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabSizeGuideUK} onChange={handleChangeTabSizeGuideUK} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Size Guide US
                   </Typography>
-                  <QuillNoSSRWrapper value={tabSizeGuideUS} onChange={handleChangeTabSizeGuideUS} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabSizeGuideUS} onChange={handleChangeTabSizeGuideUS} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Size Guide FR
                   </Typography>
-                  <QuillNoSSRWrapper value={tabSizeGuideFR} onChange={handleChangeTabSizeGuideFR} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabSizeGuideFR} onChange={handleChangeTabSizeGuideFR} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Size Guide DE
                   </Typography>
-                  <QuillNoSSRWrapper value={tabSizeGuideDE} onChange={handleChangeTabSizeGuideDE} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabSizeGuideDE} onChange={handleChangeTabSizeGuideDE} />
                 </Box>
               </TabPanel>
               <TabPanel value='3'>
@@ -1432,25 +1386,25 @@ const FormCreate = () => {
                   <Typography variant='h6'>
                     Mockup Template UK
                   </Typography>
-                  <QuillNoSSRWrapper value={tabMockupTemplateUK} onChange={handleChangeTabMockupTemplateUK} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabMockupTemplateUK} onChange={handleChangeTabMockupTemplateUK} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Mockup Template US
                   </Typography>
-                  <QuillNoSSRWrapper value={tabMockupTemplateUS} onChange={handleChangeTabMockupTemplateUS} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabMockupTemplateUS} onChange={handleChangeTabMockupTemplateUS} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Mockup Template FR
                   </Typography>
-                  <QuillNoSSRWrapper value={tabMockupTemplateFR} onChange={handleChangeTabMockupTemplateFR} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabMockupTemplateFR} onChange={handleChangeTabMockupTemplateFR} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Mockup Template DE
                   </Typography>
-                  <QuillNoSSRWrapper value={tabMockupTemplateDE} onChange={handleChangeTabMockupTemplateDE} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabMockupTemplateDE} onChange={handleChangeTabMockupTemplateDE} />
                 </Box>
               </TabPanel>
               <TabPanel value='4'>
@@ -1458,25 +1412,25 @@ const FormCreate = () => {
                   <Typography variant='h6'>
                     Care Instruction UK
                   </Typography>
-                  <QuillNoSSRWrapper value={tabCareInstructionUK} onChange={handleChangeTabCareInstructionUK} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabCareInstructionUK} onChange={handleChangeTabCareInstructionUK} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Care Instruction US
                   </Typography>
-                  <QuillNoSSRWrapper value={tabCareInstructionUS} onChange={handleChangeTabCareInstructionUS} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabCareInstructionUS} onChange={handleChangeTabCareInstructionUS} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Care Instruction FR
                   </Typography>
-                  <QuillNoSSRWrapper value={tabCareInstructionFR} onChange={handleChangeTabCareInstructionFR} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabCareInstructionFR} onChange={handleChangeTabCareInstructionFR} />
                 </Box>
                 <Box sx={{ mb: 5 }}>
                   <Typography variant='h6'>
                     Care Instruction DE
                   </Typography>
-                  <QuillNoSSRWrapper value={tabCareInstructionDE} onChange={handleChangeTabCareInstructionDE} modules={modules} formats={formats} theme="snow" />
+                  <SunEditorWrapper value={tabCareInstructionDE} onChange={handleChangeTabCareInstructionDE} />
                 </Box>
               </TabPanel>
             </TabContext>
@@ -1486,25 +1440,25 @@ const FormCreate = () => {
               <Typography variant='h5'>
                 Description UK
               </Typography>
-              <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUK} onChange={handleChangeContentUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description US
               </Typography>
-              <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUS} onChange={handleChangeContentUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description DE
               </Typography>
-              <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentDE} onChange={handleChangeContentDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Description FR
               </Typography>
-              <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentFR} onChange={handleChangeContentFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4 }}>

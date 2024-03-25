@@ -34,54 +34,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { fetchEvents, fetchInfoCategoryProduct, updateCategoryProduct } from 'src/store/apps/categoryProduct'
-
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-}
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-]
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -185,35 +138,35 @@ const ProductCategoryComponent = () => {
     setListFAQ(tempListFAQ)
   }
 
-  const handleChangePajamasUK = (content, delta, source, editor) => {
+  const handleChangePajamasUK = (content) => {
     setPajamasUK(content);
   };
 
-  const handleChangePajamasUS = (content, delta, source, editor) => {
+  const handleChangePajamasUS = (content) => {
     setPajamasUS(content);
   };
 
-  const handleChangePajamasDE = (content, delta, source, editor) => {
+  const handleChangePajamasDE = (content) => {
     setPajamasDE(content);
   };
 
-  const handleChangePajamasFR = (content, delta, source, editor) => {
+  const handleChangePajamasFR = (content) => {
     setPajamasFR(content);
   };
 
-  const handleChangeParagraphUK = (content, delta, source, editor) => {
+  const handleChangeParagraphUK = (content) => {
     setParagraphUK(content);
   };
 
-  const handleChangeParagraphUS = (content, delta, source, editor) => {
+  const handleChangeParagraphUS = (content) => {
     setParagraphUS(content);
   };
 
-  const handleChangeParagraphDE = (content, delta, source, editor) => {
+  const handleChangeParagraphDE = (content) => {
     setParagraphDE(content);
   };
 
-  const handleChangeParagraphFR = (content, delta, source, editor) => {
+  const handleChangeParagraphFR = (content) => {
     setParagraphFR(content);
   };
 
@@ -236,20 +189,20 @@ const ProductCategoryComponent = () => {
     infoCategoryProduct?.faq && setValue('faqs', JSON.parse(infoCategoryProduct?.faq))
     setFiles(infoCategoryProduct?.bannerImg)
 
-    infoCategoryProduct?.pajamasUK && setPajamasUK(JSON.parse(infoCategoryProduct?.pajamasUK) || '')
-    infoCategoryProduct?.pajamasUS && setPajamasUS(JSON.parse(infoCategoryProduct?.pajamasUS) || '')
-    infoCategoryProduct?.pajamasFR && setPajamasFR(JSON.parse(infoCategoryProduct?.pajamasFR) || '')
-    infoCategoryProduct?.pajamasDE && setPajamasDE(JSON.parse(infoCategoryProduct?.pajamasDE) || '')
+    infoCategoryProduct?.pajamasUK && setPajamasUK(infoCategoryProduct?.pajamasUK || '')
+    infoCategoryProduct?.pajamasUS && setPajamasUS(infoCategoryProduct?.pajamasUS || '')
+    infoCategoryProduct?.pajamasFR && setPajamasFR(infoCategoryProduct?.pajamasFR || '')
+    infoCategoryProduct?.pajamasDE && setPajamasDE(infoCategoryProduct?.pajamasDE || '')
 
     setValue('metaTitleUK', infoCategoryProduct?.metaTitleUK || '')
     setValue('metaTitleUS', infoCategoryProduct?.metaTitleUS || '')
     setValue('metaTitleFR', infoCategoryProduct?.metaTitleFR || '')
     setValue('metaTitleDE', infoCategoryProduct?.metaTitleDE || '')
 
-    infoCategoryProduct?.paragraphUK && setParagraphUK(JSON.parse(infoCategoryProduct?.paragraphUK) || '')
-    infoCategoryProduct?.paragraphUS && setParagraphUS(JSON.parse(infoCategoryProduct?.paragraphUS) || '')
-    infoCategoryProduct?.paragraphFR && setParagraphFR(JSON.parse(infoCategoryProduct?.paragraphFR) || '')
-    infoCategoryProduct?.paragraphDE && setParagraphDE(JSON.parse(infoCategoryProduct?.paragraphDE) || '')
+    infoCategoryProduct?.paragraphUK && setParagraphUK(infoCategoryProduct?.paragraphUK || '')
+    infoCategoryProduct?.paragraphUS && setParagraphUS(infoCategoryProduct?.paragraphUS || '')
+    infoCategoryProduct?.paragraphFR && setParagraphFR(infoCategoryProduct?.paragraphFR || '')
+    infoCategoryProduct?.paragraphDE && setParagraphDE(infoCategoryProduct?.paragraphDE || '')
 
   }, [infoCategoryProduct, id])
 
@@ -289,20 +242,20 @@ const ProductCategoryComponent = () => {
     })
     formData.append("childCategory", value.childCategory);
 
-    formData.append("paragraphUK", JSON.stringify(paragraphUK) || '');
-    formData.append("paragraphUS", JSON.stringify(paragraphUS) || '');
-    formData.append("paragraphFR", JSON.stringify(paragraphFR) || '');
-    formData.append("paragraphDE", JSON.stringify(paragraphDE) || '');
+    formData.append("paragraphUK", paragraphUK || '');
+    formData.append("paragraphUS", paragraphUS || '');
+    formData.append("paragraphFR", paragraphFR || '');
+    formData.append("paragraphDE", paragraphDE || '');
 
     formData.append("metaTitleUK", value.metaTitleUK || '');
     formData.append("metaTitleUS", value.metaTitleUS || '');
     formData.append("metaTitleFR", value.metaTitleFR || '');
     formData.append("metaTitleDE", value.metaTitleDE || '');
 
-    formData.append("pajamasUK", JSON.stringify(pajamasUK) || '');
-    formData.append("pajamasUS", JSON.stringify(pajamasUS) || '');
-    formData.append("pajamasFR", JSON.stringify(pajamasFR) || '');
-    formData.append("pajamasDE", JSON.stringify(pajamasDE) || '');
+    formData.append("pajamasUK", pajamasUK || '');
+    formData.append("pajamasUS", pajamasUS || '');
+    formData.append("pajamasFR", pajamasFR || '');
+    formData.append("pajamasDE", pajamasDE || '');
     formData.append("faq", JSON.stringify(value.faqs));
 
     typeof files === "string" || formData.append("file", files);
@@ -689,25 +642,25 @@ const ProductCategoryComponent = () => {
               <Typography variant='h5'>
                 Paragraph UK
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUK} onChange={handleChangeParagraphUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUK} onChange={handleChangeParagraphUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Paragraph US
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUS} onChange={handleChangeParagraphUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUS} onChange={handleChangeParagraphUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Paragraph DE
               </Typography>
-              <QuillNoSSRWrapper value={paragraphDE} onChange={handleChangeParagraphDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphDE} onChange={handleChangeParagraphDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Paragraph FR
               </Typography>
-              <QuillNoSSRWrapper value={paragraphFR} onChange={handleChangeParagraphFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphFR} onChange={handleChangeParagraphFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
@@ -715,25 +668,25 @@ const ProductCategoryComponent = () => {
               <Typography variant='h5'>
                 Pajamas UK
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUK} onChange={handleChangePajamasUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUK} onChange={handleChangePajamasUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Pajamas US
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUS} onChange={handleChangePajamasUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUS} onChange={handleChangePajamasUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Pajamas DE
               </Typography>
-              <QuillNoSSRWrapper value={pajamasDE} onChange={handleChangePajamasDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasDE} onChange={handleChangePajamasDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Pajamas FR
               </Typography>
-              <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasFR} onChange={handleChangePajamasFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, my: 4, pb: 6 }}>

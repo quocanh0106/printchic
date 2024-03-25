@@ -7,21 +7,20 @@ const SunEditor = dynamic(() => import('suneditor-react').then(mod => mod.defaul
   ssr: false,
 });
 
-const SunEditorWrapper = ({ content, setContent }) => {
+const SunEditorWrapper = ({ value, onChange }) => {
   const editorOptions = {
     buttonList: [
       ['undo', 'redo'],
       ['font', 'fontSize', 'formatBlock'],
       ['paragraphStyle', 'blockquote'],
-      ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+      ['bold', 'underline', 'italic', 'strike'],
       ['fontColor', 'hiliteColor', 'textStyle'],
       ['removeFormat'],
       ['outdent', 'indent'],
       ['align', 'horizontalRule', 'list', 'lineHeight'],
       ['table', 'link', 'image', 'video', 'audio'], // 'image' button in the toolbar
       ['fullScreen', 'showBlocks', 'codeView'],
-      ['preview', 'print'],
-      ['save', 'template'],
+      ['preview']
     ],
     "attributesWhitelist": {
       "all": "style",
@@ -36,8 +35,8 @@ const SunEditorWrapper = ({ content, setContent }) => {
       lang="en"
       setOptions={editorOptions}
       height="100%"
-      setContents={content}
-      onChange={setContent}
+      setContents={value}
+      onChange={onChange}
     />
   );
 };

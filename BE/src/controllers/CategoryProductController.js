@@ -61,20 +61,20 @@ module.exports.AUTH = {
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await CategoryProductService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await CategoryProductService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await CategoryProductService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await CategoryProductService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK) {
+            const checkExistProductCategory_UK = req.body?.titleUK ? await CategoryProductService.checkExist({titleUK: req.body?.titleUK}) : false;
+            const checkExistProductCategory_US = req.body?.titleUS ? await CategoryProductService.checkExist({titleUS: req.body?.titleUS}) : false;
+            const checkExistProductCategory_FR = req.body?.titleFR ? await CategoryProductService.checkExist({titleFR: req.body?.titleFR}) : false;
+            const checkExistProductCategory_DE = req.body?.titleDE ? await CategoryProductService.checkExist({titleDE: req.body?.titleDE}) : false;
+            if(checkExistProductCategory_UK && req.body?.titleUK) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US) {
+            if(checkExistProductCategory_US && req.body?.titleUS) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR) {
+            if(checkExistProductCategory_FR && req.body?.titleFR) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE) {
+            if(checkExistProductCategory_DE && req.body?.titleDE) {
                 fieldExistTitle.push('titleDE')
             }
             if (checkExistProductCategory_UK || checkExistProductCategory_US || checkExistProductCategory_FR || checkExistProductCategory_DE) {
@@ -215,20 +215,20 @@ module.exports.AUTH = {
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await CategoryProductService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await CategoryProductService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await CategoryProductService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await CategoryProductService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.categoryProductId) {
+            const checkExistProductCategory_UK = req.body?.titleUK ? await CategoryProductService.checkExist({titleUK: req.body?.titleUK}) : false;
+            const checkExistProductCategory_US = req.body?.titleUS ? await CategoryProductService.checkExist({titleUS: req.body?.titleUS}) : false;
+            const checkExistProductCategory_FR = req.body?.titleFR ? await CategoryProductService.checkExist({titleFR: req.body?.titleFR}) : false;
+            const checkExistProductCategory_DE = req.body?.titleDE ? await CategoryProductService.checkExist({titleDE: req.body?.titleDE}) : false;
+            if(checkExistProductCategory_UK && req.body?.titleUK && checkExistProductCategory_UK?._id.toHexString() !== req.body.categoryProductId) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.categoryProductId) {
+            if(checkExistProductCategory_US && req.body?.titleUS && checkExistProductCategory_US?._id.toHexString() !== req.body.categoryProductId) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.categoryProductId) {
+            if(checkExistProductCategory_FR && req.body?.titleFR && checkExistProductCategory_FR?._id.toHexString() !== req.body.categoryProductId) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.categoryProductId) {
+            if(checkExistProductCategory_DE && req.body?.titleDE && checkExistProductCategory_DE?._id.toHexString() !== req.body.categoryProductId) {
                 fieldExistTitle.push('titleDE')
             }
             if (fieldExistTitle.length > 0) {

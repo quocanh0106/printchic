@@ -184,16 +184,16 @@ const updateConditions = async (data) => {
         }
 
         if (!isEmpty(data?.contentUK)) {
-            set.contentUK = JSON.parse(data.contentUK);
+            set.contentUK = data.contentUK;
         }
         if (!isEmpty(data?.contentUS)) {
-            set.contentUS = JSON.parse(data.contentUS);
+            set.contentUS = data.contentUS;
         }
         if (!isEmpty(data?.contentFR)) {
-            set.contentFR = JSON.parse(data.contentFR);
+            set.contentFR = data.contentFR;
         }
         if (!isEmpty(data?.contentDE)) {
-            set.contentDE = JSON.parse(data.contentDE);
+            set.contentDE = data.contentDE;
         }
 
         if (!isEmpty(data?.metaTitleUK)) {
