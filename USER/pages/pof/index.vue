@@ -755,6 +755,26 @@ onMounted(() => {
     (item) => item.media[0]?.path
   );
 });
+
+
+useHead({
+  title: 'Printchic Factory',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Printchic Factory',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style scoped lang="scss">

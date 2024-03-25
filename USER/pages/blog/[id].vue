@@ -186,6 +186,25 @@ const { data : listTrending }  = await useAsyncData(
 )
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
 
+useHead({
+  title: 'Blog Post',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Blog Post',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
+
 </script>
 
 <script>

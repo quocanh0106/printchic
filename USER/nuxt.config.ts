@@ -44,4 +44,10 @@ export default defineNuxtConfig({
       './components', // Add your components directory here
     ],
   },
+  app: {
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+    }
+  }
 })

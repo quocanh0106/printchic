@@ -1,5 +1,10 @@
 <template>
   <div class="blog-list-all-page-wrapper">
+    <!-- <Head>
+      <Title>{{ title }}</Title>
+      <Meta name="description" :content="title" />
+      <Style type="text/css" children="body { background-color: green; }" ></Style>
+    </Head> -->
     <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
       <blog :listBlog="listBlog?.data?.items" class="custom-padding" />
@@ -13,7 +18,7 @@
             class="cursor-pointer font-semibold tab-btn text-base"
             v-for="(tab, index) in tabList?.data?.items"
             :key="index"
-            @click="currentTab = index"
+            @click="filterByTab(tab._id,index)"
           >
           {{ locale == 'US' ? tab.titleUS : locale == 'US' ? tab.titleUK : locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
@@ -139,9 +144,32 @@ const loadMore = async () => {
   }
 };
 
+const filterByTab = async (id,index) => {
+  console.log('asdas')
+  currentTab.value = index
+  currentPage.value = 1
+  listBlog.value = []
+  const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list?page=${currentPage.value}&limit=${limit.value}&categoryBlogId=${id}`)
+  listBlog.value = response
+}
+
 const toDetailBlog = (id) => {
   router.push(localePath(`/blog/${id}`));
 };
+
+useHead({
+  title: 'Blog',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+})
+
+useSeoMeta({
+  title: 'Blog',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+})
 </script>
 <style lang="scss">
 .tab-btn {

@@ -582,6 +582,25 @@ const listPod = ref([])
 onMounted(() => {
   listPod.value = data.value?.data?.items.map(item => item.media[0]?.path);
 })
+
+useHead({
+  title: 'Print on demand',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Print on demand',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style scoped lang="scss">

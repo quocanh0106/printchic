@@ -312,6 +312,25 @@ const listBlog  = await useAsyncData(
   `blog-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )?.data
+
+useHead({
+  title: 'Homepage',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Homepage',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style scoped lang="scss">
