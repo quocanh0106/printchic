@@ -32,6 +32,7 @@ import Icon from 'src/@core/components/icon'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { fetchEvents, fetchInfoCategoryProduct, updateCategoryProduct } from 'src/store/apps/categoryProduct'
 import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -65,6 +66,8 @@ const ProductCategoryComponent = () => {
   const [paragraphUS, setParagraphUS] = useState('');
   const [paragraphDE, setParagraphDE] = useState('');
   const [paragraphFR, setParagraphFR] = useState('');
+
+  const [valueChildCategory, setValueChildCategory] = useState([])
 
   const [listFAQ, setListFAQ] = useState([
     {
@@ -167,6 +170,10 @@ const ProductCategoryComponent = () => {
     setParagraphFR(content);
   };
 
+  const handleChange = (event, newValue) => {
+    setValueChildCategory(newValue)
+  }
+
   useEffect(() => {
     if (id) {
       dispatch(fetchInfoCategoryProduct({ categoryProductId: id }))
@@ -175,14 +182,22 @@ const ProductCategoryComponent = () => {
   }, [id, dispatch])
 
   useEffect(() => {
+
+    const listCatPro = [];
+    store.data.forEach(ele => {
+      if (infoCategoryProduct?.childCategory?.includes(ele._id)) {
+        listCatPro.push(ele)
+      }
+    })
+    console.log('listCatPro',listCatPro);
     LANG.forEach(ele => {
       setValue(`title${ele.value}`, infoCategoryProduct?.[`title${ele.value}`] || '');
-      setValue(`breadcrumb${ele.value}`, infoCategoryProduct?.[`breadcrumb${ele.value}`] || '');
+      setValue(`parentCategory${ele.value}`, infoCategoryProduct?.[`parentCategory${ele.value}`] || '');
       setValue(`description${ele.value}`, infoCategoryProduct?.[`description${ele.value}`] || '');
       setValue(`handleUrl${ele.value}`, infoCategoryProduct?.[`handleUrl${ele.value}`] || '');
     })
     setValue('description', infoCategoryProduct?.description || '')
-    setValue('childCategory', infoCategoryProduct.childCategory)
+    setValueChildCategory(listCatPro || [])
     infoCategoryProduct?.faq && setValue('faqs', JSON.parse(infoCategoryProduct?.faq))
     setFiles(infoCategoryProduct?.bannerImg)
 
@@ -201,7 +216,7 @@ const ProductCategoryComponent = () => {
     infoCategoryProduct?.paragraphFR && setParagraphFR(infoCategoryProduct?.paragraphFR || '')
     infoCategoryProduct?.paragraphDE && setParagraphDE(infoCategoryProduct?.paragraphDE || '')
 
-  }, [infoCategoryProduct, id, setValue])
+  }, [infoCategoryProduct, id, setValue, store])
 
   const callBackSubmit = (data) => {
     setLoading(false)
@@ -229,15 +244,16 @@ const ProductCategoryComponent = () => {
   const onSubmit = (value) => {
     setLoading(true)
 
+    const arrayChildCategory = valueChildCategory.map(ele => ele._id)
     const formData = new FormData();
     formData.append("categoryProductId", infoCategoryProduct._id);
     LANG.forEach(ele => {
       formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
-      formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`] || '');
+      formData.append(`parentCategory${ele.value}`, value[`parentCategory${ele.value}`] || '');
       formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
       formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
     })
-    formData.append("childCategory", value.childCategory);
+    formData.append("childCategory", JSON.stringify(arrayChildCategory) || '');
 
     formData.append("paragraphUK", paragraphUK || '');
     formData.append("paragraphUS", paragraphUS || '');
@@ -265,7 +281,7 @@ const ProductCategoryComponent = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'60%'} className='single-file-image' src={files} alt="image"/>
+        <img width={'60%'} className='single-file-image' src={files} alt="image" />
         :
         <img width={'60%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }
@@ -496,18 +512,18 @@ const ProductCategoryComponent = () => {
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 3 }}>
-              Breadcrumb
+              Parent Category
             </Typography>
             <Grid container spacing={5}>
               <Grid item xs={6} sm={6}>
                 <Controller
-                  name={`breadcrumb${LANG_OBJECT.UK}`}
+                  name={`parentCategory${LANG_OBJECT.UK}`}
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.UK}`}
+                      label={`Parent Category ${LANG_OBJECT.UK}`}
                       onChange={onChange}
                       aria-describedby='validation-basic-first-name'
                     />
@@ -516,13 +532,13 @@ const ProductCategoryComponent = () => {
               </Grid>
               <Grid item xs={6} sm={6}>
                 <Controller
-                  name={`breadcrumb${LANG_OBJECT.US}`}
+                  name={`parentCategory${LANG_OBJECT.US}`}
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.US}`}
+                      label={`Parent Category ${LANG_OBJECT.US}`}
                       onChange={onChange}
                       aria-describedby='validation-basic-first-name'
                     />
@@ -531,13 +547,13 @@ const ProductCategoryComponent = () => {
               </Grid>
               <Grid item xs={6} sm={6}>
                 <Controller
-                  name={`breadcrumb${LANG_OBJECT.FR}`}
+                  name={`parentCategory${LANG_OBJECT.FR}`}
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.FR}`}
+                      label={`Parent Category ${LANG_OBJECT.FR}`}
                       onChange={onChange}
                       aria-describedby='validation-basic-first-name'
                     />
@@ -546,13 +562,13 @@ const ProductCategoryComponent = () => {
               </Grid>
               <Grid item xs={6} sm={6}>
                 <Controller
-                  name={`breadcrumb${LANG_OBJECT.DE}`}
+                  name={`parentCategory${LANG_OBJECT.DE}`}
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <CustomTextField
                       fullWidth
                       value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.DE}`}
+                      label={`Parent Category ${LANG_OBJECT.DE}`}
                       onChange={onChange}
                       aria-describedby='validation-basic-first-name'
                     />
@@ -688,28 +704,16 @@ const ProductCategoryComponent = () => {
           </Card>
           <Card sx={{ p: 4, my: 4, pb: 6 }}>
             <Grid item xs={12} sm={12}>
-              <Controller
-                name='childCategory'
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue={infoCategoryProduct.childCategory}
-                    label='child Category'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.childCategory)}
-                    aria-describedby='validation-basic-select'
-                  >
-                    {
-                      store.data.filter(category => category.id != id).map(ele => <MenuItem key={ele._id} value={ele._id}>{ele?.titleUS}</MenuItem>)
-                    }
-                  </CustomTextField>
-                )}
+              <CustomAutocomplete
+                multiple
+                value={valueChildCategory}
+                onChange={handleChange}
+                sx={{ width: '100%', mt: 4 }}
+                options={store.data.filter(category => category.id != id)}
+                filterSelectedOptions
+                id='autocomplete-multiple-outlined'
+                getOptionLabel={option => option.titleUS || ''}
+                renderInput={params => <CustomTextField {...params} label='Child Category' placeholder='child category' />}
               />
             </Grid>
           </Card>

@@ -32,10 +32,10 @@ const create = async (data) => {
         set.paragraphFR = data?.paragraphFR;
         set.paragraphDE = data?.paragraphDE;
 
-        set.breadcrumbUK = data?.breadcrumbUK;
-        set.breadcrumbUS = data?.breadcrumbUS;
-        set.breadcrumbFR = data?.breadcrumbFR;
-        set.breadcrumbDE = data?.breadcrumbDE;
+        set.parentCategoryUK = data?.parentCategoryUK;
+        set.parentCategoryUS = data?.parentCategoryUS;
+        set.parentCategoryFR = data?.parentCategoryFR;
+        set.parentCategoryDE = data?.parentCategoryDE;
 
         set.handleUrlUK = data?.handleUrlUK;
         set.handleUrlUS = data?.handleUrlUS;
@@ -47,7 +47,7 @@ const create = async (data) => {
         set.metaTitleDE = data?.metaTitleDE;
         set.metaTitleFR = data?.metaTitleFR;
 
-        set.childCategory = data?.childCategory;
+        set.childCategory = JSON.parse(data?.childCategory);
         set.bannerImg = data?.bannerImg;
         set.faq = data?.faq;
         set.createdBy = convertToObjectId(data?.createdBy);
@@ -160,7 +160,7 @@ const updateConditions = async (data) => {
             set.bannerImg = data.bannerImg;
         }
         if (!isEmpty(data?.childCategory)) {
-            set.childCategory = data.childCategory;
+            set.childCategory = JSON.parse(data.childCategory);
         }
         if (!isEmpty(data?.pajamasUK)) {
             set.pajamasUk = data.pajamasUk;
@@ -188,17 +188,17 @@ const updateConditions = async (data) => {
             set.paragraphDE = data.paragraphDE;
         }
 
-        if (!isEmpty(data?.breadcrumbUK)) {
-            set.breadcrumbUk = data.breadcrumbUk;
+        if (!isEmpty(data?.parentCategoryUK)) {
+            set.parentCategoryUk = data.parentCategoryUk;
         }
-        if (!isEmpty(data?.breadcrumbUS)) {
-            set.breadcrumbUS = data.breadcrumbUS;
+        if (!isEmpty(data?.parentCategoryUS)) {
+            set.parentCategoryUS = data.parentCategoryUS;
         }
-        if (!isEmpty(data?.breadcrumbFR)) {
-            set.breadcrumbFR = data.breadcrumbFR;
+        if (!isEmpty(data?.parentCategoryFR)) {
+            set.parentCategoryFR = data.parentCategoryFR;
         }
-        if (!isEmpty(data?.breadcrumbDE)) {
-            set.breadcrumbDE = data.breadcrumbDE;
+        if (!isEmpty(data?.parentCategoryDE)) {
+            set.parentCategoryDE = data.parentCategoryDE;
         }
 
         if (!isEmpty(data?.handleUrlUK)) {
