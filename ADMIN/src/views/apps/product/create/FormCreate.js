@@ -1,36 +1,34 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, Divider, ListItem, MenuItem, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Divider, Fade, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import IconButton from '@mui/material/IconButton'
 
 // ** Custom Components Imports
-import { Slider } from 'antd';
-import { Fragment, forwardRef, useEffect, useState } from 'react'
-import { Box } from '@mui/system'
-import FileUploaderMultiple from 'src/views/forms/form-elements/file-uploader/FileUploaderMultiple'
-import Icon from 'src/@core/components/icon'
 import styled from '@emotion/styled'
+import { Box } from '@mui/system'
 import { DataGrid } from '@mui/x-data-grid'
+import { Slider } from 'antd'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import { Fragment, forwardRef, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'src/@core/components/icon'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
+import { LANG, LANG_OBJECT } from 'src/constant'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
 import { addProduct } from 'src/store/apps/product'
-import { useRouter } from 'next/router'
-import toast from 'react-hot-toast'
-import dynamic from 'next/dynamic'
-import { LANG, LANG_OBJECT } from 'src/constant'
-import { useSnackbar } from 'notistack'
-import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 // import Tabs
-import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-import TabContext from '@mui/lab/TabContext'
-import ButtonUpload from '../components/ButtonUpload'
+import Tab from '@mui/material/Tab'
 import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import ButtonUpload from '../components/ButtonUpload'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -337,7 +335,7 @@ const FormCreate = () => {
   useEffect(() => {
     setValue('currency', 'USD')
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch, setValue])
 
   const handleAddVariant = () => {
     let tempListVariant = JSON.parse(JSON.stringify(listVariant))

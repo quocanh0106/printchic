@@ -1,5 +1,5 @@
 // ** React Imports
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** Next Import
 
@@ -21,14 +21,13 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Utils Import
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/user'
-import CustomTextField from 'src/@core/components/mui/text-field'
+import styled from '@emotion/styled'
 import { Button, CircularProgress, Divider, IconButton, MenuItem } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
-import styled from '@emotion/styled'
 import { Controller, useForm } from 'react-hook-form'
-import { fetchEventsSetting, updateSetting } from 'src/store/apps/setting'
 import toast from 'react-hot-toast'
+import CustomTextField from 'src/@core/components/mui/text-field'
+import { fetchEventsSetting, updateSetting } from 'src/store/apps/setting'
 
 const UserList = () => {
   // ** State
@@ -71,7 +70,7 @@ const UserList = () => {
     })
 
     setFiles(store.data.imageFeature)
-  }, [store])
+  }, [store, setValue])
 
   useEffect(() => {
     dispatch(
@@ -111,7 +110,7 @@ const UserList = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'70%'} className='single-file-image' src={files} />
+        <img width={'70%'} className='single-file-image' src={files} alt="image"/>
         :
         <img width={'70%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }

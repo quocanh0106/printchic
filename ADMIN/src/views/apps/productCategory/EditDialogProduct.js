@@ -112,7 +112,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     })
     setValue('description', rowData.description)
     setFiles(rowData.bannerImg)
-  }, [rowData])
+  }, [rowData, setValue])
 
   const handleClose = () => {
     setVisible(false)
@@ -159,7 +159,7 @@ const DialogEditCard = ({ visible, setVisible, rowData }) => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'60%'} className='single-file-image' src={files} />
+        <img width={'60%'} className='single-file-image' src={files} alt="image"/>
         :
         <img width={'60%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }

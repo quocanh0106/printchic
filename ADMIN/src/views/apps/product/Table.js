@@ -45,7 +45,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
   // ** Hooks
   const router = useRouter()
@@ -54,7 +54,7 @@ const UserList = () => {
   const categoryProduct = useSelector(state => state.categoryProduct)
   useEffect(() => {
     dispatch(fetchProduct())
-  }, [])
+  }, [dispatch])
 
 
   const columns = [

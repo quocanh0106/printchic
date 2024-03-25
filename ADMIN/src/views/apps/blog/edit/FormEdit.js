@@ -168,7 +168,7 @@ const FormEdit = () => {
     dispatch(fetchEvents())
     dispatch(fetchBlog())
     dispatch(fetchTag())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (storeBlog.data.length > 0) {
@@ -221,7 +221,7 @@ const FormEdit = () => {
       setFilesBanner(data?.imgBanner)
       setTagValue(listTagSelected)
     }
-  }, [storeBlog, storeTag, storeCategoryProduct, store, router.query.id])
+  }, [storeBlog, storeTag, storeCategoryProduct, store, router.query.id, setValue])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -249,7 +249,7 @@ const FormEdit = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'100%'} className='single-file-image' src={files} />
+        <img width={'100%'} className='single-file-image' src={files} alt="image" />
         :
         <img width={'100%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }
@@ -261,7 +261,7 @@ const FormEdit = () => {
     </CustomCloseButton>
     {
       typeof filesBanner === "string" ?
-        <img width={'100%'} className='single-file-image' src={filesBanner} />
+        <img width={'100%'} className='single-file-image' src={filesBanner} alt="image" />
         :
         <img width={'100%'} key={filesBanner?.name} alt={filesBanner?.name} className='single-file-image' src={filesBanner ? URL.createObjectURL(filesBanner) : ''} />
     }

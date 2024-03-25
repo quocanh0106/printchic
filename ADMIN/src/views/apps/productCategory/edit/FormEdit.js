@@ -1,16 +1,14 @@
 
-import { forwardRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Fade from '@mui/material/Fade'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -25,8 +23,7 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { Card, CircularProgress, MenuItem, Divider } from '@mui/material'
-import { useSnackbar } from 'notistack'
+import { Card, CircularProgress, Divider, MenuItem } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -175,7 +172,7 @@ const ProductCategoryComponent = () => {
       dispatch(fetchInfoCategoryProduct({ categoryProductId: id }))
       dispatch(fetchEvents())
     }
-  }, [id])
+  }, [id, dispatch])
 
   useEffect(() => {
     LANG.forEach(ele => {
@@ -204,7 +201,7 @@ const ProductCategoryComponent = () => {
     infoCategoryProduct?.paragraphFR && setParagraphFR(infoCategoryProduct?.paragraphFR || '')
     infoCategoryProduct?.paragraphDE && setParagraphDE(infoCategoryProduct?.paragraphDE || '')
 
-  }, [infoCategoryProduct, id])
+  }, [infoCategoryProduct, id, setValue])
 
   const callBackSubmit = (data) => {
     setLoading(false)
@@ -268,7 +265,7 @@ const ProductCategoryComponent = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'60%'} className='single-file-image' src={files} />
+        <img width={'60%'} className='single-file-image' src={files} alt="image"/>
         :
         <img width={'60%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }

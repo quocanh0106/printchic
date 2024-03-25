@@ -94,7 +94,7 @@ const ProductCategoryComponent = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
   const {
     control,

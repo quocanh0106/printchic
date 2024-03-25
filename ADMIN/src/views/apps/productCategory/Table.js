@@ -56,7 +56,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
 
   const columns = [

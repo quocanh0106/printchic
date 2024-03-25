@@ -12,7 +12,6 @@ import styled from '@emotion/styled'
 import { Box } from '@mui/system'
 import { DataGrid } from '@mui/x-data-grid'
 import { Slider } from 'antd'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { Fragment, forwardRef, useEffect, useState } from 'react'
@@ -23,15 +22,15 @@ import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
-import { fetchInfoProduct, fetchProduct, updateProduct } from 'src/store/apps/product'
+import { fetchInfoProduct, updateProduct } from 'src/store/apps/product'
 
 // import Tabs
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
-import ButtonUpload from '../components/ButtonUpload'
 import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import ButtonUpload from '../components/ButtonUpload'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -393,7 +392,7 @@ const FormCreate = () => {
   useEffect(() => {
     dispatch(fetchEvents())
     dispatch(fetchInfoProduct({ productId: router.query.id }))
-  }, [router.query.id])
+  }, [router.query.id, dispatch])
 
   const getUniqueValues = (array, propertyName) => {
 
@@ -622,7 +621,7 @@ const FormCreate = () => {
       });
 
     }
-  }, [infoProduct, store, router.query.id])
+  }, [infoProduct, store, router.query.id,setValue, ])
 
 
   const handleAddVariant = () => {

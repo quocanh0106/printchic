@@ -32,7 +32,7 @@ import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import { LANG, LANG_OBJECT } from 'src/constant'
-import { addCategoryBlog, fetchInfoCategoryBlog, updateCategoryBlog } from 'src/store/apps/categoryBlog'
+import { fetchInfoCategoryBlog, updateCategoryBlog } from 'src/store/apps/categoryBlog'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -106,7 +106,7 @@ const BlogCategoryComponent = () => {
 
   useEffect(() => {
     dispatch(fetchInfoCategoryBlog({ categoryBlogId: id }))
-  }, [id])
+  }, [id, dispatch])
 
   useEffect(() => {
     LANG.forEach(ele => {
@@ -119,7 +119,7 @@ const BlogCategoryComponent = () => {
     infoCategoryBlog?.faq && setValue('faqs', JSON.parse(infoCategoryBlog?.faq))
     setValue('parentCategory', infoCategoryBlog?.parentCategory)
     setFiles(infoCategoryBlog?.bannerImg)
-  }, [id, infoCategoryBlog])
+  }, [id, infoCategoryBlog,setValue])
 
   const callBackSubmit = (data) => {
     if (data.success) {
@@ -170,7 +170,7 @@ const BlogCategoryComponent = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'80%'} className='single-file-image' src={files} />
+        <img width={'80%'} className='single-file-image' src={files} alt="image"/>
         :
         <img width={'80%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }

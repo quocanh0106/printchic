@@ -10,23 +10,21 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import { forwardRef, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
+import { LANG_OBJECT } from 'src/constant'
 import { addBlog } from 'src/store/apps/blog'
 import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
-import { fetchProduct } from 'src/store/apps/product'
-import { LANG_OBJECT } from 'src/constant'
-import { useSnackbar } from 'notistack'
-import { addTag, fetchTag } from 'src/store/apps/tag'
-import TableTabs from '../components/TableTabs'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
+import { addTag, fetchTag } from 'src/store/apps/tag'
 import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import TableTabs from '../components/TableTabs'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />
@@ -221,7 +219,7 @@ const FormCreate = () => {
     dispatch(fetchCategoryBlog())
     dispatch(fetchEvents())
     dispatch(fetchTag())
-  }, [])
+  }, [dispatch])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
