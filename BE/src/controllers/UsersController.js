@@ -37,7 +37,7 @@ const checkValid = async (data) => {
         if (!isEmpty(findUser)) return 40107;
         return '';
     } catch (errors) {
-        console.log(errors, 'errors')
+        
         return 40004;
     }
 }
@@ -120,7 +120,7 @@ module.exports.DEFAULT = {
                 data: result,
             });
         } catch (err) {
-            console.log(err, 'err')
+            
             return res.json(err);
         }
     },
@@ -168,7 +168,7 @@ module.exports.DEFAULT = {
                 data: user,
             });
         } catch (err) {
-            console.log(err, 'err')
+            
             return res.json(err);
         }
     },
@@ -213,7 +213,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10204, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -267,7 +267,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40122));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -305,7 +305,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40152));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -330,7 +330,7 @@ module.exports.AUTH = {
                 }
                 return res.json(responseError(40109, []));
             } catch (errors) {
-                console.log(errors, 'errors')
+                
                 return res.json(responseError(40004, errors));
             }
         })
@@ -384,7 +384,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40121, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -478,7 +478,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40123, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -516,7 +516,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40141, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -555,7 +555,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40142, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -594,7 +594,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40142, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -624,7 +624,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40102));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -656,7 +656,7 @@ module.exports.AUTH = {
             })
             return res.json(responseSuccess(10202));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -703,7 +703,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40141, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -747,7 +747,7 @@ module.exports.AUTH = {
                 }
                 return res.json(responseError(40146, []));
             } catch (errors) {
-                console.log(errors, 'errors')
+                
                 return res.json(responseError(40004, errors));
             }
         })
@@ -772,7 +772,7 @@ module.exports.AUTH = {
             })
             return res.json(responseSuccess(10237, result));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -827,7 +827,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40331, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -852,7 +852,7 @@ module.exports.AUTH = {
                 }
                 return res.json(responseError(40351, []));
             } catch (errors) {
-                console.log(errors, 'errors')
+                
                 return res.json(responseError(40004, errors));
             }
         })
@@ -880,7 +880,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10602, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -905,7 +905,7 @@ module.exports.AUTH = {
                 }
                 return res.json(responseError(40352, []));
             } catch (errors) {
-                console.log(errors, 'errors')
+                
                 return res.json(responseError(40004, errors));
             }
         })
@@ -935,7 +935,7 @@ module.exports.AUTH = {
             }
             return res.json(responseError(40353, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },

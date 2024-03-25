@@ -9,16 +9,13 @@ const {
 const findByConditions = async () => {
     try {
         const result = await SettingModels.find();
-        console.log('reeee', result)
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }
 
 const updateConditions = async (data) => {
-    console.log('data', data)
     try {
         const conditions = {};
         if (data?.settingId) {
@@ -140,7 +137,6 @@ const updateConditions = async (data) => {
         const result = await SettingModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };

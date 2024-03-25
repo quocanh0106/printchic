@@ -218,8 +218,6 @@ const FormCreate = () => {
       return ele
     })
 
-    console.log('variant', variant);
-
     const arrayCatPro = valueRecommend.map(ele => ele._id)
 
     const formData = new FormData();
@@ -555,12 +553,9 @@ const FormCreate = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: acceptedFiles => {
-      console.log('fileeeeee', acceptedFiles);
       setFiles(acceptedFiles.map(file => Object.assign(file)))
-      console.log('dsadsadsa', acceptedFiles.map(file => Object.assign(file)));
     }
   })
-  console.log('fileee', files);
 
   const handleRemoveFile = file => {
     const uploadedFiles = files

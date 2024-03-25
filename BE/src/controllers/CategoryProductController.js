@@ -37,7 +37,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10392, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -87,7 +87,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
         // })
@@ -113,7 +113,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -132,7 +132,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -163,7 +163,6 @@ module.exports.AUTH = {
                 const result = await CategoryProductService.checkExist({
                     title: ele.title,
                 })
-                console.log('result',result)
                 if (result) {
                     errorsExistTitle.unshift({
                         value: '',
@@ -184,8 +183,6 @@ module.exports.AUTH = {
                 }
             }) || [];
 
-            console.log('errorsExistTitle',errorsExistTitle)
-
             // Wait for all promises to resolve
             await Promise.all(promises);
             const listError = [...errorsNotFoundCategoryParent, ...errors, ...duplicateTitleErrors, ...errorsExistTitle]
@@ -195,7 +192,7 @@ module.exports.AUTH = {
                 return res.json(responseSuccess(10506));
             }
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -242,7 +239,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40213, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -263,7 +260,7 @@ module.exports.DEFAULT = {
             }
             return res.json(responseSuccess(10392, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -287,7 +284,7 @@ module.exports.DEFAULT = {
             return res.json(responseSuccess(40214, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },

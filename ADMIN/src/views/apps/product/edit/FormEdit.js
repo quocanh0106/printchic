@@ -838,13 +838,9 @@ const FormCreate = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: acceptedFiles => {
-      console.log('acceptedFiles', acceptedFiles);
       setFiles(acceptedFiles.map(file => Object.assign(file)))
-      console.log('files', acceptedFiles.map(file => Object.assign(file)));
     }
   })
-
-  console.log('fileee', files);
 
   const handleRemoveFile = file => {
     const uploadedFiles = files

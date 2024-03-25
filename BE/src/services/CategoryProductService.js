@@ -55,7 +55,7 @@ const create = async (data) => {
         const result = await CategoryProductModels.create(set);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -101,7 +101,7 @@ const list = async (data) => {
         const result = await CategoryProductModels.paginate(conditions, options);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -120,13 +120,12 @@ const findByConditions = async (data) => {
         const result = await CategoryProductModels.findOne(conditions);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
 
 const updateConditions = async (data) => {
-    console.log('data', data)
     try {
         const conditions = {};
         if (data?.categoryProductId) {
@@ -235,7 +234,7 @@ const updateConditions = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -251,7 +250,7 @@ const updateDelete = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -266,7 +265,7 @@ const updateStatus = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -277,11 +276,10 @@ const checkExist = async (data) => {
             isDeleted: IS_DELETED[200],
             ...data
         };
-        console.log('conditions',conditions)
         const checkExistTitle = await CategoryProductModels.findOne(conditions);
         return promiseResolve(checkExistTitle);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }

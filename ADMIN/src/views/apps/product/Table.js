@@ -52,7 +52,6 @@ const UserList = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.product)
   const categoryProduct = useSelector(state => state.categoryProduct)
-  console.log('categoryProduct', categoryProduct)
   useEffect(() => {
     dispatch(fetchProduct())
   }, [])

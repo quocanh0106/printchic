@@ -121,7 +121,6 @@ const FormCreate = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChangeContentUK = (content) => {
-    console.log('content1111111111', content)
     setContentUK(content);
   };
 

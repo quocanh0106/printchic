@@ -27,7 +27,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10601, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -78,7 +78,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
         // })
@@ -104,7 +104,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -123,7 +123,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -170,7 +170,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40213, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -239,7 +239,7 @@ module.exports.AUTH = {
                 return res.json(responseSuccess(10506));
             }
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },

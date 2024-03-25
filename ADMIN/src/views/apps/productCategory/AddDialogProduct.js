@@ -90,7 +90,6 @@ const DialogAddCard = ({ visible, setVisible }) => {
   } = useForm()
 
   const callBackSubmit = (data) => {
-    console.log('data', data)
     if (data.success) {
       setVisible(false)
       reset()
@@ -112,7 +111,6 @@ const DialogAddCard = ({ visible, setVisible }) => {
   }
 
   const onSubmit = (value) => {
-    console.log('value', value)
     if (files[0]) {
       setLoading(true)
       const formData = new FormData();

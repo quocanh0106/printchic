@@ -24,7 +24,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40214, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -45,7 +45,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40213, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },

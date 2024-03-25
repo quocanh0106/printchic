@@ -21,8 +21,6 @@ module.exports.AUTH = {
                 const result = await ProductService.list({
                     ...req.query
                 })
-                // console.log(req.query.categoryObjId, 'KKAKKA')
-                // console.log(result, 'KKAKKA')
                 if (!isEmpty(result)) {
                     return res.json(responseSuccess(10501, result));
                 }
@@ -36,7 +34,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10501, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -49,7 +47,6 @@ module.exports.AUTH = {
         // beforeUploadMulti(req, res, async () => {
 
         try {
-            console.log('req',req.body, req.files)
             const errors = await validateResult(createValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
@@ -85,7 +82,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
         // })
@@ -106,7 +103,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -130,7 +127,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -177,7 +174,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40213, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -198,7 +195,7 @@ module.exports.DEFAULT = {
             }
             return res.json(responseSuccess(10392, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -222,7 +219,7 @@ module.exports.DEFAULT = {
             return res.json(responseSuccess(40214, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
