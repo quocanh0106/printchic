@@ -117,11 +117,11 @@ const localePath = useLocalePath()
 const { t , locale } = useI18n()
 
 const listBlog   = await useAsyncData(
-  'listBlog',
+  `listBlog-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list?page=1&limit=10')
 )?.data
 const { data:tabList }  = await useAsyncData(
-  'tabList',
+  `tabList-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
 )
 

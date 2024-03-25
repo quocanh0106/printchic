@@ -541,7 +541,7 @@ const listNameOption = computed(()=>{
   return listNameOption
 })
 
-const { data: detail } = await useAsyncData("productDetail", () =>
+const { data: detail } = await useAsyncData(`productDetailData-${new Date().getTime()}`, () =>
 $fetch(
   `http://printchic-api.tvo-solution.net/auth/product/info?productId=${router.params.id}`
   )
@@ -553,7 +553,7 @@ onMounted(async ()=>{
 })
 
 const listProduct  = await useAsyncData(
-  'listProduct',
+  `listProduct-1-${new Date().getTime()}`,
   async () => {
     if(detail.value?.data.categoryProduct?.[0]){
       const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?categoryProductId=${detail.value?.data.categoryProduct?.[0]}`)

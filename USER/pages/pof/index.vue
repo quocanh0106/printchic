@@ -745,7 +745,7 @@ function prev() {
   }
 }
 
-const { data } = await useAsyncData("showCaseProduct", () =>
+const { data } = await useAsyncData(`showCaseProduct-${new Date().getTime()}`, () =>
   $fetch("http://printchic-api.tvo-solution.net/auth/product/list")
 );
 const listProdcutShowcase = ref([]);

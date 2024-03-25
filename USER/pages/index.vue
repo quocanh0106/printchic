@@ -304,12 +304,12 @@ const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
 
 const { data }  = await useAsyncData(
-  'categoryProduct',
+  `categoryProduct-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
 )
 
 const listBlog  = await useAsyncData(
-  'blog',
+  `blog-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )?.data
 </script>
