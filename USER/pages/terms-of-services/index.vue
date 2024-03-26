@@ -113,47 +113,49 @@
   </div>
 </template>
 
-<script>
-import mailIcon from "../../assets/svg/mail.svg";
-import popupIcon from "../../assets/svg/popup.svg";
-import linkedInIcon from "../../assets/svg/linkin.svg";
-import fbIcon from "../../assets/svg/fb.svg";
-import twitterIcon from "../../assets/svg/x-social.svg";
-import Help from "../../components/help.vue";
-import {
-  navMenuData,
-  privacyPolicyData,
-  anchorMenuData,
-} from "./helpers/constants";
-import { myMixin } from "~/mixins/myMixin";
+<script setup>
+import Help from "~/components/help.vue";
+import { ref } from 'vue';
 
-export default {
-  components: { Help },
-  mixins: [myMixin],
-  data() {
-    return {
-      mailIcon,
-      popupIcon,
-      linkedInIcon,
-      twitterIcon,
-      fbIcon,
-      breadcrumbItems: ["Home", "Terms of services"],
-      navMenuData,
-      privacyPolicyData,
-      anchorMenuData,
-    };
-  },
-  methods:{
-    changeActive(item, index){
-      item.isActive = true;
-      navMenuData.forEach((navItem,_ind)=>{
-        if(_ind != index){
-          navItem.isActive = false;
-        }
-      })
+const mailIcon = require("~/assets/svg/mail.svg");
+const popupIcon = require("~/assets/svg/popup.svg");
+const linkedInIcon = require("~/assets/svg/linkin.svg");
+const twitterIcon = require("~/assets/svg/x-social.svg");
+const fbIcon = require("~/assets/svg/fb.svg");
+const breadcrumbItems = ref(["Home", "Terms of services"]);
+
+// Assuming navMenuData, privacyPolicyData, and anchorMenuData are external
+const navMenuData = ref(/* import or define your data here */);
+const privacyPolicyData = ref(/* import or define your data here */);
+const anchorMenuData = ref(/* import or define your data here */);
+
+const changeActive = (item, index) => {
+  item.isActive = true;
+  navMenuData.value.forEach((navItem, _ind) => {
+    if (_ind != index) {
+      navItem.isActive = false;
     }
-  }
+  });
 };
+
+useHead({
+  title: 'Terms of services',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Terms of services',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style lang="scss" scoped>

@@ -8,19 +8,19 @@
     </div>
 
     <div class="hero-image mb-10">
-      <img  :src="blogDetail?.imgBanner" alt="pic" />
+      <img  :src="detail?.imgBanner" alt="pic" />
     </div>
 
     <div class="side-paddings" :class="mobile || tablet ? '' : 'flex gap-10 mb-10'">
       <div class="blog-content">
         <!-- Title --------------------------------------------------------------------------->
         <div class="title text-3xl font-bold mb-5">
-          {{ locale == 'US' ? blogDetail.titleUS : locale == 'UK' ? blogDetail.titleUK : locale == 'FR' ? blogDetail.titleFR : blogDetail.titleDE ?? ''}}
+          {{ locale == 'US' ? detail?.titleUS : locale == 'UK' ? detail?.titleUK : locale == 'FR' ? detail?.titleFR : detail?.titleDE ?? ''}}
         </div>
         <!-- Selling guide button and link bar --------------------------------------------------------------------------->
         <div class="link-bar">
-          <div class="tags flex gap-x-2" v-if="blogDetail?.tags?.length > 1 && blogDetail.tags?.[0] != null">
-            <div class="" v-for="tag,ind in blogDetail?.tags" :key="ind">
+          <div class="tags flex gap-x-2" v-if="detail?.tags?.length > 1 && detail.tags?.[0] != null">
+            <div class="" v-for="tag,ind in detail?.tags" :key="ind">
               <button class="p-1 blog-tag" size="sm" color="primary" variant="tonal">
                 {{ locale == 'US' ? tag.titleUS : locale == 'UK' ? tag.titleUK : locale == 'FR' ? tag.titleFR :tag.titleDE ?? ''}}
               </button>
@@ -40,7 +40,7 @@
         </div>
 
         <!-- Content --------------------------------------------------------------------------->
-        <p class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'" v-html="locale == 'US' ? blogDetail.contentUS : locale == 'UK' ? blogDetail.contentUK : locale == 'FR' ? blogDetail.contentFR : blogDetail.contentDE ?? ''">
+        <p class="content-info mb-10" :class="mobile || tablet ? 'mt-5' : 'mt-10'" v-html="locale == 'US' ? detail?.contentUS : locale == 'UK' ? detail?.contentUK : locale == 'FR' ? detail?.contentFR : detail?.contentDE ?? ''">
         </p>
 
         <!-- Avatar and link bar --------------------------------------------------------------------------->
@@ -49,7 +49,7 @@
             <v-avatar :image="heroImg" size="50"></v-avatar>
             <div class="flex flex-column justify-between">
               <span class="font-bold">Chloe Nguyen</span>
-              <span class="text-sm text-slate-400">{{ blogDetail.createdAt  ?? ''}}</span>
+              <span class="text-sm text-slate-400">{{ detail?.createdAt  ?? ''}}</span>
             </div>
           </div>
           <div class="hyper-link-group flex gap-2">
@@ -67,7 +67,7 @@
           <span class="text-xl font-bold">Products</span>
           <div
             class="info pt-3 pb-3 flex justify-between"
-            v-for="item in blogDetail?.recommendProduct"
+            v-for="item in detail?.recommendProduct"
             :key="item"
           >
             <h1>{{ item }}</h1>
@@ -154,7 +154,6 @@ import { useAsyncData,useFetch } from 'nuxt/app'
 // Otherwise, you need to adapt its functionality within the setup
 
 // Reactive data properties
-const breadcrumbItems = ref(["Home", "Blog Posts", "Selling Guide"])
 const menuList = ref([
   "Yard signs",
   "What are best-selling Christmas print on demand ornament?",
@@ -165,26 +164,55 @@ const route = useRoute();
 const { t , locale, d } = useI18n()
 const blogId = computed(() => route.params.id);
 
-const blogDetail = computed(() => {
-  return data.value.data
-})
+const detail = ref(null)
 
-const { data }  = await useAsyncData(
-  'blogDetail',
-  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/info?blogId=${blogId.value}`)
+const  blogDetailServer = useAsyncData(
+  `blogDetail-${new Date().getTime()}`,
+  async () =>{
+    const  response = await $fetch(`http://printchic-api.tvo-solution.net/auth/blog/info?blogId=${blogId.value}`)
+    detail.value = response.data
+    console.log(detail.value, 'HJHJHHI')
+    return response.data
+  } 
 )
 
 
 const listTrendingTopic = computed(() => {
-  return listTrending.value.data.items.filter(item => item.isTop).slice(0, 3);
+  return listTrending.value.filter(item => item.isTop).slice(0, 3);
 })
 
-
-const { data : listTrending }  = await useAsyncData(
-  'listTrending',
-  () => $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list`)
+const listTrending = ref([])
+const  listTrendingServer = useAsyncData(
+  `listTrending-${new Date().getTime()}`,
+  async () =>{
+    const  response = await $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list`)
+    listTrending.value = response.data.items
+    return response.data.items
+  } 
 )
+
 const { screenWidth, mobile, tablet, pc, lgPc, extraPc } = useWidthScreen();
+
+const breadcrumbItems = ref(["Home", "Blog Posts", detail?.titleUS ?? ''])
+
+useHead({
+  title: 'Blog Post',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Blog Post',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 
 </script>
 

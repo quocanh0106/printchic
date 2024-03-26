@@ -165,7 +165,7 @@ const create = async (data) => {
         const result = await ProductsModels.create(set);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -227,7 +227,7 @@ const list = async (data) => {
         // }
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -246,14 +246,12 @@ const findByConditions = async (data) => {
         const result = await ProductsModels.findOne(conditions);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
 
 const updateConditions = async (data) => {
-    console.log('data', data)
-
     try {
         const conditions = {};
         if (data?.productId) {
@@ -634,11 +632,14 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.metaTitleDE)) {
             set.metaTitleDE = data.metaTitleDE;
         }
+        if (!isEmpty(data?.categoryProduct)) {
+            set.categoryProduct = JSON.parse(data.categoryProduct);
+        }
 
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -654,7 +655,7 @@ const updateDelete = async (data) => {
         const result = await ProductsModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -669,7 +670,6 @@ const updateStatus = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }
@@ -684,7 +684,6 @@ const checkExist = async (data) => {
         const checkExistTitle = await ProductsModels.findOne(conditions);
         return promiseResolve(checkExistTitle);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }

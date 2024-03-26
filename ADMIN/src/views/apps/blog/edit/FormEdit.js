@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, FormControlLabel, MenuItem, Radio, RadioGroup, Typography } from '@mui/material'
+import { Button, Card, CircularProgress, Dialog, DialogContent, Fade, MenuItem, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import { Controller, useForm } from 'react-hook-form'
@@ -11,74 +11,23 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import { forwardRef, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
+import { LANG_OBJECT } from 'src/constant'
 import { fetchBlog, updateBlog } from 'src/store/apps/blog'
 import { fetchCategoryBlog } from 'src/store/apps/categoryBlog'
-import { fetchProduct } from 'src/store/apps/product'
-import axios from 'axios'
-import PopoverAddContent from '../components/PopoverAddContent'
-import UploadImgContent from '../components/UploadImgContent'
-import dynamic from 'next/dynamic'
-import { LANG_OBJECT } from 'src/constant'
-import { useSnackbar } from 'notistack'
-import { addTag, fetchTag, updateTag } from 'src/store/apps/tag'
 import { fetchEvents } from 'src/store/apps/categoryProduct'
-
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
+import { addTag, fetchTag } from 'src/store/apps/tag'
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Fade ref={ref} {...props} />
 })
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-}
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-]
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -175,10 +124,10 @@ const FormEdit = () => {
     formData.append("metaDescriptionDE", value.metaDescriptionDE || '');
     formData.append("metaDescriptionFR", value.metaDescriptionFR || '');
 
-    formData.append("contentUK", JSON.stringify(contentUK) || '');
-    formData.append("contentUS", JSON.stringify(contentUS) || '');
-    formData.append("contentDE", JSON.stringify(contentDE) || '');
-    formData.append("contentFR", JSON.stringify(contentFR) || '');
+    formData.append("contentUK", contentUK || '');
+    formData.append("contentUS", contentUS || '');
+    formData.append("contentDE", contentDE || '');
+    formData.append("contentFR", contentFR || '');
     formData.append("categoryBlogId", value.blogCategory);
     formData.append("status", value.blogStatus || '');
     formData.append("recommendProduct", JSON.stringify(arrayRecommendPro));
@@ -219,7 +168,7 @@ const FormEdit = () => {
     dispatch(fetchEvents())
     dispatch(fetchBlog())
     dispatch(fetchTag())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (storeBlog.data.length > 0) {
@@ -272,7 +221,7 @@ const FormEdit = () => {
       setFilesBanner(data?.imgBanner)
       setTagValue(listTagSelected)
     }
-  }, [storeBlog, storeTag, storeCategoryProduct, store, router.query.id])
+  }, [storeBlog, storeTag, storeCategoryProduct, store, router.query.id, setValue])
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -300,7 +249,7 @@ const FormEdit = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'100%'} className='single-file-image' src={files} />
+        <img width={'100%'} className='single-file-image' src={files} alt="image" />
         :
         <img width={'100%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }
@@ -312,7 +261,7 @@ const FormEdit = () => {
     </CustomCloseButton>
     {
       typeof filesBanner === "string" ?
-        <img width={'100%'} className='single-file-image' src={filesBanner} />
+        <img width={'100%'} className='single-file-image' src={filesBanner} alt="image" />
         :
         <img width={'100%'} key={filesBanner?.name} alt={filesBanner?.name} className='single-file-image' src={filesBanner ? URL.createObjectURL(filesBanner) : ''} />
     }
@@ -375,19 +324,19 @@ const FormEdit = () => {
     setValueRecommend(newValue)
   }
 
-  const handleChangeContentUK = (content, delta, source, editor) => {
+  const handleChangeContentUK = (content) => {
     setContentUK(content);
   };
 
-  const handleChangeContentUS = (content, delta, source, editor) => {
+  const handleChangeContentUS = (content) => {
     setContentUS(content);
   };
 
-  const handleChangeContentDE = (content, delta, source, editor) => {
+  const handleChangeContentDE = (content) => {
     setContentDE(content);
   };
 
-  const handleChangeContentFR = (content, delta, source, editor) => {
+  const handleChangeContentFR = (content) => {
     setContentFR(content);
   };
 
@@ -780,25 +729,25 @@ const FormEdit = () => {
               <Typography variant='h5'>
                 Content UK
               </Typography>
-              <QuillNoSSRWrapper value={contentUK} onChange={handleChangeContentUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUK} onChange={handleChangeContentUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content US
               </Typography>
-              <QuillNoSSRWrapper value={contentUS} onChange={handleChangeContentUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentUS} onChange={handleChangeContentUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content DE
               </Typography>
-              <QuillNoSSRWrapper value={contentDE} onChange={handleChangeContentDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentDE} onChange={handleChangeContentDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
                 Content FR
               </Typography>
-              <QuillNoSSRWrapper value={contentFR} onChange={handleChangeContentFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={contentFR} onChange={handleChangeContentFR} />
             </Box>
           </Card>
         </Grid>

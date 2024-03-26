@@ -1,31 +1,25 @@
 
 <template>
   <div class="product-page-all-screen-wrapper">
-    <Head>
-      <Title>{{ currentMetaTitle }}</Title>
-      <Meta name="description" :content="title" />
-    </Head>
     <div class="product-page-wrapper" v-show="pc || lgPc || extraPc">
       <div class="product-header pb-0 custom-padding" style="padding-top: 40px">
-        <span> Home / Men</span>
+        <span> Home / {{ currentBreadCrumb }}</span>
         <div class="product-banner mt-6 rounded-lg text-start flex flex-col custom-padding">
           <h1 class="section-title font-semibold "> {{ $t('productList.mensClothing') }} </h1>
           <p class="mt-4">Check out PrintChic's awesome print-on-demand Men's Pajamas! We've got a huge range of cool Men's Pajamas with all-over prints in different sizes and colors, our service helps retailers broaden their product offerings and increase earnings seamlessly. Enjoy the perfect blend of style and comfort with our </p>
         </div>
         <div class="cloth-category">
-          <swiperComponent @submit="filterByCategoryId" :hasDescription="true" :isCategory="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
+          <swiperComponent @submit="filterByCategoryId" :onlyHasTitle="true" :hasDescription="true" :isCategory="true" :items="listCate" :slidePerView="6" :showNavigation="true" :showPagination="false" class="product-category mt-12" />
         </div>
       </div>
       <div class="product-grid-wrapper flex justify-between custom-padding">
         <div class="filter-sidebar mt-2">
           <h1 class="text-2xl font-semibold filter-by-title">{{ $t('productList.filter') }}</h1>
-          <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
-            <h1 class="text-2xl font-semibold">{{ item.filterBy }}</h1>
-            <div class="filter-by mt-3" v-for="(itemfilterBy, index) in item.listFilter" :key="index">
-              <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" v-model="filterBy" @click="filterByTag(itemfilterBy._id)">
-              <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy.title }}</label>
+          <h1 class="text-2xl font-semibold">Category</h1>
+          <div class="list-filter mt-8" v-for="(item, index) in listCate" :key="index">
+            <input type="checkbox" :id="item._id" :value="item" v-model="filterBy" @click="filterByTag(item._id)">
+            <label class="ml-1.5" :for="item">{{ locale == 'US' ?  item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleDE : item.titleUS ?? '' }}</label>
               <!-- <v-checkbox :label="filterBy"></v-checkbox> -->
-            </div>
           </div>
         </div>
         <div class="product-list-wrapper w-100">
@@ -38,7 +32,7 @@
             </span>
           </div>
           <div class="query-filter-tag flex flex-row items-center gap-x-2.5">
-            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item.title }}</span>
+            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ locale == 'US' ?  item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleDE : item.titleUS ?? '' }}</span>
             <h1 class="txt-primary font-semibold cursor-pointer" v-if="filterBy.length > 0" @click="clearAllFilterBy()">{{
               $t('productList.clearAll') }}</h1>
           </div>
@@ -97,13 +91,12 @@
             <v-list density="compact" nav class="pl-5">
               <div class="filter-sidebar mt-2">
                 <h1 class="text-2xl font-semibold filter-by-title">{{ $t('productList.filter') }}</h1>
-                <div class="list-filter mt-8" v-for="(item, index) in listFilter" :key="index">
-                  <h3 class="text-xl font-semibold border-bottom-gray">{{ item.filterBy }}</h3>
-                  <div class="filter-by mt-3" v-for="(itemfilterBy, index) in item.listFilter" :key="index">
-                    <input type="checkbox" :id="itemfilterBy._id" :value="itemfilterBy" @click="filterByTag(itemfilterBy._id)" v-model="filterBy">
-                    <label class="ml-1.5" :for="itemfilterBy">{{ itemfilterBy.title }}</label>
-                  </div>
-                </div>  
+                <h1 class="text-2xl font-semibold">Category</h1>
+                <div class="list-filter mt-8" v-for="(item, index) in listCate" :key="index">
+                  <input type="checkbox" :id="item._id" :value="item" v-model="filterBy" @click="filterByTag(item._id)">
+                  <label class="ml-1.5" :for="item">{{ locale == 'US' ?  item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleDE : item.titleUS ?? '' }}</label>
+                    <!-- <v-checkbox :label="filterBy"></v-checkbox> -->
+                </div>
               </div>
             </v-list>
           </v-navigation-drawer>
@@ -121,7 +114,7 @@
             <span class="total-product-amount txt-gray flex"> {{ $t('productList.showing') }} <p class="ml-2"> {{
               listProduct?.length }}</p> </span>
           <div class="query-filter-tag flex flex-row items-center gap-x-2.5 justify-center flex-wrap">
-            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ item.title }}</span>
+            <span v-for="item, index in filterBy" :key="index" class="tag-filter">{{ locale == 'US' ?  item.titleUS : locale == 'UK' ? item.titleUK : locale == 'FR' ? item.titleDE : item.titleUS ?? '' }}</span>
             <h1 class="txt-primary font-semibold cursor-pointer" v-if="filterBy.length > 0" @click="clearAllFilterBy()">{{
               $t('productList.clearAll') }}</h1>
           </div>
@@ -159,7 +152,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useFetch } from 'nuxt/app';
 import SwiperCateComponent from './components/SwiperCateComponent.vue';
@@ -203,8 +196,10 @@ const loadMoreData = async () => {
   }
 }
 
+// SEO
 const currentMetaTitle = ref('Print On Demand')
-
+const currentMetaDescription = ref('Printchic')
+const currentBreadCrumb = ref('')
 watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
   if (newCategoryProductId) {
     // Reset listCate when categoryProductId changes
@@ -214,20 +209,32 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
       isLoading.value = false
     })
     listProduct.value = data?.data.items || [];
+    console.log(listCate.value,'asdasd')
     listCate.value.map(category => {
       if(newCategoryProductId == category._id) {
         listFaq.value = category.faq ? JSON.parse(category.faq ?? '') : []
         if(locale.value == 'US'){
           currentMetaTitle.value = category.metaTitleUS ? category.metaTitleUS : 'Print On Demand'
+          currentMetaDescription.value = category.metaDescriptionUS ? category.metaDescriptionUS : 'Print Chic'
+          currentBreadCrumb.value = category.parentCategoryUS ? category.parentCategoryUS : ''
         } 
         if(locale.value == 'UK') {
           currentMetaTitle.value = category.metaTitleUK ?  category.metaTitleUK : category.metaTitleUS ?? 'Print On Demand'
+          currentMetaDescription.value = category.metaDescriptionUK ? category.metaDescriptionUK : 'Print Chic'
+          currentBreadCrumb.value = category.parentCategoryUK ? category.parentCategoryUK : ''
+
         }
         if(locale.value == 'FR'){
           currentMetaTitle.value = category.metaTitleFR ?  category.metaTitleFR : category.metaTitleUS ?? 'Print On Demand'
+          currentMetaDescription.value = category.metaDescriptionFR ? category.metaDescriptionFR : 'Print Chic'
+          currentBreadCrumb.value = category.parentCategoryFR ? category.parentCategoryFR : ''
+
         } 
         if(locale.value == 'DE'){
           currentMetaTitle.value = category.metaTitleDE ? category.metaTitleDE : category.metaTitleUS ?? 'Print On Demand'
+          currentMetaDescription.value = category.metaDescriptionDE ? category.metaDescriptionDE: 'Print Chic'
+          currentBreadCrumb.value = category.parentCategoryDE ? category.parentCategoryDE : ''
+
         } 
       }
     })
@@ -236,7 +243,7 @@ watch(() => route.query.categoryProductId, async (newCategoryProductId) => {
 
 const listFaq = ref([])
 const listProduct  = await useAsyncData(
-  'listProduct',
+  `listProduct-${new Date().getTime()}`,
   async () => {
     const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/product/list?page=${currentPage.value}&limit=${limit.value}`)
     return response.data.items
@@ -244,23 +251,14 @@ const listProduct  = await useAsyncData(
   )?.data
 
 const listCate  = await useAsyncData(
-  'listCategory',
+  `listCategories-${new Date().getTime()}`,
   async () => {
     const response = await $fetch('http://printchic-api.tvo-solution.net/auth/categoryProduct/list')
     return response.data.items
   }
   )?.data
 
-  console.log(listCate.value, 'EHEHEHEH')
-const listFilter = ref([
-  {
-    filterBy: 'Categories',
-    listFilter: listCate.value?.map(item => ({
-      _id: item._id,
-      title: locale.value == 'US'? item.titleUS : locale.value == 'UK' ? item.titleUK : locale.value == 'FR' ? item.titleFR : item.titleDE
-    }))
-  },
-]);
+const listFilter = ref([]);
 
 const filterBy = ref([]);
 
@@ -292,31 +290,57 @@ function filterByCategoryId(newValue) {
 const currentParagraph = ref(null)
 const getPajamas = computed(() => {
   let currentCategory
-  if(route.query.categoryProductId){
-    listCate.value.forEach(element => {
+  if(route.query.categoryProductId && listCate.value){
+    listCate.value?.forEach(element => {
       if(route.query.categoryProductId == element._id){
         currentCategory = element
       }
     });
   }
   if(locale.value == 'US'){
-    currentParagraph.value = currentCategory.paragraphUS
-    return currentCategory.pajamasUS 
+    currentParagraph.value = currentCategory?.paragraphUS ?? ''
+    return currentCategory?.pajamasUS ?? ''
   } 
   if(locale.value == 'UK') {
-    currentParagraph.value = currentCategory.paragraphUK
-    return currentCategory.pajamasUK 
+    currentParagraph.value = currentCategory?.paragraphUK ?? ''
+    return currentCategory?.pajamasUK  ?? ''
   }
   if(locale.value == 'FR'){
-    currentParagraph.value = currentCategory.paragraphFR
-    return currentCategory.pajamasFR 
+    currentParagraph.value = currentCategory?.paragraphFR ?? ''
+    return currentCategory?.pajamasFR ?? ''
   } 
   if(locale.value == 'DE'){
-    currentParagraph.value = currentCategory.paragraphDE
-    return currentCategory.pajamasDE 
+    currentParagraph.value = currentCategory?.paragraphDE ?? ''
+    return currentCategory?.pajamasDE  ?? ''
   } 
 })
 
+onMounted(() => {
+  router.push({
+    name: route.name,
+    query: {  },
+  });
+})
+// SEO
+useHead({
+  title: currentMetaTitle,
+  meta: [
+    { name: 'description', content: currentMetaDescription }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  },
+  script: [ { innerHTML: 'console.log(\'Hello world\')' } ]
+})
+
+useSeoMeta({
+  title: currentMetaTitle,
+  ogTitle: 'Printchic',
+  description: currentMetaDescription,
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <style lang="scss" scoped>

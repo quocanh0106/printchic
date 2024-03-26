@@ -57,7 +57,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
   const callBackSubmit = (data, setIsChecked) => {
     if (data.success) {

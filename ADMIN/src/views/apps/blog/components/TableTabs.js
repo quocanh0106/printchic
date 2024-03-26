@@ -23,14 +23,14 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Actions Imports
 
 // ** Custom Components Imports
+import styled from '@emotion/styled'
+import { Button, Dialog, DialogContent, Fade, IconButton } from '@mui/material'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import CustomTextField from 'src/@core/components/mui/text-field'
 import OptionsMenu from 'src/@core/components/option-menu'
 import { deleteTag, fetchTag, updateTag } from 'src/store/apps/tag'
 import TableHeaderTabs from './TableHeaderTabs'
-import { useSnackbar } from 'notistack'
-import { Button, Dialog, DialogContent, Fade, IconButton } from '@mui/material'
-import CustomTextField from 'src/@core/components/mui/text-field'
-import styled from '@emotion/styled'
 
 // ** Components Imports
 
@@ -93,7 +93,7 @@ const TableTabs = () => {
 
   useEffect(() => {
     dispatch(fetchTag())
-  }, [])
+  }, [dispatch])
 
   const callBackSubmitDel = (data) => {
     if (data.success) {

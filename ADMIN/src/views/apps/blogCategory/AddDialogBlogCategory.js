@@ -97,7 +97,6 @@ const DialogAddCard = ({ visible, setVisible }) => {
   }
 
   const callBackSubmit = (data) => {
-    console.log('data', data)
     if (data.success) {
       reset()
       setFiles([])

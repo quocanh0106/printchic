@@ -244,6 +244,23 @@ const { t } = useI18n();
 // If there are any methods or lifecycle hooks from the original component, 
 // they should be converted to the Composition API style.
 
+useHead({
+  title: 'How it works',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'How it works',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+})
 </script>
 
 <style lang="scss" scoped>

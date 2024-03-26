@@ -59,7 +59,7 @@ defineProps({
 
 const localePath = useLocalePath()
 const { data }  = await useAsyncData(
-  'blog',
+  `blog-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list')
 )
 

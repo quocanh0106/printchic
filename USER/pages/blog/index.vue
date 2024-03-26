@@ -1,8 +1,13 @@
 <template>
   <div class="blog-list-all-page-wrapper">
+    <!-- <Head>
+      <Title>{{ title }}</Title>
+      <Meta name="description" :content="title" />
+      <Style type="text/css" children="body { background-color: green; }" ></Style>
+    </Head> -->
     <div class="blog-list-wrapper" v-show="pc || lgPc || extraPc">
       <!-- featured Post -->
-      <blog :listBlog="listBlog?.data?.items" class="custom-padding" />
+      <blog :listBlog="featuredBlog" class="custom-padding" />
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center custom-padding"
@@ -13,7 +18,7 @@
             class="cursor-pointer font-semibold tab-btn text-base"
             v-for="(tab, index) in tabList?.data?.items"
             :key="index"
-            @click="currentTab = index"
+            @click="filterByTab(tab._id,index)"
           >
           {{ locale == 'US' ? tab.titleUS : locale == 'US' ? tab.titleUK : locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
@@ -29,7 +34,7 @@
               <img class="thumbnail-img rounded" :src="item.img" />
               <span class="content p-6">
                 <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <span class="text-base font-normal mt-2" v-html="sanitizedContent(locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE)"></span>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -52,7 +57,7 @@
     </div>
     <div class="blog-list-wrapper" v-show="mobile || tablet">
       <!-- featured Post -->
-      <blog :listBlog="listBlog?.data?.items"/>
+      <blog :listBlog="featuredBlog"/>
       <!-- List Blog -->
       <div
         class="blog-list bg-light-gray-custom flex flex-col justify-center items-center w-100"
@@ -63,7 +68,7 @@
             class="cursor-pointer font-semibold tab-btn text-base"
             v-for="(tab, index) in tabList"
             :key="index"
-            @click="currentTab = index"
+            @click="filterByTab(tab._id,  index)"
           >
           {{  locale == 'US' ? tab.titleUS :  locale == 'US' ? tab.titleUK :  locale == 'FR' ? tab.titleFR : tab.titleDE}}
           </span>
@@ -79,7 +84,7 @@
               <img class="rounded" :src="item.img" />
               <span class="content p-6">
                 <h1 class="font-semibold text-xl">{{  locale == 'US' ? item.titleUS :  locale == 'US' ? item.titleUK :  locale == 'FR' ? item.titleFR : item.titleDE }}</h1>
-                <p class="text-base font-normal mt-2" v-html=" locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE"></p>
+                <span class="text-base font-normal mt-2" v-html=" sanitizedContent(locale == 'US' ? item.contentUS :  locale == 'US' ? item.contentUK :  locale == 'FR' ? item.contentFR : item.contentDE)"></span>
                 <p class="text-xs font-normal mt-3">{{ item.date }}</p>
               </span>
             </div>
@@ -117,11 +122,11 @@ const localePath = useLocalePath()
 const { t , locale } = useI18n()
 
 const listBlog   = await useAsyncData(
-  'listBlog',
+  `listBlog-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/blog/list?page=1&limit=10')
 )?.data
 const { data:tabList }  = await useAsyncData(
-  'tabList',
+  `tabList-${new Date().getTime()}`,
   () => $fetch('http://printchic-api.tvo-solution.net/auth/categoryBlog/list')
 )
 
@@ -139,9 +144,40 @@ const loadMore = async () => {
   }
 };
 
+const filterByTab = async (id,index) => {
+  console.log('asdas')
+  currentTab.value = index
+  currentPage.value = 1
+  listBlog.value = []
+  const response = await $fetch(`http://printchic-api.tvo-solution.net/auth/blog/list?page=${currentPage.value}&limit=${limit.value}&categoryBlogId=${id}`)
+  listBlog.value = response
+}
+
 const toDetailBlog = (id) => {
   router.push(localePath(`/blog/${id}`));
 };
+
+const featuredBlog = computed(() => {
+  return listBlog.value?.data?.items.slice(0,4)
+}) 
+
+const sanitizedContent = (html) => {
+  return html.replace(/<img[^>]*>/g, '');
+}
+
+useHead({
+  title: 'Blog',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+})
+
+useSeoMeta({
+  title: 'Blog',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+})
 </script>
 <style lang="scss">
 .tab-btn {
@@ -177,5 +213,11 @@ const toDetailBlog = (id) => {
 }
 .active-tab{
   min-width: 0px !important;
+}
+
+content {
+  :deep(p){
+    background-color: transparent !important;
+  }
 }
 </style>

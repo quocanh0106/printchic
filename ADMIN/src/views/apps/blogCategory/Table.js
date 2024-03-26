@@ -55,7 +55,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryBlog())
-  }, [])
+  }, [dispatch])
 
 
   const columns = [

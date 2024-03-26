@@ -8,7 +8,7 @@ module.exports.DEFAULT = {
        
         res.json({ secure_url: req.file.path });
       } catch (err) {
-          console.log(err, 'err')
+          
           return res.json(err);
       }
   },

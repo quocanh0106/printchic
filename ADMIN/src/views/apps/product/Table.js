@@ -42,20 +42,19 @@ const UserList = () => {
     page: 1,
     search: ''
   })
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
   // ** Hooks
   const router = useRouter()
-  const dispatch = useDispatch()
   const store = useSelector(state => state.product)
   const categoryProduct = useSelector(state => state.categoryProduct)
-  console.log('categoryProduct', categoryProduct)
   useEffect(() => {
     dispatch(fetchProduct())
-  }, [])
+  }, [dispatch])
 
 
   const columns = [

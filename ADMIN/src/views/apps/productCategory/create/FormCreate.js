@@ -16,13 +16,6 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Third Party Imports
 
-// ** Util Import
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
-
 // ** Styled Component Imports
 
 // ** Styles Import
@@ -38,48 +31,8 @@ import Icon from 'src/@core/components/icon'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { addCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
 import { useRouter } from 'next/router'
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-}
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-]
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -115,18 +68,7 @@ const ProductCategoryComponent = () => {
   const [paragraphDE, setParagraphDE] = useState('');
   const [paragraphFR, setParagraphFR] = useState('');
 
-  const [listFAQ, setListFAQ] = useState([
-    {
-      questionUK: '',
-      questionUS: '',
-      questionFR: '',
-      questionDE: '',
-      answerUK: '',
-      answerUS: '',
-      answerFR: '',
-      answerDE: '',
-    }
-  ]);
+  const [valueChildCategory, setValueChildCategory] = useState([])
 
   // ** Hooks
   const { getRootProps, getInputProps } = useDropzone({
@@ -142,7 +84,7 @@ const ProductCategoryComponent = () => {
 
   useEffect(() => {
     dispatch(fetchEvents())
-  }, [])
+  }, [dispatch])
 
   const {
     control,
@@ -171,37 +113,41 @@ const ProductCategoryComponent = () => {
     name: 'faqs'
   });
 
-  const handleChangePajamasUK = (content, delta, source, editor) => {
+  const handleChangePajamasUK = (content) => {
     setPajamasUK(content);
   };
 
-  const handleChangePajamasUS = (content, delta, source, editor) => {
+  const handleChangePajamasUS = (content) => {
     setPajamasUS(content);
   };
 
-  const handleChangePajamasDE = (content, delta, source, editor) => {
+  const handleChangePajamasDE = (content) => {
     setPajamasDE(content);
   };
 
-  const handleChangePajamasFR = (content, delta, source, editor) => {
+  const handleChangePajamasFR = (content) => {
     setPajamasFR(content);
   };
 
-  const handleChangeParagraphUK = (content, delta, source, editor) => {
+  const handleChangeParagraphUK = (content) => {
     setParagraphUK(content);
   };
 
-  const handleChangeParagraphUS = (content, delta, source, editor) => {
+  const handleChangeParagraphUS = (content) => {
     setParagraphUS(content);
   };
 
-  const handleChangeParagraphDE = (content, delta, source, editor) => {
+  const handleChangeParagraphDE = (content) => {
     setParagraphDE(content);
   };
 
-  const handleChangeParagraphFR = (content, delta, source, editor) => {
+  const handleChangeParagraphFR = (content) => {
     setParagraphFR(content);
   };
+
+  const handleChange = (event, newValue) => {
+    setValueChildCategory(newValue)
+  }
 
   const callBackSubmit = (data) => {
     if (data.success) {
@@ -224,32 +170,33 @@ const ProductCategoryComponent = () => {
   const onSubmit = (value) => {
     if (files[0]) {
       setLoading(true)
-
+      const arrayChildCategory = valueChildCategory.map(ele => ele._id)
       const formData = new FormData();
       LANG.forEach(ele => {
         formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
-        formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`] || '');
         formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
         formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
       })
-      formData.append("childCategory", value.childCategory);
+      formData.append("childCategory", JSON.stringify(arrayChildCategory) || '');
       formData.append("file", files[0]);
 
-      formData.append("pajamasUK", JSON.stringify(pajamasUK) || '');
-      formData.append("pajamasUS", JSON.stringify(pajamasUS) || '');
-      formData.append("pajamasFR", JSON.stringify(pajamasFR) || '');
-      formData.append("pajamasDE", JSON.stringify(pajamasDE) || '');
+      formData.append("pajamasUK", pajamasUK || '');
+      formData.append("pajamasUS", pajamasUS || '');
+      formData.append("pajamasFR", pajamasFR || '');
+      formData.append("pajamasDE", pajamasDE || '');
 
-      formData.append("paragraphUK", JSON.stringify(paragraphUK) || '');
-      formData.append("paragraphUS", JSON.stringify(paragraphUS) || '');
-      formData.append("paragraphFR", JSON.stringify(paragraphFR) || '');
-      formData.append("paragraphDE", JSON.stringify(paragraphDE) || '');
+      formData.append("paragraphUK", paragraphUK || '');
+      formData.append("paragraphUS", paragraphUS || '');
+      formData.append("paragraphFR", paragraphFR || '');
+      formData.append("paragraphDE", paragraphDE || '');
 
       formData.append("metaTitleUK", value.metaTitleUK || '');
       formData.append("metaTitleUS", value.metaTitleUS || '');
       formData.append("metaTitleFR", value.metaTitleFR || '');
       formData.append("metaTitleDE", value.metaTitleDE || '');
-  
+
+      formData.append("parentCategory", value.parentCategory);
+
       formData.append("faq", JSON.stringify(value.faqs));
 
       dispatch(addCategoryProduct({ formData, callBackSubmit }))
@@ -492,72 +439,30 @@ const ProductCategoryComponent = () => {
 
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 3 }}>
-              Breadcrumb
+              Parent Category
             </Typography>
-            <Grid container spacing={5}>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.UK}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.UK}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.US}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.US}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.FR}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.FR}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.DE}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.DE}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              {/* description */}
-
-            </Grid>
+            <Controller
+              name='parentCategory'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  select
+                  fullWidth
+                  defaultValue=''
+                  label='Parent Category'
+                  SelectProps={{
+                    value: value,
+                    onChange: e => onChange(e)
+                  }}
+                  id='validation-basic-select'
+                  aria-describedby='validation-basic-select'
+                >
+                  {
+                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
+                  }
+                </CustomTextField>
+              )}
+            />
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 2, mt: 7 }}>
@@ -633,53 +538,53 @@ const ProductCategoryComponent = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas UK
+                Boxtext header UK
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUK} onChange={handleChangePajamasUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUK} onChange={handleChangePajamasUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas US
+                Boxtext header US
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUS} onChange={handleChangePajamasUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUS} onChange={handleChangePajamasUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas DE
+                Boxtext header DE
               </Typography>
-              <QuillNoSSRWrapper value={pajamasDE} onChange={handleChangePajamasDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasDE} onChange={handleChangePajamasDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas FR
+                Boxtext header FR
               </Typography>
-              <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasFR} onChange={handleChangePajamasFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, my: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph UK
+                Boxtext footer UK
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUK} onChange={handleChangeParagraphUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUK} onChange={handleChangeParagraphUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph US
+                Boxtext footer US
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUS} onChange={handleChangeParagraphUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUS} onChange={handleChangeParagraphUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph DE
+                Boxtext footer DE
               </Typography>
-              <QuillNoSSRWrapper value={paragraphDE} onChange={handleChangeParagraphDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphDE} onChange={handleChangeParagraphDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph FR
+                Boxtext footer FR
               </Typography>
-              <QuillNoSSRWrapper value={paragraphFR} onChange={handleChangeParagraphFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphFR} onChange={handleChangeParagraphFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
@@ -845,27 +750,16 @@ const ProductCategoryComponent = () => {
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Grid item xs={12} sm={12}>
-              <Controller
-                name='childCategory'
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue=''
-                    label='child category'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    aria-describedby='validation-basic-select'
-                  >
-                    {
-                      store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
-                    }
-                  </CustomTextField>
-                )}
+              <CustomAutocomplete
+                multiple
+                value={valueChildCategory}
+                onChange={handleChange}
+                sx={{ width: '100%', mt: 4 }}
+                options={store.data}
+                filterSelectedOptions
+                id='autocomplete-multiple-outlined'
+                getOptionLabel={option => option.titleUS || ''}
+                renderInput={params => <CustomTextField {...params} label='Child Category' placeholder='child category' />}
               />
             </Grid>
           </Card>

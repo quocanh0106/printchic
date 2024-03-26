@@ -51,7 +51,7 @@ function UploadImgContent({ id, listItemsContent, setListItemContent }) {
           </CustomCloseButton>
           {
             typeof ele.value[0] === "string" ?
-              <img width={'100%'} className='single-file-image' src={ele.value[0]} />
+              <img width={'100%'} className='single-file-image' src={ele.value[0]} alt="image"/>
               :
               <img width={'100%'} key={ele.value[0].name} alt={ele.value[0].name} className='single-file-image' src={URL.createObjectURL(ele.value[0])} />
           }

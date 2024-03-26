@@ -19,7 +19,6 @@ export const updateSetting = createAsyncThunk('appSetting/updateEvent', async (e
       'Content-Type': 'multipart/form-data',
     }
   })
-  console.log('response.data', response.data)
   event.callBackSubmit(response.data)
   await dispatch(fetchEvents())
 

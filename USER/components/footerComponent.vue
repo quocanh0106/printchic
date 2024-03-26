@@ -199,7 +199,6 @@ export default {
   },
   methods: {
     navigateToPath(url) {
-      console.log(url)
       this.$router.push(localePath(`${url}`));
     },
   },

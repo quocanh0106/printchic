@@ -10,7 +10,7 @@ const ButtonUpload = ({ getValues, setValue, id }) => { // ** States
 
     useEffect(() => {
         setFiles(getValues(`imageVariant-${id}`))
-    }, [])
+    }, [getValues, id])
 
     // ** Hooks
     const { getRootProps, getInputProps } = useDropzone({

@@ -95,7 +95,6 @@ export const appCategoryProductSlice = createSlice({
       state.allData = action.payload.data.items
     }),
     builder.addCase(fetchInfoCategoryProduct.fulfilled, (state, action) => {
-      console.log('action.payload.data', action.payload.data)
       state.infoCategoryProduct = action.payload.data
     })
   }

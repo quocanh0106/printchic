@@ -87,7 +87,6 @@ export const categoryBlogSlice = createSlice({
       state.allData = action.payload.data.items
     }),
     builder.addCase(fetchInfoCategoryBlog.fulfilled, (state, action) => {
-      console.log('action.payload.data', action.payload.data)
       state.infoCategoryBlog = action.payload.data
     })
   }

@@ -17,7 +17,6 @@ const create = async (data) => {
         const result = await UsersModels.create(set);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -33,7 +32,6 @@ const updateExpiresDate = async (data) => {
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -58,7 +56,6 @@ const findByConditions = async (data) => {
         const result = await UsersModels.findOne(conditions).lean();
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }
@@ -162,7 +159,6 @@ const updateConditions = async (data) => {
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }
@@ -192,7 +188,6 @@ const chargeMoney = async (data) => {
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true }).lean();
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -253,7 +248,6 @@ const list = async (data) => {
         const result = await UsersModels.paginate(conditions, options);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 }
@@ -271,7 +265,6 @@ const updateStatus = async (data) => {
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true }).lean();
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -357,7 +350,6 @@ const createInternal = async (data) => {
         const result = await UsersModels.create(set);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -367,7 +359,6 @@ const updateInternal = async (data) => {
             isDeleted: IS_DELETED[200],
             _id: convertToObjectId(data.userObjId),
         }
-        console.log(conditions, 'conditions')
         const set = {};
         set.email = data.email;
         set.phoneNumber = data.phoneNumber;
@@ -443,11 +434,9 @@ const updateInternal = async (data) => {
         if (!isEmpty(data?.laborExportExp)) {
             set.laborExportExp = data.laborExportExp;
         }
-        console.log(set, 'set')
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };
@@ -463,7 +452,6 @@ const softDelete = async (data) => {
         const result = await UsersModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
         return promiseReject(err);
     }
 };

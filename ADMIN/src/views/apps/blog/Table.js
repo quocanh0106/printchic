@@ -53,7 +53,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch(fetchBlog())
-  }, [])
+  }, [dispatch])
 
   const callBackSubmit = (data) => {
     if (data.success) {

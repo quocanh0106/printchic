@@ -21,8 +21,6 @@ module.exports.AUTH = {
                 const result = await ProductService.list({
                     ...req.query
                 })
-                // console.log(req.query.categoryObjId, 'KKAKKA')
-                // console.log(result, 'KKAKKA')
                 if (!isEmpty(result)) {
                     return res.json(responseSuccess(10501, result));
                 }
@@ -36,7 +34,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(10501, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -49,7 +47,6 @@ module.exports.AUTH = {
         // beforeUploadMulti(req, res, async () => {
 
         try {
-            console.log('req',req.body, req.files)
             const errors = await validateResult(createValidator, req);
             if (!isEmpty(errors)) {
                 return res.json(responseError(40004, errors));
@@ -59,20 +56,20 @@ module.exports.AUTH = {
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await ProductService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await ProductService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await ProductService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await ProductService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK) {
+            const checkExistProductCategory_UK = req.body?.titleUK ? await ProductService.checkExist({titleUK: req.body?.titleUK}) : false;
+            const checkExistProductCategory_US = req.body?.titleUS ? await ProductService.checkExist({titleUS: req.body?.titleUS}) : false;
+            const checkExistProductCategory_FR = req.body?.titleFR ? await ProductService.checkExist({titleFR: req.body?.titleFR}) : false;
+            const checkExistProductCategory_DE = req.body?.titleDE ? await ProductService.checkExist({titleDE: req.body?.titleDE}) : false;
+            if(checkExistProductCategory_UK && req.body?.titleUK) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US) {
+            if(checkExistProductCategory_US && req.body?.titleUS) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR) {
+            if(checkExistProductCategory_FR && req.body?.titleFR) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE) {
+            if(checkExistProductCategory_DE && req.body?.titleDE) {
                 fieldExistTitle.push('titleDE')
             }
             if (checkExistProductCategory_UK || checkExistProductCategory_US || checkExistProductCategory_FR || checkExistProductCategory_DE) {
@@ -85,7 +82,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40211, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
         // })
@@ -106,7 +103,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -130,7 +127,7 @@ module.exports.AUTH = {
             }
             return res.json(responseSuccess(40212, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -150,20 +147,20 @@ module.exports.AUTH = {
             }
 
             let fieldExistTitle = []
-            const checkExistProductCategory_UK = await ProductService.checkExist({titleUK: req.body?.titleUK})
-            const checkExistProductCategory_US = await ProductService.checkExist({titleUS: req.body?.titleUS})
-            const checkExistProductCategory_FR = await ProductService.checkExist({titleFR: req.body?.titleFR})
-            const checkExistProductCategory_DE = await ProductService.checkExist({titleDE: req.body?.titleDE})
-            if(checkExistProductCategory_UK && checkExistProductCategory_UK?._id.toHexString() !== req.body.productId) {
+            const checkExistProductCategory_UK = req.body?.titleUK ? await ProductService.checkExist({titleUK: req.body?.titleUK}) : false;
+            const checkExistProductCategory_US = req.body?.titleUS ? await ProductService.checkExist({titleUS: req.body?.titleUS}) : false;
+            const checkExistProductCategory_FR = req.body?.titleFR ? await ProductService.checkExist({titleFR: req.body?.titleFR}) : false;
+            const checkExistProductCategory_DE = req.body?.titleDE ? await ProductService.checkExist({titleDE: req.body?.titleDE}) : false;
+            if(checkExistProductCategory_UK && req.body?.titleUK && checkExistProductCategory_UK?._id.toHexString() !== req.body.productId) {
                 fieldExistTitle.push('titleUK')
             }
-            if(checkExistProductCategory_US && checkExistProductCategory_US?._id.toHexString() !== req.body.productId) {
+            if(checkExistProductCategory_US && req.body?.titleUS && checkExistProductCategory_US?._id.toHexString() !== req.body.productId) {
                 fieldExistTitle.push('titleUS')
             }
-            if(checkExistProductCategory_FR && checkExistProductCategory_FR?._id.toHexString() !== req.body.productId) {
+            if(checkExistProductCategory_FR && req.body?.titleFR && checkExistProductCategory_FR?._id.toHexString() !== req.body.productId) {
                 fieldExistTitle.push('titleFR')
             }
-            if(checkExistProductCategory_DE && checkExistProductCategory_DE?._id.toHexString() !== req.body.productId) {
+            if(checkExistProductCategory_DE && req.body?.titleDE && checkExistProductCategory_DE?._id.toHexString() !== req.body.productId) {
                 fieldExistTitle.push('titleDE')
             }
             if (fieldExistTitle.length > 0) {
@@ -177,7 +174,7 @@ module.exports.AUTH = {
             return res.json(responseSuccess(40213, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -198,7 +195,7 @@ module.exports.DEFAULT = {
             }
             return res.json(responseSuccess(10392, []));
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },
@@ -222,7 +219,7 @@ module.exports.DEFAULT = {
             return res.json(responseSuccess(40214, []));
 
         } catch (errors) {
-            console.log(errors, 'errors')
+            
             return res.json(responseError(40004, errors));
         }
     },

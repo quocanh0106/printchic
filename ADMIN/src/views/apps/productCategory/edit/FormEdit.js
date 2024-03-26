@@ -1,16 +1,14 @@
 
-import { forwardRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Fade from '@mui/material/Fade'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -25,8 +23,7 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import 'react-credit-cards/es/styles-compiled.css'
 
 // ** Icon Imports
-import { Card, CircularProgress, MenuItem, Divider } from '@mui/material'
-import { useSnackbar } from 'notistack'
+import { Card, CircularProgress, Divider, MenuItem } from '@mui/material'
 import { useDropzone } from 'react-dropzone'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -34,54 +31,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'src/@core/components/icon'
 import { LANG, LANG_OBJECT } from 'src/constant'
 import { fetchEvents, fetchInfoCategoryProduct, updateCategoryProduct } from 'src/store/apps/categoryProduct'
-
-const QuillNoSSRWrapper = dynamic(import('react-quill'), {
-
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-})
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }, { font: [] }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image', 'video'],
-    ['clean'],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-}
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-]
+import SunEditorWrapper from 'src/views/components/RichText/SunEditorWrapper'
+import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 
 const CustomCloseButton = styled(IconButton)(({ theme }) => ({
   top: 0,
@@ -115,6 +66,8 @@ const ProductCategoryComponent = () => {
   const [paragraphUS, setParagraphUS] = useState('');
   const [paragraphDE, setParagraphDE] = useState('');
   const [paragraphFR, setParagraphFR] = useState('');
+
+  const [valueChildCategory, setValueChildCategory] = useState([])
 
   const [listFAQ, setListFAQ] = useState([
     {
@@ -185,73 +138,86 @@ const ProductCategoryComponent = () => {
     setListFAQ(tempListFAQ)
   }
 
-  const handleChangePajamasUK = (content, delta, source, editor) => {
+  const handleChangePajamasUK = (content) => {
     setPajamasUK(content);
   };
 
-  const handleChangePajamasUS = (content, delta, source, editor) => {
+  const handleChangePajamasUS = (content) => {
     setPajamasUS(content);
   };
 
-  const handleChangePajamasDE = (content, delta, source, editor) => {
+  const handleChangePajamasDE = (content) => {
     setPajamasDE(content);
   };
 
-  const handleChangePajamasFR = (content, delta, source, editor) => {
+  const handleChangePajamasFR = (content) => {
     setPajamasFR(content);
   };
 
-  const handleChangeParagraphUK = (content, delta, source, editor) => {
+  const handleChangeParagraphUK = (content) => {
     setParagraphUK(content);
   };
 
-  const handleChangeParagraphUS = (content, delta, source, editor) => {
+  const handleChangeParagraphUS = (content) => {
     setParagraphUS(content);
   };
 
-  const handleChangeParagraphDE = (content, delta, source, editor) => {
+  const handleChangeParagraphDE = (content) => {
     setParagraphDE(content);
   };
 
-  const handleChangeParagraphFR = (content, delta, source, editor) => {
+  const handleChangeParagraphFR = (content) => {
     setParagraphFR(content);
   };
+
+  const handleChange = (event, newValue) => {
+    setValueChildCategory(newValue)
+  }
 
   useEffect(() => {
     if (id) {
       dispatch(fetchInfoCategoryProduct({ categoryProductId: id }))
       dispatch(fetchEvents())
     }
-  }, [id])
+  }, [id, dispatch])
 
   useEffect(() => {
+
+    const listCatPro = [];
+    store.data.forEach(ele => {
+      if (infoCategoryProduct?.childCategory?.includes(ele._id)) {
+        listCatPro.push(ele)
+      }
+    })
+    
     LANG.forEach(ele => {
       setValue(`title${ele.value}`, infoCategoryProduct?.[`title${ele.value}`] || '');
-      setValue(`breadcrumb${ele.value}`, infoCategoryProduct?.[`breadcrumb${ele.value}`] || '');
       setValue(`description${ele.value}`, infoCategoryProduct?.[`description${ele.value}`] || '');
       setValue(`handleUrl${ele.value}`, infoCategoryProduct?.[`handleUrl${ele.value}`] || '');
     })
     setValue('description', infoCategoryProduct?.description || '')
-    setValue('childCategory', infoCategoryProduct.childCategory)
+    setValueChildCategory(listCatPro || [])
     infoCategoryProduct?.faq && setValue('faqs', JSON.parse(infoCategoryProduct?.faq))
     setFiles(infoCategoryProduct?.bannerImg)
 
-    infoCategoryProduct?.pajamasUK && setPajamasUK(JSON.parse(infoCategoryProduct?.pajamasUK) || '')
-    infoCategoryProduct?.pajamasUS && setPajamasUS(JSON.parse(infoCategoryProduct?.pajamasUS) || '')
-    infoCategoryProduct?.pajamasFR && setPajamasFR(JSON.parse(infoCategoryProduct?.pajamasFR) || '')
-    infoCategoryProduct?.pajamasDE && setPajamasDE(JSON.parse(infoCategoryProduct?.pajamasDE) || '')
+    infoCategoryProduct?.pajamasUK && setPajamasUK(infoCategoryProduct?.pajamasUK || '')
+    infoCategoryProduct?.pajamasUS && setPajamasUS(infoCategoryProduct?.pajamasUS || '')
+    infoCategoryProduct?.pajamasFR && setPajamasFR(infoCategoryProduct?.pajamasFR || '')
+    infoCategoryProduct?.pajamasDE && setPajamasDE(infoCategoryProduct?.pajamasDE || '')
 
     setValue('metaTitleUK', infoCategoryProduct?.metaTitleUK || '')
     setValue('metaTitleUS', infoCategoryProduct?.metaTitleUS || '')
     setValue('metaTitleFR', infoCategoryProduct?.metaTitleFR || '')
     setValue('metaTitleDE', infoCategoryProduct?.metaTitleDE || '')
 
-    infoCategoryProduct?.paragraphUK && setParagraphUK(JSON.parse(infoCategoryProduct?.paragraphUK) || '')
-    infoCategoryProduct?.paragraphUS && setParagraphUS(JSON.parse(infoCategoryProduct?.paragraphUS) || '')
-    infoCategoryProduct?.paragraphFR && setParagraphFR(JSON.parse(infoCategoryProduct?.paragraphFR) || '')
-    infoCategoryProduct?.paragraphDE && setParagraphDE(JSON.parse(infoCategoryProduct?.paragraphDE) || '')
+    setValue('parentCategory', infoCategoryProduct?.parentCategory || '')
 
-  }, [infoCategoryProduct, id])
+    infoCategoryProduct?.paragraphUK && setParagraphUK(infoCategoryProduct?.paragraphUK || '')
+    infoCategoryProduct?.paragraphUS && setParagraphUS(infoCategoryProduct?.paragraphUS || '')
+    infoCategoryProduct?.paragraphFR && setParagraphFR(infoCategoryProduct?.paragraphFR || '')
+    infoCategoryProduct?.paragraphDE && setParagraphDE(infoCategoryProduct?.paragraphDE || '')
+
+  }, [infoCategoryProduct, id, setValue, store])
 
   const callBackSubmit = (data) => {
     setLoading(false)
@@ -279,31 +245,33 @@ const ProductCategoryComponent = () => {
   const onSubmit = (value) => {
     setLoading(true)
 
+    const arrayChildCategory = valueChildCategory.map(ele => ele._id)
     const formData = new FormData();
     formData.append("categoryProductId", infoCategoryProduct._id);
     LANG.forEach(ele => {
       formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
-      formData.append(`breadcrumb${ele.value}`, value[`breadcrumb${ele.value}`] || '');
       formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
       formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
     })
-    formData.append("childCategory", value.childCategory);
+    formData.append("childCategory", JSON.stringify(arrayChildCategory) || '');
 
-    formData.append("paragraphUK", JSON.stringify(paragraphUK) || '');
-    formData.append("paragraphUS", JSON.stringify(paragraphUS) || '');
-    formData.append("paragraphFR", JSON.stringify(paragraphFR) || '');
-    formData.append("paragraphDE", JSON.stringify(paragraphDE) || '');
+    formData.append("paragraphUK", paragraphUK || '');
+    formData.append("paragraphUS", paragraphUS || '');
+    formData.append("paragraphFR", paragraphFR || '');
+    formData.append("paragraphDE", paragraphDE || '');
 
     formData.append("metaTitleUK", value.metaTitleUK || '');
     formData.append("metaTitleUS", value.metaTitleUS || '');
     formData.append("metaTitleFR", value.metaTitleFR || '');
     formData.append("metaTitleDE", value.metaTitleDE || '');
 
-    formData.append("pajamasUK", JSON.stringify(pajamasUK) || '');
-    formData.append("pajamasUS", JSON.stringify(pajamasUS) || '');
-    formData.append("pajamasFR", JSON.stringify(pajamasFR) || '');
-    formData.append("pajamasDE", JSON.stringify(pajamasDE) || '');
+    formData.append("pajamasUK", pajamasUK || '');
+    formData.append("pajamasUS", pajamasUS || '');
+    formData.append("pajamasFR", pajamasFR || '');
+    formData.append("pajamasDE", pajamasDE || '');
     formData.append("faq", JSON.stringify(value.faqs));
+
+    formData.append("parentCategory", value.parentCategory);
 
     typeof files === "string" || formData.append("file", files);
     dispatch(updateCategoryProduct({ formData, callBackSubmit }))
@@ -315,7 +283,7 @@ const ProductCategoryComponent = () => {
     </CustomCloseButton>
     {
       typeof files === "string" ?
-        <img width={'60%'} className='single-file-image' src={files} />
+        <img width={'60%'} className='single-file-image' src={files} alt="image" />
         :
         <img width={'60%'} key={files?.name} alt={files?.name} className='single-file-image' src={files ? URL.createObjectURL(files) : ''} />
     }
@@ -546,72 +514,29 @@ const ProductCategoryComponent = () => {
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 3 }}>
-              Breadcrumb
+              Parent Category
             </Typography>
-            <Grid container spacing={5}>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.UK}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.UK}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.US}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.US}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.FR}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.FR}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`breadcrumb${LANG_OBJECT.DE}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Breadcrumb ${LANG_OBJECT.DE}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              {/* description */}
-
-            </Grid>
+            <Controller
+              name='parentCategory'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  select
+                  fullWidth
+                  label='Parent Category'
+                  SelectProps={{
+                    value: value || "",
+                    onChange: e => onChange(e)
+                  }}
+                  id='validation-basic-select'
+                  aria-describedby='validation-basic-select'
+                >
+                  {
+                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
+                  }
+                </CustomTextField>
+              )}
+            />
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 2, mt: 7 }}>
@@ -687,79 +612,67 @@ const ProductCategoryComponent = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph UK
+                Boxtext footer UK
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUK} onChange={handleChangeParagraphUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUK} onChange={handleChangeParagraphUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph US
+                Boxtext footer US
               </Typography>
-              <QuillNoSSRWrapper value={paragraphUS} onChange={handleChangeParagraphUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphUS} onChange={handleChangeParagraphUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph DE
+                Boxtext footer DE
               </Typography>
-              <QuillNoSSRWrapper value={paragraphDE} onChange={handleChangeParagraphDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphDE} onChange={handleChangeParagraphDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph FR
+                Boxtext footer FR
               </Typography>
-              <QuillNoSSRWrapper value={paragraphFR} onChange={handleChangeParagraphFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={paragraphFR} onChange={handleChangeParagraphFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas UK
+                Boxtext header UK
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUK} onChange={handleChangePajamasUK} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUK} onChange={handleChangePajamasUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas US
+                Boxtext header US
               </Typography>
-              <QuillNoSSRWrapper value={pajamasUS} onChange={handleChangePajamasUS} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasUS} onChange={handleChangePajamasUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas DE
+                Boxtext header DE
               </Typography>
-              <QuillNoSSRWrapper value={pajamasDE} onChange={handleChangePajamasDE} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasDE} onChange={handleChangePajamasDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas FR
+                Boxtext header FR
               </Typography>
-              <QuillNoSSRWrapper value={pajamasFR} onChange={handleChangePajamasFR} modules={modules} formats={formats} theme="snow" />
+              <SunEditorWrapper value={pajamasFR} onChange={handleChangePajamasFR} />
             </Box>
           </Card>
           <Card sx={{ p: 4, my: 4, pb: 6 }}>
             <Grid item xs={12} sm={12}>
-              <Controller
-                name='childCategory'
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    defaultValue={infoCategoryProduct.childCategory}
-                    label='child Category'
-                    SelectProps={{
-                      value: value,
-                      onChange: e => onChange(e)
-                    }}
-                    id='validation-basic-select'
-                    error={Boolean(errors.childCategory)}
-                    aria-describedby='validation-basic-select'
-                  >
-                    {
-                      store.data.filter(category => category.id != id).map(ele => <MenuItem key={ele._id} value={ele._id}>{ele?.titleUS}</MenuItem>)
-                    }
-                  </CustomTextField>
-                )}
+              <CustomAutocomplete
+                multiple
+                value={valueChildCategory}
+                onChange={handleChange}
+                sx={{ width: '100%', mt: 4 }}
+                options={store.data.filter(category => category.id != id)}
+                filterSelectedOptions
+                id='autocomplete-multiple-outlined'
+                getOptionLabel={option => option.titleUS || ''}
+                renderInput={params => <CustomTextField {...params} label='Child Category' placeholder='child category' />}
               />
             </Grid>
           </Card>

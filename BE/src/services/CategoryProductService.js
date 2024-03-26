@@ -33,10 +33,7 @@ const create = async (data) => {
         set.paragraphFR = data?.paragraphFR;
         set.paragraphDE = data?.paragraphDE;
 
-        set.breadcrumbUK = data?.breadcrumbUK;
-        set.breadcrumbUS = data?.breadcrumbUS;
-        set.breadcrumbFR = data?.breadcrumbFR;
-        set.breadcrumbDE = data?.breadcrumbDE;
+        set.parentCategory = data?.parentCategory;
 
         set.handleUrlUK = data?.handleUrlUK;
         set.handleUrlUS = data?.handleUrlUS;
@@ -48,7 +45,7 @@ const create = async (data) => {
         set.metaTitleDE = data?.metaTitleDE;
         set.metaTitleFR = data?.metaTitleFR;
 
-        set.childCategory = data?.childCategory;
+        set.childCategory = JSON.parse(data?.childCategory);
         set.bannerImg = data?.bannerImg;
         set.faq = data?.faq;
         set.createdBy = convertToObjectId(data?.createdBy);
@@ -56,7 +53,7 @@ const create = async (data) => {
         const result = await CategoryProductModels.create(set);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -103,7 +100,7 @@ const list = async (data) => {
         const result = await CategoryProductModels.paginate(conditions, options);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -122,13 +119,12 @@ const findByConditions = async (data) => {
         const result = await CategoryProductModels.findOne(conditions);
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
 
 const updateConditions = async (data) => {
-    console.log('data', data)
     try {
         const conditions = {};
         if (data?.categoryProductId) {
@@ -166,7 +162,7 @@ const updateConditions = async (data) => {
             set.bannerImg = data.bannerImg;
         }
         if (!isEmpty(data?.childCategory)) {
-            set.childCategory = data.childCategory;
+            set.childCategory = JSON.parse(data.childCategory);
         }
         if (!isEmpty(data?.pajamasUK)) {
             set.pajamasUk = data.pajamasUk;
@@ -194,17 +190,8 @@ const updateConditions = async (data) => {
             set.paragraphDE = data.paragraphDE;
         }
 
-        if (!isEmpty(data?.breadcrumbUK)) {
-            set.breadcrumbUk = data.breadcrumbUk;
-        }
-        if (!isEmpty(data?.breadcrumbUS)) {
-            set.breadcrumbUS = data.breadcrumbUS;
-        }
-        if (!isEmpty(data?.breadcrumbFR)) {
-            set.breadcrumbFR = data.breadcrumbFR;
-        }
-        if (!isEmpty(data?.breadcrumbDE)) {
-            set.breadcrumbDE = data.breadcrumbDE;
+        if (!isEmpty(data?.parentCategory)) {
+            set.parentCategory = data.parentCategory;
         }
 
         if (!isEmpty(data?.handleUrlUK)) {
@@ -245,7 +232,7 @@ const updateConditions = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 };
@@ -261,7 +248,7 @@ const updateDelete = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -276,7 +263,7 @@ const updateStatus = async (data) => {
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }
@@ -287,11 +274,10 @@ const checkExist = async (data) => {
             isDeleted: IS_DELETED[200],
             ...data
         };
-        console.log('conditions', conditions)
         const checkExistTitle = await CategoryProductModels.findOne(conditions);
         return promiseResolve(checkExistTitle);
     } catch (err) {
-        console.log(err, 'err')
+        
         return promiseReject(err);
     }
 }

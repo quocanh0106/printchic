@@ -71,21 +71,14 @@ const ConfigsBase = {
   paragraphDE: {
     type: String, trim: true,
   },
-  breadcrumbUK: {
+  parentCategory: {
     type: String, trim: true,
+    ref: 'category_product'
   },
-  breadcrumbUS: {
-    type: String, trim: true,
-  },
-  breadcrumbFR: {
-    type: String, trim: true,
-  },
-  breadcrumbDE: {
-    type: String, trim: true,
-  },
-  childCategory: {
-    type: String, trim: true,
-  },
+  childCategory: [{
+    type: String,
+    ref: 'category_product'
+  }],
   metaTitleUK: {
     type: String, trim: true,
   },

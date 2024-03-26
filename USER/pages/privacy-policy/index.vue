@@ -96,7 +96,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import mailIcon from "../../assets/svg/mail.svg";
 import popupIcon from "../../assets/svg/popup.svg";
 import linkedInIcon from "../../assets/svg/linkin.svg";
@@ -106,22 +107,31 @@ import Help from "../../components/help.vue";
 import { privacyPolicyData, anchorMenuData } from "./helpers/constants";
 import { myMixin } from "~/mixins/myMixin";
 
-export default {
-  components: { Help },
-  mixins: [myMixin],
-  data() {
-    return {
-      mailIcon,
-      popupIcon,
-      linkedInIcon,
-      twitterIcon,
-      fbIcon,
-      breadcrumbItems: ["Home", "Privacy Policy"],
-      privacyPolicyData,
-      anchorMenuData,
-    };
-  },
-};
+// Mixins can be used with the Composition API, but their usage is less common.
+// If myMixin provides reactive properties or methods, consider refactoring them into composable functions.
+
+const breadcrumbItems = ref(["Home", "Privacy Policy"]);
+
+useHead({
+  title: 'Privacy Policy',
+  meta: [
+    { name: 'description', content: 'Printchic.' }
+  ],
+  bodyAttrs: {
+    class: 'test'
+  }
+})
+
+useSeoMeta({
+  title: 'Privacy Policy',
+  ogTitle: 'Printchic',
+  description: 'This is my amazing site, let me tell you all about it.',
+  ogDescription: 'This is my amazing site, let me tell you all about it.',
+  ogImage: 'https://example.com/image.png',
+  twitterCard: 'summary_large_image',
+})
+// If privacyPolicyData and anchorMenuData are reactive, use ref or reactive to define them.
+// Assuming they are just objects or arrays imported from constants, you can use them directly in your template.
 </script>
 
 <style lang="scss" scoped>
