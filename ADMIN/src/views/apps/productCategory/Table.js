@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { DataGrid } from '@mui/x-data-grid'
 
+import toast from 'react-hot-toast'
+
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
@@ -21,18 +23,17 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Utils Import
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/user'
 
 // ** Custom Components Imports
 import OptionsMenu from 'src/@core/components/option-menu'
 import TableHeader from 'src/views/apps/productCategory/TableHeader'
 
 // ** Components Imports
+import { Switch } from 'antd'
+import { useRouter } from 'next/router'
+import { deleteCategoryProduct, fetchEvents, updateTopCategoryProduct } from 'src/store/apps/categoryProduct'
 import AddDialogProduct from './AddDialogProduct'
 import DialogEditCard from './EditDialogProduct'
-import { deleteCategoryProduct, fetchEvents } from 'src/store/apps/categoryProduct'
-import { openInNewTab } from 'src/utils'
-import { useRouter } from 'next/router'
 
 
 const UserList = () => {
@@ -58,6 +59,24 @@ const UserList = () => {
     dispatch(fetchEvents())
   }, [])
 
+  const callBackSubmit = (data, setIsChecked) => {
+    if (data.success) {
+      toast.success('Successfully updated category product trends', {
+        duration: 2000
+      })
+    } else {
+      toast.error(`${data.message}`, {
+        duration: 2000
+      })
+      setIsChecked(false)
+    }
+  }
+
+  const handleSwitchTop = (isTopBlog, data, setIsChecked) => {
+    setIsChecked(isTopBlog)
+    const formData = { categoryProductId: data._id, isTop: isTopBlog, updateTrending: true }
+    dispatch(updateTopCategoryProduct({ formData, callBackSubmit, setIsChecked }))
+  }
 
   const columns = [
     {
@@ -110,6 +129,22 @@ const UserList = () => {
         return (
           <Typography noWrap sx={{ color: 'text.secondary' }}>
             {store?.data?.find(ele => ele._id == row.childCategory)?.titleUS}
+          </Typography>
+        )
+      }
+    },
+    {
+      flex: 0.25,
+      minWidth: 190,
+      field: 'isTop',
+      headerName: 'Trending',
+      renderCell: ({ row }) => {
+        // eslint-disable-next-line
+        const [isChecked, setIsChecked] = useState()
+
+        return (
+          <Typography noWrap sx={{ color: 'text.secondary' }}>
+            <Switch defaultValue={row?.isTop} value={isChecked} onChange={(checked) => handleSwitchTop(checked, row, setIsChecked)} />
           </Typography>
         )
       }

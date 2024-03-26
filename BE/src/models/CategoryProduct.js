@@ -101,6 +101,9 @@ const ConfigsBase = {
   faq: {
     type: String, trim: true,
   },
+  isTop: {
+    type: Boolean,
+  },
 }
 const Configs = { ...ConfigsBase, ...common };
 const ConfigsSchema = new Schema(Configs, { versionKey: false });

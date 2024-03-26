@@ -6,6 +6,7 @@ const {
     promiseResolve, convertToObjectId, promiseReject, isNumber,
     isEmpty, regExpSearch, trimValue, generatorTime, facetPaginationAggregate,
     convertResultAggregatePagination,
+    responseError,
 } = require('../utils/shared');
 const { IS_DELETED, STATUS } = require('../utils/constants');
 const { MY_CUSTOM_LABELS } = require('../utils/constants');
@@ -88,6 +89,7 @@ const list = async (data) => {
         }
         const options = {
             sort: {
+                isTop: -1,
                 createdAt: -1,
                 [sortKey]: sortOrder,
             },
@@ -133,6 +135,9 @@ const updateConditions = async (data) => {
             conditions._id = convertToObjectId(data.categoryProductId);
         }
         const set = {};
+        if (!isEmpty(data?.isTop)) {
+            set.isTop = data.isTop;
+        }
         if (!isEmpty(data?.titleUK)) {
             set.titleUK = data.titleUK;
         }
@@ -231,6 +236,11 @@ const updateConditions = async (data) => {
         if (!isEmpty(data?.faq)) {
             set.faq = data.faq;
         }
+        let resultCountTrending;
+        if (data?.updateTrending) {
+            resultCountTrending = await CategoryProductModels.count({ isTop: true });
+        }
+        if (resultCountTrending >= 3 && data?.isTop) return promiseReject({message: 'The maximum number of trending product categories is 3'});
 
         const result = await CategoryProductModels.findOneAndUpdate(conditions, set, { new: true });
         return promiseResolve(result);
@@ -277,7 +287,7 @@ const checkExist = async (data) => {
             isDeleted: IS_DELETED[200],
             ...data
         };
-        console.log('conditions',conditions)
+        console.log('conditions', conditions)
         const checkExistTitle = await CategoryProductModels.findOne(conditions);
         return promiseResolve(checkExistTitle);
     } catch (err) {

@@ -61,7 +61,7 @@ const UserList = () => {
         duration: 2000
       })
     } else {
-      toast.success(`${data.message}`, {
+      toast.error(`${data.message}`, {
         duration: 2000
       })
     }

@@ -23,6 +23,15 @@ export const fetchInfoCategoryProduct = createAsyncThunk('appCategoryProduct/fet
   return response.data
 })
 
+// ** Update Event
+export const updateTopCategoryProduct = createAsyncThunk('appCategoryProduct/updateTopCategoryProduct', async (event, { dispatch }) => {
+  const response = await axios.put(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryProduct/updateTop`, event.formData)
+  await event.callBackSubmit(response.data, event.setIsChecked)
+  await dispatch(fetchEvents())
+
+  return response.data.event
+})
+
 // ** Add Event
 export const addCategoryProduct = createAsyncThunk('appCalendar/addCategoryProduct', async (event, { dispatch }) => {
   const response = await axios.post(`${process.env.NEXT_PUBLIC_URL_API}/auth/categoryProduct/create`, event.formData, {
