@@ -189,10 +189,9 @@ const ProductCategoryComponent = () => {
         listCatPro.push(ele)
       }
     })
-    console.log('listCatPro',listCatPro);
+    
     LANG.forEach(ele => {
       setValue(`title${ele.value}`, infoCategoryProduct?.[`title${ele.value}`] || '');
-      setValue(`parentCategory${ele.value}`, infoCategoryProduct?.[`parentCategory${ele.value}`] || '');
       setValue(`description${ele.value}`, infoCategoryProduct?.[`description${ele.value}`] || '');
       setValue(`handleUrl${ele.value}`, infoCategoryProduct?.[`handleUrl${ele.value}`] || '');
     })
@@ -210,6 +209,8 @@ const ProductCategoryComponent = () => {
     setValue('metaTitleUS', infoCategoryProduct?.metaTitleUS || '')
     setValue('metaTitleFR', infoCategoryProduct?.metaTitleFR || '')
     setValue('metaTitleDE', infoCategoryProduct?.metaTitleDE || '')
+
+    setValue('parentCategory', infoCategoryProduct?.parentCategory || '')
 
     infoCategoryProduct?.paragraphUK && setParagraphUK(infoCategoryProduct?.paragraphUK || '')
     infoCategoryProduct?.paragraphUS && setParagraphUS(infoCategoryProduct?.paragraphUS || '')
@@ -249,7 +250,6 @@ const ProductCategoryComponent = () => {
     formData.append("categoryProductId", infoCategoryProduct._id);
     LANG.forEach(ele => {
       formData.append(`title${ele.value}`, value[`title${ele.value}`] || '');
-      formData.append(`parentCategory${ele.value}`, value[`parentCategory${ele.value}`] || '');
       formData.append(`description${ele.value}`, value[`description${ele.value}`] || '');
       formData.append(`handleUrl${ele.value}`, value[`handleUrl${ele.value}`] || '');
     })
@@ -270,6 +270,8 @@ const ProductCategoryComponent = () => {
     formData.append("pajamasFR", pajamasFR || '');
     formData.append("pajamasDE", pajamasDE || '');
     formData.append("faq", JSON.stringify(value.faqs));
+
+    formData.append("parentCategory", value.parentCategory);
 
     typeof files === "string" || formData.append("file", files);
     dispatch(updateCategoryProduct({ formData, callBackSubmit }))
@@ -514,70 +516,27 @@ const ProductCategoryComponent = () => {
             <Typography variant='h5' sx={{ mb: 3 }}>
               Parent Category
             </Typography>
-            <Grid container spacing={5}>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`parentCategory${LANG_OBJECT.UK}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Parent Category ${LANG_OBJECT.UK}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`parentCategory${LANG_OBJECT.US}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Parent Category ${LANG_OBJECT.US}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`parentCategory${LANG_OBJECT.FR}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Parent Category ${LANG_OBJECT.FR}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Controller
-                  name={`parentCategory${LANG_OBJECT.DE}`}
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      value={value}
-                      label={`Parent Category ${LANG_OBJECT.DE}`}
-                      onChange={onChange}
-                      aria-describedby='validation-basic-first-name'
-                    />
-                  )}
-                />
-              </Grid>
-              {/* description */}
-
-            </Grid>
+            <Controller
+              name='parentCategory'
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <CustomTextField
+                  select
+                  fullWidth
+                  label='Parent Category'
+                  SelectProps={{
+                    value: value || "",
+                    onChange: e => onChange(e)
+                  }}
+                  id='validation-basic-select'
+                  aria-describedby='validation-basic-select'
+                >
+                  {
+                    store.data.map(ele => <MenuItem key={ele._id} value={ele._id}>{ele.titleUS}</MenuItem>)
+                  }
+                </CustomTextField>
+              )}
+            />
           </Card>
           <Card sx={{ p: 4, mb: 4, pb: 6 }}>
             <Typography variant='h5' sx={{ mb: 2, mt: 7 }}>
@@ -653,25 +612,25 @@ const ProductCategoryComponent = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph UK
+                Boxtext footer UK
               </Typography>
               <SunEditorWrapper value={paragraphUK} onChange={handleChangeParagraphUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph US
+                Boxtext footer US
               </Typography>
               <SunEditorWrapper value={paragraphUS} onChange={handleChangeParagraphUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph DE
+                Boxtext footer DE
               </Typography>
               <SunEditorWrapper value={paragraphDE} onChange={handleChangeParagraphDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Paragraph FR
+                Boxtext footer FR
               </Typography>
               <SunEditorWrapper value={paragraphFR} onChange={handleChangeParagraphFR} />
             </Box>
@@ -679,25 +638,25 @@ const ProductCategoryComponent = () => {
           <Card sx={{ p: 4, mt: 4, textAlign: 'left' }}>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas UK
+                Boxtext header UK
               </Typography>
               <SunEditorWrapper value={pajamasUK} onChange={handleChangePajamasUK} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas US
+                Boxtext header US
               </Typography>
               <SunEditorWrapper value={pajamasUS} onChange={handleChangePajamasUS} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas DE
+                Boxtext header DE
               </Typography>
               <SunEditorWrapper value={pajamasDE} onChange={handleChangePajamasDE} />
             </Box>
             <Box sx={{ mb: 7 }}>
               <Typography variant='h5'>
-                Pajamas FR
+                Boxtext header FR
               </Typography>
               <SunEditorWrapper value={pajamasFR} onChange={handleChangePajamasFR} />
             </Box>

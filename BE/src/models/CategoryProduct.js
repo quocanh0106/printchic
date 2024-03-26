@@ -71,17 +71,9 @@ const ConfigsBase = {
   paragraphDE: {
     type: String, trim: true,
   },
-  parentCategoryUK: {
+  parentCategory: {
     type: String, trim: true,
-  },
-  parentCategoryUS: {
-    type: String, trim: true,
-  },
-  parentCategoryFR: {
-    type: String, trim: true,
-  },
-  parentCategoryDE: {
-    type: String, trim: true,
+    ref: 'category_product'
   },
   childCategory: [{
     type: String,

@@ -32,10 +32,7 @@ const create = async (data) => {
         set.paragraphFR = data?.paragraphFR;
         set.paragraphDE = data?.paragraphDE;
 
-        set.parentCategoryUK = data?.parentCategoryUK;
-        set.parentCategoryUS = data?.parentCategoryUS;
-        set.parentCategoryFR = data?.parentCategoryFR;
-        set.parentCategoryDE = data?.parentCategoryDE;
+        set.parentCategory = data?.parentCategory;
 
         set.handleUrlUK = data?.handleUrlUK;
         set.handleUrlUS = data?.handleUrlUS;
@@ -188,17 +185,8 @@ const updateConditions = async (data) => {
             set.paragraphDE = data.paragraphDE;
         }
 
-        if (!isEmpty(data?.parentCategoryUK)) {
-            set.parentCategoryUk = data.parentCategoryUk;
-        }
-        if (!isEmpty(data?.parentCategoryUS)) {
-            set.parentCategoryUS = data.parentCategoryUS;
-        }
-        if (!isEmpty(data?.parentCategoryFR)) {
-            set.parentCategoryFR = data.parentCategoryFR;
-        }
-        if (!isEmpty(data?.parentCategoryDE)) {
-            set.parentCategoryDE = data.parentCategoryDE;
+        if (!isEmpty(data?.parentCategory)) {
+            set.parentCategory = data.parentCategory;
         }
 
         if (!isEmpty(data?.handleUrlUK)) {
